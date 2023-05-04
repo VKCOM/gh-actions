@@ -1,0 +1,61 @@
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  # PACKAGES
+
+  - package-ecosystem: 'npm'
+    directory: '/VKUI/reporter'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/VKUI/patch'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/VKUI/push-screenshots'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
+
+  - package-ecosystem: 'npm'
+    directory: '/VKUI/stable-branch'
+    schedule:
+      interval: 'daily'
+    allow:
+      - dependency-type: 'direct'
+    reviewers:
+      - 'VKCOM/vk-sec'
+      - 'VKCOM/vkui-core'
