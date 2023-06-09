@@ -1,0 +1,12 @@
+name: 'Close milestone'
+description: 'Close milestone when a new version is released and notify all related issues'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+  releaseTag:
+    required: true
+    description: 'released version's tag'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
