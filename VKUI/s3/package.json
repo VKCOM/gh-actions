@@ -18,6 +18,6 @@
   "scripts": {
     "prebuild": "shx rm -rf dist/*",
     "build": "ncc build",
-    "test": "echo no test"
+    "test": "node --test"
   }
 }

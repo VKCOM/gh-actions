@@ -41,7 +41,8 @@
     ]
   },
   "engines": {
-    "yarn": "^1.21.1"
+    "yarn": "^1.21.1",
+    "node": ">=20.2.0"
   },
   "packageManager": "yarn@1.22.19"
 }
