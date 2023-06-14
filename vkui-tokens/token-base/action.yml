@@ -1,0 +1,15 @@
+name: 'Token Base'
+description: 'Figma styles to json'
+inputs:
+  token:
+    required: true
+    description: 'Figma access token https://www.figma.com/developers/api#access-tokens'
+  file_key:
+    required: true
+    description: 'Id of the team to list styles from'
+  output_file_name:
+    required: true
+    description: 'path to json file'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
