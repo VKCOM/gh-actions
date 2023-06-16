@@ -8,7 +8,7 @@ https://github.com/VKCOM/VKUI.
 
 1. Склонируйте репозиторий и перейдите в созданную директорию.
 2. Установите зависимости: `yarn install`.
-3. Напишите код, документацию и [тесты](https://nodejs.org/api/test.html)
+3. Напишите код, документацию и [тесты](https://jestjs.io/docs/using-matchers)
 4. Проверьте код `yarn lint && yarn test`
 5. Создайте Pull Request в ветку `main`
 6. Получите все апрувы
