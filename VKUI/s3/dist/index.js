@@ -12900,7 +12900,7 @@ const de_AbortMultipartUploadCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_AbortMultipartUploadCommand = de_AbortMultipartUploadCommand;
@@ -13032,7 +13032,7 @@ const de_CreateBucketCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         Location: [, output.headers["location"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_CreateBucketCommand = de_CreateBucketCommand;
@@ -13114,7 +13114,7 @@ const de_DeleteBucketCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketCommand = de_DeleteBucketCommand;
@@ -13138,7 +13138,7 @@ const de_DeleteBucketAnalyticsConfigurationCommand = async (output, context) => 
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketAnalyticsConfigurationCommand = de_DeleteBucketAnalyticsConfigurationCommand;
@@ -13162,7 +13162,7 @@ const de_DeleteBucketCorsCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketCorsCommand = de_DeleteBucketCorsCommand;
@@ -13186,7 +13186,7 @@ const de_DeleteBucketEncryptionCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketEncryptionCommand = de_DeleteBucketEncryptionCommand;
@@ -13210,7 +13210,7 @@ const de_DeleteBucketIntelligentTieringConfigurationCommand = async (output, con
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketIntelligentTieringConfigurationCommand = de_DeleteBucketIntelligentTieringConfigurationCommand;
@@ -13234,7 +13234,7 @@ const de_DeleteBucketInventoryConfigurationCommand = async (output, context) => 
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketInventoryConfigurationCommand = de_DeleteBucketInventoryConfigurationCommand;
@@ -13258,7 +13258,7 @@ const de_DeleteBucketLifecycleCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketLifecycleCommand = de_DeleteBucketLifecycleCommand;
@@ -13282,7 +13282,7 @@ const de_DeleteBucketMetricsConfigurationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketMetricsConfigurationCommand = de_DeleteBucketMetricsConfigurationCommand;
@@ -13306,7 +13306,7 @@ const de_DeleteBucketOwnershipControlsCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketOwnershipControlsCommand = de_DeleteBucketOwnershipControlsCommand;
@@ -13330,7 +13330,7 @@ const de_DeleteBucketPolicyCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketPolicyCommand = de_DeleteBucketPolicyCommand;
@@ -13354,7 +13354,7 @@ const de_DeleteBucketReplicationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketReplicationCommand = de_DeleteBucketReplicationCommand;
@@ -13378,7 +13378,7 @@ const de_DeleteBucketTaggingCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketTaggingCommand = de_DeleteBucketTaggingCommand;
@@ -13402,7 +13402,7 @@ const de_DeleteBucketWebsiteCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteBucketWebsiteCommand = de_DeleteBucketWebsiteCommand;
@@ -13432,7 +13432,7 @@ const de_DeleteObjectCommand = async (output, context) => {
         VersionId: [, output.headers["x-amz-version-id"]],
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteObjectCommand = de_DeleteObjectCommand;
@@ -13494,7 +13494,7 @@ const de_DeleteObjectTaggingCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         VersionId: [, output.headers["x-amz-version-id"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeleteObjectTaggingCommand = de_DeleteObjectTaggingCommand;
@@ -13518,7 +13518,7 @@ const de_DeletePublicAccessBlockCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_DeletePublicAccessBlockCommand = de_DeletePublicAccessBlockCommand;
@@ -14471,7 +14471,7 @@ const de_HeadBucketCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_HeadBucketCommand = de_HeadBucketCommand;
@@ -14567,7 +14567,7 @@ const de_HeadObjectCommand = async (output, context) => {
             }, {}),
         ],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_HeadObjectCommand = de_HeadObjectCommand;
@@ -15135,7 +15135,7 @@ const de_PutBucketAccelerateConfigurationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketAccelerateConfigurationCommand = de_PutBucketAccelerateConfigurationCommand;
@@ -15159,7 +15159,7 @@ const de_PutBucketAclCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketAclCommand = de_PutBucketAclCommand;
@@ -15183,7 +15183,7 @@ const de_PutBucketAnalyticsConfigurationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketAnalyticsConfigurationCommand = de_PutBucketAnalyticsConfigurationCommand;
@@ -15207,7 +15207,7 @@ const de_PutBucketCorsCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketCorsCommand = de_PutBucketCorsCommand;
@@ -15231,7 +15231,7 @@ const de_PutBucketEncryptionCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketEncryptionCommand = de_PutBucketEncryptionCommand;
@@ -15255,7 +15255,7 @@ const de_PutBucketIntelligentTieringConfigurationCommand = async (output, contex
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketIntelligentTieringConfigurationCommand = de_PutBucketIntelligentTieringConfigurationCommand;
@@ -15279,7 +15279,7 @@ const de_PutBucketInventoryConfigurationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketInventoryConfigurationCommand = de_PutBucketInventoryConfigurationCommand;
@@ -15303,7 +15303,7 @@ const de_PutBucketLifecycleConfigurationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketLifecycleConfigurationCommand = de_PutBucketLifecycleConfigurationCommand;
@@ -15327,7 +15327,7 @@ const de_PutBucketLoggingCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketLoggingCommand = de_PutBucketLoggingCommand;
@@ -15351,7 +15351,7 @@ const de_PutBucketMetricsConfigurationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketMetricsConfigurationCommand = de_PutBucketMetricsConfigurationCommand;
@@ -15375,7 +15375,7 @@ const de_PutBucketNotificationConfigurationCommand = async (output, context) => 
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketNotificationConfigurationCommand = de_PutBucketNotificationConfigurationCommand;
@@ -15399,7 +15399,7 @@ const de_PutBucketOwnershipControlsCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketOwnershipControlsCommand = de_PutBucketOwnershipControlsCommand;
@@ -15423,7 +15423,7 @@ const de_PutBucketPolicyCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketPolicyCommand = de_PutBucketPolicyCommand;
@@ -15447,7 +15447,7 @@ const de_PutBucketReplicationCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketReplicationCommand = de_PutBucketReplicationCommand;
@@ -15471,7 +15471,7 @@ const de_PutBucketRequestPaymentCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketRequestPaymentCommand = de_PutBucketRequestPaymentCommand;
@@ -15495,7 +15495,7 @@ const de_PutBucketTaggingCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketTaggingCommand = de_PutBucketTaggingCommand;
@@ -15519,7 +15519,7 @@ const de_PutBucketVersioningCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketVersioningCommand = de_PutBucketVersioningCommand;
@@ -15543,7 +15543,7 @@ const de_PutBucketWebsiteCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutBucketWebsiteCommand = de_PutBucketWebsiteCommand;
@@ -15584,7 +15584,7 @@ const de_PutObjectCommand = async (output, context) => {
         ],
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutObjectCommand = de_PutObjectCommand;
@@ -15609,7 +15609,7 @@ const de_PutObjectAclCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutObjectAclCommand = de_PutObjectAclCommand;
@@ -15640,7 +15640,7 @@ const de_PutObjectLegalHoldCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutObjectLegalHoldCommand = de_PutObjectLegalHoldCommand;
@@ -15665,7 +15665,7 @@ const de_PutObjectLockConfigurationCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutObjectLockConfigurationCommand = de_PutObjectLockConfigurationCommand;
@@ -15690,7 +15690,7 @@ const de_PutObjectRetentionCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutObjectRetentionCommand = de_PutObjectRetentionCommand;
@@ -15715,7 +15715,7 @@ const de_PutObjectTaggingCommand = async (output, context) => {
         $metadata: deserializeMetadata(output),
         VersionId: [, output.headers["x-amz-version-id"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutObjectTaggingCommand = de_PutObjectTaggingCommand;
@@ -15739,7 +15739,7 @@ const de_PutPublicAccessBlockCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_PutPublicAccessBlockCommand = de_PutPublicAccessBlockCommand;
@@ -15765,7 +15765,7 @@ const de_RestoreObjectCommand = async (output, context) => {
         RequestCharged: [, output.headers["x-amz-request-charged"]],
         RestoreOutputPath: [, output.headers["x-amz-restore-output-path"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_RestoreObjectCommand = de_RestoreObjectCommand;
@@ -15834,7 +15834,7 @@ const de_UploadPartCommand = async (output, context) => {
         ],
         RequestCharged: [, output.headers["x-amz-request-charged"]],
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_UploadPartCommand = de_UploadPartCommand;
@@ -15893,7 +15893,7 @@ const de_WriteGetObjectResponseCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_WriteGetObjectResponseCommand = de_WriteGetObjectResponseCommand;
@@ -19504,13 +19504,7 @@ const deserializeMetadata = (output) => ({
     extendedRequestId: output.headers["x-amz-id-2"],
     cfId: output.headers["x-amz-cf-id"],
 });
-const collectBody = (streamBody = new Uint8Array(), context) => {
-    if (streamBody instanceof Uint8Array) {
-        return Promise.resolve(streamBody);
-    }
-    return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-const collectBodyString = (streamBody, context) => collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
+const collectBodyString = (streamBody, context) => (0, smithy_client_1.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
 const isSerializableHeaderValue = (value) => value !== undefined &&
     value !== null &&
     value !== "" &&
@@ -19581,7 +19575,6 @@ const node_config_provider_1 = __nccwpck_require__(9266);
 const node_http_handler_1 = __nccwpck_require__(9831);
 const util_body_length_node_1 = __nccwpck_require__(98207);
 const util_retry_1 = __nccwpck_require__(69016);
-const util_stream_node_1 = __nccwpck_require__(93781);
 const util_user_agent_node_1 = __nccwpck_require__(32340);
 const runtimeConfig_shared_1 = __nccwpck_require__(4781);
 const smithy_client_1 = __nccwpck_require__(31196);
@@ -19602,7 +19595,6 @@ const getRuntimeConfig = (config) => {
         defaultUserAgentProvider: config?.defaultUserAgentProvider ??
             (0, util_user_agent_node_1.defaultUserAgent)({ serviceId: clientSharedValues.serviceId, clientVersion: package_json_1.default.version }),
         eventStreamSerdeProvider: config?.eventStreamSerdeProvider ?? eventstream_serde_node_1.eventStreamSerdeProvider,
-        getAwsChunkedEncodingStream: config?.getAwsChunkedEncodingStream ?? util_stream_node_1.getAwsChunkedEncodingStream,
         maxAttempts: config?.maxAttempts ?? (0, node_config_provider_1.loadConfig)(middleware_retry_1.NODE_MAX_ATTEMPT_CONFIG_OPTIONS),
         md5: config?.md5 ?? hash_node_1.Hash.bind(null, "md5"),
         region: config?.region ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_REGION_CONFIG_OPTIONS, config_resolver_1.NODE_REGION_CONFIG_FILE_OPTIONS),
@@ -19612,7 +19604,6 @@ const getRuntimeConfig = (config) => {
                 ...middleware_retry_1.NODE_RETRY_MODE_CONFIG_OPTIONS,
                 default: async () => (await defaultConfigProvider()).retryMode || util_retry_1.DEFAULT_RETRY_MODE,
             }),
-        sdkStreamMixin: config?.sdkStreamMixin ?? util_stream_node_1.sdkStreamMixin,
         sha1: config?.sha1 ?? hash_node_1.Hash.bind(null, "sha1"),
         sha256: config?.sha256 ?? hash_node_1.Hash.bind(null, "sha256"),
         streamCollector: config?.streamCollector ?? node_http_handler_1.streamCollector,
@@ -19638,6 +19629,7 @@ const signature_v4_multi_region_1 = __nccwpck_require__(31468);
 const smithy_client_1 = __nccwpck_require__(31196);
 const url_parser_1 = __nccwpck_require__(30045);
 const util_base64_1 = __nccwpck_require__(63130);
+const util_stream_1 = __nccwpck_require__(50535);
 const util_utf8_1 = __nccwpck_require__(82234);
 const endpointResolver_1 = __nccwpck_require__(33224);
 const getRuntimeConfig = (config) => ({
@@ -19646,7 +19638,9 @@ const getRuntimeConfig = (config) => ({
     base64Encoder: config?.base64Encoder ?? util_base64_1.toBase64,
     disableHostPrefix: config?.disableHostPrefix ?? false,
     endpointProvider: config?.endpointProvider ?? endpointResolver_1.defaultEndpointResolver,
+    getAwsChunkedEncodingStream: config?.getAwsChunkedEncodingStream ?? util_stream_1.getAwsChunkedEncodingStream,
     logger: config?.logger ?? new smithy_client_1.NoOpLogger(),
+    sdkStreamMixin: config?.sdkStreamMixin ?? util_stream_1.sdkStreamMixin,
     serviceId: config?.serviceId ?? "S3",
     signerConstructor: config?.signerConstructor ?? signature_v4_multi_region_1.SignatureV4MultiRegion,
     signingEscapePath: config?.signingEscapePath ?? false,
@@ -20800,13 +20794,7 @@ const deserializeMetadata = (output) => ({
     extendedRequestId: output.headers["x-amz-id-2"],
     cfId: output.headers["x-amz-cf-id"],
 });
-const collectBody = (streamBody = new Uint8Array(), context) => {
-    if (streamBody instanceof Uint8Array) {
-        return Promise.resolve(streamBody);
-    }
-    return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-const collectBodyString = (streamBody, context) => collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
+const collectBodyString = (streamBody, context) => (0, smithy_client_1.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
 const isSerializableHeaderValue = (value) => value !== undefined &&
     value !== null &&
     value !== "" &&
@@ -21783,7 +21771,7 @@ const de_LogoutCommand = async (output, context) => {
     const contents = (0, smithy_client_1.map)({
         $metadata: deserializeMetadata(output),
     });
-    await collectBody(output.body, context);
+    await (0, smithy_client_1.collectBody)(output.body, context);
     return contents;
 };
 exports.de_LogoutCommand = de_LogoutCommand;
@@ -21871,13 +21859,7 @@ const deserializeMetadata = (output) => ({
     extendedRequestId: output.headers["x-amz-id-2"],
     cfId: output.headers["x-amz-cf-id"],
 });
-const collectBody = (streamBody = new Uint8Array(), context) => {
-    if (streamBody instanceof Uint8Array) {
-        return Promise.resolve(streamBody);
-    }
-    return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-const collectBodyString = (streamBody, context) => collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
+const collectBodyString = (streamBody, context) => (0, smithy_client_1.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
 const isSerializableHeaderValue = (value) => value !== undefined &&
     value !== null &&
     value !== "" &&
@@ -23883,13 +23865,7 @@ const deserializeMetadata = (output) => ({
     extendedRequestId: output.headers["x-amz-id-2"],
     cfId: output.headers["x-amz-cf-id"],
 });
-const collectBody = (streamBody = new Uint8Array(), context) => {
-    if (streamBody instanceof Uint8Array) {
-        return Promise.resolve(streamBody);
-    }
-    return context.streamCollector(streamBody) || Promise.resolve(new Uint8Array());
-};
-const collectBodyString = (streamBody, context) => collectBody(streamBody, context).then((body) => context.utf8Encoder(body));
+const collectBodyString = (streamBody, context) => (0, smithy_client_1.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
 const throwDefaultError = (0, smithy_client_1.withBaseException)(STSServiceException_1.STSServiceException);
 const buildHttpRpcRequest = async (context, headers, path, resolvedHostname, body) => {
     const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
@@ -31879,6 +31855,29 @@ exports.Client = Client;
 
 /***/ }),
 
+/***/ 37922:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.collectBody = void 0;
+const util_stream_1 = __nccwpck_require__(50535);
+const collectBody = async (streamBody = new Uint8Array(), context) => {
+    if (streamBody instanceof Uint8Array) {
+        return util_stream_1.Uint8ArrayBlobAdapter.mutate(streamBody);
+    }
+    if (!streamBody) {
+        return util_stream_1.Uint8ArrayBlobAdapter.mutate(new Uint8Array());
+    }
+    const fromContext = context.streamCollector(streamBody);
+    return util_stream_1.Uint8ArrayBlobAdapter.mutate(await fromContext);
+};
+exports.collectBody = collectBody;
+
+
+/***/ }),
+
 /***/ 67474:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -32337,6 +32336,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const tslib_1 = __nccwpck_require__(30036);
 tslib_1.__exportStar(__nccwpck_require__(6980), exports);
 tslib_1.__exportStar(__nccwpck_require__(61575), exports);
+tslib_1.__exportStar(__nccwpck_require__(37922), exports);
 tslib_1.__exportStar(__nccwpck_require__(67474), exports);
 tslib_1.__exportStar(__nccwpck_require__(54711), exports);
 tslib_1.__exportStar(__nccwpck_require__(56574), exports);
@@ -33180,6 +33180,16 @@ var HttpAuthLocation;
 
 /***/ }),
 
+/***/ 82009:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+
+
+/***/ }),
+
 /***/ 86813:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -33411,6 +33421,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const tslib_1 = __nccwpck_require__(30036);
 tslib_1.__exportStar(__nccwpck_require__(90634), exports);
 tslib_1.__exportStar(__nccwpck_require__(47906), exports);
+tslib_1.__exportStar(__nccwpck_require__(82009), exports);
 tslib_1.__exportStar(__nccwpck_require__(86813), exports);
 tslib_1.__exportStar(__nccwpck_require__(14315), exports);
 tslib_1.__exportStar(__nccwpck_require__(18814), exports);
@@ -35422,7 +35433,65 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 
 /***/ }),
 
-/***/ 94339:
+/***/ 9910:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Uint8ArrayBlobAdapter = void 0;
+const transforms_1 = __nccwpck_require__(78605);
+class Uint8ArrayBlobAdapter extends Uint8Array {
+    static fromString(source, encoding = "utf-8") {
+        switch (typeof source) {
+            case "string":
+                return (0, transforms_1.transformFromString)(source, encoding);
+            default:
+                throw new Error(`Unsupported conversion from ${typeof source} to Uint8ArrayBlobAdapter.`);
+        }
+    }
+    static mutate(source) {
+        Object.setPrototypeOf(source, Uint8ArrayBlobAdapter.prototype);
+        return source;
+    }
+    transformToString(encoding = "utf-8") {
+        return (0, transforms_1.transformToString)(this, encoding);
+    }
+}
+exports.Uint8ArrayBlobAdapter = Uint8ArrayBlobAdapter;
+
+
+/***/ }),
+
+/***/ 78605:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.transformFromString = exports.transformToString = void 0;
+const util_base64_1 = __nccwpck_require__(63130);
+const util_utf8_1 = __nccwpck_require__(82234);
+const Uint8ArrayBlobAdapter_1 = __nccwpck_require__(9910);
+function transformToString(payload, encoding = "utf-8") {
+    if (encoding === "base64") {
+        return (0, util_base64_1.toBase64)(payload);
+    }
+    return (0, util_utf8_1.toUtf8)(payload);
+}
+exports.transformToString = transformToString;
+function transformFromString(str, encoding) {
+    if (encoding === "base64") {
+        return Uint8ArrayBlobAdapter_1.Uint8ArrayBlobAdapter.mutate((0, util_base64_1.fromBase64)(str));
+    }
+    return Uint8ArrayBlobAdapter_1.Uint8ArrayBlobAdapter.mutate((0, util_utf8_1.fromUtf8)(str));
+}
+exports.transformFromString = transformFromString;
+
+
+/***/ }),
+
+/***/ 18589:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -35460,20 +35529,21 @@ exports.getAwsChunkedEncodingStream = getAwsChunkedEncodingStream;
 
 /***/ }),
 
-/***/ 93781:
+/***/ 50535:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const tslib_1 = __nccwpck_require__(30036);
-tslib_1.__exportStar(__nccwpck_require__(94339), exports);
-tslib_1.__exportStar(__nccwpck_require__(72827), exports);
+tslib_1.__exportStar(__nccwpck_require__(9910), exports);
+tslib_1.__exportStar(__nccwpck_require__(18589), exports);
+tslib_1.__exportStar(__nccwpck_require__(49166), exports);
 
 
 /***/ }),
 
-/***/ 72827:
+/***/ 49166:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
@@ -40270,7 +40340,7 @@ module.exports = require("util");
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/client-s3","description":"AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native","version":"3.354.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo s3","test":"yarn test:unit","test:e2e":"ts-mocha test/**/*.ispec.ts && karma start karma.conf.js","test:unit":"ts-mocha test/**/*.spec.ts"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha1-browser":"3.0.0","@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/client-sts":"3.354.0","@aws-sdk/config-resolver":"3.354.0","@aws-sdk/credential-provider-node":"3.354.0","@aws-sdk/eventstream-serde-browser":"3.347.0","@aws-sdk/eventstream-serde-config-resolver":"3.347.0","@aws-sdk/eventstream-serde-node":"3.347.0","@aws-sdk/fetch-http-handler":"3.353.0","@aws-sdk/hash-blob-browser":"3.353.0","@aws-sdk/hash-node":"3.347.0","@aws-sdk/hash-stream-node":"3.347.0","@aws-sdk/invalid-dependency":"3.347.0","@aws-sdk/md5-js":"3.347.0","@aws-sdk/middleware-bucket-endpoint":"3.354.0","@aws-sdk/middleware-content-length":"3.347.0","@aws-sdk/middleware-endpoint":"3.347.0","@aws-sdk/middleware-expect-continue":"3.347.0","@aws-sdk/middleware-flexible-checksums":"3.347.0","@aws-sdk/middleware-host-header":"3.347.0","@aws-sdk/middleware-location-constraint":"3.347.0","@aws-sdk/middleware-logger":"3.347.0","@aws-sdk/middleware-recursion-detection":"3.347.0","@aws-sdk/middleware-retry":"3.354.0","@aws-sdk/middleware-sdk-s3":"3.347.0","@aws-sdk/middleware-serde":"3.347.0","@aws-sdk/middleware-signing":"3.354.0","@aws-sdk/middleware-ssec":"3.347.0","@aws-sdk/middleware-stack":"3.347.0","@aws-sdk/middleware-user-agent":"3.352.0","@aws-sdk/node-config-provider":"3.354.0","@aws-sdk/node-http-handler":"3.350.0","@aws-sdk/signature-v4-multi-region":"3.354.0","@aws-sdk/smithy-client":"3.347.0","@aws-sdk/types":"3.347.0","@aws-sdk/url-parser":"3.347.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.353.0","@aws-sdk/util-defaults-mode-node":"3.354.0","@aws-sdk/util-endpoints":"3.352.0","@aws-sdk/util-retry":"3.347.0","@aws-sdk/util-stream-browser":"3.353.0","@aws-sdk/util-stream-node":"3.350.0","@aws-sdk/util-user-agent-browser":"3.347.0","@aws-sdk/util-user-agent-node":"3.354.0","@aws-sdk/util-utf8":"3.310.0","@aws-sdk/util-waiter":"3.347.0","@aws-sdk/xml-builder":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","fast-xml-parser":"4.2.4","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/chai":"^4.2.11","@types/mocha":"^8.0.4","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-s3","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-s3"}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/client-s3","description":"AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native","version":"3.357.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo s3","test":"yarn test:unit","test:e2e":"ts-mocha test/**/*.ispec.ts && karma start karma.conf.js","test:unit":"ts-mocha test/**/*.spec.ts"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha1-browser":"3.0.0","@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/client-sts":"3.357.0","@aws-sdk/config-resolver":"3.357.0","@aws-sdk/credential-provider-node":"3.357.0","@aws-sdk/eventstream-serde-browser":"3.357.0","@aws-sdk/eventstream-serde-config-resolver":"3.357.0","@aws-sdk/eventstream-serde-node":"3.357.0","@aws-sdk/fetch-http-handler":"3.357.0","@aws-sdk/hash-blob-browser":"3.357.0","@aws-sdk/hash-node":"3.357.0","@aws-sdk/hash-stream-node":"3.357.0","@aws-sdk/invalid-dependency":"3.357.0","@aws-sdk/md5-js":"3.357.0","@aws-sdk/middleware-bucket-endpoint":"3.357.0","@aws-sdk/middleware-content-length":"3.357.0","@aws-sdk/middleware-endpoint":"3.357.0","@aws-sdk/middleware-expect-continue":"3.357.0","@aws-sdk/middleware-flexible-checksums":"3.357.0","@aws-sdk/middleware-host-header":"3.357.0","@aws-sdk/middleware-location-constraint":"3.357.0","@aws-sdk/middleware-logger":"3.357.0","@aws-sdk/middleware-recursion-detection":"3.357.0","@aws-sdk/middleware-retry":"3.357.0","@aws-sdk/middleware-sdk-s3":"3.357.0","@aws-sdk/middleware-serde":"3.357.0","@aws-sdk/middleware-signing":"3.357.0","@aws-sdk/middleware-ssec":"3.357.0","@aws-sdk/middleware-stack":"3.357.0","@aws-sdk/middleware-user-agent":"3.357.0","@aws-sdk/node-config-provider":"3.357.0","@aws-sdk/node-http-handler":"3.357.0","@aws-sdk/signature-v4-multi-region":"3.357.0","@aws-sdk/smithy-client":"3.357.0","@aws-sdk/types":"3.357.0","@aws-sdk/url-parser":"3.357.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.357.0","@aws-sdk/util-defaults-mode-node":"3.357.0","@aws-sdk/util-endpoints":"3.357.0","@aws-sdk/util-retry":"3.357.0","@aws-sdk/util-stream":"3.357.0","@aws-sdk/util-user-agent-browser":"3.357.0","@aws-sdk/util-user-agent-node":"3.357.0","@aws-sdk/util-utf8":"3.310.0","@aws-sdk/util-waiter":"3.357.0","@aws-sdk/xml-builder":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","fast-xml-parser":"4.2.4","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/chai":"^4.2.11","@types/mocha":"^8.0.4","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-s3","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-s3"}}');
 
 /***/ }),
 
@@ -40278,7 +40348,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/client-s3","description":"AWS SDK
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/client-sso-oidc","description":"AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native","version":"3.354.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sso-oidc"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/config-resolver":"3.354.0","@aws-sdk/fetch-http-handler":"3.353.0","@aws-sdk/hash-node":"3.347.0","@aws-sdk/invalid-dependency":"3.347.0","@aws-sdk/middleware-content-length":"3.347.0","@aws-sdk/middleware-endpoint":"3.347.0","@aws-sdk/middleware-host-header":"3.347.0","@aws-sdk/middleware-logger":"3.347.0","@aws-sdk/middleware-recursion-detection":"3.347.0","@aws-sdk/middleware-retry":"3.354.0","@aws-sdk/middleware-serde":"3.347.0","@aws-sdk/middleware-stack":"3.347.0","@aws-sdk/middleware-user-agent":"3.352.0","@aws-sdk/node-config-provider":"3.354.0","@aws-sdk/node-http-handler":"3.350.0","@aws-sdk/smithy-client":"3.347.0","@aws-sdk/types":"3.347.0","@aws-sdk/url-parser":"3.347.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.353.0","@aws-sdk/util-defaults-mode-node":"3.354.0","@aws-sdk/util-endpoints":"3.352.0","@aws-sdk/util-retry":"3.347.0","@aws-sdk/util-user-agent-browser":"3.347.0","@aws-sdk/util-user-agent-node":"3.354.0","@aws-sdk/util-utf8":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso-oidc","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sso-oidc"}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/client-sso-oidc","description":"AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native","version":"3.357.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sso-oidc"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/config-resolver":"3.357.0","@aws-sdk/fetch-http-handler":"3.357.0","@aws-sdk/hash-node":"3.357.0","@aws-sdk/invalid-dependency":"3.357.0","@aws-sdk/middleware-content-length":"3.357.0","@aws-sdk/middleware-endpoint":"3.357.0","@aws-sdk/middleware-host-header":"3.357.0","@aws-sdk/middleware-logger":"3.357.0","@aws-sdk/middleware-recursion-detection":"3.357.0","@aws-sdk/middleware-retry":"3.357.0","@aws-sdk/middleware-serde":"3.357.0","@aws-sdk/middleware-stack":"3.357.0","@aws-sdk/middleware-user-agent":"3.357.0","@aws-sdk/node-config-provider":"3.357.0","@aws-sdk/node-http-handler":"3.357.0","@aws-sdk/smithy-client":"3.357.0","@aws-sdk/types":"3.357.0","@aws-sdk/url-parser":"3.357.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.357.0","@aws-sdk/util-defaults-mode-node":"3.357.0","@aws-sdk/util-endpoints":"3.357.0","@aws-sdk/util-retry":"3.357.0","@aws-sdk/util-user-agent-browser":"3.357.0","@aws-sdk/util-user-agent-node":"3.357.0","@aws-sdk/util-utf8":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso-oidc","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sso-oidc"}}');
 
 /***/ }),
 
@@ -40286,7 +40356,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/client-sso-oidc","description":"A
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/client-sso","description":"AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native","version":"3.354.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sso"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/config-resolver":"3.354.0","@aws-sdk/fetch-http-handler":"3.353.0","@aws-sdk/hash-node":"3.347.0","@aws-sdk/invalid-dependency":"3.347.0","@aws-sdk/middleware-content-length":"3.347.0","@aws-sdk/middleware-endpoint":"3.347.0","@aws-sdk/middleware-host-header":"3.347.0","@aws-sdk/middleware-logger":"3.347.0","@aws-sdk/middleware-recursion-detection":"3.347.0","@aws-sdk/middleware-retry":"3.354.0","@aws-sdk/middleware-serde":"3.347.0","@aws-sdk/middleware-stack":"3.347.0","@aws-sdk/middleware-user-agent":"3.352.0","@aws-sdk/node-config-provider":"3.354.0","@aws-sdk/node-http-handler":"3.350.0","@aws-sdk/smithy-client":"3.347.0","@aws-sdk/types":"3.347.0","@aws-sdk/url-parser":"3.347.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.353.0","@aws-sdk/util-defaults-mode-node":"3.354.0","@aws-sdk/util-endpoints":"3.352.0","@aws-sdk/util-retry":"3.347.0","@aws-sdk/util-user-agent-browser":"3.347.0","@aws-sdk/util-user-agent-node":"3.354.0","@aws-sdk/util-utf8":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sso"}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/client-sso","description":"AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native","version":"3.357.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sso"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/config-resolver":"3.357.0","@aws-sdk/fetch-http-handler":"3.357.0","@aws-sdk/hash-node":"3.357.0","@aws-sdk/invalid-dependency":"3.357.0","@aws-sdk/middleware-content-length":"3.357.0","@aws-sdk/middleware-endpoint":"3.357.0","@aws-sdk/middleware-host-header":"3.357.0","@aws-sdk/middleware-logger":"3.357.0","@aws-sdk/middleware-recursion-detection":"3.357.0","@aws-sdk/middleware-retry":"3.357.0","@aws-sdk/middleware-serde":"3.357.0","@aws-sdk/middleware-stack":"3.357.0","@aws-sdk/middleware-user-agent":"3.357.0","@aws-sdk/node-config-provider":"3.357.0","@aws-sdk/node-http-handler":"3.357.0","@aws-sdk/smithy-client":"3.357.0","@aws-sdk/types":"3.357.0","@aws-sdk/url-parser":"3.357.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.357.0","@aws-sdk/util-defaults-mode-node":"3.357.0","@aws-sdk/util-endpoints":"3.357.0","@aws-sdk/util-retry":"3.357.0","@aws-sdk/util-user-agent-browser":"3.357.0","@aws-sdk/util-user-agent-node":"3.357.0","@aws-sdk/util-utf8":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sso"}}');
 
 /***/ }),
 
@@ -40294,7 +40364,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/client-sso","description":"AWS SD
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/client-sts","description":"AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native","version":"3.354.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sts","test":"yarn test:unit","test:unit":"jest"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/config-resolver":"3.354.0","@aws-sdk/credential-provider-node":"3.354.0","@aws-sdk/fetch-http-handler":"3.353.0","@aws-sdk/hash-node":"3.347.0","@aws-sdk/invalid-dependency":"3.347.0","@aws-sdk/middleware-content-length":"3.347.0","@aws-sdk/middleware-endpoint":"3.347.0","@aws-sdk/middleware-host-header":"3.347.0","@aws-sdk/middleware-logger":"3.347.0","@aws-sdk/middleware-recursion-detection":"3.347.0","@aws-sdk/middleware-retry":"3.354.0","@aws-sdk/middleware-sdk-sts":"3.354.0","@aws-sdk/middleware-serde":"3.347.0","@aws-sdk/middleware-signing":"3.354.0","@aws-sdk/middleware-stack":"3.347.0","@aws-sdk/middleware-user-agent":"3.352.0","@aws-sdk/node-config-provider":"3.354.0","@aws-sdk/node-http-handler":"3.350.0","@aws-sdk/smithy-client":"3.347.0","@aws-sdk/types":"3.347.0","@aws-sdk/url-parser":"3.347.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.353.0","@aws-sdk/util-defaults-mode-node":"3.354.0","@aws-sdk/util-endpoints":"3.352.0","@aws-sdk/util-retry":"3.347.0","@aws-sdk/util-user-agent-browser":"3.347.0","@aws-sdk/util-user-agent-node":"3.354.0","@aws-sdk/util-utf8":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","fast-xml-parser":"4.2.4","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sts","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sts"}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/client-sts","description":"AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native","version":"3.357.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sts","test":"yarn test:unit","test:unit":"jest"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/config-resolver":"3.357.0","@aws-sdk/credential-provider-node":"3.357.0","@aws-sdk/fetch-http-handler":"3.357.0","@aws-sdk/hash-node":"3.357.0","@aws-sdk/invalid-dependency":"3.357.0","@aws-sdk/middleware-content-length":"3.357.0","@aws-sdk/middleware-endpoint":"3.357.0","@aws-sdk/middleware-host-header":"3.357.0","@aws-sdk/middleware-logger":"3.357.0","@aws-sdk/middleware-recursion-detection":"3.357.0","@aws-sdk/middleware-retry":"3.357.0","@aws-sdk/middleware-sdk-sts":"3.357.0","@aws-sdk/middleware-serde":"3.357.0","@aws-sdk/middleware-signing":"3.357.0","@aws-sdk/middleware-stack":"3.357.0","@aws-sdk/middleware-user-agent":"3.357.0","@aws-sdk/node-config-provider":"3.357.0","@aws-sdk/node-http-handler":"3.357.0","@aws-sdk/smithy-client":"3.357.0","@aws-sdk/types":"3.357.0","@aws-sdk/url-parser":"3.357.0","@aws-sdk/util-base64":"3.310.0","@aws-sdk/util-body-length-browser":"3.310.0","@aws-sdk/util-body-length-node":"3.310.0","@aws-sdk/util-defaults-mode-browser":"3.357.0","@aws-sdk/util-defaults-mode-node":"3.357.0","@aws-sdk/util-endpoints":"3.357.0","@aws-sdk/util-retry":"3.357.0","@aws-sdk/util-user-agent-browser":"3.357.0","@aws-sdk/util-user-agent-node":"3.357.0","@aws-sdk/util-utf8":"3.310.0","@smithy/protocol-http":"^1.0.1","@smithy/types":"^1.0.0","fast-xml-parser":"4.2.4","tslib":"^2.5.0"},"devDependencies":{"@aws-sdk/service-client-documentation-generator":"3.310.0","@tsconfig/node14":"1.0.3","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sts","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sts"}}');
 
 /***/ }),
 
