@@ -25,7 +25,7 @@ ${patchRefs
   .map((pathRef) => {
     return [
       `git cherry-pick --no-commit ${pathRef}`,
-      "git checkout HEAD --no-commit '**/__image_snapshots__/*.png'",
+      "git checkout HEAD **/__image_snapshots__/*.png",
       'git commit --no-verify --no-edit',
     ].join('\n');
   })
