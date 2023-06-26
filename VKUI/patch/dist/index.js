@@ -14150,15 +14150,13 @@ const exec = __importStar(__nccwpck_require__(6473));
 const github = __importStar(__nccwpck_require__(4005));
 const semver_1 = __nccwpck_require__(7546);
 const message_1 = __nccwpck_require__(4818);
+const stableBranchName_1 = __nccwpck_require__(6291);
 function getPrNumber() {
     const pullRequest = github.context.payload.pull_request;
     if (!pullRequest) {
         throw new Error('Not found PR number');
     }
     return pullRequest.number;
-}
-function stableBranchName(semVer) {
-    return `${semVer.major}.${semVer.minor}-stable`;
 }
 function remoteRepository(token) {
     const { actor, repo: { owner, repo }, } = github.context;
@@ -14179,7 +14177,7 @@ function run() {
             });
             const pkg = JSON.parse(fs.readFileSync(path.join(directory, 'package.json'), 'utf-8'));
             const semVer = new semver_1.SemVer(pkg.version);
-            const stableBranchRef = stableBranchName(semVer);
+            const stableBranchRef = (0, stableBranchName_1.stableBranchName)(semVer);
             const remote = remoteRepository(token);
             const patchCommits = yield gh.rest.pulls.listCommits(Object.assign(Object.assign({}, github.context.repo), { pull_number: pullNumber }));
             const patchRefs = patchCommits.data
@@ -14279,6 +14277,21 @@ gh pr create --base ${stableBranchRef} --title "patch: pr${pullNumber}" --body "
 `;
 }
 exports.getPatchInstructions = getPatchInstructions;
+
+
+/***/ }),
+
+/***/ 6291:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.stableBranchName = void 0;
+function stableBranchName(semVer) {
+    return `${semVer.major}.${semVer.minor}-stable`;
+}
+exports.stableBranchName = stableBranchName;
 
 
 /***/ }),
