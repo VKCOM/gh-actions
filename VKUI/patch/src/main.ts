@@ -5,6 +5,7 @@ import * as exec from '@actions/exec';
 import * as github from '@actions/github';
 import { SemVer } from 'semver';
 import { getPatchInstructions } from './message';
+import { stableBranchName } from './stableBranchName';
 
 function getPrNumber() {
   const pullRequest = github.context.payload.pull_request;
@@ -13,10 +14,6 @@ function getPrNumber() {
   }
 
   return pullRequest.number;
-}
-
-function stableBranchName(semVer: SemVer) {
-  return `${semVer.major}.${semVer.minor}-stable`;
 }
 
 function remoteRepository(token: string) {
