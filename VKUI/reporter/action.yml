@@ -4,6 +4,9 @@ inputs:
   playwrightReportURL:
     required: false
     description: 'HTML Playwright Report URL for publish comment'
+  axeReportURL:
+    required: false
+    description: 'HTML Axe Accessibility Report URL for publish comment'
   token:
     required: false
     description: 'token with access to your repository'
