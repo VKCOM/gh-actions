@@ -1,0 +1,31 @@
+name: 'Cargo update PR'
+description: 'Create PR with cargo update'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+  
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set up cargo cache
+      uses: VKCOM/gh-actions/shared/rust/cargo-cache@main
+
+    - name: Run cargo update
+      run: cargo update --verbose
+      shell: bash
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        title: Cargo update
+        branch: github-actions/build/deps/cargo-update
+        commit-message: 'build(deps): cargo update'
+        body: Automated cargo update
+        labels: |
+          dependencies
+          rust
+        token: ${{ inputs.token }}
