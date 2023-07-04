@@ -18,7 +18,7 @@
     "deduplicate": "yarn-deduplicate --list && yarn-deduplicate --fail"
   },
   "devDependencies": {
-    "@jest/globals": "^29.5.0",
+    "@jest/globals": "^29.6.0",
     "@swc/core": "^1.3.67",
     "@swc/jest": "^0.2.26",
     "@types/node": "^20.3.3",
