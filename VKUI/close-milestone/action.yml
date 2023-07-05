@@ -6,7 +6,7 @@ inputs:
     description: 'token with access to your repository'
   releaseTag:
     required: true
-    description: 'released version's tag'
+    description: "released version's tag"
 runs:
   using: 'node16'
   main: 'dist/index.js'

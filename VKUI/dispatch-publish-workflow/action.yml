@@ -1,0 +1,19 @@
+name: 'Dispatch publish workflow'
+description: 'Publish package when its approved'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+  releaseTag:
+    required: true
+    description: "released version's tag"
+  workflowId:
+    required: true
+    description: 'workflow id (or workflow file name)'
+  defaultBranchName:
+    required: false
+    description: 'default branch name to dispatch workflow on'
+    default: 'master'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
