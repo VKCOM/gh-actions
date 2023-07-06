@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import * as exec from '@actions/exec';
 import { clean, SemVer } from 'semver';
 
 function resolveWorkflowId() {
@@ -23,7 +24,17 @@ async function run(): Promise<void> {
     const gh = github.getOctokit(token);
 
     const semVer = new SemVer(releaseTag);
-    const ref = semVer.patch !== ZERO_PATCH ? getStableBranchName(semVer) : defaultBranchName;
+    let ref = defaultBranchName;
+
+    if (semVer.patch !== ZERO_PATCH) {
+      const stableBranchName = getStableBranchName(semVer);
+      ref = stableBranchName;
+      try {
+        await exec.exec('git', ['ls-remote', '--heads', '--exit-code', 'origin', stableBranchName]);
+      } catch (error) {
+        throw new Error(`No ref found for ${stableBranchName}`);
+      }
+    }
 
     core.debug(`Dispatching workflow with the following params:
       workflowId: ${workflow_id}
