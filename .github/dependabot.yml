@@ -15,13 +15,20 @@ updates:
     allow:
       - dependency-type: 'direct'
     groups:
-      typescript-eslint:
-        patterns:
-          - '@typescript-eslint/*'
       jest:
         patterns:
-          - 'jest'
+          - 'jest*'
           - '@jest/*'
+          - '@swc/jest'
+      eslint:
+        patterns:
+          - 'eslint*'
+          - '@vkontakte/eslint-plugin'
+          - '@typescript-eslint/*'
+      prettier:
+        patterns:
+          - 'prettier'
+          - '@vkontakte/prettier-config'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
