@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
@@ -11,9 +11,17 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     allow:
       - dependency-type: 'direct'
+    groups:
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
+      jest:
+        patterns:
+          - 'jest'
+          - '@jest/*'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
