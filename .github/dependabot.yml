@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
@@ -11,9 +11,24 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     allow:
       - dependency-type: 'direct'
+    groups:
+      jest:
+        patterns:
+          - 'jest*'
+          - '@jest/*'
+          - '@swc/jest'
+      eslint:
+        patterns:
+          - 'eslint*'
+          - '@vkontakte/eslint-plugin'
+          - '@typescript-eslint/*'
+      prettier:
+        patterns:
+          - 'prettier'
+          - '@vkontakte/prettier-config'
     reviewers:
       - 'VKCOM/vk-sec'
       - 'VKCOM/vkui-core'
