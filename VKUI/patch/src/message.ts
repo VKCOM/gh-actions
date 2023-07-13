@@ -26,7 +26,7 @@ ${patchRefs
     return [
       `git cherry-pick --no-commit ${pathRef}`,
       'git checkout HEAD **/__image_snapshots__/*.png',
-      'git commit --no-verify --no-edit',
+      'git diff --quiet HEAD || git commit --no-verify --no-edit',
     ].join('\n');
   })
   .join('\n\n')}
