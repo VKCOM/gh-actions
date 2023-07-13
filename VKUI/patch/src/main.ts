@@ -104,16 +104,13 @@ async function run(): Promise<void> {
         // заведомо всё в порядке.
         await exec.exec('git', ['checkout', 'HEAD', '**/__image_snapshots__/*.png']);
 
-        const GIT_DIFF_EXIT_CODES_DICTIONARY = { NOTHING_TO_COMMIT: 0, FILES_EXIST: 1 };
-        const exitCode = await exec.exec('git', ['diff', '--quiet', 'HEAD'], {
+        const exitDiffCode = await exec.exec('git', ['diff', '--quiet', 'HEAD'], {
           ignoreReturnCode: true,
         });
-
-        switch (exitCode) {
-          case GIT_DIFF_EXIT_CODES_DICTIONARY.NOTHING_TO_COMMIT:
-            continue;
-          case GIT_DIFF_EXIT_CODES_DICTIONARY.FILES_EXIST:
-            await exec.exec('git', ['commit', '--no-verify', '--no-edit']);
+        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+        const hasCodeToCommit = exitDiffCode !== 0;
+        if (hasCodeToCommit) {
+          await exec.exec('git', ['commit', '--no-verify', '--no-edit']);
         }
       }
     } catch (e) {
