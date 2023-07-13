@@ -14109,6 +14109,76 @@ try {
 
 /***/ }),
 
+/***/ 8128:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getMergeData = void 0;
+const exec = __importStar(__nccwpck_require__(6473));
+const MINIMUM_MERGE_COMMIT_COUNT = 2;
+function getMergeData(gh, repo, pullNumber) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const pullRequest = yield gh.rest.pulls.get(Object.assign(Object.assign({}, repo), { pull_number: pullNumber }));
+        const mergeCommitSHA = pullRequest.data.merge_commit_sha || '';
+        let method = 'merge';
+        try {
+            yield exec.exec('git', ['show', '-s', '--pretty=%p', mergeCommitSHA], {
+                listeners: {
+                    stdout: (dataRaw) => {
+                        const data = dataRaw.toString().trim().split(' ');
+                        method = data.length >= MINIMUM_MERGE_COMMIT_COUNT ? 'merge' : 'squash';
+                    },
+                },
+            });
+        }
+        catch (e) {
+            console.error(e);
+        }
+        return {
+            method,
+            mergeCommitSHA,
+        };
+    });
+}
+exports.getMergeData = getMergeData;
+
+
+/***/ }),
+
 /***/ 9465:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -14154,6 +14224,7 @@ const exec = __importStar(__nccwpck_require__(6473));
 const github = __importStar(__nccwpck_require__(4005));
 const semver_1 = __nccwpck_require__(7546);
 const message_1 = __nccwpck_require__(4818);
+const getMergeData_1 = __nccwpck_require__(8128);
 const stableBranchName_1 = __nccwpck_require__(6291);
 function getPrNumber() {
     const pullRequest = github.context.payload.pull_request;
@@ -14161,6 +14232,20 @@ function getPrNumber() {
         throw new Error('Not found PR number');
     }
     return pullRequest.number;
+}
+function getStableBranchRef(directory) {
+    const pkg = JSON.parse(fs.readFileSync(path.join(directory, 'package.json'), 'utf-8'));
+    const semVer = new semver_1.SemVer(pkg.version);
+    return (0, stableBranchName_1.stableBranchName)(semVer);
+}
+function filterCommitByMessage(message) {
+    if (message.includes('CHORE: Update screenshots')) {
+        return false;
+    }
+    if (message.startsWith('Merge branch')) {
+        return false;
+    }
+    return true;
 }
 function remoteRepository(token) {
     const { actor, repo: { owner, repo }, } = github.context;
@@ -14176,17 +14261,21 @@ function run() {
             const directory = core.getInput('directory');
             const pullNumber = getPrNumber();
             const gh = github.getOctokit(token);
+            const mergeData = yield (0, getMergeData_1.getMergeData)(gh, github.context.repo, pullNumber);
+            const patchRefs = [];
+            if (mergeData.method === 'squash') {
+                patchRefs.push(mergeData.mergeCommitSHA);
+            }
+            else {
+                const patchCommits = yield gh.rest.pulls.listCommits(Object.assign(Object.assign({}, github.context.repo), { pull_number: pullNumber }));
+                patchRefs.push(...patchCommits.data
+                    .filter((commit) => filterCommitByMessage(commit.commit.message))
+                    .map((commit) => commit.sha));
+            }
             const createComment = (body) => __awaiter(this, void 0, void 0, function* () {
                 yield gh.rest.issues.createComment(Object.assign(Object.assign({}, github.context.repo), { issue_number: pullNumber, body }));
             });
-            const pkg = JSON.parse(fs.readFileSync(path.join(directory, 'package.json'), 'utf-8'));
-            const semVer = new semver_1.SemVer(pkg.version);
-            const stableBranchRef = (0, stableBranchName_1.stableBranchName)(semVer);
-            const remote = remoteRepository(token);
-            const patchCommits = yield gh.rest.pulls.listCommits(Object.assign(Object.assign({}, github.context.repo), { pull_number: pullNumber }));
-            const patchRefs = patchCommits.data
-                .filter((commit) => commit.commit.message !== 'CHORE: Update screenshots')
-                .map((commit) => commit.sha);
+            const stableBranchRef = getStableBranchRef(directory);
             if (forked) {
                 const message = (0, message_1.getPatchInstructions)('⚠️ Patch (forked repo)', 'Необходимо вручную перенести исправление в стабильную ветку.', {
                     stableBranchRef,
@@ -14202,8 +14291,17 @@ function run() {
                 yield exec.exec('git', ['checkout', stableBranchRef]);
                 for (const patchRef of patchRefs) {
                     yield exec.exec('git', ['cherry-pick', '--no-commit', patchRef]);
+                    // Исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
+                    // заведомо всё в порядке.
                     yield exec.exec('git', ['checkout', 'HEAD', '**/__image_snapshots__/*.png']);
-                    yield exec.exec('git', ['commit', '--no-verify', '--no-edit']);
+                    const exitDiffCode = yield exec.exec('git', ['diff', '--quiet', 'HEAD'], {
+                        ignoreReturnCode: true,
+                    });
+                    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+                    const hasCodeToCommit = exitDiffCode !== 0;
+                    if (hasCodeToCommit) {
+                        yield exec.exec('git', ['commit', '--no-verify', '--no-edit']);
+                    }
                 }
             }
             catch (e) {
@@ -14218,7 +14316,7 @@ function run() {
             }
             yield exec.exec('git', [
                 'push',
-                `${remote}`,
+                `${remoteRepository(token)}`,
                 `HEAD:refs/heads/${stableBranchRef}`,
                 '--verbose',
             ]);
@@ -14265,7 +14363,7 @@ ${patchRefs
         return [
             `git cherry-pick --no-commit ${pathRef}`,
             'git checkout HEAD **/__image_snapshots__/*.png',
-            'git commit --no-verify --no-edit',
+            'git diff --quiet HEAD || git commit --no-verify --no-edit',
         ].join('\n');
     })
         .join('\n\n')}
