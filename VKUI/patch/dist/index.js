@@ -14287,7 +14287,21 @@ function run() {
                 return;
             }
             try {
-                yield exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
+                if (mergeData.method === 'squash') {
+                    yield exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
+                    yield exec.exec('git', [
+                        'fetch',
+                        '--no-tags',
+                        // Перед cherry-pick'ом squash коммита, фетчим этот коммит с флагом `--depth=2`, чтобы
+                        // перебить параметр `fetch-depth` у `@actions/checkout`, который по умолчанию равен 1.
+                        '--depth=2',
+                        'origin',
+                        ...patchRefs,
+                    ]);
+                }
+                else {
+                    yield exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
+                }
                 yield exec.exec('git', ['checkout', stableBranchRef]);
                 for (const patchRef of patchRefs) {
                     yield exec.exec('git', ['cherry-pick', '--no-commit', patchRef]);
