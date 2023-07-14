@@ -95,7 +95,20 @@ async function run(): Promise<void> {
     }
 
     try {
-      await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
+      if (mergeData.method === 'squash') {
+        await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
+        await exec.exec('git', [
+          'fetch',
+          '--no-tags',
+          // Перед cherry-pick'ом squash коммита, фетчим этот коммит с флагом `--depth=2`, чтобы
+          // перебить параметр `fetch-depth` у `@actions/checkout`, который по умолчанию равен 1.
+          '--depth=2',
+          'origin',
+          ...patchRefs,
+        ]);
+      } else {
+        await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
+      }
       await exec.exec('git', ['checkout', stableBranchRef]);
 
       for (const patchRef of patchRefs) {
