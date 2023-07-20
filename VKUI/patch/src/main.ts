@@ -94,6 +94,7 @@ async function run(): Promise<void> {
       return;
     }
 
+    // fetch stable branch and patches
     try {
       if (mergeData.method === 'squash') {
         await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
@@ -109,22 +110,19 @@ async function run(): Promise<void> {
       } else {
         await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
       }
+
       await exec.exec('git', ['checkout', stableBranchRef]);
 
       for (const patchRef of patchRefs) {
-        await exec.exec('git', ['cherry-pick', '--no-commit', patchRef]);
-        // Исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
-        // заведомо всё в порядке.
-        await exec.exec('git', ['checkout', 'HEAD', '**/__image_snapshots__/*.png']);
-
-        const exitDiffCode = await exec.exec('git', ['diff', '--quiet', 'HEAD'], {
-          ignoreReturnCode: true,
-        });
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        const hasCodeToCommit = exitDiffCode !== 0;
-        if (hasCodeToCommit) {
-          await exec.exec('git', ['commit', '--no-verify', '--no-edit']);
-        }
+        const execOutput = await exec.getExecOutput('git', [
+          'format-patch',
+          patchRef,
+          '-1',
+          '--stdout',
+          '--',
+          '":!**/__image_snapshots__/*.png"',
+        ]);
+        await exec.exec('git', ['am', execOutput.stdout]);
       }
     } catch (e) {
       console.error(e);
