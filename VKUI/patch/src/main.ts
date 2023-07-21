@@ -101,7 +101,7 @@ async function run(): Promise<void> {
         await exec.exec('git', [
           'fetch',
           '--no-tags',
-          // Перед cherry-pick'ом squash коммита, фетчим этот коммит с флагом `--depth=2`, чтобы
+          // Перед переносом диффа коммита, фетчим этот коммит с флагом `--depth=2`, чтобы
           // перебить параметр `fetch-depth` у `@actions/checkout`, который по умолчанию равен 1.
           '--depth=2',
           'origin',
@@ -113,6 +113,9 @@ async function run(): Promise<void> {
 
       await exec.exec('git', ['checkout', stableBranchRef]);
 
+      // Переносим коммиты из PR в стабильную ветку,
+      // исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
+      // заведомо всё в порядке.
       for (const patchRef of patchRefs) {
         await exec.exec('bash', [
           '-c',
