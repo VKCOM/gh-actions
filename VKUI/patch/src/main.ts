@@ -94,13 +94,14 @@ async function run(): Promise<void> {
       return;
     }
 
+    // фетчим стабильную ветку и патчи
     try {
       if (mergeData.method === 'squash') {
         await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
         await exec.exec('git', [
           'fetch',
           '--no-tags',
-          // Перед cherry-pick'ом squash коммита, фетчим этот коммит с флагом `--depth=2`, чтобы
+          // Перед переносом диффа коммита, фетчим этот коммит с флагом `--depth=2`, чтобы
           // перебить параметр `fetch-depth` у `@actions/checkout`, который по умолчанию равен 1.
           '--depth=2',
           'origin',
@@ -109,22 +110,17 @@ async function run(): Promise<void> {
       } else {
         await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
       }
+
       await exec.exec('git', ['checkout', stableBranchRef]);
 
+      // Переносим коммиты из PR в стабильную ветку,
+      // исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
+      // заведомо всё в порядке.
       for (const patchRef of patchRefs) {
-        await exec.exec('git', ['cherry-pick', '--no-commit', patchRef]);
-        // Исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
-        // заведомо всё в порядке.
-        await exec.exec('git', ['checkout', 'HEAD', '**/__image_snapshots__/*.png']);
-
-        const exitDiffCode = await exec.exec('git', ['diff', '--quiet', 'HEAD'], {
-          ignoreReturnCode: true,
-        });
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        const hasCodeToCommit = exitDiffCode !== 0;
-        if (hasCodeToCommit) {
-          await exec.exec('git', ['commit', '--no-verify', '--no-edit']);
-        }
+        await exec.exec('bash', [
+          '-c',
+          `git --no-pager format-patch ${patchRef} -1 --stdout -- ':!**/__image_snapshots__/*.png' | git am`,
+        ]);
       }
     } catch (e) {
       console.error(e);
