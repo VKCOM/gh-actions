@@ -114,7 +114,7 @@ async function run(): Promise<void> {
       await exec.exec('git', ['checkout', stableBranchRef]);
 
       for (const patchRef of patchRefs) {
-        await exec.getExecOutput('bash', [
+        await exec.exec('bash', [
           '-c',
           `git --no-pager format-patch ${patchRef} -1 --stdout -- ':!**/__image_snapshots__/*.png' | git am`,
         ]);
