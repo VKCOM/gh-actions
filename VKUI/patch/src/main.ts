@@ -114,15 +114,10 @@ async function run(): Promise<void> {
       await exec.exec('git', ['checkout', stableBranchRef]);
 
       for (const patchRef of patchRefs) {
-        const execOutput = await exec.getExecOutput('git', [
-          'format-patch',
-          patchRef,
-          '-1',
-          '--stdout',
-          '--',
-          '":!**/__image_snapshots__/*.png"',
+        await exec.getExecOutput('bash', [
+          '-c',
+          `git --no-pager format-patch ${patchRef} -1 --stdout -- ':!**/__image_snapshots__/*.png' | git am`,
         ]);
-        await exec.exec('git', ['am', execOutput.stdout]);
       }
     } catch (e) {
       console.error(e);
