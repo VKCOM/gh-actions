@@ -14286,6 +14286,7 @@ function run() {
                 core.warning('Необходимо вручную перенести исправление в стабильную ветку');
                 return;
             }
+            // fetch stable branch and patches
             try {
                 if (mergeData.method === 'squash') {
                     yield exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
@@ -14304,18 +14305,10 @@ function run() {
                 }
                 yield exec.exec('git', ['checkout', stableBranchRef]);
                 for (const patchRef of patchRefs) {
-                    yield exec.exec('git', ['cherry-pick', '--no-commit', patchRef]);
-                    // Исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
-                    // заведомо всё в порядке.
-                    yield exec.exec('git', ['checkout', 'HEAD', '**/__image_snapshots__/*.png']);
-                    const exitDiffCode = yield exec.exec('git', ['diff', '--quiet', 'HEAD'], {
-                        ignoreReturnCode: true,
-                    });
-                    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-                    const hasCodeToCommit = exitDiffCode !== 0;
-                    if (hasCodeToCommit) {
-                        yield exec.exec('git', ['commit', '--no-verify', '--no-edit']);
-                    }
+                    yield exec.getExecOutput('bash', [
+                        '-c',
+                        `git --no-pager format-patch ${patchRef} -1 --stdout -- ':!**/__image_snapshots__/*.png' | git am`,
+                    ]);
                 }
             }
             catch (e) {
