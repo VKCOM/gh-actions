@@ -94,7 +94,7 @@ async function run(): Promise<void> {
       return;
     }
 
-    // fetch stable branch and patches
+    // фетчим стабильную ветку и патчи
     try {
       if (mergeData.method === 'squash') {
         await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
