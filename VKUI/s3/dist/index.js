@@ -8905,6 +8905,7 @@ const resolveClientEndpointParameters = (options) => {
         ...options,
         useFipsEndpoint: options.useFipsEndpoint ?? false,
         useDualstackEndpoint: options.useDualstackEndpoint ?? false,
+        forcePathStyle: options.forcePathStyle ?? false,
         useAccelerateEndpoint: options.useAccelerateEndpoint ?? false,
         useGlobalEndpoint: options.useGlobalEndpoint ?? false,
         disableMultiregionAccessPoints: options.disableMultiregionAccessPoints ?? false,
@@ -8943,9 +8944,9 @@ exports.defaultEndpointResolver = defaultEndpointResolver;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ruleSet = void 0;
-const bV = "required", bW = "type", bX = "rules", bY = "conditions", bZ = "fn", ca = "argv", cb = "ref", cc = "assign", cd = "url", ce = "properties", cf = "authSchemes", cg = "disableDoubleEncoding", ch = "signingName", ci = "signingRegion", cj = "headers";
-const a = false, b = true, c = "tree", d = "isSet", e = "substring", f = "hardwareType", g = "regionPrefix", h = "abbaSuffix", i = "outpostId", j = "aws.partition", k = "stringEquals", l = "isValidHostLabel", m = "not", n = "error", o = "parseURL", p = "s3-outposts", q = "endpoint", r = "booleanEquals", s = "aws.parseArn", t = "s3", u = "aws.isVirtualHostableS3Bucket", v = "getAttr", w = "name", x = "Host override cannot be combined with Dualstack, FIPS, or S3 Accelerate", y = "https://{Bucket}.s3.{partitionResult#dnsSuffix}", z = "bucketArn", A = "arnType", B = "", C = "s3-object-lambda", D = "accesspoint", E = "accessPointName", F = "{url#scheme}://{accessPointName}-{bucketArn#accountId}.{url#authority}{url#path}", G = "mrapPartition", H = "outpostType", I = "arnPrefix", J = "{url#scheme}://{url#authority}{url#path}", K = "https://s3.{partitionResult#dnsSuffix}", L = { [bV]: false, [bW]: "String" }, M = { [bV]: true, "default": false, [bW]: "Boolean" }, N = { [bV]: false, [bW]: "Boolean" }, O = { [bZ]: d, [ca]: [{ [cb]: "Bucket" }] }, P = { [cb]: "Bucket" }, Q = { [cb]: f }, R = { [bY]: [{ [bZ]: m, [ca]: [{ [bZ]: d, [ca]: [{ [cb]: "Endpoint" }] }] }], [n]: "Expected a endpoint to be specified but no endpoint was found", [bW]: n }, S = { [bZ]: m, [ca]: [{ [bZ]: d, [ca]: [{ [cb]: "Endpoint" }] }] }, T = { [bZ]: d, [ca]: [{ [cb]: "Endpoint" }] }, U = { [bZ]: o, [ca]: [{ [cb]: "Endpoint" }], [cc]: "url" }, V = { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: p, [ci]: "{Region}" }] }, W = {}, X = { [cb]: "ForcePathStyle" }, Y = { [bY]: [{ [bZ]: "uriEncode", [ca]: [P], [cc]: "uri_encoded_bucket" }], [bW]: c, [bX]: [{ [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, T], [n]: "Cannot set dual-stack in combination with a custom endpoint.", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [{ [bZ]: j, [ca]: [{ [cb]: "Region" }], [cc]: "partitionResult" }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "Accelerate" }, false] }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, true] }], [bW]: c, [bX]: [{ [q]: { [cd]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }] }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, false] }], [q]: { [cd]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, true] }], [bW]: c, [bX]: [{ [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }] }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, false] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, true] }], [bW]: c, [bX]: [{ [q]: { [cd]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }] }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, false] }], [q]: { [cd]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, true] }], [bW]: c, [bX]: [{ [q]: { [cd]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }] }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, false] }], [q]: { [cd]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, true] }], [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "us-east-1"] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }, { [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }] }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, T, U, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, false] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, true] }], [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "us-east-1"] }], [q]: { [cd]: "https://s3.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }, { [q]: { [cd]: "https://s3.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }] }, { [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, S, { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, false] }], [q]: { [cd]: "https://s3.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, [cj]: {} }, [bW]: q }] }] }, { [n]: "Path-style addressing cannot be used with S3 Accelerate", [bW]: n }] }] }, { [n]: "A valid partition could not be determined", [bW]: n }] }] }, Z = { [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, true] }, aa = { [bZ]: r, [ca]: [{ [cb]: "Accelerate" }, false] }, ab = { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, true] }, ac = { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }] }, ad = { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, true] }, ae = { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{Region}" }] }, af = { [bZ]: r, [ca]: [{ [cb]: "UseGlobalEndpoint" }, false] }, ag = { [bZ]: r, [ca]: [{ [cb]: "UseDualStack" }, false] }, ah = { [bZ]: r, [ca]: [{ [cb]: "UseFIPS" }, false] }, ai = { [n]: "A valid partition could not be determined", [bW]: n }, aj = { [bY]: [ab, { [bZ]: k, [ca]: [{ [bZ]: v, [ca]: [{ [cb]: "partitionResult" }, w] }, "aws-cn"] }], [n]: "Partition does not support FIPS", [bW]: n }, ak = { [bZ]: k, [ca]: [{ [bZ]: v, [ca]: [{ [cb]: "partitionResult" }, w] }, "aws-cn"] }, al = { [bZ]: r, [ca]: [{ [cb]: "Accelerate" }, true] }, am = { [bY]: [Z, ab, aa, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, an = { [cd]: "https://{Bucket}.s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, ao = { [bY]: [ag, ab, aa, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, ap = { [cd]: "https://{Bucket}.s3-fips.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, aq = { [bY]: [Z, ah, al, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, ar = { [cd]: "https://{Bucket}.s3-accelerate.dualstack.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, as = { [bY]: [Z, ah, aa, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, at = { [cd]: "https://{Bucket}.s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, au = { [bY]: [ag, ah, aa, T, U, { [bZ]: r, [ca]: [{ [bZ]: v, [ca]: [{ [cb]: "url" }, "isIp"] }, true] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{Bucket}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, av = { [bZ]: r, [ca]: [{ [bZ]: v, [ca]: [{ [cb]: "url" }, "isIp"] }, true] }, aw = { [cb]: "url" }, ax = { [bY]: [ag, ah, aa, T, U, { [bZ]: r, [ca]: [{ [bZ]: v, [ca]: [aw, "isIp"] }, false] }, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "{url#scheme}://{Bucket}.{url#authority}{url#path}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, ay = { [bZ]: r, [ca]: [{ [bZ]: v, [ca]: [aw, "isIp"] }, false] }, az = { [cd]: "{url#scheme}://{url#authority}{url#normalizedPath}{Bucket}", [ce]: ae, [cj]: {} }, aA = { [cd]: "{url#scheme}://{Bucket}.{url#authority}{url#path}", [ce]: ae, [cj]: {} }, aB = { [q]: aA, [bW]: q }, aC = { [bY]: [ag, ah, al, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://{Bucket}.s3-accelerate.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, aD = { [cd]: "https://{Bucket}.s3-accelerate.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, aE = { [bY]: [ag, ah, aa, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: y, [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, aF = { [cd]: "https://{Bucket}.s3.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, aG = { [n]: "Invalid region: region was not a valid DNS name.", [bW]: n }, aH = { [cb]: z }, aI = { [cb]: A }, aJ = { [bZ]: v, [ca]: [aH, "service"] }, aK = { [cb]: E }, aL = { [bY]: [Z], [n]: "S3 Object Lambda does not support Dual-stack", [bW]: n }, aM = { [bY]: [al], [n]: "S3 Object Lambda does not support S3 Accelerate", [bW]: n }, aN = { [bY]: [{ [bZ]: d, [ca]: [{ [cb]: "DisableAccessPoints" }] }, { [bZ]: r, [ca]: [{ [cb]: "DisableAccessPoints" }, true] }], [n]: "Access points are not supported for this operation", [bW]: n }, aO = { [bY]: [{ [bZ]: d, [ca]: [{ [cb]: "UseArnRegion" }] }, { [bZ]: r, [ca]: [{ [cb]: "UseArnRegion" }, false] }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [bZ]: v, [ca]: [aH, "region"] }, "{Region}"] }] }], [n]: "Invalid configuration: region from ARN `{bucketArn#region}` does not match client region `{Region}` and UseArnRegion is `false`", [bW]: n }, aP = { [bZ]: v, [ca]: [{ [cb]: "bucketPartition" }, w] }, aQ = { [bZ]: v, [ca]: [aH, "accountId"] }, aR = { [bY]: [ab, { [bZ]: k, [ca]: [aP, "aws-cn"] }], [n]: "Partition does not support FIPS", [bW]: n }, aS = { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: C, [ci]: "{bucketArn#region}" }] }, aT = { [n]: "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `{accessPointName}`", [bW]: n }, aU = { [n]: "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: `{bucketArn#accountId}`", [bW]: n }, aV = { [n]: "Invalid region in ARN: `{bucketArn#region}` (invalid DNS name)", [bW]: n }, aW = { [n]: "Client was configured for partition `{partitionResult#name}` but ARN (`{Bucket}`) has `{bucketPartition#name}`", [bW]: n }, aX = { [n]: "Could not load partition for ARN region `{bucketArn#region}`", [bW]: n }, aY = { [n]: "Invalid ARN: The ARN may only contain a single resource component after `accesspoint`.", [bW]: n }, aZ = { [n]: "Invalid ARN: bucket ARN is missing a region", [bW]: n }, ba = { [n]: "Invalid ARN: Expected a resource of the format `accesspoint:<accesspoint name>` but no name was provided", [bW]: n }, bb = { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "{bucketArn#region}" }] }, bc = { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: p, [ci]: "{bucketArn#region}" }] }, bd = { [cb]: "UseObjectLambdaEndpoint" }, be = { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: C, [ci]: "{Region}" }] }, bf = { [bY]: [ab, Z, T, U, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: J, [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, bg = { [q]: { [cd]: J, [ce]: ae, [cj]: {} }, [bW]: q }, bh = { [cd]: J, [ce]: ae, [cj]: {} }, bi = { [bY]: [ab, Z, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, bj = { [cd]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, bk = { [bY]: [ab, ag, T, U, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: J, [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, bl = { [bY]: [ab, ag, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, bm = { [cd]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, bn = { [bY]: [ah, Z, T, U, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: J, [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, bo = { [bY]: [ah, Z, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, bp = { [cd]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, bq = { [bY]: [ah, ag, T, U, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: J, [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, br = { [bY]: [ah, ag, S, { [bZ]: k, [ca]: [{ [cb]: "Region" }, "aws-global"] }], [q]: { [cd]: K, [ce]: { [cf]: [{ [cg]: true, [w]: "sigv4", [ch]: t, [ci]: "us-east-1" }] }, [cj]: {} }, [bW]: q }, bs = { [cd]: "https://s3.{Region}.{partitionResult#dnsSuffix}", [ce]: ae, [cj]: {} }, bt = [{ [cb]: "Region" }], bu = [P], bv = [{ [bZ]: l, [ca]: [{ [cb]: i }, false] }], bw = [{ [bZ]: k, [ca]: [{ [cb]: g }, "beta"] }], bx = [{ [cb]: "Endpoint" }], by = [T, U], bz = [O], bA = [{ [bZ]: s, [ca]: [P] }], bB = [Z, T], bC = [{ [bZ]: j, [ca]: bt, [cc]: "partitionResult" }], bD = [{ [bZ]: k, [ca]: [{ [cb]: "Region" }, "us-east-1"] }], bE = [{ [bZ]: l, [ca]: [{ [cb]: "Region" }, false] }], bF = [{ [bZ]: k, [ca]: [aI, D] }], bG = [{ [bZ]: v, [ca]: [aH, "resourceId[1]"], [cc]: E }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [aK, B] }] }], bH = [aH, "resourceId[1]"], bI = [Z], bJ = [al], bK = [{ [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [{ [bZ]: v, [ca]: [aH, "region"] }, B] }] }], bL = [{ [bZ]: m, [ca]: [{ [bZ]: d, [ca]: [{ [bZ]: v, [ca]: [aH, "resourceId[2]"] }] }] }], bM = [aH, "resourceId[2]"], bN = [{ [bZ]: j, [ca]: [{ [bZ]: v, [ca]: [aH, "region"] }], [cc]: "bucketPartition" }], bO = [{ [bZ]: k, [ca]: [aP, { [bZ]: v, [ca]: [{ [cb]: "partitionResult" }, w] }] }], bP = [{ [bZ]: l, [ca]: [{ [bZ]: v, [ca]: [aH, "region"] }, true] }], bQ = [{ [bZ]: l, [ca]: [aQ, false] }], bR = [{ [bZ]: l, [ca]: [aK, false] }], bS = [ab], bT = [{ [bZ]: l, [ca]: [{ [cb]: "Region" }, true] }], bU = [bg];
-const _data = { version: "1.0", parameters: { Bucket: L, Region: L, UseFIPS: M, UseDualStack: M, Endpoint: L, ForcePathStyle: N, Accelerate: M, UseGlobalEndpoint: M, UseObjectLambdaEndpoint: N, DisableAccessPoints: N, DisableMultiRegionAccessPoints: M, UseArnRegion: N }, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: d, [ca]: bt }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [O, { [bZ]: e, [ca]: [P, 49, 50, b], [cc]: f }, { [bZ]: e, [ca]: [P, 8, 12, b], [cc]: g }, { [bZ]: e, [ca]: [P, 0, 7, b], [cc]: h }, { [bZ]: e, [ca]: [P, 32, 49, b], [cc]: i }, { [bZ]: j, [ca]: bt, [cc]: "regionPartition" }, { [bZ]: k, [ca]: [{ [cb]: h }, "--op-s3"] }], [bW]: c, [bX]: [{ [bY]: bv, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [Q, "e"] }], [bW]: c, [bX]: [{ [bY]: bw, [bW]: c, [bX]: [R, { [bY]: by, endpoint: { [cd]: "https://{Bucket}.ec2.{url#authority}", [ce]: V, [cj]: W }, [bW]: q }] }, { endpoint: { [cd]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [ce]: V, [cj]: W }, [bW]: q }] }, { [bY]: [{ [bZ]: k, [ca]: [Q, "o"] }], [bW]: c, [bX]: [{ [bY]: bw, [bW]: c, [bX]: [R, { [bY]: by, endpoint: { [cd]: "https://{Bucket}.op-{outpostId}.{url#authority}", [ce]: V, [cj]: W }, [bW]: q }] }, { endpoint: { [cd]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [ce]: V, [cj]: W }, [bW]: q }] }, { error: "Unrecognized hardware type: \"Expected hardware type o or e but got {hardwareType}\"", [bW]: n }] }] }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [bW]: n }] }, { [bY]: bz, [bW]: c, [bX]: [{ [bY]: [T, { [bZ]: m, [ca]: [{ [bZ]: d, [ca]: [{ [bZ]: o, [ca]: bx }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [{ [bZ]: d, [ca]: [X] }, { [bZ]: r, [ca]: [X, b] }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bA, error: "Path-style addressing cannot be used with ARN buckets", [bW]: n }, Y] }] }, { [bY]: [{ [bZ]: u, [ca]: [P, a] }], [bW]: c, [bX]: [{ [bY]: bC, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bE, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aj, { [bW]: c, [bX]: [{ [bY]: [al, ab], error: "Accelerate cannot be used with FIPS", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [al, ak], error: "S3 Accelerate cannot be used in this region", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [T, Z], error: x, [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [T, ab], error: x, [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [T, al], error: x, [bW]: n }, { [bW]: c, [bX]: [am, am, { [bY]: [Z, ab, aa, S, ac, ad], [bW]: c, [bX]: [{ endpoint: an, [bW]: q }] }, { [bY]: [Z, ab, aa, S, ac, af], endpoint: an, [bW]: q }, ao, ao, { [bY]: [ag, ab, aa, S, ac, ad], [bW]: c, [bX]: [{ endpoint: ap, [bW]: q }] }, { [bY]: [ag, ab, aa, S, ac, af], endpoint: ap, [bW]: q }, aq, aq, { [bY]: [Z, ah, al, S, ac, ad], [bW]: c, [bX]: [{ endpoint: ar, [bW]: q }] }, { [bY]: [Z, ah, al, S, ac, af], endpoint: ar, [bW]: q }, as, as, { [bY]: [Z, ah, aa, S, ac, ad], [bW]: c, [bX]: [{ endpoint: at, [bW]: q }] }, { [bY]: [Z, ah, aa, S, ac, af], endpoint: at, [bW]: q }, au, ax, au, ax, { [bY]: [ag, ah, aa, T, U, av, ac, ad], [bW]: c, [bX]: [{ [bY]: bD, endpoint: az, [bW]: q }, { endpoint: az, [bW]: q }] }, { [bY]: [ag, ah, aa, T, U, ay, ac, ad], [bW]: c, [bX]: [{ [bY]: bD, endpoint: aA, [bW]: q }, aB] }, { [bY]: [ag, ah, aa, T, U, av, ac, af], endpoint: az, [bW]: q }, { [bY]: [ag, ah, aa, T, U, ay, ac, af], endpoint: aA, [bW]: q }, aC, aC, { [bY]: [ag, ah, al, S, ac, ad], [bW]: c, [bX]: [{ [bY]: bD, endpoint: aD, [bW]: q }, { endpoint: aD, [bW]: q }] }, { [bY]: [ag, ah, al, S, ac, af], endpoint: aD, [bW]: q }, aE, aE, { [bY]: [ag, ah, aa, S, ac, ad], [bW]: c, [bX]: [{ [bY]: bD, endpoint: { [cd]: y, [ce]: ae, [cj]: W }, [bW]: q }, { endpoint: aF, [bW]: q }] }, { [bY]: [ag, ah, aa, S, ac, af], endpoint: aF, [bW]: q }] }] }] }] }] }] }] }] }, aG] }] }, ai] }, { [bY]: [T, U, { [bZ]: k, [ca]: [{ [bZ]: v, [ca]: [aw, "scheme"] }, "http"] }, { [bZ]: u, [ca]: [P, b] }, ah, ag, aa], [bW]: c, [bX]: [{ [bY]: bC, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bE, [bW]: c, [bX]: [aB] }, aG] }] }, ai] }, { [bY]: [{ [bZ]: s, [ca]: bu, [cc]: z }], [bW]: c, [bX]: [{ [bY]: [{ [bZ]: v, [ca]: [aH, "resourceId[0]"], [cc]: A }, { [bZ]: m, [ca]: [{ [bZ]: k, [ca]: [aI, B] }] }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [aJ, C] }], [bW]: c, [bX]: [{ [bY]: bF, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bG, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aL, { [bW]: c, [bX]: [aM, { [bW]: c, [bX]: [{ [bY]: bK, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aN, { [bW]: c, [bX]: [{ [bY]: bL, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aO, { [bW]: c, [bX]: [{ [bY]: bN, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bC, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bO, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bP, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [aQ, B] }], error: "Invalid ARN: Missing account id", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: bQ, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bR, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aR, { [bW]: c, [bX]: [{ [bY]: by, endpoint: { [cd]: F, [ce]: aS, [cj]: W }, [bW]: q }, { [bY]: bS, endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [ce]: aS, [cj]: W }, [bW]: q }, { endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [ce]: aS, [cj]: W }, [bW]: q }] }] }] }, aT] }] }, aU] }] }] }, aV] }] }, aW] }] }, ai] }] }, aX] }] }] }, aY] }] }] }, aZ] }] }] }] }, ba] }] }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [bW]: n }] }, { [bY]: bF, [bW]: c, [bX]: [{ [bY]: bG, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bK, [bW]: c, [bX]: [{ [bY]: bF, [bW]: c, [bX]: [{ [bY]: bK, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aN, { [bW]: c, [bX]: [{ [bY]: bL, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aO, { [bW]: c, [bX]: [{ [bY]: bN, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bC, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [aP, "{partitionResult#name}"] }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bP, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [aJ, t] }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bQ, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bR, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bJ, error: "Access Points do not support S3 Accelerate", [bW]: n }, { [bW]: c, [bX]: [aR, { [bW]: c, [bX]: [{ [bY]: bB, error: "DualStack cannot be combined with a Host override (PrivateLink)", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [ab, Z], endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [ce]: bb, [cj]: W }, [bW]: q }, { [bY]: [ab, ag], endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [ce]: bb, [cj]: W }, [bW]: q }, { [bY]: [ah, Z], endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [ce]: bb, [cj]: W }, [bW]: q }, { [bY]: [ah, ag, T, U], endpoint: { [cd]: F, [ce]: bb, [cj]: W }, [bW]: q }, { [bY]: [ah, ag], endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [ce]: bb, [cj]: W }, [bW]: q }] }] }] }] }] }, aT] }] }, aU] }] }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [bW]: n }] }] }, aV] }] }, aW] }] }, ai] }] }, aX] }] }] }, aY] }] }] }, aZ] }] }, { [bW]: c, [bX]: [{ [bY]: [{ [bZ]: l, [ca]: [aK, b] }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bI, error: "S3 MRAP does not support dual-stack", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: bS, error: "S3 MRAP does not support FIPS", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: bJ, error: "S3 MRAP does not support S3 Accelerate", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [{ [bZ]: r, [ca]: [{ [cb]: "DisableMultiRegionAccessPoints" }, b] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [{ [bZ]: j, [ca]: bt, [cc]: G }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [{ [bZ]: v, [ca]: [{ [cb]: G }, w] }, { [bZ]: v, [ca]: [aH, "partition"] }] }], [bW]: c, [bX]: [{ endpoint: { [cd]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [ce]: { [cf]: [{ [cg]: b, name: "sigv4a", [ch]: t, signingRegionSet: ["*"] }] }, [cj]: W }, [bW]: q }] }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [bW]: n }] }] }, { error: "{Region} was not a valid region", [bW]: n }] }] }] }] }] }] }, { error: "Invalid Access Point Name", [bW]: n }] }] }] }, ba] }, { [bY]: [{ [bZ]: k, [ca]: [aJ, p] }], [bW]: c, [bX]: [{ [bY]: bI, error: "S3 Outposts does not support Dual-stack", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: bS, error: "S3 Outposts does not support FIPS", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: bJ, error: "S3 Outposts does not support S3 Accelerate", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [{ [bZ]: d, [ca]: [{ [bZ]: v, [ca]: [aH, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [bW]: n }, { [bW]: c, [bX]: [{ [bY]: [{ [bZ]: v, [ca]: bH, [cc]: i }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bv, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aO, { [bW]: c, [bX]: [{ [bY]: bN, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bC, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bO, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bP, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bQ, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: v, [ca]: bM, [cc]: H }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: v, [ca]: [aH, "resourceId[3]"], [cc]: E }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: [{ [bZ]: k, [ca]: [{ [cb]: H }, D] }], [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: by, endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [ce]: bc, [cj]: W }, [bW]: q }, { endpoint: { [cd]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [ce]: bc, [cj]: W }, [bW]: q }] }] }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [bW]: n }] }] }, { error: "Invalid ARN: expected an access point name", [bW]: n }] }] }, { error: "Invalid ARN: Expected a 4-component resource", [bW]: n }] }] }, aU] }] }, aV] }] }, aW] }] }, ai] }] }, { error: "Could not load partition for ARN region {bucketArn#region}", [bW]: n }] }] }] }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [bW]: n }] }] }, { error: "Invalid ARN: The Outpost Id was not set", [bW]: n }] }] }] }] }] }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [bW]: n }] }] }, { error: "Invalid ARN: No ARN type specified", [bW]: n }] }, { [bY]: [{ [bZ]: e, [ca]: [P, 0, 4, a], [cc]: I }, { [bZ]: k, [ca]: [{ [cb]: I }, "arn:"] }, { [bZ]: m, [ca]: [{ [bZ]: d, [ca]: bA }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [bW]: n }, Y] }] }, { [bY]: [{ [bZ]: d, [ca]: [bd] }, { [bZ]: r, [ca]: [bd, b] }], [bW]: c, [bX]: [{ [bY]: bC, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bT, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aL, { [bW]: c, [bX]: [aM, { [bW]: c, [bX]: [aj, { [bW]: c, [bX]: [{ [bY]: by, endpoint: { [cd]: J, [ce]: be, [cj]: W }, [bW]: q }, { [bY]: bS, endpoint: { [cd]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [ce]: be, [cj]: W }, [bW]: q }, { endpoint: { [cd]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [ce]: be, [cj]: W }, [bW]: q }] }] }] }] }] }, aG] }] }, ai] }, { [bY]: [{ [bZ]: m, [ca]: bz }], [bW]: c, [bX]: [{ [bY]: bC, [bW]: c, [bX]: [{ [bW]: c, [bX]: [{ [bY]: bT, [bW]: c, [bX]: [{ [bW]: c, [bX]: [aj, { [bW]: c, [bX]: [bf, bf, { [bY]: [ab, Z, T, U, ac, ad], [bW]: c, [bX]: bU }, { [bY]: [ab, Z, T, U, ac, af], endpoint: bh, [bW]: q }, bi, bi, { [bY]: [ab, Z, S, ac, ad], [bW]: c, [bX]: [{ endpoint: bj, [bW]: q }] }, { [bY]: [ab, Z, S, ac, af], endpoint: bj, [bW]: q }, bk, bk, { [bY]: [ab, ag, T, U, ac, ad], [bW]: c, [bX]: bU }, { [bY]: [ab, ag, T, U, ac, af], endpoint: bh, [bW]: q }, bl, bl, { [bY]: [ab, ag, S, ac, ad], [bW]: c, [bX]: [{ endpoint: bm, [bW]: q }] }, { [bY]: [ab, ag, S, ac, af], endpoint: bm, [bW]: q }, bn, bn, { [bY]: [ah, Z, T, U, ac, ad], [bW]: c, [bX]: bU }, { [bY]: [ah, Z, T, U, ac, af], endpoint: bh, [bW]: q }, bo, bo, { [bY]: [ah, Z, S, ac, ad], [bW]: c, [bX]: [{ endpoint: bp, [bW]: q }] }, { [bY]: [ah, Z, S, ac, af], endpoint: bp, [bW]: q }, bq, bq, { [bY]: [ah, ag, T, U, ac, ad], [bW]: c, [bX]: [{ [bY]: bD, endpoint: bh, [bW]: q }, bg] }, { [bY]: [ah, ag, T, U, ac, af], endpoint: bh, [bW]: q }, br, br, { [bY]: [ah, ag, S, ac, ad], [bW]: c, [bX]: [{ [bY]: bD, endpoint: { [cd]: K, [ce]: ae, [cj]: W }, [bW]: q }, { endpoint: bs, [bW]: q }] }, { [bY]: [ah, ag, S, ac, af], endpoint: bs, [bW]: q }] }] }] }, aG] }] }, ai] }] }] }, { error: "A region must be set when sending requests to S3.", [bW]: n }] }] };
+const bJ = "required", bK = "type", bL = "conditions", bM = "fn", bN = "argv", bO = "ref", bP = "assign", bQ = "url", bR = "properties", bS = "authSchemes", bT = "disableDoubleEncoding", bU = "signingName", bV = "signingRegion", bW = "headers";
+const a = false, b = true, c = "isSet", d = "tree", e = "booleanEquals", f = "error", g = "aws.partition", h = "stringEquals", i = "getAttr", j = "name", k = "substring", l = "hardwareType", m = "regionPrefix", n = "bucketAliasSuffix", o = "outpostId", p = "isValidHostLabel", q = "not", r = "parseURL", s = "s3-outposts", t = "endpoint", u = "aws.isVirtualHostableS3Bucket", v = "s3", w = "{url#scheme}://{url#authority}{url#normalizedPath}{Bucket}", x = "{url#scheme}://{Bucket}.{url#authority}{url#path}", y = "https://{Bucket}.s3-accelerate.{partitionResult#dnsSuffix}", z = "https://{Bucket}.s3.{partitionResult#dnsSuffix}", A = "aws.parseArn", B = "bucketArn", C = "arnType", D = "", E = "s3-object-lambda", F = "accesspoint", G = "accessPointName", H = "{url#scheme}://{accessPointName}-{bucketArn#accountId}.{url#authority}{url#path}", I = "mrapPartition", J = "outpostType", K = "arnPrefix", L = "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}", M = "https://s3.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", N = "{url#scheme}://{url#authority}{url#path}", O = "https://s3.{partitionResult#dnsSuffix}", P = { [bJ]: false, [bK]: "String" }, Q = { [bJ]: true, "default": false, [bK]: "Boolean" }, R = { [bJ]: false, [bK]: "Boolean" }, S = { [bM]: e, [bN]: [{ [bO]: "Accelerate" }, true] }, T = { [bM]: e, [bN]: [{ [bO]: "UseFIPS" }, true] }, U = { [bM]: e, [bN]: [{ [bO]: "UseDualStack" }, true] }, V = { [bM]: c, [bN]: [{ [bO]: "Endpoint" }] }, W = { [bM]: g, [bN]: [{ [bO]: "Region" }], [bP]: "partitionResult" }, X = { [bM]: h, [bN]: [{ [bM]: i, [bN]: [{ [bO]: "partitionResult" }, j] }, "aws-cn"] }, Y = { [bM]: c, [bN]: [{ [bO]: "Bucket" }] }, Z = { [bO]: "Bucket" }, aa = { [bO]: l }, ab = { [bL]: [{ [bM]: q, [bN]: [V] }], [f]: "Expected a endpoint to be specified but no endpoint was found", [bK]: f }, ac = { [bM]: q, [bN]: [V] }, ad = { [bM]: r, [bN]: [{ [bO]: "Endpoint" }], [bP]: "url" }, ae = { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: s, [bV]: "{Region}" }] }, af = {}, ag = { [bM]: e, [bN]: [{ [bO]: "ForcePathStyle" }, false] }, ah = { [bO]: "ForcePathStyle" }, ai = { [bM]: e, [bN]: [{ [bO]: "Accelerate" }, false] }, aj = { [bM]: h, [bN]: [{ [bO]: "Region" }, "aws-global"] }, ak = { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: v, [bV]: "us-east-1" }] }, al = { [bM]: q, [bN]: [aj] }, am = { [bM]: e, [bN]: [{ [bO]: "UseGlobalEndpoint" }, true] }, an = { [bQ]: "https://{Bucket}.s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [bR]: { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: v, [bV]: "{Region}" }] }, [bW]: {} }, ao = { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: v, [bV]: "{Region}" }] }, ap = { [bM]: e, [bN]: [{ [bO]: "UseGlobalEndpoint" }, false] }, aq = { [bM]: e, [bN]: [{ [bO]: "UseDualStack" }, false] }, ar = { [bQ]: "https://{Bucket}.s3-fips.{Region}.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, as = { [bM]: e, [bN]: [{ [bO]: "UseFIPS" }, false] }, at = { [bQ]: "https://{Bucket}.s3-accelerate.dualstack.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, au = { [bQ]: "https://{Bucket}.s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, av = { [bM]: e, [bN]: [{ [bM]: i, [bN]: [{ [bO]: "url" }, "isIp"] }, true] }, aw = { [bO]: "url" }, ax = { [bM]: e, [bN]: [{ [bM]: i, [bN]: [aw, "isIp"] }, false] }, ay = { [bQ]: w, [bR]: ao, [bW]: {} }, az = { [bQ]: x, [bR]: ao, [bW]: {} }, aA = { [t]: az, [bK]: t }, aB = { [bQ]: y, [bR]: ao, [bW]: {} }, aC = { [bQ]: "https://{Bucket}.s3.{Region}.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, aD = { [f]: "Invalid region: region was not a valid DNS name.", [bK]: f }, aE = { [bO]: B }, aF = { [bO]: C }, aG = { [bM]: i, [bN]: [aE, "service"] }, aH = { [bO]: G }, aI = { [bL]: [U], [f]: "S3 Object Lambda does not support Dual-stack", [bK]: f }, aJ = { [bL]: [S], [f]: "S3 Object Lambda does not support S3 Accelerate", [bK]: f }, aK = { [bL]: [{ [bM]: c, [bN]: [{ [bO]: "DisableAccessPoints" }] }, { [bM]: e, [bN]: [{ [bO]: "DisableAccessPoints" }, true] }], [f]: "Access points are not supported for this operation", [bK]: f }, aL = { [bL]: [{ [bM]: c, [bN]: [{ [bO]: "UseArnRegion" }] }, { [bM]: e, [bN]: [{ [bO]: "UseArnRegion" }, false] }, { [bM]: q, [bN]: [{ [bM]: h, [bN]: [{ [bM]: i, [bN]: [aE, "region"] }, "{Region}"] }] }], [f]: "Invalid configuration: region from ARN `{bucketArn#region}` does not match client region `{Region}` and UseArnRegion is `false`", [bK]: f }, aM = { [bM]: i, [bN]: [{ [bO]: "bucketPartition" }, j] }, aN = { [bM]: i, [bN]: [aE, "accountId"] }, aO = { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: E, [bV]: "{bucketArn#region}" }] }, aP = { [f]: "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `{accessPointName}`", [bK]: f }, aQ = { [f]: "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: `{bucketArn#accountId}`", [bK]: f }, aR = { [f]: "Invalid region in ARN: `{bucketArn#region}` (invalid DNS name)", [bK]: f }, aS = { [f]: "Client was configured for partition `{partitionResult#name}` but ARN (`{Bucket}`) has `{bucketPartition#name}`", [bK]: f }, aT = { [f]: "Invalid ARN: The ARN may only contain a single resource component after `accesspoint`.", [bK]: f }, aU = { [f]: "Invalid ARN: Expected a resource of the format `accesspoint:<accesspoint name>` but no name was provided", [bK]: f }, aV = { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: v, [bV]: "{bucketArn#region}" }] }, aW = { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: s, [bV]: "{bucketArn#region}" }] }, aX = { [bM]: A, [bN]: [Z] }, aY = { [bQ]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ao, [bW]: {} }, aZ = { [bQ]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ao, [bW]: {} }, ba = { [bQ]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ao, [bW]: {} }, bb = { [bQ]: L, [bR]: ao, [bW]: {} }, bc = { [bQ]: "https://s3.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ao, [bW]: {} }, bd = { [bO]: "UseObjectLambdaEndpoint" }, be = { [bS]: [{ [bT]: true, [j]: "sigv4", [bU]: E, [bV]: "{Region}" }] }, bf = { [bQ]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, bg = { [bQ]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, bh = { [bQ]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, bi = { [bQ]: N, [bR]: ao, [bW]: {} }, bj = { [bQ]: "https://s3.{Region}.{partitionResult#dnsSuffix}", [bR]: ao, [bW]: {} }, bk = [{ [bO]: "Region" }], bl = [{ [bO]: "Endpoint" }], bm = [Z], bn = [{ [bM]: p, [bN]: [{ [bO]: o }, false] }], bo = [{ [bM]: h, [bN]: [{ [bO]: m }, "beta"] }], bp = [V, ad], bq = [Y], br = [W], bs = [{ [bM]: p, [bN]: [{ [bO]: "Region" }, false] }], bt = [{ [bM]: h, [bN]: [{ [bO]: "Region" }, "us-east-1"] }], bu = [{ [bM]: h, [bN]: [aF, F] }], bv = [{ [bM]: i, [bN]: [aE, "resourceId[1]"], [bP]: G }, { [bM]: q, [bN]: [{ [bM]: h, [bN]: [aH, D] }] }], bw = [aE, "resourceId[1]"], bx = [U], by = [S], bz = [{ [bM]: q, [bN]: [{ [bM]: h, [bN]: [{ [bM]: i, [bN]: [aE, "region"] }, D] }] }], bA = [{ [bM]: q, [bN]: [{ [bM]: c, [bN]: [{ [bM]: i, [bN]: [aE, "resourceId[2]"] }] }] }], bB = [aE, "resourceId[2]"], bC = [{ [bM]: g, [bN]: [{ [bM]: i, [bN]: [aE, "region"] }], [bP]: "bucketPartition" }], bD = [{ [bM]: h, [bN]: [aM, { [bM]: i, [bN]: [{ [bO]: "partitionResult" }, j] }] }], bE = [{ [bM]: p, [bN]: [{ [bM]: i, [bN]: [aE, "region"] }, true] }], bF = [{ [bM]: p, [bN]: [aN, false] }], bG = [{ [bM]: p, [bN]: [aH, false] }], bH = [T], bI = [{ [bM]: p, [bN]: [{ [bO]: "Region" }, true] }];
+const _data = { version: "1.0", parameters: { Bucket: P, Region: P, UseFIPS: Q, UseDualStack: Q, Endpoint: P, ForcePathStyle: Q, Accelerate: Q, UseGlobalEndpoint: Q, UseObjectLambdaEndpoint: R, DisableAccessPoints: R, DisableMultiRegionAccessPoints: Q, UseArnRegion: R }, rules: [{ [bL]: [{ [bM]: c, [bN]: bk }], [bK]: d, rules: [{ [bL]: [S, T], error: "Accelerate cannot be used with FIPS", [bK]: f }, { [bL]: [U, V], error: "Cannot set dual-stack in combination with a custom endpoint.", [bK]: f }, { [bL]: [V, T], error: "A custom endpoint cannot be combined with FIPS", [bK]: f }, { [bL]: [V, S], error: "A custom endpoint cannot be combined with S3 Accelerate", [bK]: f }, { [bL]: [T, W, X], error: "Partition does not support FIPS", [bK]: f }, { [bL]: [Y, { [bM]: k, [bN]: [Z, 49, 50, b], [bP]: l }, { [bM]: k, [bN]: [Z, 8, 12, b], [bP]: m }, { [bM]: k, [bN]: [Z, 0, 7, b], [bP]: n }, { [bM]: k, [bN]: [Z, 32, 49, b], [bP]: o }, { [bM]: g, [bN]: bk, [bP]: "regionPartition" }, { [bM]: h, [bN]: [{ [bO]: n }, "--op-s3"] }], [bK]: d, rules: [{ [bL]: bn, [bK]: d, rules: [{ [bL]: [{ [bM]: h, [bN]: [aa, "e"] }], [bK]: d, rules: [{ [bL]: bo, [bK]: d, rules: [ab, { [bL]: bp, endpoint: { [bQ]: "https://{Bucket}.ec2.{url#authority}", [bR]: ae, [bW]: af }, [bK]: t }] }, { endpoint: { [bQ]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [bR]: ae, [bW]: af }, [bK]: t }] }, { [bL]: [{ [bM]: h, [bN]: [aa, "o"] }], [bK]: d, rules: [{ [bL]: bo, [bK]: d, rules: [ab, { [bL]: bp, endpoint: { [bQ]: "https://{Bucket}.op-{outpostId}.{url#authority}", [bR]: ae, [bW]: af }, [bK]: t }] }, { endpoint: { [bQ]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [bR]: ae, [bW]: af }, [bK]: t }] }, { error: "Unrecognized hardware type: \"Expected hardware type o or e but got {hardwareType}\"", [bK]: f }] }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [bK]: f }] }, { [bL]: bq, [bK]: d, rules: [{ [bL]: [V, { [bM]: q, [bN]: [{ [bM]: c, [bN]: [{ [bM]: r, [bN]: bl }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [bK]: f }, { [bL]: [ag, { [bM]: u, [bN]: [Z, a] }], [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: bs, [bK]: d, rules: [{ [bL]: [S, X], error: "S3 Accelerate cannot be used in this region", [bK]: f }, { [bL]: [U, T, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [U, T, ai, ac, al, am], [bK]: d, rules: [{ endpoint: an, [bK]: t }] }, { [bL]: [U, T, ai, ac, al, ap], endpoint: an, [bK]: t }, { [bL]: [aq, T, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, T, ai, ac, al, am], [bK]: d, rules: [{ endpoint: ar, [bK]: t }] }, { [bL]: [aq, T, ai, ac, al, ap], endpoint: ar, [bK]: t }, { [bL]: [U, as, S, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [U, as, S, ac, al, am], [bK]: d, rules: [{ endpoint: at, [bK]: t }] }, { [bL]: [U, as, S, ac, al, ap], endpoint: at, [bK]: t }, { [bL]: [U, as, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [U, as, ai, ac, al, am], [bK]: d, rules: [{ endpoint: au, [bK]: t }] }, { [bL]: [U, as, ai, ac, al, ap], endpoint: au, [bK]: t }, { [bL]: [aq, as, ai, V, ad, av, aj], endpoint: { [bQ]: w, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, as, ai, V, ad, ax, aj], endpoint: { [bQ]: x, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, as, ai, V, ad, av, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: ay, [bK]: t }, { endpoint: ay, [bK]: t }] }, { [bL]: [aq, as, ai, V, ad, ax, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: az, [bK]: t }, aA] }, { [bL]: [aq, as, ai, V, ad, av, al, ap], endpoint: ay, [bK]: t }, { [bL]: [aq, as, ai, V, ad, ax, al, ap], endpoint: az, [bK]: t }, { [bL]: [aq, as, S, ac, aj], endpoint: { [bQ]: y, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, as, S, ac, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: aB, [bK]: t }, { endpoint: aB, [bK]: t }] }, { [bL]: [aq, as, S, ac, al, ap], endpoint: aB, [bK]: t }, { [bL]: [aq, as, ai, ac, aj], endpoint: { [bQ]: z, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, as, ai, ac, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: { [bQ]: z, [bR]: ao, [bW]: af }, [bK]: t }, { endpoint: aC, [bK]: t }] }, { [bL]: [aq, as, ai, ac, al, ap], endpoint: aC, [bK]: t }] }, aD] }] }, { [bL]: [V, ad, { [bM]: h, [bN]: [{ [bM]: i, [bN]: [aw, "scheme"] }, "http"] }, { [bM]: u, [bN]: [Z, b] }, ag, as, aq, ai], [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: bs, [bK]: d, rules: [aA] }, aD] }] }, { [bL]: [ag, { [bM]: A, [bN]: bm, [bP]: B }], [bK]: d, rules: [{ [bL]: [{ [bM]: i, [bN]: [aE, "resourceId[0]"], [bP]: C }, { [bM]: q, [bN]: [{ [bM]: h, [bN]: [aF, D] }] }], [bK]: d, rules: [{ [bL]: [{ [bM]: h, [bN]: [aG, E] }], [bK]: d, rules: [{ [bL]: bu, [bK]: d, rules: [{ [bL]: bv, [bK]: d, rules: [aI, aJ, { [bL]: bz, [bK]: d, rules: [aK, { [bL]: bA, [bK]: d, rules: [aL, { [bL]: bC, [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: bD, [bK]: d, rules: [{ [bL]: bE, [bK]: d, rules: [{ [bL]: [{ [bM]: h, [bN]: [aN, D] }], error: "Invalid ARN: Missing account id", [bK]: f }, { [bL]: bF, [bK]: d, rules: [{ [bL]: bG, [bK]: d, rules: [{ [bL]: bp, endpoint: { [bQ]: H, [bR]: aO, [bW]: af }, [bK]: t }, { [bL]: bH, endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aO, [bW]: af }, [bK]: t }, { endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aO, [bW]: af }, [bK]: t }] }, aP] }, aQ] }, aR] }, aS] }] }] }, aT] }, { error: "Invalid ARN: bucket ARN is missing a region", [bK]: f }] }, aU] }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [bK]: f }] }, { [bL]: bu, [bK]: d, rules: [{ [bL]: bv, [bK]: d, rules: [{ [bL]: bz, [bK]: d, rules: [{ [bL]: bu, [bK]: d, rules: [{ [bL]: bz, [bK]: d, rules: [aK, { [bL]: bA, [bK]: d, rules: [aL, { [bL]: bC, [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: [{ [bM]: h, [bN]: [aM, "{partitionResult#name}"] }], [bK]: d, rules: [{ [bL]: bE, [bK]: d, rules: [{ [bL]: [{ [bM]: h, [bN]: [aG, v] }], [bK]: d, rules: [{ [bL]: bF, [bK]: d, rules: [{ [bL]: bG, [bK]: d, rules: [{ [bL]: by, error: "Access Points do not support S3 Accelerate", [bK]: f }, { [bL]: [T, U], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: t }, { [bL]: [T, aq], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: t }, { [bL]: [as, U], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: t }, { [bL]: [as, aq, V, ad], endpoint: { [bQ]: H, [bR]: aV, [bW]: af }, [bK]: t }, { [bL]: [as, aq], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: t }] }, aP] }, aQ] }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [bK]: f }] }, aR] }, aS] }] }] }, aT] }] }] }, { [bL]: [{ [bM]: p, [bN]: [aH, b] }], [bK]: d, rules: [{ [bL]: bx, error: "S3 MRAP does not support dual-stack", [bK]: f }, { [bL]: bH, error: "S3 MRAP does not support FIPS", [bK]: f }, { [bL]: by, error: "S3 MRAP does not support S3 Accelerate", [bK]: f }, { [bL]: [{ [bM]: e, [bN]: [{ [bO]: "DisableMultiRegionAccessPoints" }, b] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [bK]: f }, { [bL]: [{ [bM]: g, [bN]: bk, [bP]: I }], [bK]: d, rules: [{ [bL]: [{ [bM]: h, [bN]: [{ [bM]: i, [bN]: [{ [bO]: I }, j] }, { [bM]: i, [bN]: [aE, "partition"] }] }], [bK]: d, rules: [{ endpoint: { [bQ]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [bR]: { [bS]: [{ [bT]: b, name: "sigv4a", [bU]: v, signingRegionSet: ["*"] }] }, [bW]: af }, [bK]: t }] }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [bK]: f }] }] }, { error: "Invalid Access Point Name", [bK]: f }] }, aU] }, { [bL]: [{ [bM]: h, [bN]: [aG, s] }], [bK]: d, rules: [{ [bL]: bx, error: "S3 Outposts does not support Dual-stack", [bK]: f }, { [bL]: bH, error: "S3 Outposts does not support FIPS", [bK]: f }, { [bL]: by, error: "S3 Outposts does not support S3 Accelerate", [bK]: f }, { [bL]: [{ [bM]: c, [bN]: [{ [bM]: i, [bN]: [aE, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [bK]: f }, { [bL]: [{ [bM]: i, [bN]: bw, [bP]: o }], [bK]: d, rules: [{ [bL]: bn, [bK]: d, rules: [aL, { [bL]: bC, [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: bD, [bK]: d, rules: [{ [bL]: bE, [bK]: d, rules: [{ [bL]: bF, [bK]: d, rules: [{ [bL]: [{ [bM]: i, [bN]: bB, [bP]: J }], [bK]: d, rules: [{ [bL]: [{ [bM]: i, [bN]: [aE, "resourceId[3]"], [bP]: G }], [bK]: d, rules: [{ [bL]: [{ [bM]: h, [bN]: [{ [bO]: J }, F] }], [bK]: d, rules: [{ [bL]: bp, endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [bR]: aW, [bW]: af }, [bK]: t }, { endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aW, [bW]: af }, [bK]: t }] }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [bK]: f }] }, { error: "Invalid ARN: expected an access point name", [bK]: f }] }, { error: "Invalid ARN: Expected a 4-component resource", [bK]: f }] }, aQ] }, aR] }, aS] }] }] }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [bK]: f }] }, { error: "Invalid ARN: The Outpost Id was not set", [bK]: f }] }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [bK]: f }] }, { error: "Invalid ARN: No ARN type specified", [bK]: f }] }, { [bL]: [{ [bM]: k, [bN]: [Z, 0, 4, a], [bP]: K }, { [bM]: h, [bN]: [{ [bO]: K }, "arn:"] }, { [bM]: q, [bN]: [{ [bM]: c, [bN]: [aX] }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [bK]: f }, { [bL]: [{ [bM]: e, [bN]: [ah, b] }, aX], error: "Path-style addressing cannot be used with ARN buckets", [bK]: f }, { [bL]: [{ [bM]: "uriEncode", [bN]: bm, [bP]: "uri_encoded_bucket" }], [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: [ai], [bK]: d, rules: [{ [bL]: [U, ac, T, aj], endpoint: { [bQ]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [U, ac, T, al, am], [bK]: d, rules: [{ endpoint: aY, [bK]: t }] }, { [bL]: [U, ac, T, al, ap], endpoint: aY, [bK]: t }, { [bL]: [aq, ac, T, aj], endpoint: { [bQ]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, ac, T, al, am], [bK]: d, rules: [{ endpoint: aZ, [bK]: t }] }, { [bL]: [aq, ac, T, al, ap], endpoint: aZ, [bK]: t }, { [bL]: [U, ac, as, aj], endpoint: { [bQ]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [U, ac, as, al, am], [bK]: d, rules: [{ endpoint: ba, [bK]: t }] }, { [bL]: [U, ac, as, al, ap], endpoint: ba, [bK]: t }, { [bL]: [aq, V, ad, as, aj], endpoint: { [bQ]: L, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, V, ad, as, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: bb, [bK]: t }, { endpoint: bb, [bK]: t }] }, { [bL]: [aq, V, ad, as, al, ap], endpoint: bb, [bK]: t }, { [bL]: [aq, ac, as, aj], endpoint: { [bQ]: M, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [aq, ac, as, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: { [bQ]: M, [bR]: ao, [bW]: af }, [bK]: t }, { endpoint: bc, [bK]: t }] }, { [bL]: [aq, ac, as, al, ap], endpoint: bc, [bK]: t }] }, { error: "Path-style addressing cannot be used with S3 Accelerate", [bK]: f }] }] }] }, { [bL]: [{ [bM]: c, [bN]: [bd] }, { [bM]: e, [bN]: [bd, b] }], [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: bI, [bK]: d, rules: [aI, aJ, { [bL]: bp, endpoint: { [bQ]: N, [bR]: be, [bW]: af }, [bK]: t }, { [bL]: bH, endpoint: { [bQ]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [bR]: be, [bW]: af }, [bK]: t }, { endpoint: { [bQ]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [bR]: be, [bW]: af }, [bK]: t }] }, aD] }] }, { [bL]: [{ [bM]: q, [bN]: bq }], [bK]: d, rules: [{ [bL]: br, [bK]: d, rules: [{ [bL]: bI, [bK]: d, rules: [{ [bL]: [T, U, ac, aj], endpoint: { [bQ]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [T, U, ac, al, am], [bK]: d, rules: [{ endpoint: bf, [bK]: t }] }, { [bL]: [T, U, ac, al, ap], endpoint: bf, [bK]: t }, { [bL]: [T, aq, ac, aj], endpoint: { [bQ]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [T, aq, ac, al, am], [bK]: d, rules: [{ endpoint: bg, [bK]: t }] }, { [bL]: [T, aq, ac, al, ap], endpoint: bg, [bK]: t }, { [bL]: [as, U, ac, aj], endpoint: { [bQ]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [as, U, ac, al, am], [bK]: d, rules: [{ endpoint: bh, [bK]: t }] }, { [bL]: [as, U, ac, al, ap], endpoint: bh, [bK]: t }, { [bL]: [as, aq, V, ad, aj], endpoint: { [bQ]: N, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [as, aq, V, ad, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: bi, [bK]: t }, { endpoint: bi, [bK]: t }] }, { [bL]: [as, aq, V, ad, al, ap], endpoint: bi, [bK]: t }, { [bL]: [as, aq, ac, aj], endpoint: { [bQ]: O, [bR]: ak, [bW]: af }, [bK]: t }, { [bL]: [as, aq, ac, al, am], [bK]: d, rules: [{ [bL]: bt, endpoint: { [bQ]: O, [bR]: ao, [bW]: af }, [bK]: t }, { endpoint: bj, [bK]: t }] }, { [bL]: [as, aq, ac, al, ap], endpoint: bj, [bK]: t }] }, aD] }] }] }, { error: "A region must be set when sending requests to S3.", [bK]: f }] };
 exports.ruleSet = _data;
 
 
@@ -19600,12 +19601,12 @@ const tslib_1 = __nccwpck_require__(30036);
 const package_json_1 = tslib_1.__importDefault(__nccwpck_require__(73703));
 const client_sts_1 = __nccwpck_require__(54458);
 const credential_provider_node_1 = __nccwpck_require__(93933);
-const hash_stream_node_1 = __nccwpck_require__(44026);
 const middleware_bucket_endpoint_1 = __nccwpck_require__(79332);
 const util_user_agent_node_1 = __nccwpck_require__(32340);
 const config_resolver_1 = __nccwpck_require__(2046);
 const eventstream_serde_node_1 = __nccwpck_require__(36860);
 const hash_node_1 = __nccwpck_require__(2182);
+const hash_stream_node_1 = __nccwpck_require__(81912);
 const middleware_retry_1 = __nccwpck_require__(21880);
 const node_config_provider_1 = __nccwpck_require__(40022);
 const node_http_handler_1 = __nccwpck_require__(45954);
@@ -24789,129 +24790,6 @@ tslib_1.__exportStar(__nccwpck_require__(42580), exports);
 
 /***/ }),
 
-/***/ 98146:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.HashCalculator = void 0;
-const util_utf8_1 = __nccwpck_require__(82234);
-const stream_1 = __nccwpck_require__(12781);
-class HashCalculator extends stream_1.Writable {
-    constructor(hash, options) {
-        super(options);
-        this.hash = hash;
-    }
-    _write(chunk, encoding, callback) {
-        try {
-            this.hash.update((0, util_utf8_1.toUint8Array)(chunk));
-        }
-        catch (err) {
-            return callback(err);
-        }
-        callback();
-    }
-}
-exports.HashCalculator = HashCalculator;
-
-
-/***/ }),
-
-/***/ 96216:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fileStreamHasher = void 0;
-const fs_1 = __nccwpck_require__(57147);
-const HashCalculator_1 = __nccwpck_require__(98146);
-const fileStreamHasher = (hashCtor, fileStream) => new Promise((resolve, reject) => {
-    if (!isReadStream(fileStream)) {
-        reject(new Error("Unable to calculate hash for non-file streams."));
-        return;
-    }
-    const fileStreamTee = (0, fs_1.createReadStream)(fileStream.path, {
-        start: fileStream.start,
-        end: fileStream.end,
-    });
-    const hash = new hashCtor();
-    const hashCalculator = new HashCalculator_1.HashCalculator(hash);
-    fileStreamTee.pipe(hashCalculator);
-    fileStreamTee.on("error", (err) => {
-        hashCalculator.end();
-        reject(err);
-    });
-    hashCalculator.on("error", reject);
-    hashCalculator.on("finish", function () {
-        hash.digest().then(resolve).catch(reject);
-    });
-});
-exports.fileStreamHasher = fileStreamHasher;
-const isReadStream = (stream) => typeof stream.path === "string";
-
-
-/***/ }),
-
-/***/ 44026:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tslib_1 = __nccwpck_require__(30036);
-tslib_1.__exportStar(__nccwpck_require__(96216), exports);
-tslib_1.__exportStar(__nccwpck_require__(42491), exports);
-
-
-/***/ }),
-
-/***/ 42491:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.readableStreamHasher = void 0;
-const HashCalculator_1 = __nccwpck_require__(98146);
-const readableStreamHasher = (hashCtor, readableStream) => {
-    if (readableStream.readableFlowing !== null) {
-        throw new Error("Unable to calculate hash for flowing readable stream");
-    }
-    const hash = new hashCtor();
-    const hashCalculator = new HashCalculator_1.HashCalculator(hash);
-    readableStream.pipe(hashCalculator);
-    return new Promise((resolve, reject) => {
-        readableStream.on("error", (err) => {
-            hashCalculator.end();
-            reject(err);
-        });
-        hashCalculator.on("error", reject);
-        hashCalculator.on("finish", () => {
-            hash.digest().then(resolve).catch(reject);
-        });
-    });
-};
-exports.readableStreamHasher = readableStreamHasher;
-
-
-/***/ }),
-
-/***/ 49400:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.isArrayBuffer = void 0;
-const isArrayBuffer = (arg) => (typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer) ||
-    Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
-exports.isArrayBuffer = isArrayBuffer;
-
-
-/***/ }),
-
 /***/ 93873:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
@@ -27394,33 +27272,6 @@ exports.build = build;
 
 /***/ }),
 
-/***/ 61294:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fromString = exports.fromArrayBuffer = void 0;
-const is_array_buffer_1 = __nccwpck_require__(49400);
-const buffer_1 = __nccwpck_require__(14300);
-const fromArrayBuffer = (input, offset = 0, length = input.byteLength - offset) => {
-    if (!(0, is_array_buffer_1.isArrayBuffer)(input)) {
-        throw new TypeError(`The "input" argument must be ArrayBuffer. Received type ${typeof input} (${input})`);
-    }
-    return buffer_1.Buffer.from(input, offset, length);
-};
-exports.fromArrayBuffer = fromArrayBuffer;
-const fromString = (input, encoding) => {
-    if (typeof input !== "string") {
-        throw new TypeError(`The "input" argument must be of type string. Received type ${typeof input} (${input})`);
-    }
-    return encoding ? buffer_1.Buffer.from(input, encoding) : buffer_1.Buffer.from(input);
-};
-exports.fromString = fromString;
-
-
-/***/ }),
-
 /***/ 73830:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -28603,73 +28454,6 @@ exports.fromUtf8 = fromUtf8;
 function toUtf8(input) {
     return new TextDecoder("utf-8").decode(input);
 }
-exports.toUtf8 = toUtf8;
-
-
-/***/ }),
-
-/***/ 3467:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.fromUtf8 = void 0;
-const util_buffer_from_1 = __nccwpck_require__(61294);
-const fromUtf8 = (input) => {
-    const buf = (0, util_buffer_from_1.fromString)(input, "utf8");
-    return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength / Uint8Array.BYTES_PER_ELEMENT);
-};
-exports.fromUtf8 = fromUtf8;
-
-
-/***/ }),
-
-/***/ 82234:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const tslib_1 = __nccwpck_require__(30036);
-tslib_1.__exportStar(__nccwpck_require__(3467), exports);
-tslib_1.__exportStar(__nccwpck_require__(75576), exports);
-tslib_1.__exportStar(__nccwpck_require__(23902), exports);
-
-
-/***/ }),
-
-/***/ 75576:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toUint8Array = void 0;
-const fromUtf8_1 = __nccwpck_require__(3467);
-const toUint8Array = (data) => {
-    if (typeof data === "string") {
-        return (0, fromUtf8_1.fromUtf8)(data);
-    }
-    if (ArrayBuffer.isView(data)) {
-        return new Uint8Array(data.buffer, data.byteOffset, data.byteLength / Uint8Array.BYTES_PER_ELEMENT);
-    }
-    return new Uint8Array(data);
-};
-exports.toUint8Array = toUint8Array;
-
-
-/***/ }),
-
-/***/ 23902:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toUtf8 = void 0;
-const util_buffer_from_1 = __nccwpck_require__(61294);
-const toUtf8 = (input) => (0, util_buffer_from_1.fromArrayBuffer)(input.buffer, input.byteOffset, input.byteLength).toString("utf8");
 exports.toUtf8 = toUtf8;
 
 
@@ -30560,6 +30344,115 @@ function castSourceData(toCast, encoding) {
     }
     return (0, util_buffer_from_1.fromArrayBuffer)(toCast);
 }
+
+
+/***/ }),
+
+/***/ 84649:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HashCalculator = void 0;
+const util_utf8_1 = __nccwpck_require__(54894);
+const stream_1 = __nccwpck_require__(12781);
+class HashCalculator extends stream_1.Writable {
+    constructor(hash, options) {
+        super(options);
+        this.hash = hash;
+    }
+    _write(chunk, encoding, callback) {
+        try {
+            this.hash.update((0, util_utf8_1.toUint8Array)(chunk));
+        }
+        catch (err) {
+            return callback(err);
+        }
+        callback();
+    }
+}
+exports.HashCalculator = HashCalculator;
+
+
+/***/ }),
+
+/***/ 75765:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fileStreamHasher = void 0;
+const fs_1 = __nccwpck_require__(57147);
+const HashCalculator_1 = __nccwpck_require__(84649);
+const fileStreamHasher = (hashCtor, fileStream) => new Promise((resolve, reject) => {
+    if (!isReadStream(fileStream)) {
+        reject(new Error("Unable to calculate hash for non-file streams."));
+        return;
+    }
+    const fileStreamTee = (0, fs_1.createReadStream)(fileStream.path, {
+        start: fileStream.start,
+        end: fileStream.end,
+    });
+    const hash = new hashCtor();
+    const hashCalculator = new HashCalculator_1.HashCalculator(hash);
+    fileStreamTee.pipe(hashCalculator);
+    fileStreamTee.on("error", (err) => {
+        hashCalculator.end();
+        reject(err);
+    });
+    hashCalculator.on("error", reject);
+    hashCalculator.on("finish", function () {
+        hash.digest().then(resolve).catch(reject);
+    });
+});
+exports.fileStreamHasher = fileStreamHasher;
+const isReadStream = (stream) => typeof stream.path === "string";
+
+
+/***/ }),
+
+/***/ 81912:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const tslib_1 = __nccwpck_require__(30036);
+tslib_1.__exportStar(__nccwpck_require__(75765), exports);
+tslib_1.__exportStar(__nccwpck_require__(57761), exports);
+
+
+/***/ }),
+
+/***/ 57761:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.readableStreamHasher = void 0;
+const HashCalculator_1 = __nccwpck_require__(84649);
+const readableStreamHasher = (hashCtor, readableStream) => {
+    if (readableStream.readableFlowing !== null) {
+        throw new Error("Unable to calculate hash for flowing readable stream");
+    }
+    const hash = new hashCtor();
+    const hashCalculator = new HashCalculator_1.HashCalculator(hash);
+    readableStream.pipe(hashCalculator);
+    return new Promise((resolve, reject) => {
+        readableStream.on("error", (err) => {
+            hashCalculator.end();
+            reject(err);
+        });
+        hashCalculator.on("error", reject);
+        hashCalculator.on("finish", () => {
+            hash.digest().then(resolve).catch(reject);
+        });
+    });
+};
+exports.readableStreamHasher = readableStreamHasher;
 
 
 /***/ }),
@@ -35604,7 +35497,7 @@ exports.parseUrl = parseUrl;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fromBase64 = void 0;
-const util_buffer_from_1 = __nccwpck_require__(12749);
+const util_buffer_from_1 = __nccwpck_require__(50308);
 const BASE64_REGEX = /^[A-Za-z0-9+/]*={0,2}$/;
 const fromBase64 = (input) => {
     if ((input.length * 3) % 4 !== 0) {
@@ -35641,9 +35534,50 @@ tslib_1.__exportStar(__nccwpck_require__(7646), exports);
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toBase64 = void 0;
-const util_buffer_from_1 = __nccwpck_require__(12749);
+const util_buffer_from_1 = __nccwpck_require__(50308);
 const toBase64 = (input) => (0, util_buffer_from_1.fromArrayBuffer)(input.buffer, input.byteOffset, input.byteLength).toString("base64");
 exports.toBase64 = toBase64;
+
+
+/***/ }),
+
+/***/ 6094:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isArrayBuffer = void 0;
+const isArrayBuffer = (arg) => (typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer) ||
+    Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
+exports.isArrayBuffer = isArrayBuffer;
+
+
+/***/ }),
+
+/***/ 50308:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fromString = exports.fromArrayBuffer = void 0;
+const is_array_buffer_1 = __nccwpck_require__(6094);
+const buffer_1 = __nccwpck_require__(14300);
+const fromArrayBuffer = (input, offset = 0, length = input.byteLength - offset) => {
+    if (!(0, is_array_buffer_1.isArrayBuffer)(input)) {
+        throw new TypeError(`The "input" argument must be ArrayBuffer. Received type ${typeof input} (${input})`);
+    }
+    return buffer_1.Buffer.from(input, offset, length);
+};
+exports.fromArrayBuffer = fromArrayBuffer;
+const fromString = (input, encoding) => {
+    if (typeof input !== "string") {
+        throw new TypeError(`The "input" argument must be of type string. Received type ${typeof input} (${input})`);
+    }
+    return encoding ? buffer_1.Buffer.from(input, encoding) : buffer_1.Buffer.from(input);
+};
+exports.fromString = fromString;
 
 
 /***/ }),
@@ -36538,7 +36472,7 @@ tslib_1.__exportStar(__nccwpck_require__(46451), exports);
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fromUtf8 = void 0;
-const util_buffer_from_1 = __nccwpck_require__(12749);
+const util_buffer_from_1 = __nccwpck_require__(10405);
 const fromUtf8 = (input) => {
     const buf = (0, util_buffer_from_1.fromString)(input, "utf8");
     return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength / Uint8Array.BYTES_PER_ELEMENT);
@@ -36591,9 +36525,50 @@ exports.toUint8Array = toUint8Array;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toUtf8 = void 0;
-const util_buffer_from_1 = __nccwpck_require__(12749);
+const util_buffer_from_1 = __nccwpck_require__(10405);
 const toUtf8 = (input) => (0, util_buffer_from_1.fromArrayBuffer)(input.buffer, input.byteOffset, input.byteLength).toString("utf8");
 exports.toUtf8 = toUtf8;
+
+
+/***/ }),
+
+/***/ 61218:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isArrayBuffer = void 0;
+const isArrayBuffer = (arg) => (typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer) ||
+    Object.prototype.toString.call(arg) === "[object ArrayBuffer]";
+exports.isArrayBuffer = isArrayBuffer;
+
+
+/***/ }),
+
+/***/ 10405:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fromString = exports.fromArrayBuffer = void 0;
+const is_array_buffer_1 = __nccwpck_require__(61218);
+const buffer_1 = __nccwpck_require__(14300);
+const fromArrayBuffer = (input, offset = 0, length = input.byteLength - offset) => {
+    if (!(0, is_array_buffer_1.isArrayBuffer)(input)) {
+        throw new TypeError(`The "input" argument must be ArrayBuffer. Received type ${typeof input} (${input})`);
+    }
+    return buffer_1.Buffer.from(input, offset, length);
+};
+exports.fromArrayBuffer = fromArrayBuffer;
+const fromString = (input, encoding) => {
+    if (typeof input !== "string") {
+        throw new TypeError(`The "input" argument must be of type string. Received type ${typeof input} (${input})`);
+    }
+    return encoding ? buffer_1.Buffer.from(input, encoding) : buffer_1.Buffer.from(input);
+};
+exports.fromString = fromString;
 
 
 /***/ }),
@@ -40723,7 +40698,7 @@ module.exports = require("util");
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/client-s3","description":"AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native","version":"3.370.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo s3","test":"yarn test:unit","test:e2e":"ts-mocha test/**/*.ispec.ts && karma start karma.conf.js","test:unit":"ts-mocha test/**/*.spec.ts"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha1-browser":"3.0.0","@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/client-sts":"3.370.0","@aws-sdk/credential-provider-node":"3.370.0","@aws-sdk/hash-blob-browser":"3.370.0","@aws-sdk/hash-stream-node":"3.370.0","@aws-sdk/md5-js":"3.370.0","@aws-sdk/middleware-bucket-endpoint":"3.370.0","@aws-sdk/middleware-expect-continue":"3.370.0","@aws-sdk/middleware-flexible-checksums":"3.370.0","@aws-sdk/middleware-host-header":"3.370.0","@aws-sdk/middleware-location-constraint":"3.370.0","@aws-sdk/middleware-logger":"3.370.0","@aws-sdk/middleware-recursion-detection":"3.370.0","@aws-sdk/middleware-sdk-s3":"3.370.0","@aws-sdk/middleware-signing":"3.370.0","@aws-sdk/middleware-ssec":"3.370.0","@aws-sdk/middleware-user-agent":"3.370.0","@aws-sdk/signature-v4-multi-region":"3.370.0","@aws-sdk/types":"3.370.0","@aws-sdk/util-endpoints":"3.370.0","@aws-sdk/util-user-agent-browser":"3.370.0","@aws-sdk/util-user-agent-node":"3.370.0","@aws-sdk/xml-builder":"3.310.0","@smithy/config-resolver":"^1.0.1","@smithy/eventstream-serde-browser":"^1.0.1","@smithy/eventstream-serde-config-resolver":"^1.0.1","@smithy/eventstream-serde-node":"^1.0.1","@smithy/fetch-http-handler":"^1.0.1","@smithy/hash-node":"^1.0.1","@smithy/invalid-dependency":"^1.0.1","@smithy/middleware-content-length":"^1.0.1","@smithy/middleware-endpoint":"^1.0.2","@smithy/middleware-retry":"^1.0.3","@smithy/middleware-serde":"^1.0.1","@smithy/middleware-stack":"^1.0.1","@smithy/node-config-provider":"^1.0.1","@smithy/node-http-handler":"^1.0.2","@smithy/protocol-http":"^1.1.0","@smithy/smithy-client":"^1.0.3","@smithy/types":"^1.1.0","@smithy/url-parser":"^1.0.1","@smithy/util-base64":"^1.0.1","@smithy/util-body-length-browser":"^1.0.1","@smithy/util-body-length-node":"^1.0.1","@smithy/util-defaults-mode-browser":"^1.0.1","@smithy/util-defaults-mode-node":"^1.0.1","@smithy/util-retry":"^1.0.3","@smithy/util-stream":"^1.0.1","@smithy/util-utf8":"^1.0.1","@smithy/util-waiter":"^1.0.1","fast-xml-parser":"4.2.5","tslib":"^2.5.0"},"devDependencies":{"@smithy/service-client-documentation-generator":"^1.0.1","@tsconfig/node14":"1.0.3","@types/chai":"^4.2.11","@types/mocha":"^8.0.4","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-s3","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-s3"}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/client-s3","description":"AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native","version":"3.374.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"tsc -p tsconfig.cjs.json","build:docs":"typedoc","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo s3","test":"yarn test:unit","test:e2e":"ts-mocha test/**/*.ispec.ts && karma start karma.conf.js","test:unit":"ts-mocha test/**/*.spec.ts"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha1-browser":"3.0.0","@aws-crypto/sha256-browser":"3.0.0","@aws-crypto/sha256-js":"3.0.0","@aws-sdk/client-sts":"3.370.0","@aws-sdk/credential-provider-node":"3.370.0","@aws-sdk/hash-stream-node":"3.374.0","@aws-sdk/middleware-bucket-endpoint":"3.370.0","@aws-sdk/middleware-expect-continue":"3.370.0","@aws-sdk/middleware-flexible-checksums":"3.374.0","@aws-sdk/middleware-host-header":"3.370.0","@aws-sdk/middleware-location-constraint":"3.370.0","@aws-sdk/middleware-logger":"3.370.0","@aws-sdk/middleware-recursion-detection":"3.370.0","@aws-sdk/middleware-sdk-s3":"3.370.0","@aws-sdk/middleware-signing":"3.370.0","@aws-sdk/middleware-ssec":"3.370.0","@aws-sdk/middleware-user-agent":"3.370.0","@aws-sdk/signature-v4-multi-region":"3.370.0","@aws-sdk/types":"3.370.0","@aws-sdk/util-endpoints":"3.370.0","@aws-sdk/util-user-agent-browser":"3.370.0","@aws-sdk/util-user-agent-node":"3.370.0","@aws-sdk/xml-builder":"3.310.0","@smithy/config-resolver":"^1.0.1","@smithy/eventstream-serde-browser":"^1.0.1","@smithy/eventstream-serde-config-resolver":"^1.0.1","@smithy/eventstream-serde-node":"^1.0.1","@smithy/fetch-http-handler":"^1.0.1","@smithy/hash-blob-browser":"^1.0.1","@smithy/hash-node":"^1.0.1","@smithy/invalid-dependency":"^1.0.1","@smithy/md5-js":"^1.0.1","@smithy/middleware-content-length":"^1.0.1","@smithy/middleware-endpoint":"^1.0.2","@smithy/middleware-retry":"^1.0.3","@smithy/middleware-serde":"^1.0.1","@smithy/middleware-stack":"^1.0.1","@smithy/node-config-provider":"^1.0.1","@smithy/node-http-handler":"^1.0.2","@smithy/protocol-http":"^1.1.0","@smithy/smithy-client":"^1.0.3","@smithy/types":"^1.1.0","@smithy/url-parser":"^1.0.1","@smithy/util-base64":"^1.0.1","@smithy/util-body-length-browser":"^1.0.1","@smithy/util-body-length-node":"^1.0.1","@smithy/util-defaults-mode-browser":"^1.0.1","@smithy/util-defaults-mode-node":"^1.0.1","@smithy/util-retry":"^1.0.3","@smithy/util-stream":"^1.0.1","@smithy/util-utf8":"^1.0.1","@smithy/util-waiter":"^1.0.1","fast-xml-parser":"4.2.5","tslib":"^2.5.0"},"devDependencies":{"@smithy/service-client-documentation-generator":"^1.0.1","@tsconfig/node14":"1.0.3","@types/chai":"^4.2.11","@types/mocha":"^8.0.4","@types/node":"^14.14.31","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typedoc":"0.23.23","typescript":"~4.9.5"},"engines":{"node":">=14.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-s3","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-s3"}}');
 
 /***/ }),
 
