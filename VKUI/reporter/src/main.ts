@@ -25,10 +25,11 @@ async function run(): Promise<void> {
     }
 
     const playwrightReportURL = core.getInput('playwrightReportURL', { required: false });
+    const axeReportURL = core.getInput('axeReportURL', { required: false });
     const token = core.getInput('token', { required: false });
 
     if (playwrightReportURL && token) {
-      jobs.push(playwrightReport(playwrightReportURL, token));
+      jobs.push(playwrightReport(token, playwrightReportURL, axeReportURL));
     }
 
     await Promise.all(jobs);
