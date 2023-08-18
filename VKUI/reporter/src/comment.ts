@@ -12,10 +12,10 @@ const commentPrefix = '<!--GitHub Comment Builder-->\n';
  */
 export class GitHubCommentBuilder {
   public message = commentPrefix;
-  private readonly gh: ReturnType<typeof github.getOctokit>;
+  private readonly prNumber: number;
 
-  public constructor(gh: ReturnType<typeof github.getOctokit>) {
-    this.gh = gh;
+  public constructor(private readonly gh: ReturnType<typeof github.getOctokit>, prNumber?: number) {
+    this.prNumber = typeof prNumber === 'number' ? prNumber : getPullRequestNumber();
   }
 
   /**
@@ -29,11 +29,9 @@ export class GitHubCommentBuilder {
    * Пытаемся найти уже существующий комментарий
    */
   private async getCommentId() {
-    const issue_number = getPullRequestNumber();
-
     const comments = await this.gh.rest.issues.listComments({
       ...github.context.repo,
-      issue_number,
+      issue_number: this.prNumber,
     });
 
     const comment = comments.data.find((item) => item.body?.startsWith(commentPrefix));
@@ -46,7 +44,6 @@ export class GitHubCommentBuilder {
    */
   public async write() {
     const comment_id = await this.getCommentId();
-    const issue_number = getPullRequestNumber();
 
     // Если сообщение пустое, то удаляем старый комментарий
     if (this.message === commentPrefix) {
@@ -72,7 +69,7 @@ export class GitHubCommentBuilder {
 
     await this.gh.rest.issues.createComment({
       ...github.context.repo,
-      issue_number,
+      issue_number: this.prNumber,
       body: this.message,
     });
   }

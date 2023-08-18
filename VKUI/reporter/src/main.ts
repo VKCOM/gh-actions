@@ -26,9 +26,11 @@ async function run(): Promise<void> {
 
     const playwrightReportURL = core.getInput('playwrightReportURL', { required: false });
     const token = core.getInput('token', { required: false });
+    const prNumberRaw = core.getInput('prNumber', { required: false });
 
     if (playwrightReportURL && token) {
-      jobs.push(playwrightReport(playwrightReportURL, token));
+      const prNumber = prNumberRaw ? Number(prNumberRaw) : undefined;
+      jobs.push(playwrightReport(playwrightReportURL, token, prNumber));
     }
 
     await Promise.all(jobs);

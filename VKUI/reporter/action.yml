@@ -1,6 +1,9 @@
 name: 'Reporter'
 description: 'Reporter'
 inputs:
+  prNumber:
+    required: false
+    description: 'PR number'
   playwrightReportURL:
     required: false
     description: 'HTML Playwright Report URL for publish comment'

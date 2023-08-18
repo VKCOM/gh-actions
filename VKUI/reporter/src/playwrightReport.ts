@@ -12,9 +12,9 @@ function hasFailedScreenshots() {
   return isDataDirExist || isTraceDirExist;
 }
 
-export async function playwrightReport(url: string, token: string) {
+export async function playwrightReport(url: string, token: string, prNumber?: number) {
   const gh = github.getOctokit(token);
-  const comment = new GitHubCommentBuilder(gh);
+  const comment = new GitHubCommentBuilder(gh, prNumber);
 
   const message = ['## e2e tests\n\n'];
 
