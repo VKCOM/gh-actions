@@ -9661,9 +9661,10 @@ const commentPrefix = '<!--GitHub Comment Builder-->\n';
  * Сборщик комментария для PR-а. Создает или редактирует комментарий.
  */
 class GitHubCommentBuilder {
-    constructor(gh) {
-        this.message = commentPrefix;
+    constructor(gh, prNumber) {
         this.gh = gh;
+        this.message = commentPrefix;
+        this.prNumber = typeof prNumber === 'number' ? prNumber : (0, shared_1.getPullRequestNumber)();
     }
     /**
      * Добавляет текст к комментарию.
@@ -9676,8 +9677,7 @@ class GitHubCommentBuilder {
      */
     getCommentId() {
         return __awaiter(this, void 0, void 0, function* () {
-            const issue_number = (0, shared_1.getPullRequestNumber)();
-            const comments = yield this.gh.rest.issues.listComments(Object.assign(Object.assign({}, github.context.repo), { issue_number }));
+            const comments = yield this.gh.rest.issues.listComments(Object.assign(Object.assign({}, github.context.repo), { issue_number: this.prNumber }));
             const comment = comments.data.find((item) => { var _a; return (_a = item.body) === null || _a === void 0 ? void 0 : _a.startsWith(commentPrefix); });
             return comment === null || comment === void 0 ? void 0 : comment.id;
         });
@@ -9688,7 +9688,6 @@ class GitHubCommentBuilder {
     write() {
         return __awaiter(this, void 0, void 0, function* () {
             const comment_id = yield this.getCommentId();
-            const issue_number = (0, shared_1.getPullRequestNumber)();
             // Если сообщение пустое, то удаляем старый комментарий
             if (this.message === commentPrefix) {
                 if (comment_id) {
@@ -9701,7 +9700,7 @@ class GitHubCommentBuilder {
                 yield this.gh.rest.issues.updateComment(Object.assign(Object.assign({}, github.context.repo), { comment_id, body: this.message }));
                 return;
             }
-            yield this.gh.rest.issues.createComment(Object.assign(Object.assign({}, github.context.repo), { issue_number, body: this.message }));
+            yield this.gh.rest.issues.createComment(Object.assign(Object.assign({}, github.context.repo), { issue_number: this.prNumber, body: this.message }));
         });
     }
 }
@@ -9977,8 +9976,10 @@ function run() {
             }
             const playwrightReportURL = core.getInput('playwrightReportURL', { required: false });
             const token = core.getInput('token', { required: false });
+            const prNumberRaw = core.getInput('prNumber', { required: false });
             if (playwrightReportURL && token) {
-                jobs.push((0, playwrightReport_1.playwrightReport)(playwrightReportURL, token));
+                const prNumber = prNumberRaw ? Number(prNumberRaw) : undefined;
+                jobs.push((0, playwrightReport_1.playwrightReport)(playwrightReportURL, token, prNumber));
             }
             yield Promise.all(jobs);
         }
@@ -10048,10 +10049,10 @@ function hasFailedScreenshots() {
     const isTraceDirExist = (0, fs_1.existsSync)(playwrightReportTracePathDir);
     return isDataDirExist || isTraceDirExist;
 }
-function playwrightReport(url, token) {
+function playwrightReport(url, token, prNumber) {
     return __awaiter(this, void 0, void 0, function* () {
         const gh = github.getOctokit(token);
-        const comment = new comment_1.GitHubCommentBuilder(gh);
+        const comment = new comment_1.GitHubCommentBuilder(gh, prNumber);
         const message = ['## e2e tests\n\n'];
         if (hasFailedScreenshots()) {
             message.push('> ⚠️ Some screenshots were failed. See Playwright Report. \n\n');
