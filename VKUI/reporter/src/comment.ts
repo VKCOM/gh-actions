@@ -14,7 +14,10 @@ export class GitHubCommentBuilder {
   public message = commentPrefix;
   private readonly prNumber: number;
 
-  public constructor(private readonly gh: ReturnType<typeof github.getOctokit>, prNumber?: number) {
+  public constructor(
+    private readonly gh: ReturnType<typeof github.getOctokit>,
+    prNumber?: number,
+  ) {
     this.prNumber = typeof prNumber === 'number' ? prNumber : getPullRequestNumber();
   }
 
