@@ -7061,7 +7061,7 @@ async function main() {
         }
         recursiveTokens(tokens, splitPath, cssValue);
     });
-    await fs.writeFile(pathToJSON, JSON.stringify(tokens));
+    await fs.writeFile(pathToJSON, JSON.stringify(tokens, undefined, 2));
 }
 main()
     .then()
