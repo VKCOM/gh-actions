@@ -1,5 +1,5 @@
 {
-  "name": "@actions-internal/close-milestone",
+  "name": "@actions-internal/find-and-close-milestone",
   "version": "0.0.0",
   "main": "src/main.ts",
   "license": "MIT",
