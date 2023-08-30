@@ -1,5 +1,5 @@
-name: 'Find and close milestone'
-description: 'Find the milestone by a release tag, close it and notify all related issues'
+name: 'Find and close milestone/Publish the Release Notes'
+description: 'Find and close the milestone, notify all related issues and publish the release notes'
 inputs:
   token:
     required: true
