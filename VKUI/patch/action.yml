@@ -7,6 +7,12 @@ inputs:
   directory:
     required: false
     description: 'main directory of your project (default is your root directory)'
+  targetBranch:
+    required: false
+    description: 'target of your project (default is stable branch)'
+  needScreenshots:
+    required: false
+    description: 'include screenshots in a patch (default ignore screenshots)'
 runs:
   using: 'node16'
   main: 'dist/index.js'
