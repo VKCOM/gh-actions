@@ -14259,6 +14259,8 @@ function run() {
                 ((_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.head.repo.id);
             const token = core.getInput('token', { required: true });
             const directory = core.getInput('directory');
+            const targetBranchInput = core.getInput('targetBranch');
+            const needScreenshots = core.getBooleanInput('needScreenshots');
             const pullNumber = getPrNumber();
             const gh = github.getOctokit(token);
             const mergeData = yield (0, getMergeData_1.getMergeData)(gh, github.context.repo, pullNumber);
@@ -14275,21 +14277,21 @@ function run() {
             const createComment = (body) => __awaiter(this, void 0, void 0, function* () {
                 yield gh.rest.issues.createComment(Object.assign(Object.assign({}, github.context.repo), { issue_number: pullNumber, body }));
             });
-            const stableBranchRef = getStableBranchRef(directory);
+            const targetBranchRef = targetBranchInput ? targetBranchInput : getStableBranchRef(directory);
             if (forked) {
-                const message = (0, message_1.getPatchInstructions)('⚠️ Patch (forked repo)', 'Необходимо вручную перенести исправление в стабильную ветку.', {
-                    stableBranchRef,
+                const message = (0, message_1.getPatchInstructions)('⚠️ Patch (forked repo)', `Необходимо вручную перенести изменения в ветку ${targetBranchRef}.`, {
+                    targetBranchRef,
                     pullNumber,
                     patchRefs,
                 });
                 yield createComment(message);
-                core.warning('Необходимо вручную перенести исправление в стабильную ветку');
+                core.warning(`Необходимо вручную перенести изменения в ветку ${targetBranchRef}`);
                 return;
             }
-            // фетчим стабильную ветку и патчи
+            // фетчим таргет ветку и патчи
             try {
                 if (mergeData.method === 'squash') {
-                    yield exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
+                    yield exec.exec('git', ['fetch', '--no-tags', 'origin', targetBranchRef]);
                     yield exec.exec('git', [
                         'fetch',
                         '--no-tags',
@@ -14301,33 +14303,31 @@ function run() {
                     ]);
                 }
                 else {
-                    yield exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
+                    yield exec.exec('git', ['fetch', '--no-tags', 'origin', targetBranchRef, ...patchRefs]);
                 }
-                yield exec.exec('git', ['checkout', stableBranchRef]);
-                // Переносим коммиты из PR в стабильную ветку,
-                // исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
-                // заведомо всё в порядке.
+                yield exec.exec('git', ['checkout', targetBranchRef]);
+                const revision = needScreenshots ? ':*' : ':!**/__image_snapshots__/*.png';
                 for (const patchRef of patchRefs) {
                     yield exec.exec('bash', [
                         '-c',
-                        `git --no-pager format-patch ${patchRef} -1 --stdout -- ':!**/__image_snapshots__/*.png' | git am`,
+                        `git --no-pager format-patch ${patchRef} -1 --stdout -- '${revision}' | git am`,
                     ]);
                 }
             }
             catch (e) {
                 console.error(e);
-                const message = (0, message_1.getPatchInstructions)('❌ Patch', 'Не удалось автоматически применить исправление на стабильной ветке.', {
-                    stableBranchRef,
+                const message = (0, message_1.getPatchInstructions)('❌ Patch', `Не удалось автоматически применить исправление на ветке ${targetBranchRef}.`, {
+                    targetBranchRef,
                     pullNumber,
                     patchRefs,
                 });
                 yield createComment(message);
-                throw new Error('Не удалось автоматически применить исправление на стабильной ветке');
+                throw new Error(`Не удалось автоматически применить исправление на ветке ${targetBranchRef}`);
             }
             yield exec.exec('git', [
                 'push',
                 `${remoteRepository(token)}`,
-                `HEAD:refs/heads/${stableBranchRef}`,
+                `HEAD:refs/heads/${targetBranchRef}`,
                 '--verbose',
             ]);
         }
@@ -14351,7 +14351,7 @@ void run();
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getPatchInstructions = void 0;
 function getPatchInstructions(header, description, patch) {
-    const { stableBranchRef, patchRefs, pullNumber } = patch;
+    const { targetBranchRef, patchRefs, pullNumber } = patch;
     return `
 ## ${header}
 
@@ -14359,14 +14359,14 @@ ${description}
 
 > Дальнейшие действия выполняют контрибьютеры из группы @VKCOM/vkui-core
 
-Чтобы исправление попало в стабильную ветку, выполните следующие действия:
+Чтобы изменение попало в ветку ${targetBranchRef}, выполните следующие действия:
 
-1. Создайте новую ветку от стабильной и примените исправления используя cherry-pick
+1. Создайте новую ветку от ${targetBranchRef} и примените изменения используя cherry-pick
 
 \`\`\`bash
 git stash # опционально
-git fetch origin ${stableBranchRef}
-git checkout -b patch/pr${pullNumber} origin/${stableBranchRef}
+git fetch origin ${targetBranchRef}
+git checkout -b patch/pr${pullNumber} origin/${targetBranchRef}
 
 ${patchRefs
         .map((pathRef) => {
@@ -14380,11 +14380,11 @@ ${patchRefs
 \`\`\`
 
 2. Исправьте конфликты, следуя инструкциям из терминала
-3. Отправьте ветку на GitHub и создайте новый PR с последней стабильной веткой (метка patch не нужна)
+3. Отправьте ветку на GitHub и создайте новый PR с веткой ${targetBranchRef} (установка лейбла не требуется!)
 
 \`\`\`bash
 git push --set-upstream origin patch/pr${pullNumber}
-gh pr create --base ${stableBranchRef} --title "patch: pr${pullNumber}" --body "- patch #${pullNumber}"
+gh pr create --base ${targetBranchRef} --title "patch: pr${pullNumber}" --body "- patch #${pullNumber}"
 \`\`\`
 `;
 }
