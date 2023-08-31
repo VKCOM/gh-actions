@@ -48,6 +48,8 @@ async function run(): Promise<void> {
       github.context.payload.pull_request?.head.repo.id;
     const token = core.getInput('token', { required: true });
     const directory = core.getInput('directory');
+    const targetBranchInput = core.getInput('targetBranch');
+    const needScreenshots = core.getBooleanInput('needScreenshots');
     const pullNumber = getPrNumber();
 
     const gh = github.getOctokit(token);
@@ -75,29 +77,29 @@ async function run(): Promise<void> {
         body,
       });
     };
-    const stableBranchRef = getStableBranchRef(directory);
+    const targetBranchRef = targetBranchInput ? targetBranchInput : getStableBranchRef(directory);
 
     if (forked) {
       const message = getPatchInstructions(
         '⚠️ Patch (forked repo)',
-        'Необходимо вручную перенести исправление в стабильную ветку.',
+        `Необходимо вручную перенести изменения в ветку ${targetBranchRef}.`,
         {
-          stableBranchRef,
+          targetBranchRef,
           pullNumber,
           patchRefs,
         },
       );
 
       await createComment(message);
-      core.warning('Необходимо вручную перенести исправление в стабильную ветку');
+      core.warning(`Необходимо вручную перенести изменения в ветку ${targetBranchRef}`);
 
       return;
     }
 
-    // фетчим стабильную ветку и патчи
+    // фетчим таргет ветку и патчи
     try {
       if (mergeData.method === 'squash') {
-        await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef]);
+        await exec.exec('git', ['fetch', '--no-tags', 'origin', targetBranchRef]);
         await exec.exec('git', [
           'fetch',
           '--no-tags',
@@ -108,18 +110,17 @@ async function run(): Promise<void> {
           ...patchRefs,
         ]);
       } else {
-        await exec.exec('git', ['fetch', '--no-tags', 'origin', stableBranchRef, ...patchRefs]);
+        await exec.exec('git', ['fetch', '--no-tags', 'origin', targetBranchRef, ...patchRefs]);
       }
 
-      await exec.exec('git', ['checkout', stableBranchRef]);
+      await exec.exec('git', ['checkout', targetBranchRef]);
 
-      // Переносим коммиты из PR в стабильную ветку,
-      // исключаем файлы со скриншотами, т.к. предполагаем, что в стабильной ветке
-      // заведомо всё в порядке.
+      const revision = needScreenshots ? ':*' : ':!**/__image_snapshots__/*.png';
+
       for (const patchRef of patchRefs) {
         await exec.exec('bash', [
           '-c',
-          `git --no-pager format-patch ${patchRef} -1 --stdout -- ':!**/__image_snapshots__/*.png' | git am`,
+          `git --no-pager format-patch ${patchRef} -1 --stdout -- '${revision}' | git am`,
         ]);
       }
     } catch (e) {
@@ -127,22 +128,22 @@ async function run(): Promise<void> {
 
       const message = getPatchInstructions(
         '❌ Patch',
-        'Не удалось автоматически применить исправление на стабильной ветке.',
+        `Не удалось автоматически применить исправление на ветке ${targetBranchRef}.`,
         {
-          stableBranchRef,
+          targetBranchRef,
           pullNumber,
           patchRefs,
         },
       );
 
       await createComment(message);
-      throw new Error('Не удалось автоматически применить исправление на стабильной ветке');
+      throw new Error(`Не удалось автоматически применить исправление на ветке ${targetBranchRef}`);
     }
 
     await exec.exec('git', [
       'push',
       `${remoteRepository(token)}`,
-      `HEAD:refs/heads/${stableBranchRef}`,
+      `HEAD:refs/heads/${targetBranchRef}`,
       '--verbose',
     ]);
   } catch (error) {
