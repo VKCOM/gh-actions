@@ -1,5 +1,5 @@
-name: 'Close milestone'
-description: 'Close milestone when a new version is released and notify all related issues'
+name: 'Find and close milestone/Publish the Release Notes'
+description: 'Find and close the milestone, notify all related issues and publish the release notes'
 inputs:
   token:
     required: true
