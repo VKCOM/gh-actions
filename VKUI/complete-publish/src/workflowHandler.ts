@@ -101,6 +101,7 @@ export class WorkflowHandler {
     const issues = await this.gh.paginate(this.gh.rest.issues.listForRepo, {
       ...github.context.repo,
       milestone: `${milestoneNumber}`,
+      state: 'all',
     });
 
     return issues.map((issue) => issue.number);
