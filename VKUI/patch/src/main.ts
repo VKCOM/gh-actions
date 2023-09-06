@@ -7,6 +7,7 @@ import { SemVer } from 'semver';
 import { getPatchInstructions } from './message';
 import { getMergeData } from './getMergeData';
 import { stableBranchName } from './stableBranchName';
+import { getBooleanInput } from './getBooleanInput';
 
 function getPrNumber() {
   const pullRequest = github.context.payload.pull_request;
@@ -49,7 +50,7 @@ async function run(): Promise<void> {
     const token = core.getInput('token', { required: true });
     const directory = core.getInput('directory');
     const targetBranchInput = core.getInput('targetBranch');
-    const needScreenshots = core.getBooleanInput('needScreenshots');
+    const needScreenshots = getBooleanInput('needScreenshots');
     const pullNumber = getPrNumber();
 
     const gh = github.getOctokit(token);
