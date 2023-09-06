@@ -9794,7 +9794,7 @@ class WorkflowHandler {
     }
     getIssueNumbersByMilestone(milestoneNumber) {
         return __awaiter(this, void 0, void 0, function* () {
-            const issues = yield this.gh.paginate(this.gh.rest.issues.listForRepo, Object.assign(Object.assign({}, github.context.repo), { milestone: `${milestoneNumber}` }));
+            const issues = yield this.gh.paginate(this.gh.rest.issues.listForRepo, Object.assign(Object.assign({}, github.context.repo), { milestone: `${milestoneNumber}`, state: 'all' }));
             return issues.map((issue) => issue.number);
         });
     }
