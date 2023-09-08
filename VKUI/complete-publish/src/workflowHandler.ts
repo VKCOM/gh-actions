@@ -17,6 +17,8 @@ function getIssueCommentBody(releaseTag: string) {
 }
 
 const COMMENT_WAIT_INTERVAL_MS = 1500;
+// Исключаем задачи, которые были закрыты со статусом "not_planned (won't fix)"
+const IGNORED_STATE = 'not_planned';
 
 export class WorkflowHandler {
   private readonly gh: OctokitProp;
@@ -104,7 +106,12 @@ export class WorkflowHandler {
       state: 'all',
     });
 
-    return issues.map((issue) => issue.number);
+    return issues.reduce<number[]>((issueNumbers, issue) => {
+      if (issue.state_reason !== IGNORED_STATE) {
+        issueNumbers.push(issue.number);
+      }
+      return issueNumbers;
+    }, []);
   }
 
   private async commentOnIssues(issueNumbers: number[]) {
