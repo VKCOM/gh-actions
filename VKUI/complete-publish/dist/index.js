@@ -9729,6 +9729,8 @@ function getIssueCommentBody(releaseTag) {
     return `✅ <a href="${url}" target="_blank">${releaseTag}</a> 🎉`;
 }
 const COMMENT_WAIT_INTERVAL_MS = 1500;
+// Исключаем задачи, которые были закрыты со статусом "not_planned (won't fix)"
+const IGNORED_STATE = 'not_planned';
 class WorkflowHandler {
     constructor(token, releaseTag) {
         this.error = false;
@@ -9795,7 +9797,12 @@ class WorkflowHandler {
     getIssueNumbersByMilestone(milestoneNumber) {
         return __awaiter(this, void 0, void 0, function* () {
             const issues = yield this.gh.paginate(this.gh.rest.issues.listForRepo, Object.assign(Object.assign({}, github.context.repo), { milestone: `${milestoneNumber}`, state: 'all' }));
-            return issues.map((issue) => issue.number);
+            return issues.reduce((issueNumbers, issue) => {
+                if (issue.state_reason !== IGNORED_STATE) {
+                    issueNumbers.push(issue.number);
+                }
+                return issueNumbers;
+            }, []);
         });
     }
     commentOnIssues(issueNumbers) {
