@@ -45,7 +45,7 @@ export class WorkflowHandler {
     }
   }
 
-  public async processReleaseNotes() {
+  public async processReleaseNotes(latest: boolean) {
     try {
       const releaseNotes = await this.findReleaseNotes();
 
@@ -53,7 +53,7 @@ export class WorkflowHandler {
         throw new Error(`There are no release notes for ${this.releaseTag}`);
       }
 
-      await this.publishReleaseNotes(releaseNotes.id);
+      await this.publishReleaseNotes(releaseNotes.id, latest);
     } catch (error) {
       if (error instanceof Error) {
         core.error(error.message);
@@ -74,13 +74,14 @@ export class WorkflowHandler {
     return releases.find(({ draft, name }) => draft && name === this.releaseTag);
   }
 
-  private async publishReleaseNotes(release_id: number) {
+  private async publishReleaseNotes(release_id: number, latest: boolean) {
     await this.gh.rest.repos.updateRelease({
       ...github.context.repo,
       tag_name: this.releaseTag,
       release_id,
       draft: false,
       prerelease: this.releaseTag.includes('-'),
+      make_latest: latest,
     });
   }
 

@@ -7,6 +7,9 @@ inputs:
   releaseTag:
     required: true
     description: "released version's tag"
+  latest:
+    required: true
+    description: 'latest tag for release'
 runs:
   using: 'node16'
   main: 'dist/index.js'
