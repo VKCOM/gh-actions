@@ -5,10 +5,11 @@ async function run(): Promise<void> {
   try {
     const token = core.getInput('token', { required: true });
     const releaseTag = core.getInput('releaseTag', { required: true });
+    const latest = core.getInput('latest', { required: true });
 
     const workflow = new WorkflowHandler(token, releaseTag);
 
-    await workflow.processReleaseNotes();
+    await workflow.processReleaseNotes(latest === 'true');
     await workflow.processMilestone();
 
     if (workflow.isProcessWithError()) {
