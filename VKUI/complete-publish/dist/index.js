@@ -7799,13 +7799,13 @@ var WorkflowHandler = class {
       this.error = true;
     }
   }
-  async processReleaseNotes() {
+  async processReleaseNotes(latest) {
     try {
       const releaseNotes = await this.findReleaseNotes();
       if (!releaseNotes) {
         throw new Error(`There are no release notes for ${this.releaseTag}`);
       }
-      await this.publishReleaseNotes(releaseNotes.id);
+      await this.publishReleaseNotes(releaseNotes.id, latest);
     } catch (error2) {
       if (error2 instanceof Error) {
         core.error(error2.message);
@@ -7822,13 +7822,14 @@ var WorkflowHandler = class {
     });
     return releases.find(({ draft, name }) => draft && name === this.releaseTag);
   }
-  async publishReleaseNotes(release_id) {
+  async publishReleaseNotes(release_id, latest) {
     await this.gh.rest.repos.updateRelease({
       ...github.context.repo,
       tag_name: this.releaseTag,
       release_id,
       draft: false,
-      prerelease: this.releaseTag.includes("-")
+      prerelease: this.releaseTag.includes("-"),
+      make_latest: latest
     });
   }
   async findMilestoneNumberByReleaseTag() {
@@ -7882,8 +7883,9 @@ async function run() {
   try {
     const token = core2.getInput("token", { required: true });
     const releaseTag = core2.getInput("releaseTag", { required: true });
+    const latest = core2.getInput("latest", { required: true });
     const workflow = new WorkflowHandler(token, releaseTag);
-    await workflow.processReleaseNotes();
+    await workflow.processReleaseNotes(latest === "true");
     await workflow.processMilestone();
     if (workflow.isProcessWithError()) {
       throw new Error("There were errors during the process. Check the logs for more information");
