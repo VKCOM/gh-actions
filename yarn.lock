@@ -1687,7 +1687,7 @@
   dependencies:
     tslib "^2.5.0"
 
-"@smithy/node-config-provider@^2.0.1", "@smithy/node-config-provider@^2.0.2", "@smithy/node-config-provider@^2.0.3":
+"@smithy/node-config-provider@^2.0.2", "@smithy/node-config-provider@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@smithy/node-config-provider/-/node-config-provider-2.0.3.tgz#d2559c5944453c33078221ead2aeb1ae9f53e63e"
   integrity sha512-dYSVxOQMqtdmSOBW/J4RPvSYE4KKdGLgFHDJQGNsGo1d3y9IoNLwE32lT7doWwV0ryntlm4QZZwhfb3gISrTtA==
@@ -1708,7 +1708,7 @@
     "@smithy/types" "^2.2.0"
     tslib "^2.5.0"
 
-"@smithy/property-provider@^2.0.0", "@smithy/property-provider@^2.0.1", "@smithy/property-provider@^2.0.3":
+"@smithy/property-provider@^2.0.0", "@smithy/property-provider@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@smithy/property-provider/-/property-provider-2.0.3.tgz#75b10aa55b253ad70c13f6e46e8ecadda321d9f8"
   integrity sha512-SHV1SINUNysJ5HyPrMLHLkdofgalk9+5FnQCB/985hqcUxstN616hPZ7ngOjLpdhKp0yu1ul/esE9Gd4qh1tgg==
@@ -1785,7 +1785,7 @@
   dependencies:
     tslib "^2.5.0"
 
-"@smithy/url-parser@^2.0.1", "@smithy/url-parser@^2.0.2", "@smithy/url-parser@^2.0.3":
+"@smithy/url-parser@^2.0.2", "@smithy/url-parser@^2.0.3":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@smithy/url-parser/-/url-parser-2.0.3.tgz#68015a83218b8efb92822273c5ee81c71240297d"
   integrity sha512-O7NlbDL4kh+th6qwtL7wNRcPCuOXFRWJzWKywfB/Nv56N1F8KiK0KbPn1z7MU5du/0LgjAMvhkg0mVDyiMCnqw==
@@ -2093,10 +2093,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.0.tgz#9d7daa855d33d4efec8aea88cd66db1c2f0ebe16"
   integrity sha512-najjVq5KN2vsH2U/xyh2opaSEz6cZMR2SetLIlxlj08nOcmPOemJmUK2o4kUzfLqfrWE0PIrNeE16XhYDd3nqg==
 
-"@types/semver@^7.3.12", "@types/semver@^7.5.1":
-  version "7.5.1"
-  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.1.tgz#0480eeb7221eb9bc398ad7432c9d7e14b1a5a367"
-  integrity sha512-cJRQXpObxfNKkFAZbJl2yjWtJCqELQIdShsogr1d2MilP8dKD9TE/nEKHkJgUNHdGKCQaf9HbIynuV2csLGVLg==
+"@types/semver@^7.3.12", "@types/semver@^7.5.2":
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.2.tgz#31f6eec1ed7ec23f4f05608d3a2d381df041f564"
+  integrity sha512-7aqorHYgdNO4DM36stTiGO3DvKoex9TQRwsJU6vMaFGyqpBA1MNZkz+PG3gaNUPpTAOYhT1WR7M1JyA3fbS9Cw==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
