@@ -6,7 +6,7 @@
   "private": true,
   "devDependencies": {
     "@types/node": "^20.6.5",
-    "@types/semver": "^7.5.2",
+    "@types/semver": "^7.5.3",
     "typescript": "^5.2.2"
   },
   "dependencies": {
