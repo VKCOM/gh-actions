@@ -11,5 +11,5 @@ inputs:
     required: true
     description: 'latest tag for release'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

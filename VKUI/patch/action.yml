@@ -14,5 +14,5 @@ inputs:
     required: false
     description: 'include screenshots in a patch (default ignore screenshots)'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

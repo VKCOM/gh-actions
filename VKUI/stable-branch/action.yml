@@ -8,5 +8,5 @@ inputs:
     required: false
     description: 'main directory of your project (default is your root directory)'
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
