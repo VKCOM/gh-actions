@@ -7776,7 +7776,7 @@ function getIssueCommentBody(releaseTag) {
     repo: { repo, owner }
   } = github.context;
   const url = `https://github.com/${owner}/${repo}/releases/tag/${releaseTag}`;
-  return `\u2705 <a href="${url}" target="_blank">${releaseTag}</a> \u{1F389}`;
+  return `<!-- disable_global_notification -->\u2705 <a href="${url}" target="_blank">${releaseTag}</a> \u{1F389}`;
 }
 var COMMENT_WAIT_INTERVAL_MS = 1500;
 var IGNORED_STATE = "not_planned";
