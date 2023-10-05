@@ -13,7 +13,7 @@ function getIssueCommentBody(releaseTag: string) {
   } = github.context;
 
   const url = `https://github.com/${owner}/${repo}/releases/tag/${releaseTag}`;
-  return `✅ <a href="${url}" target="_blank">${releaseTag}</a> 🎉`;
+  return `<!-- disable_global_notification -->✅ <a href="${url}" target="_blank">${releaseTag}</a> 🎉`;
 }
 
 const COMMENT_WAIT_INTERVAL_MS = 1500;
