@@ -81,7 +81,7 @@ export class WorkflowHandler {
       release_id,
       draft: false,
       prerelease: this.releaseTag.includes('-'),
-      make_latest: latest,
+      make_latest: latest ? 'true' : 'false',
     });
   }
 
