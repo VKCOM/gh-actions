@@ -2162,10 +2162,10 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
-"@types/mime-types@^2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@types/mime-types/-/mime-types-2.1.2.tgz#b4fe6996d2f32975b6603b26b4e4b3b6c92c9901"
-  integrity sha512-q9QGHMGCiBJCHEvd4ZLdasdqXv570agPsUW0CeIm/B8DzhxsYMerD0l3IlI+EQ1A2RWHY2mmM9x1YIuuWxisCg==
+"@types/mime-types@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@types/mime-types/-/mime-types-2.1.3.tgz#0688436864f87a0c8e33ca12be60cd791cc24b36"
+  integrity sha512-bvxCbHeeS7quxS7uOJShyoOQj/BfLabhF6mk9Rmr+2MRfW8W1yxyyL/0GTxLFTHen41GrIw4K3D4DrLouhb8vg==
 
 "@types/node@*", "@types/node@^20.8.6":
   version "20.8.6"
