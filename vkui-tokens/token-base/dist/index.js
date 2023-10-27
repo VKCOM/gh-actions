@@ -93,7 +93,7 @@ var require_utils = __commonJS({
     function isNumber(val) {
       return typeof val === "number";
     }
-    function isObject(val) {
+    function isObject2(val) {
       return val !== null && typeof val === "object";
     }
     function isPlainObject(val) {
@@ -116,7 +116,7 @@ var require_utils = __commonJS({
       return toString.call(val) === "[object Function]";
     }
     function isStream(val) {
-      return isObject(val) && isFunction(val.pipe);
+      return isObject2(val) && isFunction(val.pipe);
     }
     function isURLSearchParams(val) {
       return typeof URLSearchParams !== "undefined" && val instanceof URLSearchParams;
@@ -191,7 +191,7 @@ var require_utils = __commonJS({
       isArrayBufferView,
       isString,
       isNumber,
-      isObject,
+      isObject: isObject2,
       isPlainObject,
       isUndefined,
       isDate,
@@ -20755,6 +20755,21 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
 var Figma = __toESM(require_main());
 var core = __toESM(require_core());
 var fs = __toESM(require("fs/promises"));
+
+// src/sort.ts
+function isObject(value) {
+  return typeof value === "object" && !(value instanceof Array);
+}
+function sortObjectRecursively(value) {
+  if (!isObject(value))
+    return value;
+  return Object.keys(value).sort().reduce((obj, key) => {
+    obj[key] = sortObjectRecursively(value[key]);
+    return obj;
+  }, {});
+}
+
+// src/main.ts
 function toSnack(s) {
   return s.replaceAll(/( – | )/g, "_");
 }
@@ -20855,7 +20870,7 @@ async function main() {
     }
     recursiveTokens(tokens, splitPath, cssValue);
   });
-  await fs.writeFile(pathToJSON, JSON.stringify(tokens, void 0, 2));
+  await fs.writeFile(pathToJSON, JSON.stringify(sortObjectRecursively(tokens), void 0, 2));
 }
 main().then().catch((err) => {
   core.error(err.stack);
