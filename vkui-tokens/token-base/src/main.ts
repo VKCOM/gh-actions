@@ -1,6 +1,7 @@
 import * as Figma from 'figma-js';
 import * as core from '@actions/core';
 import * as fs from 'fs/promises';
+import { sortObjectRecursively } from './sort';
 
 type Tokens = { [P in string]: Tokens | string };
 
@@ -156,7 +157,7 @@ async function main() {
     recursiveTokens(tokens, splitPath, cssValue);
   });
 
-  await fs.writeFile(pathToJSON, JSON.stringify(tokens, undefined, 2));
+  await fs.writeFile(pathToJSON, JSON.stringify(sortObjectRecursively(tokens), undefined, 2));
 }
 
 main()
