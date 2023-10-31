@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/eslintrc",
-  "extends": ["plugin:@vkontakte/eslint-plugin/react-typescript", "prettier"],
+  "extends": ["plugin:@vkontakte/eslint-plugin/typescript", "prettier"],
   "plugins": ["import", "prettier"],
   "rules": {
     "prettier/prettier": "error"
