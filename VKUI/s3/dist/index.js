@@ -21881,7 +21881,7 @@ var require_region_redirect_middleware = __commonJS({
         try {
           return await next(args);
         } catch (err) {
-          if (clientConfig.followRegionRedirects && err.name === "PermanentRedirect" && err.$metadata.httpStatusCode === 301) {
+          if (clientConfig.followRegionRedirects && err.$metadata.httpStatusCode === 301) {
             try {
               const actualRegion = err.$response.headers["x-amz-bucket-region"];
               (_a = context.logger) === null || _a === void 0 ? void 0 : _a.debug(`Redirecting from ${await clientConfig.region()} to ${actualRegion}`);
@@ -28652,7 +28652,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.438.0",
+      version: "3.441.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -28678,9 +28678,9 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.438.0",
-        "@aws-sdk/core": "3.436.0",
-        "@aws-sdk/credential-provider-node": "3.438.0",
+        "@aws-sdk/client-sts": "3.441.0",
+        "@aws-sdk/core": "3.441.0",
+        "@aws-sdk/credential-provider-node": "3.441.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.433.0",
         "@aws-sdk/middleware-expect-continue": "3.433.0",
         "@aws-sdk/middleware-flexible-checksums": "3.433.0",
@@ -28688,7 +28688,7 @@ var require_package = __commonJS({
         "@aws-sdk/middleware-location-constraint": "3.433.0",
         "@aws-sdk/middleware-logger": "3.433.0",
         "@aws-sdk/middleware-recursion-detection": "3.433.0",
-        "@aws-sdk/middleware-sdk-s3": "3.433.0",
+        "@aws-sdk/middleware-sdk-s3": "3.440.0",
         "@aws-sdk/middleware-signing": "3.433.0",
         "@aws-sdk/middleware-ssec": "3.433.0",
         "@aws-sdk/middleware-user-agent": "3.438.0",
@@ -28819,7 +28819,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.438.0",
+      version: "3.441.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -28841,8 +28841,8 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.436.0",
-        "@aws-sdk/credential-provider-node": "3.438.0",
+        "@aws-sdk/core": "3.441.0",
+        "@aws-sdk/credential-provider-node": "3.441.0",
         "@aws-sdk/middleware-host-header": "3.433.0",
         "@aws-sdk/middleware-logger": "3.433.0",
         "@aws-sdk/middleware-recursion-detection": "3.433.0",
@@ -32048,6 +32048,71 @@ var require_client4 = __commonJS({
   }
 });
 
+// ../../node_modules/@aws-sdk/core/dist-cjs/protocols/coercing-serializers.js
+var require_coercing_serializers = __commonJS({
+  "../../node_modules/@aws-sdk/core/dist-cjs/protocols/coercing-serializers.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports._toNum = exports._toBool = exports._toStr = void 0;
+    var _toStr = (val2) => {
+      if (val2 == null) {
+        return val2;
+      }
+      if (typeof val2 === "number" || typeof val2 === "bigint") {
+        const warning = new Error(`Received number ${val2} where a string was expected.`);
+        warning.name = "Warning";
+        console.warn(warning);
+        return String(val2);
+      }
+      if (typeof val2 === "boolean") {
+        const warning = new Error(`Received boolean ${val2} where a string was expected.`);
+        warning.name = "Warning";
+        console.warn(warning);
+        return String(val2);
+      }
+      return val2;
+    };
+    exports._toStr = _toStr;
+    var _toBool = (val2) => {
+      if (val2 == null) {
+        return val2;
+      }
+      if (typeof val2 === "number") {
+      }
+      if (typeof val2 === "string") {
+        const lowercase = val2.toLowerCase();
+        if (val2 !== "" && lowercase !== "false" && lowercase !== "true") {
+          const warning = new Error(`Received string "${val2}" where a boolean was expected.`);
+          warning.name = "Warning";
+          console.warn(warning);
+        }
+        return val2 !== "" && lowercase !== "false";
+      }
+      return val2;
+    };
+    exports._toBool = _toBool;
+    var _toNum = (val2) => {
+      if (val2 == null) {
+        return val2;
+      }
+      if (typeof val2 === "boolean") {
+      }
+      if (typeof val2 === "string") {
+        const num = Number(val2);
+        if (num.toString() !== val2) {
+          const warning = new Error(`Received string "${val2}" where a number was expected.`);
+          warning.name = "Warning";
+          console.warn(warning);
+          return val2;
+        }
+        return num;
+      }
+      return val2;
+    };
+    exports._toNum = _toNum;
+  }
+});
+
 // ../../node_modules/@aws-sdk/core/dist-cjs/protocols/json/awsExpectUnion.js
 var require_awsExpectUnion = __commonJS({
   "../../node_modules/@aws-sdk/core/dist-cjs/protocols/json/awsExpectUnion.js"(exports) {
@@ -32074,6 +32139,7 @@ var require_protocols = __commonJS({
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
+    tslib_1.__exportStar(require_coercing_serializers(), exports);
     tslib_1.__exportStar(require_awsExpectUnion(), exports);
   }
 });
@@ -33100,7 +33166,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.438.0",
+      version: "3.441.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -33120,7 +33186,7 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.436.0",
+        "@aws-sdk/core": "3.441.0",
         "@aws-sdk/middleware-host-header": "3.433.0",
         "@aws-sdk/middleware-logger": "3.433.0",
         "@aws-sdk/middleware-recursion-detection": "3.433.0",
