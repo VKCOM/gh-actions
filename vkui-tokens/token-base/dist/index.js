@@ -386,7 +386,7 @@ var require_cookies = __commonJS({
     var utils = require_utils();
     module2.exports = utils.isStandardBrowserEnv() ? (
       // Standard browser envs support document.cookie
-      function standardBrowserEnv() {
+      /* @__PURE__ */ function standardBrowserEnv() {
         return {
           write: function write(name, value, expires, path, domain, secure) {
             var cookie = [];
@@ -416,7 +416,7 @@ var require_cookies = __commonJS({
       }()
     ) : (
       // Non standard browser env (web workers, react-native) lack needed support.
-      function nonStandardBrowserEnv() {
+      /* @__PURE__ */ function nonStandardBrowserEnv() {
         return {
           write: function write() {
           },
@@ -556,7 +556,7 @@ var require_isURLSameOrigin = __commonJS({
       }()
     ) : (
       // Non standard browser envs (web workers, react-native) lack needed support.
-      function nonStandardBrowserEnv() {
+      /* @__PURE__ */ function nonStandardBrowserEnv() {
         return function isURLSameOrigin() {
           return true;
         };
@@ -981,7 +981,7 @@ var require_browser = __commonJS({
     exports.load = load;
     exports.useColors = useColors;
     exports.storage = localstorage();
-    exports.destroy = (() => {
+    exports.destroy = /* @__PURE__ */ (() => {
       let warned = false;
       return () => {
         if (!warned) {
