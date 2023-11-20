@@ -27,7 +27,7 @@
     "@vkontakte/eslint-plugin": "^1.2.0",
     "@vkontakte/prettier-config": "^0.1.0",
     "concurrently": "^8.2.2",
-    "esbuild": "^0.19.5",
+    "esbuild": "^0.19.6",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",
