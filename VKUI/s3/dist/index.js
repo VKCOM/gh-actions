@@ -28743,7 +28743,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.454.0",
+      version: "3.458.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -28769,9 +28769,9 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.454.0",
+        "@aws-sdk/client-sts": "3.458.0",
         "@aws-sdk/core": "3.451.0",
-        "@aws-sdk/credential-provider-node": "3.451.0",
+        "@aws-sdk/credential-provider-node": "3.458.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.451.0",
         "@aws-sdk/middleware-expect-continue": "3.451.0",
         "@aws-sdk/middleware-flexible-checksums": "3.451.0",
@@ -28910,7 +28910,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.454.0",
+      version: "3.458.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -28933,7 +28933,7 @@ var require_package2 = __commonJS({
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
         "@aws-sdk/core": "3.451.0",
-        "@aws-sdk/credential-provider-node": "3.451.0",
+        "@aws-sdk/credential-provider-node": "3.458.0",
         "@aws-sdk/middleware-host-header": "3.451.0",
         "@aws-sdk/middleware-logger": "3.451.0",
         "@aws-sdk/middleware-recursion-detection": "3.451.0",
@@ -33257,7 +33257,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.451.0",
+      version: "3.458.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -39477,7 +39477,7 @@ var require_ruleset3 = __commonJS({
     var bG = [{ [bM]: o, [bN]: [aH, false] }];
     var bH = [T];
     var bI = [{ [bM]: o, [bN]: [{ [bO]: "Region" }, true] }];
-    var _data = { version: "1.0", parameters: { Bucket: P, Region: P, UseFIPS: Q, UseDualStack: Q, Endpoint: P, ForcePathStyle: Q, Accelerate: Q, UseGlobalEndpoint: Q, UseObjectLambdaEndpoint: R, DisableAccessPoints: R, DisableMultiRegionAccessPoints: Q, UseArnRegion: R }, rules: [{ [bL]: [{ [bM]: c, [bN]: bk }], rules: [{ [bL]: [S, T], error: "Accelerate cannot be used with FIPS", [bK]: e }, { [bL]: [U, V], error: "Cannot set dual-stack in combination with a custom endpoint.", [bK]: e }, { [bL]: [V, T], error: "A custom endpoint cannot be combined with FIPS", [bK]: e }, { [bL]: [V, S], error: "A custom endpoint cannot be combined with S3 Accelerate", [bK]: e }, { [bL]: [T, W, X], error: "Partition does not support FIPS", [bK]: e }, { [bL]: [Y, { [bM]: j, [bN]: [Z, 49, 50, b], [bP]: k }, { [bM]: j, [bN]: [Z, 8, 12, b], [bP]: l }, { [bM]: j, [bN]: [Z, 0, 7, b], [bP]: m }, { [bM]: j, [bN]: [Z, 32, 49, b], [bP]: n }, { [bM]: f, [bN]: bk, [bP]: "regionPartition" }, { [bM]: g, [bN]: [{ [bO]: m }, "--op-s3"] }], rules: [{ [bL]: bn, rules: [{ [bL]: [{ [bM]: g, [bN]: [aa, "e"] }], rules: [{ [bL]: bo, rules: [ab, { [bL]: bp, endpoint: { [bQ]: "https://{Bucket}.ec2.{url#authority}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { endpoint: { [bQ]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { [bL]: [{ [bM]: g, [bN]: [aa, "o"] }], rules: [{ [bL]: bo, rules: [ab, { [bL]: bp, endpoint: { [bQ]: "https://{Bucket}.op-{outpostId}.{url#authority}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { endpoint: { [bQ]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { error: 'Unrecognized hardware type: "Expected hardware type o or e but got {hardwareType}"', [bK]: e }], [bK]: t }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [bK]: e }], [bK]: t }, { [bL]: bq, rules: [{ [bL]: [V, { [bM]: p, [bN]: [{ [bM]: c, [bN]: [{ [bM]: q, [bN]: bl }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [bK]: e }, { [bL]: [ag, { [bM]: u, [bN]: [Z, a] }], rules: [{ [bL]: br, rules: [{ [bL]: bs, rules: [{ [bL]: [S, X], error: "S3 Accelerate cannot be used in this region", [bK]: e }, { [bL]: [U, T, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, T, ai, ac, al, am], rules: [{ endpoint: an, [bK]: s }], [bK]: t }, { [bL]: [U, T, ai, ac, al, ap], endpoint: an, [bK]: s }, { [bL]: [aq, T, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, T, ai, ac, al, am], rules: [{ endpoint: ar, [bK]: s }], [bK]: t }, { [bL]: [aq, T, ai, ac, al, ap], endpoint: ar, [bK]: s }, { [bL]: [U, as, S, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, as, S, ac, al, am], rules: [{ endpoint: at, [bK]: s }], [bK]: t }, { [bL]: [U, as, S, ac, al, ap], endpoint: at, [bK]: s }, { [bL]: [U, as, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, as, ai, ac, al, am], rules: [{ endpoint: au, [bK]: s }], [bK]: t }, { [bL]: [U, as, ai, ac, al, ap], endpoint: au, [bK]: s }, { [bL]: [aq, as, ai, V, ad, av, aj], endpoint: { [bQ]: w, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, ai, V, ad, ax, aj], endpoint: { [bQ]: x, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, ai, V, ad, av, al, am], rules: [{ [bL]: bt, endpoint: ay, [bK]: s }, { endpoint: ay, [bK]: s }], [bK]: t }, { [bL]: [aq, as, ai, V, ad, ax, al, am], rules: [{ [bL]: bt, endpoint: az, [bK]: s }, aA], [bK]: t }, { [bL]: [aq, as, ai, V, ad, av, al, ap], endpoint: ay, [bK]: s }, { [bL]: [aq, as, ai, V, ad, ax, al, ap], endpoint: az, [bK]: s }, { [bL]: [aq, as, S, ac, aj], endpoint: { [bQ]: y, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, S, ac, al, am], rules: [{ [bL]: bt, endpoint: aB, [bK]: s }, { endpoint: aB, [bK]: s }], [bK]: t }, { [bL]: [aq, as, S, ac, al, ap], endpoint: aB, [bK]: s }, { [bL]: [aq, as, ai, ac, aj], endpoint: { [bQ]: z, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, ai, ac, al, am], rules: [{ [bL]: bt, endpoint: { [bQ]: z, [bR]: ao, [bW]: af }, [bK]: s }, { endpoint: aC, [bK]: s }], [bK]: t }, { [bL]: [aq, as, ai, ac, al, ap], endpoint: aC, [bK]: s }], [bK]: t }, aD], [bK]: t }], [bK]: t }, { [bL]: [V, ad, { [bM]: g, [bN]: [{ [bM]: h, [bN]: [aw, "scheme"] }, "http"] }, { [bM]: u, [bN]: [Z, b] }, ag, as, aq, ai], rules: [{ [bL]: br, rules: [{ [bL]: bs, rules: [aA], [bK]: t }, aD], [bK]: t }], [bK]: t }, { [bL]: [ag, { [bM]: A, [bN]: bm, [bP]: B }], rules: [{ [bL]: [{ [bM]: h, [bN]: [aE, "resourceId[0]"], [bP]: C }, { [bM]: p, [bN]: [{ [bM]: g, [bN]: [aF, D] }] }], rules: [{ [bL]: [{ [bM]: g, [bN]: [aG, E] }], rules: [{ [bL]: bu, rules: [{ [bL]: bv, rules: [aI, aJ, { [bL]: bz, rules: [aK, { [bL]: bA, rules: [aL, { [bL]: bC, rules: [{ [bL]: br, rules: [{ [bL]: bD, rules: [{ [bL]: bE, rules: [{ [bL]: [{ [bM]: g, [bN]: [aN, D] }], error: "Invalid ARN: Missing account id", [bK]: e }, { [bL]: bF, rules: [{ [bL]: bG, rules: [{ [bL]: bp, endpoint: { [bQ]: H, [bR]: aO, [bW]: af }, [bK]: s }, { [bL]: bH, endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aO, [bW]: af }, [bK]: s }, { endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aO, [bW]: af }, [bK]: s }], [bK]: t }, aP], [bK]: t }, aQ], [bK]: t }, aR], [bK]: t }, aS], [bK]: t }], [bK]: t }], [bK]: t }, aT], [bK]: t }, { error: "Invalid ARN: bucket ARN is missing a region", [bK]: e }], [bK]: t }, aU], [bK]: t }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [bK]: e }], [bK]: t }, { [bL]: bu, rules: [{ [bL]: bv, rules: [{ [bL]: bz, rules: [{ [bL]: bu, rules: [{ [bL]: bz, rules: [aK, { [bL]: bA, rules: [aL, { [bL]: bC, rules: [{ [bL]: br, rules: [{ [bL]: [{ [bM]: g, [bN]: [aM, "{partitionResult#name}"] }], rules: [{ [bL]: bE, rules: [{ [bL]: [{ [bM]: g, [bN]: [aG, v] }], rules: [{ [bL]: bF, rules: [{ [bL]: bG, rules: [{ [bL]: by, error: "Access Points do not support S3 Accelerate", [bK]: e }, { [bL]: [T, U], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [T, aq], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [as, U], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [as, aq, V, ad], endpoint: { [bQ]: H, [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [as, aq], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }], [bK]: t }, aP], [bK]: t }, aQ], [bK]: t }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [bK]: e }], [bK]: t }, aR], [bK]: t }, aS], [bK]: t }], [bK]: t }], [bK]: t }, aT], [bK]: t }], [bK]: t }], [bK]: t }, { [bL]: [{ [bM]: o, [bN]: [aH, b] }], rules: [{ [bL]: bx, error: "S3 MRAP does not support dual-stack", [bK]: e }, { [bL]: bH, error: "S3 MRAP does not support FIPS", [bK]: e }, { [bL]: by, error: "S3 MRAP does not support S3 Accelerate", [bK]: e }, { [bL]: [{ [bM]: d, [bN]: [{ [bO]: "DisableMultiRegionAccessPoints" }, b] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [bK]: e }, { [bL]: [{ [bM]: f, [bN]: bk, [bP]: I }], rules: [{ [bL]: [{ [bM]: g, [bN]: [{ [bM]: h, [bN]: [{ [bO]: I }, i] }, { [bM]: h, [bN]: [aE, "partition"] }] }], rules: [{ endpoint: { [bQ]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [bR]: { [bS]: [{ [bT]: b, name: "sigv4a", [bU]: v, signingRegionSet: ["*"] }] }, [bW]: af }, [bK]: s }], [bK]: t }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [bK]: e }], [bK]: t }], [bK]: t }, { error: "Invalid Access Point Name", [bK]: e }], [bK]: t }, aU], [bK]: t }, { [bL]: [{ [bM]: g, [bN]: [aG, r] }], rules: [{ [bL]: bx, error: "S3 Outposts does not support Dual-stack", [bK]: e }, { [bL]: bH, error: "S3 Outposts does not support FIPS", [bK]: e }, { [bL]: by, error: "S3 Outposts does not support S3 Accelerate", [bK]: e }, { [bL]: [{ [bM]: c, [bN]: [{ [bM]: h, [bN]: [aE, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [bK]: e }, { [bL]: [{ [bM]: h, [bN]: bw, [bP]: n }], rules: [{ [bL]: bn, rules: [aL, { [bL]: bC, rules: [{ [bL]: br, rules: [{ [bL]: bD, rules: [{ [bL]: bE, rules: [{ [bL]: bF, rules: [{ [bL]: [{ [bM]: h, [bN]: bB, [bP]: J }], rules: [{ [bL]: [{ [bM]: h, [bN]: [aE, "resourceId[3]"], [bP]: G }], rules: [{ [bL]: [{ [bM]: g, [bN]: [{ [bO]: J }, F] }], rules: [{ [bL]: bp, endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [bR]: aW, [bW]: af }, [bK]: s }, { endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aW, [bW]: af }, [bK]: s }], [bK]: t }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [bK]: e }], [bK]: t }, { error: "Invalid ARN: expected an access point name", [bK]: e }], [bK]: t }, { error: "Invalid ARN: Expected a 4-component resource", [bK]: e }], [bK]: t }, aQ], [bK]: t }, aR], [bK]: t }, aS], [bK]: t }], [bK]: t }], [bK]: t }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [bK]: e }], [bK]: t }, { error: "Invalid ARN: The Outpost Id was not set", [bK]: e }], [bK]: t }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [bK]: e }], [bK]: t }, { error: "Invalid ARN: No ARN type specified", [bK]: e }], [bK]: t }, { [bL]: [{ [bM]: j, [bN]: [Z, 0, 4, a], [bP]: K }, { [bM]: g, [bN]: [{ [bO]: K }, "arn:"] }, { [bM]: p, [bN]: [{ [bM]: c, [bN]: [aX] }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [bK]: e }, { [bL]: [{ [bM]: d, [bN]: [ah, b] }, aX], error: "Path-style addressing cannot be used with ARN buckets", [bK]: e }, { [bL]: [{ [bM]: "uriEncode", [bN]: bm, [bP]: "uri_encoded_bucket" }], rules: [{ [bL]: br, rules: [{ [bL]: [ai], rules: [{ [bL]: [U, ac, T, aj], endpoint: { [bQ]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, ac, T, al, am], rules: [{ endpoint: aY, [bK]: s }], [bK]: t }, { [bL]: [U, ac, T, al, ap], endpoint: aY, [bK]: s }, { [bL]: [aq, ac, T, aj], endpoint: { [bQ]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, ac, T, al, am], rules: [{ endpoint: aZ, [bK]: s }], [bK]: t }, { [bL]: [aq, ac, T, al, ap], endpoint: aZ, [bK]: s }, { [bL]: [U, ac, as, aj], endpoint: { [bQ]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, ac, as, al, am], rules: [{ endpoint: ba, [bK]: s }], [bK]: t }, { [bL]: [U, ac, as, al, ap], endpoint: ba, [bK]: s }, { [bL]: [aq, V, ad, as, aj], endpoint: { [bQ]: L, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, V, ad, as, al, am], rules: [{ [bL]: bt, endpoint: bb, [bK]: s }, { endpoint: bb, [bK]: s }], [bK]: t }, { [bL]: [aq, V, ad, as, al, ap], endpoint: bb, [bK]: s }, { [bL]: [aq, ac, as, aj], endpoint: { [bQ]: M, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, ac, as, al, am], rules: [{ [bL]: bt, endpoint: { [bQ]: M, [bR]: ao, [bW]: af }, [bK]: s }, { endpoint: bc, [bK]: s }], [bK]: t }, { [bL]: [aq, ac, as, al, ap], endpoint: bc, [bK]: s }], [bK]: t }, { error: "Path-style addressing cannot be used with S3 Accelerate", [bK]: e }], [bK]: t }], [bK]: t }], [bK]: t }, { [bL]: [{ [bM]: c, [bN]: [bd] }, { [bM]: d, [bN]: [bd, b] }], rules: [{ [bL]: br, rules: [{ [bL]: bI, rules: [aI, aJ, { [bL]: bp, endpoint: { [bQ]: N, [bR]: be, [bW]: af }, [bK]: s }, { [bL]: bH, endpoint: { [bQ]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [bR]: be, [bW]: af }, [bK]: s }, { endpoint: { [bQ]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [bR]: be, [bW]: af }, [bK]: s }], [bK]: t }, aD], [bK]: t }], [bK]: t }, { [bL]: [{ [bM]: p, [bN]: bq }], rules: [{ [bL]: br, rules: [{ [bL]: bI, rules: [{ [bL]: [T, U, ac, aj], endpoint: { [bQ]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [T, U, ac, al, am], rules: [{ endpoint: bf, [bK]: s }], [bK]: t }, { [bL]: [T, U, ac, al, ap], endpoint: bf, [bK]: s }, { [bL]: [T, aq, ac, aj], endpoint: { [bQ]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [T, aq, ac, al, am], rules: [{ endpoint: bg, [bK]: s }], [bK]: t }, { [bL]: [T, aq, ac, al, ap], endpoint: bg, [bK]: s }, { [bL]: [as, U, ac, aj], endpoint: { [bQ]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [as, U, ac, al, am], rules: [{ endpoint: bh, [bK]: s }], [bK]: t }, { [bL]: [as, U, ac, al, ap], endpoint: bh, [bK]: s }, { [bL]: [as, aq, V, ad, aj], endpoint: { [bQ]: N, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [as, aq, V, ad, al, am], rules: [{ [bL]: bt, endpoint: bi, [bK]: s }, { endpoint: bi, [bK]: s }], [bK]: t }, { [bL]: [as, aq, V, ad, al, ap], endpoint: bi, [bK]: s }, { [bL]: [as, aq, ac, aj], endpoint: { [bQ]: O, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [as, aq, ac, al, am], rules: [{ [bL]: bt, endpoint: { [bQ]: O, [bR]: ao, [bW]: af }, [bK]: s }, { endpoint: bj, [bK]: s }], [bK]: t }, { [bL]: [as, aq, ac, al, ap], endpoint: bj, [bK]: s }], [bK]: t }, aD], [bK]: t }], [bK]: t }], [bK]: t }, { error: "A region must be set when sending requests to S3.", [bK]: e }] };
+    var _data = { version: "1.0", parameters: { Bucket: P, Region: P, UseFIPS: Q, UseDualStack: Q, Endpoint: P, ForcePathStyle: Q, Accelerate: Q, UseGlobalEndpoint: Q, UseObjectLambdaEndpoint: R, Key: P, Prefix: P, DisableAccessPoints: R, DisableMultiRegionAccessPoints: Q, UseArnRegion: R }, rules: [{ [bL]: [{ [bM]: c, [bN]: bk }], rules: [{ [bL]: [S, T], error: "Accelerate cannot be used with FIPS", [bK]: e }, { [bL]: [U, V], error: "Cannot set dual-stack in combination with a custom endpoint.", [bK]: e }, { [bL]: [V, T], error: "A custom endpoint cannot be combined with FIPS", [bK]: e }, { [bL]: [V, S], error: "A custom endpoint cannot be combined with S3 Accelerate", [bK]: e }, { [bL]: [T, W, X], error: "Partition does not support FIPS", [bK]: e }, { [bL]: [Y, { [bM]: j, [bN]: [Z, 49, 50, b], [bP]: k }, { [bM]: j, [bN]: [Z, 8, 12, b], [bP]: l }, { [bM]: j, [bN]: [Z, 0, 7, b], [bP]: m }, { [bM]: j, [bN]: [Z, 32, 49, b], [bP]: n }, { [bM]: f, [bN]: bk, [bP]: "regionPartition" }, { [bM]: g, [bN]: [{ [bO]: m }, "--op-s3"] }], rules: [{ [bL]: bn, rules: [{ [bL]: [{ [bM]: g, [bN]: [aa, "e"] }], rules: [{ [bL]: bo, rules: [ab, { [bL]: bp, endpoint: { [bQ]: "https://{Bucket}.ec2.{url#authority}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { endpoint: { [bQ]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { [bL]: [{ [bM]: g, [bN]: [aa, "o"] }], rules: [{ [bL]: bo, rules: [ab, { [bL]: bp, endpoint: { [bQ]: "https://{Bucket}.op-{outpostId}.{url#authority}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { endpoint: { [bQ]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [bR]: ae, [bW]: af }, [bK]: s }], [bK]: t }, { error: 'Unrecognized hardware type: "Expected hardware type o or e but got {hardwareType}"', [bK]: e }], [bK]: t }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [bK]: e }], [bK]: t }, { [bL]: bq, rules: [{ [bL]: [V, { [bM]: p, [bN]: [{ [bM]: c, [bN]: [{ [bM]: q, [bN]: bl }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [bK]: e }, { [bL]: [ag, { [bM]: u, [bN]: [Z, a] }], rules: [{ [bL]: br, rules: [{ [bL]: bs, rules: [{ [bL]: [S, X], error: "S3 Accelerate cannot be used in this region", [bK]: e }, { [bL]: [U, T, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, T, ai, ac, al, am], rules: [{ endpoint: an, [bK]: s }], [bK]: t }, { [bL]: [U, T, ai, ac, al, ap], endpoint: an, [bK]: s }, { [bL]: [aq, T, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, T, ai, ac, al, am], rules: [{ endpoint: ar, [bK]: s }], [bK]: t }, { [bL]: [aq, T, ai, ac, al, ap], endpoint: ar, [bK]: s }, { [bL]: [U, as, S, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, as, S, ac, al, am], rules: [{ endpoint: at, [bK]: s }], [bK]: t }, { [bL]: [U, as, S, ac, al, ap], endpoint: at, [bK]: s }, { [bL]: [U, as, ai, ac, aj], endpoint: { [bQ]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, as, ai, ac, al, am], rules: [{ endpoint: au, [bK]: s }], [bK]: t }, { [bL]: [U, as, ai, ac, al, ap], endpoint: au, [bK]: s }, { [bL]: [aq, as, ai, V, ad, av, aj], endpoint: { [bQ]: w, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, ai, V, ad, ax, aj], endpoint: { [bQ]: x, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, ai, V, ad, av, al, am], rules: [{ [bL]: bt, endpoint: ay, [bK]: s }, { endpoint: ay, [bK]: s }], [bK]: t }, { [bL]: [aq, as, ai, V, ad, ax, al, am], rules: [{ [bL]: bt, endpoint: az, [bK]: s }, aA], [bK]: t }, { [bL]: [aq, as, ai, V, ad, av, al, ap], endpoint: ay, [bK]: s }, { [bL]: [aq, as, ai, V, ad, ax, al, ap], endpoint: az, [bK]: s }, { [bL]: [aq, as, S, ac, aj], endpoint: { [bQ]: y, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, S, ac, al, am], rules: [{ [bL]: bt, endpoint: aB, [bK]: s }, { endpoint: aB, [bK]: s }], [bK]: t }, { [bL]: [aq, as, S, ac, al, ap], endpoint: aB, [bK]: s }, { [bL]: [aq, as, ai, ac, aj], endpoint: { [bQ]: z, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, as, ai, ac, al, am], rules: [{ [bL]: bt, endpoint: { [bQ]: z, [bR]: ao, [bW]: af }, [bK]: s }, { endpoint: aC, [bK]: s }], [bK]: t }, { [bL]: [aq, as, ai, ac, al, ap], endpoint: aC, [bK]: s }], [bK]: t }, aD], [bK]: t }], [bK]: t }, { [bL]: [V, ad, { [bM]: g, [bN]: [{ [bM]: h, [bN]: [aw, "scheme"] }, "http"] }, { [bM]: u, [bN]: [Z, b] }, ag, as, aq, ai], rules: [{ [bL]: br, rules: [{ [bL]: bs, rules: [aA], [bK]: t }, aD], [bK]: t }], [bK]: t }, { [bL]: [ag, { [bM]: A, [bN]: bm, [bP]: B }], rules: [{ [bL]: [{ [bM]: h, [bN]: [aE, "resourceId[0]"], [bP]: C }, { [bM]: p, [bN]: [{ [bM]: g, [bN]: [aF, D] }] }], rules: [{ [bL]: [{ [bM]: g, [bN]: [aG, E] }], rules: [{ [bL]: bu, rules: [{ [bL]: bv, rules: [aI, aJ, { [bL]: bz, rules: [aK, { [bL]: bA, rules: [aL, { [bL]: bC, rules: [{ [bL]: br, rules: [{ [bL]: bD, rules: [{ [bL]: bE, rules: [{ [bL]: [{ [bM]: g, [bN]: [aN, D] }], error: "Invalid ARN: Missing account id", [bK]: e }, { [bL]: bF, rules: [{ [bL]: bG, rules: [{ [bL]: bp, endpoint: { [bQ]: H, [bR]: aO, [bW]: af }, [bK]: s }, { [bL]: bH, endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aO, [bW]: af }, [bK]: s }, { endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aO, [bW]: af }, [bK]: s }], [bK]: t }, aP], [bK]: t }, aQ], [bK]: t }, aR], [bK]: t }, aS], [bK]: t }], [bK]: t }], [bK]: t }, aT], [bK]: t }, { error: "Invalid ARN: bucket ARN is missing a region", [bK]: e }], [bK]: t }, aU], [bK]: t }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [bK]: e }], [bK]: t }, { [bL]: bu, rules: [{ [bL]: bv, rules: [{ [bL]: bz, rules: [{ [bL]: bu, rules: [{ [bL]: bz, rules: [aK, { [bL]: bA, rules: [aL, { [bL]: bC, rules: [{ [bL]: br, rules: [{ [bL]: [{ [bM]: g, [bN]: [aM, "{partitionResult#name}"] }], rules: [{ [bL]: bE, rules: [{ [bL]: [{ [bM]: g, [bN]: [aG, v] }], rules: [{ [bL]: bF, rules: [{ [bL]: bG, rules: [{ [bL]: by, error: "Access Points do not support S3 Accelerate", [bK]: e }, { [bL]: [T, U], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [T, aq], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [as, U], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [as, aq, V, ad], endpoint: { [bQ]: H, [bR]: aV, [bW]: af }, [bK]: s }, { [bL]: [as, aq], endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aV, [bW]: af }, [bK]: s }], [bK]: t }, aP], [bK]: t }, aQ], [bK]: t }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [bK]: e }], [bK]: t }, aR], [bK]: t }, aS], [bK]: t }], [bK]: t }], [bK]: t }, aT], [bK]: t }], [bK]: t }], [bK]: t }, { [bL]: [{ [bM]: o, [bN]: [aH, b] }], rules: [{ [bL]: bx, error: "S3 MRAP does not support dual-stack", [bK]: e }, { [bL]: bH, error: "S3 MRAP does not support FIPS", [bK]: e }, { [bL]: by, error: "S3 MRAP does not support S3 Accelerate", [bK]: e }, { [bL]: [{ [bM]: d, [bN]: [{ [bO]: "DisableMultiRegionAccessPoints" }, b] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [bK]: e }, { [bL]: [{ [bM]: f, [bN]: bk, [bP]: I }], rules: [{ [bL]: [{ [bM]: g, [bN]: [{ [bM]: h, [bN]: [{ [bO]: I }, i] }, { [bM]: h, [bN]: [aE, "partition"] }] }], rules: [{ endpoint: { [bQ]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [bR]: { [bS]: [{ [bT]: b, name: "sigv4a", [bU]: v, signingRegionSet: ["*"] }] }, [bW]: af }, [bK]: s }], [bK]: t }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [bK]: e }], [bK]: t }], [bK]: t }, { error: "Invalid Access Point Name", [bK]: e }], [bK]: t }, aU], [bK]: t }, { [bL]: [{ [bM]: g, [bN]: [aG, r] }], rules: [{ [bL]: bx, error: "S3 Outposts does not support Dual-stack", [bK]: e }, { [bL]: bH, error: "S3 Outposts does not support FIPS", [bK]: e }, { [bL]: by, error: "S3 Outposts does not support S3 Accelerate", [bK]: e }, { [bL]: [{ [bM]: c, [bN]: [{ [bM]: h, [bN]: [aE, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [bK]: e }, { [bL]: [{ [bM]: h, [bN]: bw, [bP]: n }], rules: [{ [bL]: bn, rules: [aL, { [bL]: bC, rules: [{ [bL]: br, rules: [{ [bL]: bD, rules: [{ [bL]: bE, rules: [{ [bL]: bF, rules: [{ [bL]: [{ [bM]: h, [bN]: bB, [bP]: J }], rules: [{ [bL]: [{ [bM]: h, [bN]: [aE, "resourceId[3]"], [bP]: G }], rules: [{ [bL]: [{ [bM]: g, [bN]: [{ [bO]: J }, F] }], rules: [{ [bL]: bp, endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [bR]: aW, [bW]: af }, [bK]: s }, { endpoint: { [bQ]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [bR]: aW, [bW]: af }, [bK]: s }], [bK]: t }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [bK]: e }], [bK]: t }, { error: "Invalid ARN: expected an access point name", [bK]: e }], [bK]: t }, { error: "Invalid ARN: Expected a 4-component resource", [bK]: e }], [bK]: t }, aQ], [bK]: t }, aR], [bK]: t }, aS], [bK]: t }], [bK]: t }], [bK]: t }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [bK]: e }], [bK]: t }, { error: "Invalid ARN: The Outpost Id was not set", [bK]: e }], [bK]: t }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [bK]: e }], [bK]: t }, { error: "Invalid ARN: No ARN type specified", [bK]: e }], [bK]: t }, { [bL]: [{ [bM]: j, [bN]: [Z, 0, 4, a], [bP]: K }, { [bM]: g, [bN]: [{ [bO]: K }, "arn:"] }, { [bM]: p, [bN]: [{ [bM]: c, [bN]: [aX] }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [bK]: e }, { [bL]: [{ [bM]: d, [bN]: [ah, b] }, aX], error: "Path-style addressing cannot be used with ARN buckets", [bK]: e }, { [bL]: [{ [bM]: "uriEncode", [bN]: bm, [bP]: "uri_encoded_bucket" }], rules: [{ [bL]: br, rules: [{ [bL]: [ai], rules: [{ [bL]: [U, ac, T, aj], endpoint: { [bQ]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, ac, T, al, am], rules: [{ endpoint: aY, [bK]: s }], [bK]: t }, { [bL]: [U, ac, T, al, ap], endpoint: aY, [bK]: s }, { [bL]: [aq, ac, T, aj], endpoint: { [bQ]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, ac, T, al, am], rules: [{ endpoint: aZ, [bK]: s }], [bK]: t }, { [bL]: [aq, ac, T, al, ap], endpoint: aZ, [bK]: s }, { [bL]: [U, ac, as, aj], endpoint: { [bQ]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [U, ac, as, al, am], rules: [{ endpoint: ba, [bK]: s }], [bK]: t }, { [bL]: [U, ac, as, al, ap], endpoint: ba, [bK]: s }, { [bL]: [aq, V, ad, as, aj], endpoint: { [bQ]: L, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, V, ad, as, al, am], rules: [{ [bL]: bt, endpoint: bb, [bK]: s }, { endpoint: bb, [bK]: s }], [bK]: t }, { [bL]: [aq, V, ad, as, al, ap], endpoint: bb, [bK]: s }, { [bL]: [aq, ac, as, aj], endpoint: { [bQ]: M, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [aq, ac, as, al, am], rules: [{ [bL]: bt, endpoint: { [bQ]: M, [bR]: ao, [bW]: af }, [bK]: s }, { endpoint: bc, [bK]: s }], [bK]: t }, { [bL]: [aq, ac, as, al, ap], endpoint: bc, [bK]: s }], [bK]: t }, { error: "Path-style addressing cannot be used with S3 Accelerate", [bK]: e }], [bK]: t }], [bK]: t }], [bK]: t }, { [bL]: [{ [bM]: c, [bN]: [bd] }, { [bM]: d, [bN]: [bd, b] }], rules: [{ [bL]: br, rules: [{ [bL]: bI, rules: [aI, aJ, { [bL]: bp, endpoint: { [bQ]: N, [bR]: be, [bW]: af }, [bK]: s }, { [bL]: bH, endpoint: { [bQ]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [bR]: be, [bW]: af }, [bK]: s }, { endpoint: { [bQ]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [bR]: be, [bW]: af }, [bK]: s }], [bK]: t }, aD], [bK]: t }], [bK]: t }, { [bL]: [{ [bM]: p, [bN]: bq }], rules: [{ [bL]: br, rules: [{ [bL]: bI, rules: [{ [bL]: [T, U, ac, aj], endpoint: { [bQ]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [T, U, ac, al, am], rules: [{ endpoint: bf, [bK]: s }], [bK]: t }, { [bL]: [T, U, ac, al, ap], endpoint: bf, [bK]: s }, { [bL]: [T, aq, ac, aj], endpoint: { [bQ]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [T, aq, ac, al, am], rules: [{ endpoint: bg, [bK]: s }], [bK]: t }, { [bL]: [T, aq, ac, al, ap], endpoint: bg, [bK]: s }, { [bL]: [as, U, ac, aj], endpoint: { [bQ]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [as, U, ac, al, am], rules: [{ endpoint: bh, [bK]: s }], [bK]: t }, { [bL]: [as, U, ac, al, ap], endpoint: bh, [bK]: s }, { [bL]: [as, aq, V, ad, aj], endpoint: { [bQ]: N, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [as, aq, V, ad, al, am], rules: [{ [bL]: bt, endpoint: bi, [bK]: s }, { endpoint: bi, [bK]: s }], [bK]: t }, { [bL]: [as, aq, V, ad, al, ap], endpoint: bi, [bK]: s }, { [bL]: [as, aq, ac, aj], endpoint: { [bQ]: O, [bR]: ak, [bW]: af }, [bK]: s }, { [bL]: [as, aq, ac, al, am], rules: [{ [bL]: bt, endpoint: { [bQ]: O, [bR]: ao, [bW]: af }, [bK]: s }, { endpoint: bj, [bK]: s }], [bK]: t }, { [bL]: [as, aq, ac, al, ap], endpoint: bj, [bK]: s }], [bK]: t }, aD], [bK]: t }], [bK]: t }], [bK]: t }, { error: "A region must be set when sending requests to S3.", [bK]: e }] };
     exports.ruleSet = _data;
   }
 });
@@ -39824,8 +39824,8 @@ var require_models_03 = __commonJS({
   "../../node_modules/@aws-sdk/client-s3/dist-cjs/models/models_0.js"(exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.ReplicationStatus = exports.Protocol = exports.BucketVersioningStatus = exports.MFADeleteStatus = exports.Payer = exports.ReplicationRuleStatus = exports.SseKmsEncryptedObjectsStatus = exports.ReplicaModificationsStatus = exports.ReplicationRuleFilter = exports.ExistingObjectReplicationStatus = exports.ReplicationTimeStatus = exports.MetricsStatus = exports.DeleteMarkerReplicationStatus = exports.FilterRuleName = exports.Event = exports.MetricsFilter = exports.BucketLogsPermission = exports.ExpirationStatus = exports.TransitionStorageClass = exports.LifecycleRuleFilter = exports.InventoryFrequency = exports.InventoryOptionalField = exports.InventoryIncludedObjectVersions = exports.InventoryFormat = exports.IntelligentTieringAccessTier = exports.IntelligentTieringStatus = exports.StorageClassAnalysisSchemaVersion = exports.AnalyticsS3ExportFileFormat = exports.AnalyticsFilter = exports.ObjectOwnership = exports.BucketLocationConstraint = exports.BucketCannedACL = exports.BucketAlreadyOwnedByYou = exports.BucketAlreadyExists = exports.ObjectNotInActiveTierError = exports.TaggingDirective = exports.StorageClass = exports.ObjectLockMode = exports.ObjectLockLegalHoldStatus = exports.MetadataDirective = exports.ChecksumAlgorithm = exports.ObjectCannedACL = exports.ServerSideEncryption = exports.OwnerOverride = exports.Permission = exports.Type = exports.BucketAccelerateStatus = exports.NoSuchUpload = exports.RequestPayer = exports.RequestCharged = void 0;
-    exports.PutObjectRequestFilterSensitiveLog = exports.PutObjectOutputFilterSensitiveLog = exports.PutBucketInventoryConfigurationRequestFilterSensitiveLog = exports.PutBucketEncryptionRequestFilterSensitiveLog = exports.ListPartsRequestFilterSensitiveLog = exports.ListBucketInventoryConfigurationsOutputFilterSensitiveLog = exports.HeadObjectRequestFilterSensitiveLog = exports.HeadObjectOutputFilterSensitiveLog = exports.GetObjectTorrentOutputFilterSensitiveLog = exports.GetObjectAttributesRequestFilterSensitiveLog = exports.GetObjectRequestFilterSensitiveLog = exports.GetObjectOutputFilterSensitiveLog = exports.GetBucketInventoryConfigurationOutputFilterSensitiveLog = exports.InventoryConfigurationFilterSensitiveLog = exports.InventoryDestinationFilterSensitiveLog = exports.InventoryS3BucketDestinationFilterSensitiveLog = exports.InventoryEncryptionFilterSensitiveLog = exports.SSEKMSFilterSensitiveLog = exports.GetBucketEncryptionOutputFilterSensitiveLog = exports.ServerSideEncryptionConfigurationFilterSensitiveLog = exports.ServerSideEncryptionRuleFilterSensitiveLog = exports.ServerSideEncryptionByDefaultFilterSensitiveLog = exports.CreateMultipartUploadRequestFilterSensitiveLog = exports.CreateMultipartUploadOutputFilterSensitiveLog = exports.CopyObjectRequestFilterSensitiveLog = exports.CopyObjectOutputFilterSensitiveLog = exports.CompleteMultipartUploadRequestFilterSensitiveLog = exports.CompleteMultipartUploadOutputFilterSensitiveLog = exports.MFADelete = exports.ObjectVersionStorageClass = exports.NoSuchBucket = exports.OptionalObjectAttributes = exports.ObjectStorageClass = exports.EncodingType = exports.ArchiveStatus = exports.NotFound = exports.ObjectLockRetentionMode = exports.ObjectLockEnabled = exports.ObjectAttributes = exports.NoSuchKey = exports.InvalidObjectState = exports.ChecksumMode = void 0;
+    exports.Protocol = exports.BucketVersioningStatus = exports.MFADeleteStatus = exports.Payer = exports.ReplicationRuleStatus = exports.SseKmsEncryptedObjectsStatus = exports.ReplicaModificationsStatus = exports.ReplicationRuleFilter = exports.ExistingObjectReplicationStatus = exports.ReplicationTimeStatus = exports.MetricsStatus = exports.DeleteMarkerReplicationStatus = exports.FilterRuleName = exports.Event = exports.MetricsFilter = exports.PartitionDateSource = exports.BucketLogsPermission = exports.ExpirationStatus = exports.TransitionStorageClass = exports.LifecycleRuleFilter = exports.InventoryFrequency = exports.InventoryOptionalField = exports.InventoryIncludedObjectVersions = exports.InventoryFormat = exports.IntelligentTieringAccessTier = exports.IntelligentTieringStatus = exports.StorageClassAnalysisSchemaVersion = exports.AnalyticsS3ExportFileFormat = exports.AnalyticsFilter = exports.ObjectOwnership = exports.BucketLocationConstraint = exports.BucketCannedACL = exports.BucketAlreadyOwnedByYou = exports.BucketAlreadyExists = exports.ObjectNotInActiveTierError = exports.TaggingDirective = exports.StorageClass = exports.ObjectLockMode = exports.ObjectLockLegalHoldStatus = exports.MetadataDirective = exports.ChecksumAlgorithm = exports.ObjectCannedACL = exports.ServerSideEncryption = exports.OwnerOverride = exports.Permission = exports.Type = exports.BucketAccelerateStatus = exports.NoSuchUpload = exports.RequestPayer = exports.RequestCharged = void 0;
+    exports.PutObjectRequestFilterSensitiveLog = exports.PutObjectOutputFilterSensitiveLog = exports.PutBucketInventoryConfigurationRequestFilterSensitiveLog = exports.PutBucketEncryptionRequestFilterSensitiveLog = exports.ListPartsRequestFilterSensitiveLog = exports.ListBucketInventoryConfigurationsOutputFilterSensitiveLog = exports.HeadObjectRequestFilterSensitiveLog = exports.HeadObjectOutputFilterSensitiveLog = exports.GetObjectTorrentOutputFilterSensitiveLog = exports.GetObjectAttributesRequestFilterSensitiveLog = exports.GetObjectRequestFilterSensitiveLog = exports.GetObjectOutputFilterSensitiveLog = exports.GetBucketInventoryConfigurationOutputFilterSensitiveLog = exports.InventoryConfigurationFilterSensitiveLog = exports.InventoryDestinationFilterSensitiveLog = exports.InventoryS3BucketDestinationFilterSensitiveLog = exports.InventoryEncryptionFilterSensitiveLog = exports.SSEKMSFilterSensitiveLog = exports.GetBucketEncryptionOutputFilterSensitiveLog = exports.ServerSideEncryptionConfigurationFilterSensitiveLog = exports.ServerSideEncryptionRuleFilterSensitiveLog = exports.ServerSideEncryptionByDefaultFilterSensitiveLog = exports.CreateMultipartUploadRequestFilterSensitiveLog = exports.CreateMultipartUploadOutputFilterSensitiveLog = exports.CopyObjectRequestFilterSensitiveLog = exports.CopyObjectOutputFilterSensitiveLog = exports.CompleteMultipartUploadRequestFilterSensitiveLog = exports.CompleteMultipartUploadOutputFilterSensitiveLog = exports.MFADelete = exports.ObjectVersionStorageClass = exports.NoSuchBucket = exports.OptionalObjectAttributes = exports.ObjectStorageClass = exports.EncodingType = exports.ArchiveStatus = exports.NotFound = exports.ObjectLockRetentionMode = exports.ObjectLockEnabled = exports.ObjectAttributes = exports.NoSuchKey = exports.InvalidObjectState = exports.ChecksumMode = exports.ReplicationStatus = void 0;
     var smithy_client_1 = require_dist_cjs16();
     var S3ServiceException_1 = require_S3ServiceException();
     exports.RequestCharged = {
@@ -40082,6 +40082,10 @@ var require_models_03 = __commonJS({
       FULL_CONTROL: "FULL_CONTROL",
       READ: "READ",
       WRITE: "WRITE"
+    };
+    exports.PartitionDateSource = {
+      DeliveryTime: "DeliveryTime",
+      EventTime: "EventTime"
     };
     var MetricsFilter;
     (function(MetricsFilter2) {
@@ -47657,6 +47661,10 @@ var require_Aws_restXml = __commonJS({
         const node = xml_builder_1.XmlNode.of("TargetPrefix", input.TargetPrefix).withName("TargetPrefix");
         bodyNode.addChildNode(node);
       }
+      if (input.TargetObjectKeyFormat != null) {
+        const node = se_TargetObjectKeyFormat(input.TargetObjectKeyFormat, context).withName("TargetObjectKeyFormat");
+        bodyNode.addChildNode(node);
+      }
       return bodyNode;
     };
     var se_MetadataEntry = (input, context) => {
@@ -47930,6 +47938,14 @@ var require_Aws_restXml = __commonJS({
     };
     var se_ParquetInput = (input, context) => {
       const bodyNode = new xml_builder_1.XmlNode("ParquetInput");
+      return bodyNode;
+    };
+    var se_PartitionedPrefix = (input, context) => {
+      const bodyNode = new xml_builder_1.XmlNode("PartitionedPrefix");
+      if (input.PartitionDateSource != null) {
+        const node = xml_builder_1.XmlNode.of("PartitionDateSource", input.PartitionDateSource).withName("PartitionDateSource");
+        bodyNode.addChildNode(node);
+      }
       return bodyNode;
     };
     var se_PublicAccessBlockConfiguration = (input, context) => {
@@ -48339,6 +48355,10 @@ var require_Aws_restXml = __commonJS({
         return node.withName("member");
       });
     };
+    var se_SimplePrefix = (input, context) => {
+      const bodyNode = new xml_builder_1.XmlNode("SimplePrefix");
+      return bodyNode;
+    };
     var se_SourceSelectionCriteria = (input, context) => {
       const bodyNode = new xml_builder_1.XmlNode("SourceSelectionCriteria");
       if (input.SseKmsEncryptedObjects != null) {
@@ -48439,6 +48459,18 @@ var require_Aws_restXml = __commonJS({
         const node = se_TargetGrant(entry, context);
         return node.withName("Grant");
       });
+    };
+    var se_TargetObjectKeyFormat = (input, context) => {
+      const bodyNode = new xml_builder_1.XmlNode("TargetObjectKeyFormat");
+      if (input.SimplePrefix != null) {
+        const node = se_SimplePrefix(input.SimplePrefix, context).withName("SimplePrefix");
+        bodyNode.addChildNode(node);
+      }
+      if (input.PartitionedPrefix != null) {
+        const node = se_PartitionedPrefix(input.PartitionedPrefix, context).withName("PartitionedPrefix");
+        bodyNode.addChildNode(node);
+      }
+      return bodyNode;
     };
     var se_Tiering = (input, context) => {
       const bodyNode = new xml_builder_1.XmlNode("Tiering");
@@ -49304,6 +49336,9 @@ var require_Aws_restXml = __commonJS({
       if (output["TargetPrefix"] !== void 0) {
         contents.TargetPrefix = (0, smithy_client_1.expectString)(output["TargetPrefix"]);
       }
+      if (output["TargetObjectKeyFormat"] !== void 0) {
+        contents.TargetObjectKeyFormat = de_TargetObjectKeyFormat(output["TargetObjectKeyFormat"], context);
+      }
       return contents;
     };
     var de_Metrics = (output, context) => {
@@ -49626,6 +49661,13 @@ var require_Aws_restXml = __commonJS({
       }
       return contents;
     };
+    var de_PartitionedPrefix = (output, context) => {
+      const contents = {};
+      if (output["PartitionDateSource"] !== void 0) {
+        contents.PartitionDateSource = (0, smithy_client_1.expectString)(output["PartitionDateSource"]);
+      }
+      return contents;
+    };
     var de_Parts = (output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
         return de_Part(entry, context);
@@ -49895,6 +49937,10 @@ var require_Aws_restXml = __commonJS({
         return de_ServerSideEncryptionRule(entry, context);
       });
     };
+    var de_SimplePrefix = (output, context) => {
+      const contents = {};
+      return contents;
+    };
     var de_SourceSelectionCriteria = (output, context) => {
       const contents = {};
       if (output["SseKmsEncryptedObjects"] !== void 0) {
@@ -49982,6 +50028,16 @@ var require_Aws_restXml = __commonJS({
       return (output || []).filter((e) => e != null).map((entry) => {
         return de_TargetGrant(entry, context);
       });
+    };
+    var de_TargetObjectKeyFormat = (output, context) => {
+      const contents = {};
+      if (output["SimplePrefix"] !== void 0) {
+        contents.SimplePrefix = de_SimplePrefix(output["SimplePrefix"], context);
+      }
+      if (output["PartitionedPrefix"] !== void 0) {
+        contents.PartitionedPrefix = de_PartitionedPrefix(output["PartitionedPrefix"], context);
+      }
+      return contents;
     };
     var de_Tiering = (output, context) => {
       const contents = {};
@@ -50108,6 +50164,7 @@ var require_AbortMultipartUploadCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -50231,6 +50288,7 @@ var require_CompleteMultipartUploadCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -50476,6 +50534,7 @@ var require_CreateMultipartUploadCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -51387,6 +51446,7 @@ var require_DeleteObjectCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -54082,6 +54142,7 @@ var require_GetObjectAclCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -54218,6 +54279,7 @@ var require_GetObjectCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -54748,6 +54810,7 @@ var require_HeadObjectCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -55139,6 +55202,7 @@ var require_ListMultipartUploadsCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Prefix: { type: "contextParams", name: "Prefix" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -55204,6 +55268,7 @@ var require_ListObjectsCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Prefix: { type: "contextParams", name: "Prefix" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -55269,6 +55334,7 @@ var require_ListObjectsV2Command = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Prefix: { type: "contextParams", name: "Prefix" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -55334,6 +55400,7 @@ var require_ListObjectVersionsCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Prefix: { type: "contextParams", name: "Prefix" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -55401,6 +55468,7 @@ var require_ListPartsCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -56714,6 +56782,7 @@ var require_PutObjectAclCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -56788,6 +56857,7 @@ var require_PutObjectCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
@@ -57358,6 +57428,7 @@ var require_UploadPartCommand = __commonJS({
       static getEndpointParameterInstructions() {
         return {
           Bucket: { type: "contextParams", name: "Bucket" },
+          Key: { type: "contextParams", name: "Key" },
           ForcePathStyle: { type: "clientContextParams", name: "forcePathStyle" },
           UseArnRegion: { type: "clientContextParams", name: "useArnRegion" },
           DisableMultiRegionAccessPoints: { type: "clientContextParams", name: "disableMultiregionAccessPoints" },
