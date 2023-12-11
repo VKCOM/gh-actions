@@ -1390,16 +1390,16 @@ var require_util = __commonJS({
         yield Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
       }
     }
-    var ReadableStream;
+    var ReadableStream2;
     function ReadableStreamFrom(iterable) {
-      if (!ReadableStream) {
-        ReadableStream = require("stream/web").ReadableStream;
+      if (!ReadableStream2) {
+        ReadableStream2 = require("stream/web").ReadableStream;
       }
-      if (ReadableStream.from) {
-        return ReadableStream.from(convertIterableToBuffer(iterable));
+      if (ReadableStream2.from) {
+        return ReadableStream2.from(convertIterableToBuffer(iterable));
       }
       let iterator;
-      return new ReadableStream(
+      return new ReadableStream2(
         {
           async start() {
             iterator = iterable[Symbol.asyncIterator]();
@@ -1729,11 +1729,11 @@ var require_PartStream = __commonJS({
   "../../node_modules/@fastify/busboy/deps/dicer/lib/PartStream.js"(exports, module2) {
     "use strict";
     var inherits = require("node:util").inherits;
-    var ReadableStream = require("node:stream").Readable;
+    var ReadableStream2 = require("node:stream").Readable;
     function PartStream(opts) {
-      ReadableStream.call(this, opts);
+      ReadableStream2.call(this, opts);
     }
-    inherits(PartStream, ReadableStream);
+    inherits(PartStream, ReadableStream2);
     PartStream.prototype._read = function(n) {
     };
     module2.exports = PartStream;
@@ -3653,12 +3653,12 @@ var require_util2 = __commonJS({
         errorSteps(e);
       }
     }
-    var ReadableStream = globalThis.ReadableStream;
+    var ReadableStream2 = globalThis.ReadableStream;
     function isReadableStreamLike(stream) {
-      if (!ReadableStream) {
-        ReadableStream = require("stream/web").ReadableStream;
+      if (!ReadableStream2) {
+        ReadableStream2 = require("stream/web").ReadableStream;
       }
-      return stream instanceof ReadableStream || stream[Symbol.toStringTag] === "ReadableStream" && typeof stream.tee === "function";
+      return stream instanceof ReadableStream2 || stream[Symbol.toStringTag] === "ReadableStream" && typeof stream.tee === "function";
     }
     var MAXIMUM_ARGUMENT_LENGTH = 65535;
     function isomorphicDecode(input) {
@@ -4805,19 +4805,19 @@ var require_body = __commonJS({
     var { isUint8Array, isArrayBuffer } = require("util/types");
     var { File: UndiciFile } = require_file();
     var { parseMIMEType, serializeAMimeType } = require_dataURL();
-    var ReadableStream = globalThis.ReadableStream;
+    var ReadableStream2 = globalThis.ReadableStream;
     var File = NativeFile ?? UndiciFile;
     function extractBody(object, keepalive = false) {
-      if (!ReadableStream) {
-        ReadableStream = require("stream/web").ReadableStream;
+      if (!ReadableStream2) {
+        ReadableStream2 = require("stream/web").ReadableStream;
       }
       let stream = null;
-      if (object instanceof ReadableStream) {
+      if (object instanceof ReadableStream2) {
         stream = object;
       } else if (isBlobLike(object)) {
         stream = object.stream();
       } else {
-        stream = new ReadableStream({
+        stream = new ReadableStream2({
           async pull(controller) {
             controller.enqueue(
               typeof source === "string" ? new TextEncoder().encode(source) : source
@@ -4908,14 +4908,14 @@ Content-Type: ${value.type || "application/octet-stream"}\r
             "Response body object should not be disturbed or locked"
           );
         }
-        stream = object instanceof ReadableStream ? object : ReadableStreamFrom(object);
+        stream = object instanceof ReadableStream2 ? object : ReadableStreamFrom(object);
       }
       if (typeof source === "string" || util.isBuffer(source)) {
         length = Buffer.byteLength(source);
       }
       if (action2 != null) {
         let iterator;
-        stream = new ReadableStream({
+        stream = new ReadableStream2({
           async start() {
             iterator = action2(object)[Symbol.asyncIterator]();
           },
@@ -4942,10 +4942,10 @@ Content-Type: ${value.type || "application/octet-stream"}\r
       return [body, type];
     }
     function safelyExtractBody(object, keepalive = false) {
-      if (!ReadableStream) {
-        ReadableStream = require("stream/web").ReadableStream;
+      if (!ReadableStream2) {
+        ReadableStream2 = require("stream/web").ReadableStream;
       }
-      if (object instanceof ReadableStream) {
+      if (object instanceof ReadableStream2) {
         assert(!util.isDisturbed(object), "The body has already been consumed.");
         assert(!object.locked, "The stream is locked.");
       }
@@ -11126,7 +11126,7 @@ var require_response = __commonJS({
     var { kHeadersList } = require_symbols();
     var assert = require("assert");
     var { types } = require("util");
-    var ReadableStream = globalThis.ReadableStream || require("stream/web").ReadableStream;
+    var ReadableStream2 = globalThis.ReadableStream || require("stream/web").ReadableStream;
     var Response = class _Response {
       // Creates network error Response.
       static error() {
@@ -11412,7 +11412,7 @@ var require_response = __commonJS({
       }
     }
     webidl.converters.ReadableStream = webidl.interfaceConverter(
-      ReadableStream
+      ReadableStream2
     );
     webidl.converters.FormData = webidl.interfaceConverter(
       FormData
@@ -11439,7 +11439,7 @@ var require_response = __commonJS({
       return webidl.converters.DOMString(V);
     };
     webidl.converters.BodyInit = function(V) {
-      if (V instanceof ReadableStream) {
+      if (V instanceof ReadableStream2) {
         return webidl.converters.ReadableStream(V);
       }
       if (V?.[Symbol.asyncIterator]) {
@@ -12178,7 +12178,7 @@ var require_fetch = __commonJS({
     var { webidl } = require_webidl();
     var { STATUS_CODES } = require("http");
     var resolveObjectURL;
-    var ReadableStream = globalThis.ReadableStream;
+    var ReadableStream2 = globalThis.ReadableStream;
     var Fetch = class extends EE {
       constructor(dispatcher) {
         super();
@@ -12923,10 +12923,10 @@ var require_fetch = __commonJS({
       const cancelAlgorithm = (reason) => {
         fetchParams.controller.abort(reason);
       };
-      if (!ReadableStream) {
-        ReadableStream = require("stream/web").ReadableStream;
+      if (!ReadableStream2) {
+        ReadableStream2 = require("stream/web").ReadableStream;
       }
-      const stream = new ReadableStream(
+      const stream = new ReadableStream2(
         {
           async start(controller) {
             fetchParams.controller.controller = controller;
@@ -18804,6 +18804,14 @@ var require_http = __commonJS({
   }
 });
 
+// ../../node_modules/@smithy/types/dist-cjs/http/httpHandlerInitialization.js
+var require_httpHandlerInitialization = __commonJS({
+  "../../node_modules/@smithy/types/dist-cjs/http/httpHandlerInitialization.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+  }
+});
+
 // ../../node_modules/@smithy/types/dist-cjs/identity/apiKeyIdentity.js
 var require_apiKeyIdentity = __commonJS({
   "../../node_modules/@smithy/types/dist-cjs/identity/apiKeyIdentity.js"(exports) {
@@ -18985,6 +18993,14 @@ var require_client_payload_blob_type_narrow = __commonJS({
   }
 });
 
+// ../../node_modules/@smithy/types/dist-cjs/transform/no-undefined.js
+var require_no_undefined = __commonJS({
+  "../../node_modules/@smithy/types/dist-cjs/transform/no-undefined.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+  }
+});
+
 // ../../node_modules/@smithy/types/dist-cjs/transform/type-transform.js
 var require_type_transform = __commonJS({
   "../../node_modules/@smithy/types/dist-cjs/transform/type-transform.js"(exports) {
@@ -19037,6 +19053,7 @@ var require_dist_cjs = __commonJS({
     tslib_1.__exportStar(require_eventStream(), exports);
     tslib_1.__exportStar(require_extensions2(), exports);
     tslib_1.__exportStar(require_http(), exports);
+    tslib_1.__exportStar(require_httpHandlerInitialization(), exports);
     tslib_1.__exportStar(require_identity2(), exports);
     tslib_1.__exportStar(require_logger(), exports);
     tslib_1.__exportStar(require_middleware(), exports);
@@ -19053,6 +19070,7 @@ var require_dist_cjs = __commonJS({
     tslib_1.__exportStar(require_streaming_blob_payload_output_types(), exports);
     tslib_1.__exportStar(require_transfer(), exports);
     tslib_1.__exportStar(require_client_payload_blob_type_narrow(), exports);
+    tslib_1.__exportStar(require_no_undefined(), exports);
     tslib_1.__exportStar(require_type_transform(), exports);
     tslib_1.__exportStar(require_uri(), exports);
     tslib_1.__exportStar(require_util8(), exports);
@@ -20231,7 +20249,13 @@ var require_node_http_handler = __commonJS({
     var set_socket_timeout_1 = require_set_socket_timeout();
     var write_request_body_1 = require_write_request_body();
     exports.DEFAULT_REQUEST_TIMEOUT = 0;
-    var NodeHttpHandler = class {
+    var NodeHttpHandler = class _NodeHttpHandler {
+      static create(instanceOrOptions) {
+        if (typeof (instanceOrOptions === null || instanceOrOptions === void 0 ? void 0 : instanceOrOptions.handle) === "function") {
+          return instanceOrOptions;
+        }
+        return new _NodeHttpHandler(instanceOrOptions);
+      }
       constructor(options) {
         this.metadata = { handlerProtocol: "http/1.1" };
         this.configProvider = new Promise((resolve, reject) => {
@@ -20512,7 +20536,13 @@ var require_node_http2_handler = __commonJS({
     var get_transformed_headers_1 = require_get_transformed_headers();
     var node_http2_connection_manager_1 = require_node_http2_connection_manager();
     var write_request_body_1 = require_write_request_body();
-    var NodeHttp2Handler = class {
+    var NodeHttp2Handler = class _NodeHttp2Handler {
+      static create(instanceOrOptions) {
+        if (typeof (instanceOrOptions === null || instanceOrOptions === void 0 ? void 0 : instanceOrOptions.handle) === "function") {
+          return instanceOrOptions;
+        }
+        return new _NodeHttp2Handler(instanceOrOptions);
+      }
       constructor(options) {
         this.metadata = { handlerProtocol: "h2" };
         this.connectionManager = new node_http2_connection_manager_1.NodeHttp2ConnectionManager({});
@@ -21783,7 +21813,7 @@ var require_serde_json = __commonJS({
         return {};
       }
       if (Array.isArray(obj)) {
-        return obj.filter((_) => _ != null);
+        return obj.filter((_) => _ != null).map(exports._json);
       }
       if (typeof obj === "object") {
         const target = {};
@@ -27097,13 +27127,14 @@ var require_getConfigData = __commonJS({
     var types_1 = require_dist_cjs();
     var loadSharedConfigFiles_1 = require_loadSharedConfigFiles();
     var getConfigData = (data) => Object.entries(data).filter(([key]) => {
-      const sections = key.split(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR);
-      if (sections.length === 2 && Object.values(types_1.IniSectionType).includes(sections[0])) {
-        return true;
+      const indexOfSeparator = key.indexOf(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR);
+      if (indexOfSeparator === -1) {
+        return false;
       }
-      return false;
+      return Object.values(types_1.IniSectionType).includes(key.substring(0, indexOfSeparator));
     }).reduce((acc, [key, value]) => {
-      const updatedKey = key.startsWith(types_1.IniSectionType.PROFILE) ? key.split(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR)[1] : key;
+      const indexOfSeparator = key.indexOf(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR);
+      const updatedKey = key.substring(0, indexOfSeparator) === types_1.IniSectionType.PROFILE ? key.substring(indexOfSeparator + 1) : key;
       acc[updatedKey] = value;
       return acc;
     }, {
@@ -27504,13 +27535,14 @@ var require_getConfigData2 = __commonJS({
     var types_1 = require_dist_cjs();
     var loadSharedConfigFiles_1 = require_loadSharedConfigFiles2();
     var getConfigData = (data) => Object.entries(data).filter(([key]) => {
-      const sections = key.split(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR);
-      if (sections.length === 2 && Object.values(types_1.IniSectionType).includes(sections[0])) {
-        return true;
+      const indexOfSeparator = key.indexOf(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR);
+      if (indexOfSeparator === -1) {
+        return false;
       }
-      return false;
+      return Object.values(types_1.IniSectionType).includes(key.substring(0, indexOfSeparator));
     }).reduce((acc, [key, value]) => {
-      const updatedKey = key.startsWith(types_1.IniSectionType.PROFILE) ? key.split(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR)[1] : key;
+      const indexOfSeparator = key.indexOf(loadSharedConfigFiles_1.CONFIG_PREFIX_SEPARATOR);
+      const updatedKey = key.substring(0, indexOfSeparator) === types_1.IniSectionType.PROFILE ? key.substring(indexOfSeparator + 1) : key;
       acc[updatedKey] = value;
       return acc;
     }, {
@@ -28897,6 +28929,18 @@ var require_omitRetryHeadersMiddleware = __commonJS({
   }
 });
 
+// ../../node_modules/@smithy/middleware-retry/dist-cjs/isStreamingPayload/isStreamingPayload.js
+var require_isStreamingPayload = __commonJS({
+  "../../node_modules/@smithy/middleware-retry/dist-cjs/isStreamingPayload/isStreamingPayload.js"(exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.isStreamingPayload = void 0;
+    var stream_1 = require("stream");
+    var isStreamingPayload = (request) => (request === null || request === void 0 ? void 0 : request.body) instanceof stream_1.Readable || typeof ReadableStream !== "undefined" && (request === null || request === void 0 ? void 0 : request.body) instanceof ReadableStream;
+    exports.isStreamingPayload = isStreamingPayload;
+  }
+});
+
 // ../../node_modules/@smithy/middleware-retry/dist-cjs/retryMiddleware.js
 var require_retryMiddleware = __commonJS({
   "../../node_modules/@smithy/middleware-retry/dist-cjs/retryMiddleware.js"(exports) {
@@ -28905,10 +28949,13 @@ var require_retryMiddleware = __commonJS({
     exports.getRetryAfterHint = exports.getRetryPlugin = exports.retryMiddlewareOptions = exports.retryMiddleware = void 0;
     var protocol_http_1 = require_dist_cjs2();
     var service_error_classification_1 = require_dist_cjs42();
+    var smithy_client_1 = require_dist_cjs16();
     var util_retry_1 = require_dist_cjs43();
     var uuid_1 = (init_esm_node(), __toCommonJS(esm_node_exports));
+    var isStreamingPayload_1 = require_isStreamingPayload();
     var util_1 = require_util9();
     var retryMiddleware = (options) => (next, context) => async (args) => {
+      var _a;
       let retryStrategy = await options.retryStrategy();
       const maxAttempts = await options.maxAttempts();
       if (isRetryStrategyV2(retryStrategy)) {
@@ -28918,12 +28965,13 @@ var require_retryMiddleware = __commonJS({
         let attempts = 0;
         let totalRetryDelay = 0;
         const { request } = args;
-        if (protocol_http_1.HttpRequest.isInstance(request)) {
+        const isRequest = protocol_http_1.HttpRequest.isInstance(request);
+        if (isRequest) {
           request.headers[util_retry_1.INVOCATION_ID_HEADER] = (0, uuid_1.v4)();
         }
         while (true) {
           try {
-            if (protocol_http_1.HttpRequest.isInstance(request)) {
+            if (isRequest) {
               request.headers[util_retry_1.REQUEST_HEADER] = `attempt=${attempts + 1}; max=${maxAttempts}`;
             }
             const { response, output } = await next(args);
@@ -28934,6 +28982,10 @@ var require_retryMiddleware = __commonJS({
           } catch (e) {
             const retryErrorInfo = getRetryErrorInfo(e);
             lastError = (0, util_1.asSdkError)(e);
+            if (isRequest && (0, isStreamingPayload_1.isStreamingPayload)(request)) {
+              (_a = context.logger instanceof smithy_client_1.NoOpLogger ? console : context.logger) === null || _a === void 0 ? void 0 : _a.warn("An error was encountered in a non-retryable streaming request.");
+              throw lastError;
+            }
             try {
               retryToken = await retryStrategy.refreshRetryTokenForRetry(retryToken, retryErrorInfo);
             } catch (refreshError) {
@@ -41453,7 +41505,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.465.0",
+      version: "3.470.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -41478,58 +41530,58 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.465.0",
-        "@aws-sdk/core": "3.465.0",
-        "@aws-sdk/credential-provider-node": "3.465.0",
-        "@aws-sdk/middleware-bucket-endpoint": "3.465.0",
-        "@aws-sdk/middleware-expect-continue": "3.465.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.465.0",
-        "@aws-sdk/middleware-host-header": "3.465.0",
-        "@aws-sdk/middleware-location-constraint": "3.465.0",
-        "@aws-sdk/middleware-logger": "3.465.0",
-        "@aws-sdk/middleware-recursion-detection": "3.465.0",
-        "@aws-sdk/middleware-sdk-s3": "3.465.0",
-        "@aws-sdk/middleware-signing": "3.465.0",
-        "@aws-sdk/middleware-ssec": "3.465.0",
-        "@aws-sdk/middleware-user-agent": "3.465.0",
-        "@aws-sdk/region-config-resolver": "3.465.0",
-        "@aws-sdk/signature-v4-multi-region": "3.465.0",
-        "@aws-sdk/types": "3.465.0",
-        "@aws-sdk/util-endpoints": "3.465.0",
-        "@aws-sdk/util-user-agent-browser": "3.465.0",
-        "@aws-sdk/util-user-agent-node": "3.465.0",
+        "@aws-sdk/client-sts": "3.470.0",
+        "@aws-sdk/core": "3.468.0",
+        "@aws-sdk/credential-provider-node": "3.470.0",
+        "@aws-sdk/middleware-bucket-endpoint": "3.470.0",
+        "@aws-sdk/middleware-expect-continue": "3.468.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.468.0",
+        "@aws-sdk/middleware-host-header": "3.468.0",
+        "@aws-sdk/middleware-location-constraint": "3.468.0",
+        "@aws-sdk/middleware-logger": "3.468.0",
+        "@aws-sdk/middleware-recursion-detection": "3.468.0",
+        "@aws-sdk/middleware-sdk-s3": "3.470.0",
+        "@aws-sdk/middleware-signing": "3.468.0",
+        "@aws-sdk/middleware-ssec": "3.468.0",
+        "@aws-sdk/middleware-user-agent": "3.470.0",
+        "@aws-sdk/region-config-resolver": "3.470.0",
+        "@aws-sdk/signature-v4-multi-region": "3.470.0",
+        "@aws-sdk/types": "3.468.0",
+        "@aws-sdk/util-endpoints": "3.470.0",
+        "@aws-sdk/util-user-agent-browser": "3.468.0",
+        "@aws-sdk/util-user-agent-node": "3.470.0",
         "@aws-sdk/xml-builder": "3.465.0",
-        "@smithy/config-resolver": "^2.0.18",
-        "@smithy/eventstream-serde-browser": "^2.0.13",
-        "@smithy/eventstream-serde-config-resolver": "^2.0.13",
-        "@smithy/eventstream-serde-node": "^2.0.13",
-        "@smithy/fetch-http-handler": "^2.2.6",
-        "@smithy/hash-blob-browser": "^2.0.14",
-        "@smithy/hash-node": "^2.0.15",
-        "@smithy/hash-stream-node": "^2.0.15",
-        "@smithy/invalid-dependency": "^2.0.13",
-        "@smithy/md5-js": "^2.0.15",
-        "@smithy/middleware-content-length": "^2.0.15",
-        "@smithy/middleware-endpoint": "^2.2.0",
-        "@smithy/middleware-retry": "^2.0.20",
-        "@smithy/middleware-serde": "^2.0.13",
-        "@smithy/middleware-stack": "^2.0.7",
-        "@smithy/node-config-provider": "^2.1.5",
-        "@smithy/node-http-handler": "^2.1.9",
-        "@smithy/protocol-http": "^3.0.9",
-        "@smithy/smithy-client": "^2.1.15",
-        "@smithy/types": "^2.5.0",
-        "@smithy/url-parser": "^2.0.13",
+        "@smithy/config-resolver": "^2.0.21",
+        "@smithy/eventstream-serde-browser": "^2.0.15",
+        "@smithy/eventstream-serde-config-resolver": "^2.0.15",
+        "@smithy/eventstream-serde-node": "^2.0.15",
+        "@smithy/fetch-http-handler": "^2.3.1",
+        "@smithy/hash-blob-browser": "^2.0.16",
+        "@smithy/hash-node": "^2.0.17",
+        "@smithy/hash-stream-node": "^2.0.17",
+        "@smithy/invalid-dependency": "^2.0.15",
+        "@smithy/md5-js": "^2.0.17",
+        "@smithy/middleware-content-length": "^2.0.17",
+        "@smithy/middleware-endpoint": "^2.2.3",
+        "@smithy/middleware-retry": "^2.0.24",
+        "@smithy/middleware-serde": "^2.0.15",
+        "@smithy/middleware-stack": "^2.0.9",
+        "@smithy/node-config-provider": "^2.1.8",
+        "@smithy/node-http-handler": "^2.2.1",
+        "@smithy/protocol-http": "^3.0.11",
+        "@smithy/smithy-client": "^2.1.18",
+        "@smithy/types": "^2.7.0",
+        "@smithy/url-parser": "^2.0.15",
         "@smithy/util-base64": "^2.0.1",
-        "@smithy/util-body-length-browser": "^2.0.0",
+        "@smithy/util-body-length-browser": "^2.0.1",
         "@smithy/util-body-length-node": "^2.1.0",
-        "@smithy/util-defaults-mode-browser": "^2.0.19",
-        "@smithy/util-defaults-mode-node": "^2.0.25",
-        "@smithy/util-endpoints": "^1.0.4",
-        "@smithy/util-retry": "^2.0.6",
-        "@smithy/util-stream": "^2.0.20",
+        "@smithy/util-defaults-mode-browser": "^2.0.22",
+        "@smithy/util-defaults-mode-node": "^2.0.29",
+        "@smithy/util-endpoints": "^1.0.7",
+        "@smithy/util-retry": "^2.0.8",
+        "@smithy/util-stream": "^2.0.23",
         "@smithy/util-utf8": "^2.0.2",
-        "@smithy/util-waiter": "^2.0.13",
+        "@smithy/util-waiter": "^2.0.15",
         "fast-xml-parser": "4.2.5",
         tslib: "^2.5.0"
       },
@@ -41618,7 +41670,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.465.0",
+      version: "3.470.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -41639,41 +41691,41 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.465.0",
-        "@aws-sdk/credential-provider-node": "3.465.0",
-        "@aws-sdk/middleware-host-header": "3.465.0",
-        "@aws-sdk/middleware-logger": "3.465.0",
-        "@aws-sdk/middleware-recursion-detection": "3.465.0",
-        "@aws-sdk/middleware-sdk-sts": "3.465.0",
-        "@aws-sdk/middleware-signing": "3.465.0",
-        "@aws-sdk/middleware-user-agent": "3.465.0",
-        "@aws-sdk/region-config-resolver": "3.465.0",
-        "@aws-sdk/types": "3.465.0",
-        "@aws-sdk/util-endpoints": "3.465.0",
-        "@aws-sdk/util-user-agent-browser": "3.465.0",
-        "@aws-sdk/util-user-agent-node": "3.465.0",
-        "@smithy/config-resolver": "^2.0.18",
-        "@smithy/fetch-http-handler": "^2.2.6",
-        "@smithy/hash-node": "^2.0.15",
-        "@smithy/invalid-dependency": "^2.0.13",
-        "@smithy/middleware-content-length": "^2.0.15",
-        "@smithy/middleware-endpoint": "^2.2.0",
-        "@smithy/middleware-retry": "^2.0.20",
-        "@smithy/middleware-serde": "^2.0.13",
-        "@smithy/middleware-stack": "^2.0.7",
-        "@smithy/node-config-provider": "^2.1.5",
-        "@smithy/node-http-handler": "^2.1.9",
-        "@smithy/protocol-http": "^3.0.9",
-        "@smithy/smithy-client": "^2.1.15",
-        "@smithy/types": "^2.5.0",
-        "@smithy/url-parser": "^2.0.13",
+        "@aws-sdk/core": "3.468.0",
+        "@aws-sdk/credential-provider-node": "3.470.0",
+        "@aws-sdk/middleware-host-header": "3.468.0",
+        "@aws-sdk/middleware-logger": "3.468.0",
+        "@aws-sdk/middleware-recursion-detection": "3.468.0",
+        "@aws-sdk/middleware-sdk-sts": "3.468.0",
+        "@aws-sdk/middleware-signing": "3.468.0",
+        "@aws-sdk/middleware-user-agent": "3.470.0",
+        "@aws-sdk/region-config-resolver": "3.470.0",
+        "@aws-sdk/types": "3.468.0",
+        "@aws-sdk/util-endpoints": "3.470.0",
+        "@aws-sdk/util-user-agent-browser": "3.468.0",
+        "@aws-sdk/util-user-agent-node": "3.470.0",
+        "@smithy/config-resolver": "^2.0.21",
+        "@smithy/fetch-http-handler": "^2.3.1",
+        "@smithy/hash-node": "^2.0.17",
+        "@smithy/invalid-dependency": "^2.0.15",
+        "@smithy/middleware-content-length": "^2.0.17",
+        "@smithy/middleware-endpoint": "^2.2.3",
+        "@smithy/middleware-retry": "^2.0.24",
+        "@smithy/middleware-serde": "^2.0.15",
+        "@smithy/middleware-stack": "^2.0.9",
+        "@smithy/node-config-provider": "^2.1.8",
+        "@smithy/node-http-handler": "^2.2.1",
+        "@smithy/protocol-http": "^3.0.11",
+        "@smithy/smithy-client": "^2.1.18",
+        "@smithy/types": "^2.7.0",
+        "@smithy/url-parser": "^2.0.15",
         "@smithy/util-base64": "^2.0.1",
-        "@smithy/util-body-length-browser": "^2.0.0",
+        "@smithy/util-body-length-browser": "^2.0.1",
         "@smithy/util-body-length-node": "^2.1.0",
-        "@smithy/util-defaults-mode-browser": "^2.0.19",
-        "@smithy/util-defaults-mode-node": "^2.0.25",
-        "@smithy/util-endpoints": "^1.0.4",
-        "@smithy/util-retry": "^2.0.6",
+        "@smithy/util-defaults-mode-browser": "^2.0.22",
+        "@smithy/util-defaults-mode-node": "^2.0.29",
+        "@smithy/util-endpoints": "^1.0.7",
+        "@smithy/util-retry": "^2.0.8",
         "@smithy/util-utf8": "^2.0.2",
         "fast-xml-parser": "4.2.5",
         tslib: "^2.5.0"
@@ -44284,7 +44336,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.465.0",
+      version: "3.470.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -44303,38 +44355,38 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.465.0",
-        "@aws-sdk/middleware-host-header": "3.465.0",
-        "@aws-sdk/middleware-logger": "3.465.0",
-        "@aws-sdk/middleware-recursion-detection": "3.465.0",
-        "@aws-sdk/middleware-user-agent": "3.465.0",
-        "@aws-sdk/region-config-resolver": "3.465.0",
-        "@aws-sdk/types": "3.465.0",
-        "@aws-sdk/util-endpoints": "3.465.0",
-        "@aws-sdk/util-user-agent-browser": "3.465.0",
-        "@aws-sdk/util-user-agent-node": "3.465.0",
-        "@smithy/config-resolver": "^2.0.18",
-        "@smithy/fetch-http-handler": "^2.2.6",
-        "@smithy/hash-node": "^2.0.15",
-        "@smithy/invalid-dependency": "^2.0.13",
-        "@smithy/middleware-content-length": "^2.0.15",
-        "@smithy/middleware-endpoint": "^2.2.0",
-        "@smithy/middleware-retry": "^2.0.20",
-        "@smithy/middleware-serde": "^2.0.13",
-        "@smithy/middleware-stack": "^2.0.7",
-        "@smithy/node-config-provider": "^2.1.5",
-        "@smithy/node-http-handler": "^2.1.9",
-        "@smithy/protocol-http": "^3.0.9",
-        "@smithy/smithy-client": "^2.1.15",
-        "@smithy/types": "^2.5.0",
-        "@smithy/url-parser": "^2.0.13",
+        "@aws-sdk/core": "3.468.0",
+        "@aws-sdk/middleware-host-header": "3.468.0",
+        "@aws-sdk/middleware-logger": "3.468.0",
+        "@aws-sdk/middleware-recursion-detection": "3.468.0",
+        "@aws-sdk/middleware-user-agent": "3.470.0",
+        "@aws-sdk/region-config-resolver": "3.470.0",
+        "@aws-sdk/types": "3.468.0",
+        "@aws-sdk/util-endpoints": "3.470.0",
+        "@aws-sdk/util-user-agent-browser": "3.468.0",
+        "@aws-sdk/util-user-agent-node": "3.470.0",
+        "@smithy/config-resolver": "^2.0.21",
+        "@smithy/fetch-http-handler": "^2.3.1",
+        "@smithy/hash-node": "^2.0.17",
+        "@smithy/invalid-dependency": "^2.0.15",
+        "@smithy/middleware-content-length": "^2.0.17",
+        "@smithy/middleware-endpoint": "^2.2.3",
+        "@smithy/middleware-retry": "^2.0.24",
+        "@smithy/middleware-serde": "^2.0.15",
+        "@smithy/middleware-stack": "^2.0.9",
+        "@smithy/node-config-provider": "^2.1.8",
+        "@smithy/node-http-handler": "^2.2.1",
+        "@smithy/protocol-http": "^3.0.11",
+        "@smithy/smithy-client": "^2.1.18",
+        "@smithy/types": "^2.7.0",
+        "@smithy/url-parser": "^2.0.15",
         "@smithy/util-base64": "^2.0.1",
-        "@smithy/util-body-length-browser": "^2.0.0",
+        "@smithy/util-body-length-browser": "^2.0.1",
         "@smithy/util-body-length-node": "^2.1.0",
-        "@smithy/util-defaults-mode-browser": "^2.0.19",
-        "@smithy/util-defaults-mode-node": "^2.0.25",
-        "@smithy/util-endpoints": "^1.0.4",
-        "@smithy/util-retry": "^2.0.6",
+        "@smithy/util-defaults-mode-browser": "^2.0.22",
+        "@smithy/util-defaults-mode-node": "^2.0.29",
+        "@smithy/util-endpoints": "^1.0.7",
+        "@smithy/util-retry": "^2.0.8",
         "@smithy/util-utf8": "^2.0.2",
         tslib: "^2.5.0"
       },
