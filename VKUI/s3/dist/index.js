@@ -41279,7 +41279,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.485.0",
+      version: "3.490.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -41304,26 +41304,26 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.485.0",
-        "@aws-sdk/core": "3.485.0",
-        "@aws-sdk/credential-provider-node": "3.485.0",
-        "@aws-sdk/middleware-bucket-endpoint": "3.485.0",
-        "@aws-sdk/middleware-expect-continue": "3.485.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.485.0",
-        "@aws-sdk/middleware-host-header": "3.485.0",
-        "@aws-sdk/middleware-location-constraint": "3.485.0",
-        "@aws-sdk/middleware-logger": "3.485.0",
-        "@aws-sdk/middleware-recursion-detection": "3.485.0",
-        "@aws-sdk/middleware-sdk-s3": "3.485.0",
-        "@aws-sdk/middleware-signing": "3.485.0",
-        "@aws-sdk/middleware-ssec": "3.485.0",
-        "@aws-sdk/middleware-user-agent": "3.485.0",
-        "@aws-sdk/region-config-resolver": "3.485.0",
-        "@aws-sdk/signature-v4-multi-region": "3.485.0",
-        "@aws-sdk/types": "3.485.0",
-        "@aws-sdk/util-endpoints": "3.485.0",
-        "@aws-sdk/util-user-agent-browser": "3.485.0",
-        "@aws-sdk/util-user-agent-node": "3.485.0",
+        "@aws-sdk/client-sts": "3.490.0",
+        "@aws-sdk/core": "3.490.0",
+        "@aws-sdk/credential-provider-node": "3.490.0",
+        "@aws-sdk/middleware-bucket-endpoint": "3.489.0",
+        "@aws-sdk/middleware-expect-continue": "3.489.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.489.0",
+        "@aws-sdk/middleware-host-header": "3.489.0",
+        "@aws-sdk/middleware-location-constraint": "3.489.0",
+        "@aws-sdk/middleware-logger": "3.489.0",
+        "@aws-sdk/middleware-recursion-detection": "3.489.0",
+        "@aws-sdk/middleware-sdk-s3": "3.489.0",
+        "@aws-sdk/middleware-signing": "3.489.0",
+        "@aws-sdk/middleware-ssec": "3.489.0",
+        "@aws-sdk/middleware-user-agent": "3.489.0",
+        "@aws-sdk/region-config-resolver": "3.489.0",
+        "@aws-sdk/signature-v4-multi-region": "3.489.0",
+        "@aws-sdk/types": "3.489.0",
+        "@aws-sdk/util-endpoints": "3.489.0",
+        "@aws-sdk/util-user-agent-browser": "3.489.0",
+        "@aws-sdk/util-user-agent-node": "3.489.0",
         "@aws-sdk/xml-builder": "3.485.0",
         "@smithy/config-resolver": "^2.0.23",
         "@smithy/core": "^1.2.2",
@@ -41506,37 +41506,26 @@ var require_utils4 = __commonJS({
   }
 });
 
-// ../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/throwAWSSDKSigningPropertyError.js
-var require_throwAWSSDKSigningPropertyError = __commonJS({
-  "../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/throwAWSSDKSigningPropertyError.js"(exports2) {
+// ../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js
+var require_AwsSdkSigV4Signer = __commonJS({
+  "../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.throwAWSSDKSigningPropertyError = void 0;
-    var throwAWSSDKSigningPropertyError = (name, property) => {
+    exports2.AWSSDKSigV4Signer = exports2.AwsSdkSigV4Signer = void 0;
+    var protocol_http_1 = require_dist_cjs2();
+    var utils_1 = require_utils4();
+    var throwSigningPropertyError = (name, property) => {
       if (!property) {
         throw new Error(`Property \`${name}\` is not resolved for AWS SDK SigV4Auth`);
       }
       return property;
     };
-    exports2.throwAWSSDKSigningPropertyError = throwAWSSDKSigningPropertyError;
-  }
-});
-
-// ../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/AWSSDKSigV4Signer.js
-var require_AWSSDKSigV4Signer = __commonJS({
-  "../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/AWSSDKSigV4Signer.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.AWSSDKSigV4Signer = void 0;
-    var protocol_http_1 = require_dist_cjs2();
-    var utils_1 = require_utils4();
-    var throwAWSSDKSigningPropertyError_1 = require_throwAWSSDKSigningPropertyError();
     var validateSigningProperties = async (signingProperties) => {
       var _a, _b, _c;
-      const context = (0, throwAWSSDKSigningPropertyError_1.throwAWSSDKSigningPropertyError)("context", signingProperties.context);
-      const config = (0, throwAWSSDKSigningPropertyError_1.throwAWSSDKSigningPropertyError)("config", signingProperties.config);
+      const context = throwSigningPropertyError("context", signingProperties.context);
+      const config = throwSigningPropertyError("config", signingProperties.config);
       const authScheme = (_c = (_b = (_a = context.endpointV2) === null || _a === void 0 ? void 0 : _a.properties) === null || _b === void 0 ? void 0 : _b.authSchemes) === null || _c === void 0 ? void 0 : _c[0];
-      const signerFunction = (0, throwAWSSDKSigningPropertyError_1.throwAWSSDKSigningPropertyError)("signer", config.signer);
+      const signerFunction = throwSigningPropertyError("signer", config.signer);
       const signer = await signerFunction(authScheme);
       const signingRegion = signingProperties === null || signingProperties === void 0 ? void 0 : signingProperties.signingRegion;
       const signingName = signingProperties === null || signingProperties === void 0 ? void 0 : signingProperties.signingName;
@@ -41547,7 +41536,7 @@ var require_AWSSDKSigV4Signer = __commonJS({
         signingName
       };
     };
-    var AWSSDKSigV4Signer = class {
+    var AwsSdkSigV4Signer = class {
       async sign(httpRequest, identity, signingProperties) {
         if (!protocol_http_1.HttpRequest.isInstance(httpRequest)) {
           throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
@@ -41565,7 +41554,7 @@ var require_AWSSDKSigV4Signer = __commonJS({
           var _a;
           const serverTime = (_a = error2.ServerTime) !== null && _a !== void 0 ? _a : (0, utils_1.getDateHeader)(error2.$response);
           if (serverTime) {
-            const config = (0, throwAWSSDKSigningPropertyError_1.throwAWSSDKSigningPropertyError)("config", signingProperties.config);
+            const config = throwSigningPropertyError("config", signingProperties.config);
             config.systemClockOffset = (0, utils_1.getUpdatedSystemClockOffset)(serverTime, config.systemClockOffset);
           }
           throw error2;
@@ -41574,24 +41563,25 @@ var require_AWSSDKSigV4Signer = __commonJS({
       successHandler(httpResponse, signingProperties) {
         const dateHeader = (0, utils_1.getDateHeader)(httpResponse);
         if (dateHeader) {
-          const config = (0, throwAWSSDKSigningPropertyError_1.throwAWSSDKSigningPropertyError)("config", signingProperties.config);
+          const config = throwSigningPropertyError("config", signingProperties.config);
           config.systemClockOffset = (0, utils_1.getUpdatedSystemClockOffset)(dateHeader, config.systemClockOffset);
         }
       }
     };
-    exports2.AWSSDKSigV4Signer = AWSSDKSigV4Signer;
+    exports2.AwsSdkSigV4Signer = AwsSdkSigV4Signer;
+    exports2.AWSSDKSigV4Signer = AwsSdkSigV4Signer;
   }
 });
 
-// ../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/resolveAWSSDKSigV4Config.js
-var require_resolveAWSSDKSigV4Config = __commonJS({
-  "../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/resolveAWSSDKSigV4Config.js"(exports2) {
+// ../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
+var require_resolveAwsSdkSigV4Config = __commonJS({
+  "../../node_modules/@aws-sdk/core/dist-cjs/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.resolveAWSSDKSigV4Config = void 0;
+    exports2.resolveAWSSDKSigV4Config = exports2.resolveAwsSdkSigV4Config = void 0;
     var core_1 = require_dist_cjs46();
     var signature_v4_1 = require_dist_cjs21();
-    var resolveAWSSDKSigV4Config = (config) => {
+    var resolveAwsSdkSigV4Config = (config) => {
       let normalizedCreds;
       if (config.credentials) {
         normalizedCreds = (0, core_1.memoizeIdentityProvider)(config.credentials, core_1.isIdentityExpired, core_1.doesIdentityRequireRefresh);
@@ -41663,7 +41653,8 @@ var require_resolveAWSSDKSigV4Config = __commonJS({
         signer
       };
     };
-    exports2.resolveAWSSDKSigV4Config = resolveAWSSDKSigV4Config;
+    exports2.resolveAwsSdkSigV4Config = resolveAwsSdkSigV4Config;
+    exports2.resolveAWSSDKSigV4Config = exports2.resolveAwsSdkSigV4Config;
   }
 });
 
@@ -41673,8 +41664,8 @@ var require_aws_sdk = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
-    tslib_1.__exportStar(require_AWSSDKSigV4Signer(), exports2);
-    tslib_1.__exportStar(require_resolveAWSSDKSigV4Config(), exports2);
+    tslib_1.__exportStar(require_AwsSdkSigV4Signer(), exports2);
+    tslib_1.__exportStar(require_resolveAwsSdkSigV4Config(), exports2);
   }
 });
 
@@ -41859,7 +41850,7 @@ var require_httpAuthSchemeProvider = __commonJS({
     exports2.resolveStsAuthConfig = resolveStsAuthConfig;
     var resolveHttpAuthSchemeConfig = (config) => {
       const config_0 = (0, exports2.resolveStsAuthConfig)(config);
-      const config_1 = (0, core_1.resolveAWSSDKSigV4Config)(config_0);
+      const config_1 = (0, core_1.resolveAwsSdkSigV4Config)(config_0);
       return {
         ...config_1
       };
@@ -41900,7 +41891,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.485.0",
+      version: "3.490.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -41921,17 +41912,17 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.485.0",
-        "@aws-sdk/credential-provider-node": "3.485.0",
-        "@aws-sdk/middleware-host-header": "3.485.0",
-        "@aws-sdk/middleware-logger": "3.485.0",
-        "@aws-sdk/middleware-recursion-detection": "3.485.0",
-        "@aws-sdk/middleware-user-agent": "3.485.0",
-        "@aws-sdk/region-config-resolver": "3.485.0",
-        "@aws-sdk/types": "3.485.0",
-        "@aws-sdk/util-endpoints": "3.485.0",
-        "@aws-sdk/util-user-agent-browser": "3.485.0",
-        "@aws-sdk/util-user-agent-node": "3.485.0",
+        "@aws-sdk/core": "3.490.0",
+        "@aws-sdk/credential-provider-node": "3.490.0",
+        "@aws-sdk/middleware-host-header": "3.489.0",
+        "@aws-sdk/middleware-logger": "3.489.0",
+        "@aws-sdk/middleware-recursion-detection": "3.489.0",
+        "@aws-sdk/middleware-user-agent": "3.489.0",
+        "@aws-sdk/region-config-resolver": "3.489.0",
+        "@aws-sdk/types": "3.489.0",
+        "@aws-sdk/util-endpoints": "3.489.0",
+        "@aws-sdk/util-user-agent-browser": "3.489.0",
+        "@aws-sdk/util-user-agent-node": "3.489.0",
         "@smithy/config-resolver": "^2.0.23",
         "@smithy/core": "^1.2.2",
         "@smithy/fetch-http-handler": "^2.3.2",
@@ -44426,7 +44417,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.485.0",
+      version: "3.490.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "tsc -p tsconfig.cjs.json",
@@ -44445,16 +44436,16 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.485.0",
-        "@aws-sdk/middleware-host-header": "3.485.0",
-        "@aws-sdk/middleware-logger": "3.485.0",
-        "@aws-sdk/middleware-recursion-detection": "3.485.0",
-        "@aws-sdk/middleware-user-agent": "3.485.0",
-        "@aws-sdk/region-config-resolver": "3.485.0",
-        "@aws-sdk/types": "3.485.0",
-        "@aws-sdk/util-endpoints": "3.485.0",
-        "@aws-sdk/util-user-agent-browser": "3.485.0",
-        "@aws-sdk/util-user-agent-node": "3.485.0",
+        "@aws-sdk/core": "3.490.0",
+        "@aws-sdk/middleware-host-header": "3.489.0",
+        "@aws-sdk/middleware-logger": "3.489.0",
+        "@aws-sdk/middleware-recursion-detection": "3.489.0",
+        "@aws-sdk/middleware-user-agent": "3.489.0",
+        "@aws-sdk/region-config-resolver": "3.489.0",
+        "@aws-sdk/types": "3.489.0",
+        "@aws-sdk/util-endpoints": "3.489.0",
+        "@aws-sdk/util-user-agent-browser": "3.489.0",
+        "@aws-sdk/util-user-agent-node": "3.489.0",
         "@smithy/config-resolver": "^2.0.23",
         "@smithy/core": "^1.2.2",
         "@smithy/fetch-http-handler": "^2.3.2",
@@ -48281,7 +48272,7 @@ var require_runtimeConfig_shared2 = __commonJS({
           {
             schemeId: "aws.auth#sigv4",
             identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4"),
-            signer: new core_1.AWSSDKSigV4Signer()
+            signer: new core_1.AwsSdkSigV4Signer()
           },
           {
             schemeId: "smithy.api#noAuth",
@@ -48342,7 +48333,7 @@ var require_runtimeConfig2 = __commonJS({
           {
             schemeId: "aws.auth#sigv4",
             identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4") || (async (idProps) => await (0, defaultStsRoleAssumers_1.decorateDefaultCredentialProvider)(credential_provider_node_1.defaultProvider)(idProps?.__config || {})()),
-            signer: new core_1.AWSSDKSigV4Signer()
+            signer: new core_1.AwsSdkSigV4Signer()
           },
           {
             schemeId: "smithy.api#noAuth",
@@ -48470,14 +48461,6 @@ var require_STSClient = __commonJS({
     var runtimeConfig_1 = require_runtimeConfig2();
     var runtimeExtensions_1 = require_runtimeExtensions2();
     var STSClient = class extends smithy_client_1.Client {
-      getDefaultHttpAuthSchemeParametersProvider() {
-        return httpAuthSchemeProvider_1.defaultSTSHttpAuthSchemeParametersProvider;
-      }
-      getIdentityProviderConfigProvider() {
-        return async (config) => new core_1.DefaultIdentityProviderConfig({
-          "aws.auth#sigv4": config.credentials
-        });
-      }
       constructor(...[configuration2]) {
         const _config_0 = (0, runtimeConfig_1.getRuntimeConfig)(configuration2 || {});
         const _config_1 = (0, EndpointParameters_1.resolveClientEndpointParameters)(_config_0);
@@ -48504,6 +48487,14 @@ var require_STSClient = __commonJS({
       }
       destroy() {
         super.destroy();
+      }
+      getDefaultHttpAuthSchemeParametersProvider() {
+        return httpAuthSchemeProvider_1.defaultSTSHttpAuthSchemeParametersProvider;
+      }
+      getIdentityProviderConfigProvider() {
+        return async (config) => new core_1.DefaultIdentityProviderConfig({
+          "aws.auth#sigv4": config.credentials
+        });
       }
     };
     exports2.STSClient = STSClient;
