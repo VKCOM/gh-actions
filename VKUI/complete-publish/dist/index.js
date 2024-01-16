@@ -21881,7 +21881,7 @@ var WorkflowHandler = class {
       state: "all"
     });
     return issues.reduce((issueNumbers, issue) => {
-      if (issue.state_reason !== IGNORED_STATE) {
+      if (issue.state_reason !== IGNORED_STATE && !issue.locked) {
         issueNumbers.push(issue.number);
       }
       return issueNumbers;
