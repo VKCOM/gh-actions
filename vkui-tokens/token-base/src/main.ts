@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/naming-convention
 import * as Figma from 'figma-js';
 import * as core from '@actions/core';
 import * as fs from 'fs/promises';
