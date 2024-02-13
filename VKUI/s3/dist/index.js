@@ -22994,7 +22994,7 @@ var require_dist_cjs24 = __commonJS({
         var _a;
         const { request } = args;
         if (import_protocol_http.HttpRequest.isInstance(request)) {
-          if (!request.headers[CONTENT_LENGTH_HEADER]) {
+          if (!(CONTENT_LENGTH_HEADER in request.headers)) {
             const message = `Are you using a Stream of unknown length as the Body of a PutObject request? Consider using Upload instead from @aws-sdk/lib-storage.`;
             if (typeof ((_a = context == null ? void 0 : context.logger) == null ? void 0 : _a.warn) === "function" && !(context.logger instanceof import_smithy_client.NoOpLogger)) {
               context.logger.warn(message);
@@ -23583,7 +23583,11 @@ var require_dist_cjs26 = __commonJS({
     var import_util_middleware = require_dist_cjs20();
     var CREDENTIAL_EXPIRE_WINDOW = 3e5;
     var resolveAwsAuthConfig = /* @__PURE__ */ __name((input) => {
-      const normalizedCreds = input.credentials ? normalizeCredentialProvider(input.credentials) : input.credentialDefaultProvider(input);
+      const normalizedCreds = input.credentials ? normalizeCredentialProvider(input.credentials) : input.credentialDefaultProvider(
+        Object.assign({}, input, {
+          parentClientConfig: input
+        })
+      );
       const { signingEscapePath = true, systemClockOffset = input.systemClockOffset || 0, sha256 } = input;
       let signer;
       if (input.signer) {
@@ -23649,7 +23653,11 @@ var require_dist_cjs26 = __commonJS({
       };
     }, "resolveAwsAuthConfig");
     var resolveSigV4AuthConfig = /* @__PURE__ */ __name((input) => {
-      const normalizedCreds = input.credentials ? normalizeCredentialProvider(input.credentials) : input.credentialDefaultProvider(input);
+      const normalizedCreds = input.credentials ? normalizeCredentialProvider(input.credentials) : input.credentialDefaultProvider(
+        Object.assign({}, input, {
+          parentClientConfig: input
+        })
+      );
       const { signingEscapePath = true, systemClockOffset = input.systemClockOffset || 0, sha256 } = input;
       let signer;
       if (input.signer) {
@@ -29299,7 +29307,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.501.0",
+      version: "3.511.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29324,26 +29332,26 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.501.0",
-        "@aws-sdk/core": "3.496.0",
-        "@aws-sdk/credential-provider-node": "3.501.0",
-        "@aws-sdk/middleware-bucket-endpoint": "3.496.0",
-        "@aws-sdk/middleware-expect-continue": "3.496.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.496.0",
-        "@aws-sdk/middleware-host-header": "3.496.0",
-        "@aws-sdk/middleware-location-constraint": "3.496.0",
-        "@aws-sdk/middleware-logger": "3.496.0",
-        "@aws-sdk/middleware-recursion-detection": "3.496.0",
-        "@aws-sdk/middleware-sdk-s3": "3.499.0",
-        "@aws-sdk/middleware-signing": "3.496.0",
-        "@aws-sdk/middleware-ssec": "3.498.0",
-        "@aws-sdk/middleware-user-agent": "3.496.0",
-        "@aws-sdk/region-config-resolver": "3.496.0",
-        "@aws-sdk/signature-v4-multi-region": "3.499.0",
-        "@aws-sdk/types": "3.496.0",
-        "@aws-sdk/util-endpoints": "3.496.0",
-        "@aws-sdk/util-user-agent-browser": "3.496.0",
-        "@aws-sdk/util-user-agent-node": "3.496.0",
+        "@aws-sdk/client-sts": "3.511.0",
+        "@aws-sdk/core": "3.511.0",
+        "@aws-sdk/credential-provider-node": "3.511.0",
+        "@aws-sdk/middleware-bucket-endpoint": "3.511.0",
+        "@aws-sdk/middleware-expect-continue": "3.511.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.511.0",
+        "@aws-sdk/middleware-host-header": "3.511.0",
+        "@aws-sdk/middleware-location-constraint": "3.511.0",
+        "@aws-sdk/middleware-logger": "3.511.0",
+        "@aws-sdk/middleware-recursion-detection": "3.511.0",
+        "@aws-sdk/middleware-sdk-s3": "3.511.0",
+        "@aws-sdk/middleware-signing": "3.511.0",
+        "@aws-sdk/middleware-ssec": "3.511.0",
+        "@aws-sdk/middleware-user-agent": "3.511.0",
+        "@aws-sdk/region-config-resolver": "3.511.0",
+        "@aws-sdk/signature-v4-multi-region": "3.511.0",
+        "@aws-sdk/types": "3.511.0",
+        "@aws-sdk/util-endpoints": "3.511.0",
+        "@aws-sdk/util-user-agent-browser": "3.511.0",
+        "@aws-sdk/util-user-agent-node": "3.511.0",
         "@aws-sdk/xml-builder": "3.496.0",
         "@smithy/config-resolver": "^2.1.1",
         "@smithy/core": "^1.3.1",
@@ -29381,6 +29389,7 @@ var require_package = __commonJS({
         tslib: "^2.5.0"
       },
       devDependencies: {
+        "@aws-sdk/signature-v4-crt": "3.511.0",
         "@smithy/service-client-documentation-generator": "^2.1.1",
         "@tsconfig/node14": "1.0.3",
         "@types/chai": "^4.2.11",
@@ -29565,7 +29574,13 @@ More information can be found at: https://a.co/dzr2AJd`
       }
       if (!normalizedCreds) {
         if (config.credentialDefaultProvider) {
-          normalizedCreds = (0, import_core.normalizeProvider)(config.credentialDefaultProvider(config));
+          normalizedCreds = (0, import_core.normalizeProvider)(
+            config.credentialDefaultProvider(
+              Object.assign({}, config, {
+                parentClientConfig: config
+              })
+            )
+          );
         } else {
           normalizedCreds = /* @__PURE__ */ __name(async () => {
             throw new Error("`credentials` is missing");
@@ -29707,1615 +29722,6 @@ More information can be found at: https://a.co/dzr2AJd`
       }
       return (0, import_smithy_client.expectUnion)(value);
     }, "awsExpectUnion");
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/auth/httpAuthSchemeProvider.js
-var require_httpAuthSchemeProvider = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/auth/httpAuthSchemeProvider.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.resolveHttpAuthSchemeConfig = exports2.resolveStsAuthConfig = exports2.defaultSTSHttpAuthSchemeProvider = exports2.defaultSTSHttpAuthSchemeParametersProvider = void 0;
-    var core_1 = require_dist_cjs44();
-    var util_middleware_1 = require_dist_cjs20();
-    var STSClient_1 = require_STSClient();
-    var defaultSTSHttpAuthSchemeParametersProvider = async (config, context, input) => {
-      return {
-        operation: (0, util_middleware_1.getSmithyContext)(context).operation,
-        region: await (0, util_middleware_1.normalizeProvider)(config.region)() || (() => {
-          throw new Error("expected `region` to be configured for `aws.auth#sigv4`");
-        })()
-      };
-    };
-    exports2.defaultSTSHttpAuthSchemeParametersProvider = defaultSTSHttpAuthSchemeParametersProvider;
-    function createAwsAuthSigv4HttpAuthOption(authParameters) {
-      return {
-        schemeId: "aws.auth#sigv4",
-        signingProperties: {
-          name: "sts",
-          region: authParameters.region
-        },
-        propertiesExtractor: (config, context) => ({
-          signingProperties: {
-            config,
-            context
-          }
-        })
-      };
-    }
-    function createSmithyApiNoAuthHttpAuthOption(authParameters) {
-      return {
-        schemeId: "smithy.api#noAuth"
-      };
-    }
-    var defaultSTSHttpAuthSchemeProvider = (authParameters) => {
-      const options = [];
-      switch (authParameters.operation) {
-        case "AssumeRoleWithSAML": {
-          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
-          break;
-        }
-        case "AssumeRoleWithWebIdentity": {
-          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
-          break;
-        }
-        default: {
-          options.push(createAwsAuthSigv4HttpAuthOption(authParameters));
-        }
-      }
-      return options;
-    };
-    exports2.defaultSTSHttpAuthSchemeProvider = defaultSTSHttpAuthSchemeProvider;
-    var resolveStsAuthConfig = (input) => ({
-      ...input,
-      stsClientCtor: STSClient_1.STSClient
-    });
-    exports2.resolveStsAuthConfig = resolveStsAuthConfig;
-    var resolveHttpAuthSchemeConfig = (config) => {
-      const config_0 = (0, exports2.resolveStsAuthConfig)(config);
-      const config_1 = (0, core_1.resolveAwsSdkSigV4Config)(config_0);
-      return {
-        ...config_1
-      };
-    };
-    exports2.resolveHttpAuthSchemeConfig = resolveHttpAuthSchemeConfig;
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/EndpointParameters.js
-var require_EndpointParameters = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/EndpointParameters.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.commonParams = exports2.resolveClientEndpointParameters = void 0;
-    var resolveClientEndpointParameters = (options) => {
-      return {
-        ...options,
-        useDualstackEndpoint: options.useDualstackEndpoint ?? false,
-        useFipsEndpoint: options.useFipsEndpoint ?? false,
-        useGlobalEndpoint: options.useGlobalEndpoint ?? false,
-        defaultSigningName: "sts"
-      };
-    };
-    exports2.resolveClientEndpointParameters = resolveClientEndpointParameters;
-    exports2.commonParams = {
-      UseGlobalEndpoint: { type: "builtInParams", name: "useGlobalEndpoint" },
-      UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
-      Endpoint: { type: "builtInParams", name: "endpoint" },
-      Region: { type: "builtInParams", name: "region" },
-      UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
-    };
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/package.json
-var require_package2 = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/package.json"(exports2, module2) {
-    module2.exports = {
-      name: "@aws-sdk/client-sts",
-      description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.501.0",
-      scripts: {
-        build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
-        "build:cjs": "node ../../scripts/compilation/inline client-sts",
-        "build:es": "tsc -p tsconfig.es.json",
-        "build:include:deps": "lerna run --scope $npm_package_name --include-dependencies build",
-        "build:types": "tsc -p tsconfig.types.json",
-        "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
-        clean: "rimraf ./dist-* && rimraf *.tsbuildinfo",
-        "extract:docs": "api-extractor run --local",
-        "generate:client": "node ../../scripts/generate-clients/single-service --solo sts",
-        test: "yarn test:unit",
-        "test:unit": "jest"
-      },
-      main: "./dist-cjs/index.js",
-      types: "./dist-types/index.d.ts",
-      module: "./dist-es/index.js",
-      sideEffects: false,
-      dependencies: {
-        "@aws-crypto/sha256-browser": "3.0.0",
-        "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.496.0",
-        "@aws-sdk/credential-provider-node": "3.501.0",
-        "@aws-sdk/middleware-host-header": "3.496.0",
-        "@aws-sdk/middleware-logger": "3.496.0",
-        "@aws-sdk/middleware-recursion-detection": "3.496.0",
-        "@aws-sdk/middleware-user-agent": "3.496.0",
-        "@aws-sdk/region-config-resolver": "3.496.0",
-        "@aws-sdk/types": "3.496.0",
-        "@aws-sdk/util-endpoints": "3.496.0",
-        "@aws-sdk/util-user-agent-browser": "3.496.0",
-        "@aws-sdk/util-user-agent-node": "3.496.0",
-        "@smithy/config-resolver": "^2.1.1",
-        "@smithy/core": "^1.3.1",
-        "@smithy/fetch-http-handler": "^2.4.1",
-        "@smithy/hash-node": "^2.1.1",
-        "@smithy/invalid-dependency": "^2.1.1",
-        "@smithy/middleware-content-length": "^2.1.1",
-        "@smithy/middleware-endpoint": "^2.4.1",
-        "@smithy/middleware-retry": "^2.1.1",
-        "@smithy/middleware-serde": "^2.1.1",
-        "@smithy/middleware-stack": "^2.1.1",
-        "@smithy/node-config-provider": "^2.2.1",
-        "@smithy/node-http-handler": "^2.3.1",
-        "@smithy/protocol-http": "^3.1.1",
-        "@smithy/smithy-client": "^2.3.1",
-        "@smithy/types": "^2.9.1",
-        "@smithy/url-parser": "^2.1.1",
-        "@smithy/util-base64": "^2.1.1",
-        "@smithy/util-body-length-browser": "^2.1.1",
-        "@smithy/util-body-length-node": "^2.2.1",
-        "@smithy/util-defaults-mode-browser": "^2.1.1",
-        "@smithy/util-defaults-mode-node": "^2.1.1",
-        "@smithy/util-endpoints": "^1.1.1",
-        "@smithy/util-middleware": "^2.1.1",
-        "@smithy/util-retry": "^2.1.1",
-        "@smithy/util-utf8": "^2.1.1",
-        "fast-xml-parser": "4.2.5",
-        tslib: "^2.5.0"
-      },
-      devDependencies: {
-        "@smithy/service-client-documentation-generator": "^2.1.1",
-        "@tsconfig/node14": "1.0.3",
-        "@types/node": "^14.14.31",
-        concurrently: "7.0.0",
-        "downlevel-dts": "0.10.1",
-        rimraf: "3.0.2",
-        typescript: "~4.9.5"
-      },
-      engines: {
-        node: ">=14.0.0"
-      },
-      typesVersions: {
-        "<4.0": {
-          "dist-types/*": [
-            "dist-types/ts3.4/*"
-          ]
-        }
-      },
-      files: [
-        "dist-*/**"
-      ],
-      author: {
-        name: "AWS SDK for JavaScript Team",
-        url: "https://aws.amazon.com/javascript/"
-      },
-      license: "Apache-2.0",
-      browser: {
-        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
-      },
-      "react-native": {
-        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.native"
-      },
-      homepage: "https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sts",
-      repository: {
-        type: "git",
-        url: "https://github.com/aws/aws-sdk-js-v3.git",
-        directory: "clients/client-sts"
-      }
-    };
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/models/STSServiceException.js
-var require_STSServiceException = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/models/STSServiceException.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.STSServiceException = exports2.__ServiceException = void 0;
-    var smithy_client_1 = require_dist_cjs16();
-    Object.defineProperty(exports2, "__ServiceException", { enumerable: true, get: function() {
-      return smithy_client_1.ServiceException;
-    } });
-    var STSServiceException2 = class _STSServiceException extends smithy_client_1.ServiceException {
-      constructor(options) {
-        super(options);
-        Object.setPrototypeOf(this, _STSServiceException.prototype);
-      }
-    };
-    exports2.STSServiceException = STSServiceException2;
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/models/models_0.js
-var require_models_0 = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/models/models_0.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.GetSessionTokenResponseFilterSensitiveLog = exports2.GetFederationTokenResponseFilterSensitiveLog = exports2.AssumeRoleWithWebIdentityResponseFilterSensitiveLog = exports2.AssumeRoleWithWebIdentityRequestFilterSensitiveLog = exports2.AssumeRoleWithSAMLResponseFilterSensitiveLog = exports2.AssumeRoleWithSAMLRequestFilterSensitiveLog = exports2.AssumeRoleResponseFilterSensitiveLog = exports2.CredentialsFilterSensitiveLog = exports2.InvalidAuthorizationMessageException = exports2.IDPCommunicationErrorException = exports2.InvalidIdentityTokenException = exports2.IDPRejectedClaimException = exports2.RegionDisabledException = exports2.PackedPolicyTooLargeException = exports2.MalformedPolicyDocumentException = exports2.ExpiredTokenException = void 0;
-    var smithy_client_1 = require_dist_cjs16();
-    var STSServiceException_1 = require_STSServiceException();
-    var ExpiredTokenException2 = class _ExpiredTokenException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "ExpiredTokenException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "ExpiredTokenException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _ExpiredTokenException.prototype);
-      }
-    };
-    exports2.ExpiredTokenException = ExpiredTokenException2;
-    var MalformedPolicyDocumentException2 = class _MalformedPolicyDocumentException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "MalformedPolicyDocumentException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "MalformedPolicyDocumentException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _MalformedPolicyDocumentException.prototype);
-      }
-    };
-    exports2.MalformedPolicyDocumentException = MalformedPolicyDocumentException2;
-    var PackedPolicyTooLargeException2 = class _PackedPolicyTooLargeException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "PackedPolicyTooLargeException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "PackedPolicyTooLargeException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _PackedPolicyTooLargeException.prototype);
-      }
-    };
-    exports2.PackedPolicyTooLargeException = PackedPolicyTooLargeException2;
-    var RegionDisabledException2 = class _RegionDisabledException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "RegionDisabledException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "RegionDisabledException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _RegionDisabledException.prototype);
-      }
-    };
-    exports2.RegionDisabledException = RegionDisabledException2;
-    var IDPRejectedClaimException2 = class _IDPRejectedClaimException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "IDPRejectedClaimException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "IDPRejectedClaimException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _IDPRejectedClaimException.prototype);
-      }
-    };
-    exports2.IDPRejectedClaimException = IDPRejectedClaimException2;
-    var InvalidIdentityTokenException2 = class _InvalidIdentityTokenException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidIdentityTokenException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "InvalidIdentityTokenException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _InvalidIdentityTokenException.prototype);
-      }
-    };
-    exports2.InvalidIdentityTokenException = InvalidIdentityTokenException2;
-    var IDPCommunicationErrorException2 = class _IDPCommunicationErrorException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "IDPCommunicationErrorException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "IDPCommunicationErrorException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _IDPCommunicationErrorException.prototype);
-      }
-    };
-    exports2.IDPCommunicationErrorException = IDPCommunicationErrorException2;
-    var InvalidAuthorizationMessageException2 = class _InvalidAuthorizationMessageException extends STSServiceException_1.STSServiceException {
-      constructor(opts) {
-        super({
-          name: "InvalidAuthorizationMessageException",
-          $fault: "client",
-          ...opts
-        });
-        this.name = "InvalidAuthorizationMessageException";
-        this.$fault = "client";
-        Object.setPrototypeOf(this, _InvalidAuthorizationMessageException.prototype);
-      }
-    };
-    exports2.InvalidAuthorizationMessageException = InvalidAuthorizationMessageException2;
-    var CredentialsFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.SecretAccessKey && { SecretAccessKey: smithy_client_1.SENSITIVE_STRING }
-    });
-    exports2.CredentialsFilterSensitiveLog = CredentialsFilterSensitiveLog2;
-    var AssumeRoleResponseFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.Credentials && { Credentials: (0, exports2.CredentialsFilterSensitiveLog)(obj.Credentials) }
-    });
-    exports2.AssumeRoleResponseFilterSensitiveLog = AssumeRoleResponseFilterSensitiveLog2;
-    var AssumeRoleWithSAMLRequestFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.SAMLAssertion && { SAMLAssertion: smithy_client_1.SENSITIVE_STRING }
-    });
-    exports2.AssumeRoleWithSAMLRequestFilterSensitiveLog = AssumeRoleWithSAMLRequestFilterSensitiveLog2;
-    var AssumeRoleWithSAMLResponseFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.Credentials && { Credentials: (0, exports2.CredentialsFilterSensitiveLog)(obj.Credentials) }
-    });
-    exports2.AssumeRoleWithSAMLResponseFilterSensitiveLog = AssumeRoleWithSAMLResponseFilterSensitiveLog2;
-    var AssumeRoleWithWebIdentityRequestFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.WebIdentityToken && { WebIdentityToken: smithy_client_1.SENSITIVE_STRING }
-    });
-    exports2.AssumeRoleWithWebIdentityRequestFilterSensitiveLog = AssumeRoleWithWebIdentityRequestFilterSensitiveLog2;
-    var AssumeRoleWithWebIdentityResponseFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.Credentials && { Credentials: (0, exports2.CredentialsFilterSensitiveLog)(obj.Credentials) }
-    });
-    exports2.AssumeRoleWithWebIdentityResponseFilterSensitiveLog = AssumeRoleWithWebIdentityResponseFilterSensitiveLog2;
-    var GetFederationTokenResponseFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.Credentials && { Credentials: (0, exports2.CredentialsFilterSensitiveLog)(obj.Credentials) }
-    });
-    exports2.GetFederationTokenResponseFilterSensitiveLog = GetFederationTokenResponseFilterSensitiveLog2;
-    var GetSessionTokenResponseFilterSensitiveLog2 = (obj) => ({
-      ...obj,
-      ...obj.Credentials && { Credentials: (0, exports2.CredentialsFilterSensitiveLog)(obj.Credentials) }
-    });
-    exports2.GetSessionTokenResponseFilterSensitiveLog = GetSessionTokenResponseFilterSensitiveLog2;
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/protocols/Aws_query.js
-var require_Aws_query = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/protocols/Aws_query.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.de_GetSessionTokenCommand = exports2.de_GetFederationTokenCommand = exports2.de_GetCallerIdentityCommand = exports2.de_GetAccessKeyInfoCommand = exports2.de_DecodeAuthorizationMessageCommand = exports2.de_AssumeRoleWithWebIdentityCommand = exports2.de_AssumeRoleWithSAMLCommand = exports2.de_AssumeRoleCommand = exports2.se_GetSessionTokenCommand = exports2.se_GetFederationTokenCommand = exports2.se_GetCallerIdentityCommand = exports2.se_GetAccessKeyInfoCommand = exports2.se_DecodeAuthorizationMessageCommand = exports2.se_AssumeRoleWithWebIdentityCommand = exports2.se_AssumeRoleWithSAMLCommand = exports2.se_AssumeRoleCommand = void 0;
-    var protocol_http_1 = require_dist_cjs2();
-    var smithy_client_1 = require_dist_cjs16();
-    var fast_xml_parser_1 = require_fxp();
-    var models_0_1 = require_models_0();
-    var STSServiceException_1 = require_STSServiceException();
-    var se_AssumeRoleCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_AssumeRoleRequest(input, context),
-        [_A]: _AR,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_AssumeRoleCommand = se_AssumeRoleCommand;
-    var se_AssumeRoleWithSAMLCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_AssumeRoleWithSAMLRequest(input, context),
-        [_A]: _ARWSAML,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_AssumeRoleWithSAMLCommand = se_AssumeRoleWithSAMLCommand;
-    var se_AssumeRoleWithWebIdentityCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_AssumeRoleWithWebIdentityRequest(input, context),
-        [_A]: _ARWWI,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_AssumeRoleWithWebIdentityCommand = se_AssumeRoleWithWebIdentityCommand;
-    var se_DecodeAuthorizationMessageCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_DecodeAuthorizationMessageRequest(input, context),
-        [_A]: _DAM,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_DecodeAuthorizationMessageCommand = se_DecodeAuthorizationMessageCommand;
-    var se_GetAccessKeyInfoCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_GetAccessKeyInfoRequest(input, context),
-        [_A]: _GAKI,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_GetAccessKeyInfoCommand = se_GetAccessKeyInfoCommand;
-    var se_GetCallerIdentityCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_GetCallerIdentityRequest(input, context),
-        [_A]: _GCI,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_GetCallerIdentityCommand = se_GetCallerIdentityCommand;
-    var se_GetFederationTokenCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_GetFederationTokenRequest(input, context),
-        [_A]: _GFT,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_GetFederationTokenCommand = se_GetFederationTokenCommand;
-    var se_GetSessionTokenCommand = async (input, context) => {
-      const headers = SHARED_HEADERS;
-      let body;
-      body = buildFormUrlencodedString({
-        ...se_GetSessionTokenRequest(input, context),
-        [_A]: _GST,
-        [_V]: _
-      });
-      return buildHttpRpcRequest(context, headers, "/", void 0, body);
-    };
-    exports2.se_GetSessionTokenCommand = se_GetSessionTokenCommand;
-    var de_AssumeRoleCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_AssumeRoleCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_AssumeRoleResponse(data.AssumeRoleResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_AssumeRoleCommand = de_AssumeRoleCommand;
-    var de_AssumeRoleCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "ExpiredTokenException":
-        case "com.amazonaws.sts#ExpiredTokenException":
-          throw await de_ExpiredTokenExceptionRes(parsedOutput, context);
-        case "MalformedPolicyDocument":
-        case "com.amazonaws.sts#MalformedPolicyDocumentException":
-          throw await de_MalformedPolicyDocumentExceptionRes(parsedOutput, context);
-        case "PackedPolicyTooLarge":
-        case "com.amazonaws.sts#PackedPolicyTooLargeException":
-          throw await de_PackedPolicyTooLargeExceptionRes(parsedOutput, context);
-        case "RegionDisabledException":
-        case "com.amazonaws.sts#RegionDisabledException":
-          throw await de_RegionDisabledExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody: parsedBody.Error,
-            errorCode
-          });
-      }
-    };
-    var de_AssumeRoleWithSAMLCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_AssumeRoleWithSAMLCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_AssumeRoleWithSAMLResponse(data.AssumeRoleWithSAMLResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_AssumeRoleWithSAMLCommand = de_AssumeRoleWithSAMLCommand;
-    var de_AssumeRoleWithSAMLCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "ExpiredTokenException":
-        case "com.amazonaws.sts#ExpiredTokenException":
-          throw await de_ExpiredTokenExceptionRes(parsedOutput, context);
-        case "IDPRejectedClaim":
-        case "com.amazonaws.sts#IDPRejectedClaimException":
-          throw await de_IDPRejectedClaimExceptionRes(parsedOutput, context);
-        case "InvalidIdentityToken":
-        case "com.amazonaws.sts#InvalidIdentityTokenException":
-          throw await de_InvalidIdentityTokenExceptionRes(parsedOutput, context);
-        case "MalformedPolicyDocument":
-        case "com.amazonaws.sts#MalformedPolicyDocumentException":
-          throw await de_MalformedPolicyDocumentExceptionRes(parsedOutput, context);
-        case "PackedPolicyTooLarge":
-        case "com.amazonaws.sts#PackedPolicyTooLargeException":
-          throw await de_PackedPolicyTooLargeExceptionRes(parsedOutput, context);
-        case "RegionDisabledException":
-        case "com.amazonaws.sts#RegionDisabledException":
-          throw await de_RegionDisabledExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody: parsedBody.Error,
-            errorCode
-          });
-      }
-    };
-    var de_AssumeRoleWithWebIdentityCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_AssumeRoleWithWebIdentityCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_AssumeRoleWithWebIdentityResponse(data.AssumeRoleWithWebIdentityResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_AssumeRoleWithWebIdentityCommand = de_AssumeRoleWithWebIdentityCommand;
-    var de_AssumeRoleWithWebIdentityCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "ExpiredTokenException":
-        case "com.amazonaws.sts#ExpiredTokenException":
-          throw await de_ExpiredTokenExceptionRes(parsedOutput, context);
-        case "IDPCommunicationError":
-        case "com.amazonaws.sts#IDPCommunicationErrorException":
-          throw await de_IDPCommunicationErrorExceptionRes(parsedOutput, context);
-        case "IDPRejectedClaim":
-        case "com.amazonaws.sts#IDPRejectedClaimException":
-          throw await de_IDPRejectedClaimExceptionRes(parsedOutput, context);
-        case "InvalidIdentityToken":
-        case "com.amazonaws.sts#InvalidIdentityTokenException":
-          throw await de_InvalidIdentityTokenExceptionRes(parsedOutput, context);
-        case "MalformedPolicyDocument":
-        case "com.amazonaws.sts#MalformedPolicyDocumentException":
-          throw await de_MalformedPolicyDocumentExceptionRes(parsedOutput, context);
-        case "PackedPolicyTooLarge":
-        case "com.amazonaws.sts#PackedPolicyTooLargeException":
-          throw await de_PackedPolicyTooLargeExceptionRes(parsedOutput, context);
-        case "RegionDisabledException":
-        case "com.amazonaws.sts#RegionDisabledException":
-          throw await de_RegionDisabledExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody: parsedBody.Error,
-            errorCode
-          });
-      }
-    };
-    var de_DecodeAuthorizationMessageCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_DecodeAuthorizationMessageCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_DecodeAuthorizationMessageResponse(data.DecodeAuthorizationMessageResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_DecodeAuthorizationMessageCommand = de_DecodeAuthorizationMessageCommand;
-    var de_DecodeAuthorizationMessageCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "InvalidAuthorizationMessageException":
-        case "com.amazonaws.sts#InvalidAuthorizationMessageException":
-          throw await de_InvalidAuthorizationMessageExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody: parsedBody.Error,
-            errorCode
-          });
-      }
-    };
-    var de_GetAccessKeyInfoCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_GetAccessKeyInfoCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_GetAccessKeyInfoResponse(data.GetAccessKeyInfoResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_GetAccessKeyInfoCommand = de_GetAccessKeyInfoCommand;
-    var de_GetAccessKeyInfoCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody: parsedBody.Error,
-        errorCode
-      });
-    };
-    var de_GetCallerIdentityCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_GetCallerIdentityCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_GetCallerIdentityResponse(data.GetCallerIdentityResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_GetCallerIdentityCommand = de_GetCallerIdentityCommand;
-    var de_GetCallerIdentityCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody: parsedBody.Error,
-        errorCode
-      });
-    };
-    var de_GetFederationTokenCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_GetFederationTokenCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_GetFederationTokenResponse(data.GetFederationTokenResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_GetFederationTokenCommand = de_GetFederationTokenCommand;
-    var de_GetFederationTokenCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "MalformedPolicyDocument":
-        case "com.amazonaws.sts#MalformedPolicyDocumentException":
-          throw await de_MalformedPolicyDocumentExceptionRes(parsedOutput, context);
-        case "PackedPolicyTooLarge":
-        case "com.amazonaws.sts#PackedPolicyTooLargeException":
-          throw await de_PackedPolicyTooLargeExceptionRes(parsedOutput, context);
-        case "RegionDisabledException":
-        case "com.amazonaws.sts#RegionDisabledException":
-          throw await de_RegionDisabledExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody: parsedBody.Error,
-            errorCode
-          });
-      }
-    };
-    var de_GetSessionTokenCommand = async (output, context) => {
-      if (output.statusCode >= 300) {
-        return de_GetSessionTokenCommandError(output, context);
-      }
-      const data = await parseBody(output.body, context);
-      let contents = {};
-      contents = de_GetSessionTokenResponse(data.GetSessionTokenResult, context);
-      const response = {
-        $metadata: deserializeMetadata(output),
-        ...contents
-      };
-      return response;
-    };
-    exports2.de_GetSessionTokenCommand = de_GetSessionTokenCommand;
-    var de_GetSessionTokenCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "RegionDisabledException":
-        case "com.amazonaws.sts#RegionDisabledException":
-          throw await de_RegionDisabledExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody: parsedBody.Error,
-            errorCode
-          });
-      }
-    };
-    var de_ExpiredTokenExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_ExpiredTokenException(body.Error, context);
-      const exception = new models_0_1.ExpiredTokenException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var de_IDPCommunicationErrorExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_IDPCommunicationErrorException(body.Error, context);
-      const exception = new models_0_1.IDPCommunicationErrorException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var de_IDPRejectedClaimExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_IDPRejectedClaimException(body.Error, context);
-      const exception = new models_0_1.IDPRejectedClaimException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var de_InvalidAuthorizationMessageExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_InvalidAuthorizationMessageException(body.Error, context);
-      const exception = new models_0_1.InvalidAuthorizationMessageException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var de_InvalidIdentityTokenExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_InvalidIdentityTokenException(body.Error, context);
-      const exception = new models_0_1.InvalidIdentityTokenException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var de_MalformedPolicyDocumentExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_MalformedPolicyDocumentException(body.Error, context);
-      const exception = new models_0_1.MalformedPolicyDocumentException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var de_PackedPolicyTooLargeExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_PackedPolicyTooLargeException(body.Error, context);
-      const exception = new models_0_1.PackedPolicyTooLargeException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var de_RegionDisabledExceptionRes = async (parsedOutput, context) => {
-      const body = parsedOutput.body;
-      const deserialized = de_RegionDisabledException(body.Error, context);
-      const exception = new models_0_1.RegionDisabledException({
-        $metadata: deserializeMetadata(parsedOutput),
-        ...deserialized
-      });
-      return (0, smithy_client_1.decorateServiceException)(exception, body);
-    };
-    var se_AssumeRoleRequest = (input, context) => {
-      const entries = {};
-      if (input[_RA] != null) {
-        entries[_RA] = input[_RA];
-      }
-      if (input[_RSN] != null) {
-        entries[_RSN] = input[_RSN];
-      }
-      if (input[_PA] != null) {
-        const memberEntries = se_policyDescriptorListType(input[_PA], context);
-        if (input[_PA]?.length === 0) {
-          entries.PolicyArns = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `PolicyArns.${key}`;
-          entries[loc] = value;
-        });
-      }
-      if (input[_P] != null) {
-        entries[_P] = input[_P];
-      }
-      if (input[_DS] != null) {
-        entries[_DS] = input[_DS];
-      }
-      if (input[_T] != null) {
-        const memberEntries = se_tagListType(input[_T], context);
-        if (input[_T]?.length === 0) {
-          entries.Tags = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `Tags.${key}`;
-          entries[loc] = value;
-        });
-      }
-      if (input[_TTK] != null) {
-        const memberEntries = se_tagKeyListType(input[_TTK], context);
-        if (input[_TTK]?.length === 0) {
-          entries.TransitiveTagKeys = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `TransitiveTagKeys.${key}`;
-          entries[loc] = value;
-        });
-      }
-      if (input[_EI] != null) {
-        entries[_EI] = input[_EI];
-      }
-      if (input[_SN] != null) {
-        entries[_SN] = input[_SN];
-      }
-      if (input[_TC] != null) {
-        entries[_TC] = input[_TC];
-      }
-      if (input[_SI] != null) {
-        entries[_SI] = input[_SI];
-      }
-      if (input[_PC] != null) {
-        const memberEntries = se_ProvidedContextsListType(input[_PC], context);
-        if (input[_PC]?.length === 0) {
-          entries.ProvidedContexts = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `ProvidedContexts.${key}`;
-          entries[loc] = value;
-        });
-      }
-      return entries;
-    };
-    var se_AssumeRoleWithSAMLRequest = (input, context) => {
-      const entries = {};
-      if (input[_RA] != null) {
-        entries[_RA] = input[_RA];
-      }
-      if (input[_PAr] != null) {
-        entries[_PAr] = input[_PAr];
-      }
-      if (input[_SAMLA] != null) {
-        entries[_SAMLA] = input[_SAMLA];
-      }
-      if (input[_PA] != null) {
-        const memberEntries = se_policyDescriptorListType(input[_PA], context);
-        if (input[_PA]?.length === 0) {
-          entries.PolicyArns = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `PolicyArns.${key}`;
-          entries[loc] = value;
-        });
-      }
-      if (input[_P] != null) {
-        entries[_P] = input[_P];
-      }
-      if (input[_DS] != null) {
-        entries[_DS] = input[_DS];
-      }
-      return entries;
-    };
-    var se_AssumeRoleWithWebIdentityRequest = (input, context) => {
-      const entries = {};
-      if (input[_RA] != null) {
-        entries[_RA] = input[_RA];
-      }
-      if (input[_RSN] != null) {
-        entries[_RSN] = input[_RSN];
-      }
-      if (input[_WIT] != null) {
-        entries[_WIT] = input[_WIT];
-      }
-      if (input[_PI] != null) {
-        entries[_PI] = input[_PI];
-      }
-      if (input[_PA] != null) {
-        const memberEntries = se_policyDescriptorListType(input[_PA], context);
-        if (input[_PA]?.length === 0) {
-          entries.PolicyArns = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `PolicyArns.${key}`;
-          entries[loc] = value;
-        });
-      }
-      if (input[_P] != null) {
-        entries[_P] = input[_P];
-      }
-      if (input[_DS] != null) {
-        entries[_DS] = input[_DS];
-      }
-      return entries;
-    };
-    var se_DecodeAuthorizationMessageRequest = (input, context) => {
-      const entries = {};
-      if (input[_EM] != null) {
-        entries[_EM] = input[_EM];
-      }
-      return entries;
-    };
-    var se_GetAccessKeyInfoRequest = (input, context) => {
-      const entries = {};
-      if (input[_AKI] != null) {
-        entries[_AKI] = input[_AKI];
-      }
-      return entries;
-    };
-    var se_GetCallerIdentityRequest = (input, context) => {
-      const entries = {};
-      return entries;
-    };
-    var se_GetFederationTokenRequest = (input, context) => {
-      const entries = {};
-      if (input[_N] != null) {
-        entries[_N] = input[_N];
-      }
-      if (input[_P] != null) {
-        entries[_P] = input[_P];
-      }
-      if (input[_PA] != null) {
-        const memberEntries = se_policyDescriptorListType(input[_PA], context);
-        if (input[_PA]?.length === 0) {
-          entries.PolicyArns = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `PolicyArns.${key}`;
-          entries[loc] = value;
-        });
-      }
-      if (input[_DS] != null) {
-        entries[_DS] = input[_DS];
-      }
-      if (input[_T] != null) {
-        const memberEntries = se_tagListType(input[_T], context);
-        if (input[_T]?.length === 0) {
-          entries.Tags = [];
-        }
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          const loc = `Tags.${key}`;
-          entries[loc] = value;
-        });
-      }
-      return entries;
-    };
-    var se_GetSessionTokenRequest = (input, context) => {
-      const entries = {};
-      if (input[_DS] != null) {
-        entries[_DS] = input[_DS];
-      }
-      if (input[_SN] != null) {
-        entries[_SN] = input[_SN];
-      }
-      if (input[_TC] != null) {
-        entries[_TC] = input[_TC];
-      }
-      return entries;
-    };
-    var se_policyDescriptorListType = (input, context) => {
-      const entries = {};
-      let counter = 1;
-      for (const entry of input) {
-        if (entry === null) {
-          continue;
-        }
-        const memberEntries = se_PolicyDescriptorType(entry, context);
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          entries[`member.${counter}.${key}`] = value;
-        });
-        counter++;
-      }
-      return entries;
-    };
-    var se_PolicyDescriptorType = (input, context) => {
-      const entries = {};
-      if (input[_a] != null) {
-        entries[_a] = input[_a];
-      }
-      return entries;
-    };
-    var se_ProvidedContext = (input, context) => {
-      const entries = {};
-      if (input[_PAro] != null) {
-        entries[_PAro] = input[_PAro];
-      }
-      if (input[_CA] != null) {
-        entries[_CA] = input[_CA];
-      }
-      return entries;
-    };
-    var se_ProvidedContextsListType = (input, context) => {
-      const entries = {};
-      let counter = 1;
-      for (const entry of input) {
-        if (entry === null) {
-          continue;
-        }
-        const memberEntries = se_ProvidedContext(entry, context);
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          entries[`member.${counter}.${key}`] = value;
-        });
-        counter++;
-      }
-      return entries;
-    };
-    var se_Tag = (input, context) => {
-      const entries = {};
-      if (input[_K] != null) {
-        entries[_K] = input[_K];
-      }
-      if (input[_Va] != null) {
-        entries[_Va] = input[_Va];
-      }
-      return entries;
-    };
-    var se_tagKeyListType = (input, context) => {
-      const entries = {};
-      let counter = 1;
-      for (const entry of input) {
-        if (entry === null) {
-          continue;
-        }
-        entries[`member.${counter}`] = entry;
-        counter++;
-      }
-      return entries;
-    };
-    var se_tagListType = (input, context) => {
-      const entries = {};
-      let counter = 1;
-      for (const entry of input) {
-        if (entry === null) {
-          continue;
-        }
-        const memberEntries = se_Tag(entry, context);
-        Object.entries(memberEntries).forEach(([key, value]) => {
-          entries[`member.${counter}.${key}`] = value;
-        });
-        counter++;
-      }
-      return entries;
-    };
-    var de_AssumedRoleUser = (output, context) => {
-      const contents = {};
-      if (output[_ARI] != null) {
-        contents[_ARI] = (0, smithy_client_1.expectString)(output[_ARI]);
-      }
-      if (output[_Ar] != null) {
-        contents[_Ar] = (0, smithy_client_1.expectString)(output[_Ar]);
-      }
-      return contents;
-    };
-    var de_AssumeRoleResponse = (output, context) => {
-      const contents = {};
-      if (output[_C] != null) {
-        contents[_C] = de_Credentials(output[_C], context);
-      }
-      if (output[_ARU] != null) {
-        contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
-      }
-      if (output[_PPS] != null) {
-        contents[_PPS] = (0, smithy_client_1.strictParseInt32)(output[_PPS]);
-      }
-      if (output[_SI] != null) {
-        contents[_SI] = (0, smithy_client_1.expectString)(output[_SI]);
-      }
-      return contents;
-    };
-    var de_AssumeRoleWithSAMLResponse = (output, context) => {
-      const contents = {};
-      if (output[_C] != null) {
-        contents[_C] = de_Credentials(output[_C], context);
-      }
-      if (output[_ARU] != null) {
-        contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
-      }
-      if (output[_PPS] != null) {
-        contents[_PPS] = (0, smithy_client_1.strictParseInt32)(output[_PPS]);
-      }
-      if (output[_S] != null) {
-        contents[_S] = (0, smithy_client_1.expectString)(output[_S]);
-      }
-      if (output[_ST] != null) {
-        contents[_ST] = (0, smithy_client_1.expectString)(output[_ST]);
-      }
-      if (output[_I] != null) {
-        contents[_I] = (0, smithy_client_1.expectString)(output[_I]);
-      }
-      if (output[_Au] != null) {
-        contents[_Au] = (0, smithy_client_1.expectString)(output[_Au]);
-      }
-      if (output[_NQ] != null) {
-        contents[_NQ] = (0, smithy_client_1.expectString)(output[_NQ]);
-      }
-      if (output[_SI] != null) {
-        contents[_SI] = (0, smithy_client_1.expectString)(output[_SI]);
-      }
-      return contents;
-    };
-    var de_AssumeRoleWithWebIdentityResponse = (output, context) => {
-      const contents = {};
-      if (output[_C] != null) {
-        contents[_C] = de_Credentials(output[_C], context);
-      }
-      if (output[_SFWIT] != null) {
-        contents[_SFWIT] = (0, smithy_client_1.expectString)(output[_SFWIT]);
-      }
-      if (output[_ARU] != null) {
-        contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
-      }
-      if (output[_PPS] != null) {
-        contents[_PPS] = (0, smithy_client_1.strictParseInt32)(output[_PPS]);
-      }
-      if (output[_Pr] != null) {
-        contents[_Pr] = (0, smithy_client_1.expectString)(output[_Pr]);
-      }
-      if (output[_Au] != null) {
-        contents[_Au] = (0, smithy_client_1.expectString)(output[_Au]);
-      }
-      if (output[_SI] != null) {
-        contents[_SI] = (0, smithy_client_1.expectString)(output[_SI]);
-      }
-      return contents;
-    };
-    var de_Credentials = (output, context) => {
-      const contents = {};
-      if (output[_AKI] != null) {
-        contents[_AKI] = (0, smithy_client_1.expectString)(output[_AKI]);
-      }
-      if (output[_SAK] != null) {
-        contents[_SAK] = (0, smithy_client_1.expectString)(output[_SAK]);
-      }
-      if (output[_STe] != null) {
-        contents[_STe] = (0, smithy_client_1.expectString)(output[_STe]);
-      }
-      if (output[_E] != null) {
-        contents[_E] = (0, smithy_client_1.expectNonNull)((0, smithy_client_1.parseRfc3339DateTimeWithOffset)(output[_E]));
-      }
-      return contents;
-    };
-    var de_DecodeAuthorizationMessageResponse = (output, context) => {
-      const contents = {};
-      if (output[_DM] != null) {
-        contents[_DM] = (0, smithy_client_1.expectString)(output[_DM]);
-      }
-      return contents;
-    };
-    var de_ExpiredTokenException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var de_FederatedUser = (output, context) => {
-      const contents = {};
-      if (output[_FUI] != null) {
-        contents[_FUI] = (0, smithy_client_1.expectString)(output[_FUI]);
-      }
-      if (output[_Ar] != null) {
-        contents[_Ar] = (0, smithy_client_1.expectString)(output[_Ar]);
-      }
-      return contents;
-    };
-    var de_GetAccessKeyInfoResponse = (output, context) => {
-      const contents = {};
-      if (output[_Ac] != null) {
-        contents[_Ac] = (0, smithy_client_1.expectString)(output[_Ac]);
-      }
-      return contents;
-    };
-    var de_GetCallerIdentityResponse = (output, context) => {
-      const contents = {};
-      if (output[_UI] != null) {
-        contents[_UI] = (0, smithy_client_1.expectString)(output[_UI]);
-      }
-      if (output[_Ac] != null) {
-        contents[_Ac] = (0, smithy_client_1.expectString)(output[_Ac]);
-      }
-      if (output[_Ar] != null) {
-        contents[_Ar] = (0, smithy_client_1.expectString)(output[_Ar]);
-      }
-      return contents;
-    };
-    var de_GetFederationTokenResponse = (output, context) => {
-      const contents = {};
-      if (output[_C] != null) {
-        contents[_C] = de_Credentials(output[_C], context);
-      }
-      if (output[_FU] != null) {
-        contents[_FU] = de_FederatedUser(output[_FU], context);
-      }
-      if (output[_PPS] != null) {
-        contents[_PPS] = (0, smithy_client_1.strictParseInt32)(output[_PPS]);
-      }
-      return contents;
-    };
-    var de_GetSessionTokenResponse = (output, context) => {
-      const contents = {};
-      if (output[_C] != null) {
-        contents[_C] = de_Credentials(output[_C], context);
-      }
-      return contents;
-    };
-    var de_IDPCommunicationErrorException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var de_IDPRejectedClaimException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var de_InvalidAuthorizationMessageException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var de_InvalidIdentityTokenException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var de_MalformedPolicyDocumentException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var de_PackedPolicyTooLargeException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var de_RegionDisabledException = (output, context) => {
-      const contents = {};
-      if (output[_m] != null) {
-        contents[_m] = (0, smithy_client_1.expectString)(output[_m]);
-      }
-      return contents;
-    };
-    var deserializeMetadata = (output) => ({
-      httpStatusCode: output.statusCode,
-      requestId: output.headers["x-amzn-requestid"] ?? output.headers["x-amzn-request-id"] ?? output.headers["x-amz-request-id"],
-      extendedRequestId: output.headers["x-amz-id-2"],
-      cfId: output.headers["x-amz-cf-id"]
-    });
-    var collectBodyString = (streamBody, context) => (0, smithy_client_1.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
-    var throwDefaultError = (0, smithy_client_1.withBaseException)(STSServiceException_1.STSServiceException);
-    var buildHttpRpcRequest = async (context, headers, path2, resolvedHostname, body) => {
-      const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
-      const contents = {
-        protocol,
-        hostname,
-        port,
-        method: "POST",
-        path: basePath.endsWith("/") ? basePath.slice(0, -1) + path2 : basePath + path2,
-        headers
-      };
-      if (resolvedHostname !== void 0) {
-        contents.hostname = resolvedHostname;
-      }
-      if (body !== void 0) {
-        contents.body = body;
-      }
-      return new protocol_http_1.HttpRequest(contents);
-    };
-    var SHARED_HEADERS = {
-      "content-type": "application/x-www-form-urlencoded"
-    };
-    var _ = "2011-06-15";
-    var _A = "Action";
-    var _AKI = "AccessKeyId";
-    var _AR = "AssumeRole";
-    var _ARI = "AssumedRoleId";
-    var _ARU = "AssumedRoleUser";
-    var _ARWSAML = "AssumeRoleWithSAML";
-    var _ARWWI = "AssumeRoleWithWebIdentity";
-    var _Ac = "Account";
-    var _Ar = "Arn";
-    var _Au = "Audience";
-    var _C = "Credentials";
-    var _CA = "ContextAssertion";
-    var _DAM = "DecodeAuthorizationMessage";
-    var _DM = "DecodedMessage";
-    var _DS = "DurationSeconds";
-    var _E = "Expiration";
-    var _EI = "ExternalId";
-    var _EM = "EncodedMessage";
-    var _FU = "FederatedUser";
-    var _FUI = "FederatedUserId";
-    var _GAKI = "GetAccessKeyInfo";
-    var _GCI = "GetCallerIdentity";
-    var _GFT = "GetFederationToken";
-    var _GST = "GetSessionToken";
-    var _I = "Issuer";
-    var _K = "Key";
-    var _N = "Name";
-    var _NQ = "NameQualifier";
-    var _P = "Policy";
-    var _PA = "PolicyArns";
-    var _PAr = "PrincipalArn";
-    var _PAro = "ProviderArn";
-    var _PC = "ProvidedContexts";
-    var _PI = "ProviderId";
-    var _PPS = "PackedPolicySize";
-    var _Pr = "Provider";
-    var _RA = "RoleArn";
-    var _RSN = "RoleSessionName";
-    var _S = "Subject";
-    var _SAK = "SecretAccessKey";
-    var _SAMLA = "SAMLAssertion";
-    var _SFWIT = "SubjectFromWebIdentityToken";
-    var _SI = "SourceIdentity";
-    var _SN = "SerialNumber";
-    var _ST = "SubjectType";
-    var _STe = "SessionToken";
-    var _T = "Tags";
-    var _TC = "TokenCode";
-    var _TTK = "TransitiveTagKeys";
-    var _UI = "UserId";
-    var _V = "Version";
-    var _Va = "Value";
-    var _WIT = "WebIdentityToken";
-    var _a = "arn";
-    var _m = "message";
-    var parseBody = (streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
-      if (encoded.length) {
-        const parser = new fast_xml_parser_1.XMLParser({
-          attributeNamePrefix: "",
-          htmlEntities: true,
-          ignoreAttributes: false,
-          ignoreDeclaration: true,
-          parseTagValue: false,
-          trimValues: false,
-          tagValueProcessor: (_2, val2) => val2.trim() === "" && val2.includes("\n") ? "" : void 0
-        });
-        parser.addEntity("#xD", "\r");
-        parser.addEntity("#10", "\n");
-        const parsedObj = parser.parse(encoded);
-        const textNodeName = "#text";
-        const key = Object.keys(parsedObj)[0];
-        const parsedObjToReturn = parsedObj[key];
-        if (parsedObjToReturn[textNodeName]) {
-          parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
-          delete parsedObjToReturn[textNodeName];
-        }
-        return (0, smithy_client_1.getValueFromTextNode)(parsedObjToReturn);
-      }
-      return {};
-    });
-    var parseErrorBody = async (errorBody, context) => {
-      const value = await parseBody(errorBody, context);
-      if (value.Error) {
-        value.Error.message = value.Error.message ?? value.Error.Message;
-      }
-      return value;
-    };
-    var buildFormUrlencodedString = (formEntries) => Object.entries(formEntries).map(([key, value]) => (0, smithy_client_1.extendedEncodeURIComponent)(key) + "=" + (0, smithy_client_1.extendedEncodeURIComponent)(value)).join("&");
-    var loadQueryErrorCode = (output, data) => {
-      if (data.Error?.Code !== void 0) {
-        return data.Error.Code;
-      }
-      if (output.statusCode == 404) {
-        return "NotFound";
-      }
-    };
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/commands/AssumeRoleCommand.js
-var require_AssumeRoleCommand = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/commands/AssumeRoleCommand.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.AssumeRoleCommand = exports2.$Command = void 0;
-    var middleware_endpoint_1 = require_dist_cjs41();
-    var middleware_serde_1 = require_dist_cjs40();
-    var smithy_client_1 = require_dist_cjs16();
-    Object.defineProperty(exports2, "$Command", { enumerable: true, get: function() {
-      return smithy_client_1.Command;
-    } });
-    var EndpointParameters_1 = require_EndpointParameters();
-    var models_0_1 = require_models_0();
-    var Aws_query_1 = require_Aws_query();
-    var AssumeRoleCommand2 = class extends smithy_client_1.Command.classBuilder().ep({
-      ...EndpointParameters_1.commonParams
-    }).m(function(Command, cs, config, o) {
-      return [
-        (0, middleware_serde_1.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, middleware_endpoint_1.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
-      ];
-    }).s("AWSSecurityTokenServiceV20110615", "AssumeRole", {}).n("STSClient", "AssumeRoleCommand").f(void 0, models_0_1.AssumeRoleResponseFilterSensitiveLog).ser(Aws_query_1.se_AssumeRoleCommand).de(Aws_query_1.de_AssumeRoleCommand).build() {
-    };
-    exports2.AssumeRoleCommand = AssumeRoleCommand2;
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/commands/AssumeRoleWithWebIdentityCommand.js
-var require_AssumeRoleWithWebIdentityCommand = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/commands/AssumeRoleWithWebIdentityCommand.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.AssumeRoleWithWebIdentityCommand = exports2.$Command = void 0;
-    var middleware_endpoint_1 = require_dist_cjs41();
-    var middleware_serde_1 = require_dist_cjs40();
-    var smithy_client_1 = require_dist_cjs16();
-    Object.defineProperty(exports2, "$Command", { enumerable: true, get: function() {
-      return smithy_client_1.Command;
-    } });
-    var EndpointParameters_1 = require_EndpointParameters();
-    var models_0_1 = require_models_0();
-    var Aws_query_1 = require_Aws_query();
-    var AssumeRoleWithWebIdentityCommand2 = class extends smithy_client_1.Command.classBuilder().ep({
-      ...EndpointParameters_1.commonParams
-    }).m(function(Command, cs, config, o) {
-      return [
-        (0, middleware_serde_1.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, middleware_endpoint_1.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
-      ];
-    }).s("AWSSecurityTokenServiceV20110615", "AssumeRoleWithWebIdentity", {}).n("STSClient", "AssumeRoleWithWebIdentityCommand").f(models_0_1.AssumeRoleWithWebIdentityRequestFilterSensitiveLog, models_0_1.AssumeRoleWithWebIdentityResponseFilterSensitiveLog).ser(Aws_query_1.se_AssumeRoleWithWebIdentityCommand).de(Aws_query_1.de_AssumeRoleWithWebIdentityCommand).build() {
-    };
-    exports2.AssumeRoleWithWebIdentityCommand = AssumeRoleWithWebIdentityCommand2;
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/defaultStsRoleAssumers.js
-var require_defaultStsRoleAssumers = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/defaultStsRoleAssumers.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.decorateDefaultCredentialProvider = exports2.getDefaultRoleAssumerWithWebIdentity = exports2.getDefaultRoleAssumer = void 0;
-    var AssumeRoleCommand_1 = require_AssumeRoleCommand();
-    var AssumeRoleWithWebIdentityCommand_1 = require_AssumeRoleWithWebIdentityCommand();
-    var ASSUME_ROLE_DEFAULT_REGION = "us-east-1";
-    var decorateDefaultRegion = (region) => {
-      if (typeof region !== "function") {
-        return region === void 0 ? ASSUME_ROLE_DEFAULT_REGION : region;
-      }
-      return async () => {
-        try {
-          return await region();
-        } catch (e) {
-          return ASSUME_ROLE_DEFAULT_REGION;
-        }
-      };
-    };
-    var getDefaultRoleAssumer = (stsOptions, stsClientCtor) => {
-      let stsClient;
-      let closureSourceCreds;
-      return async (sourceCreds, params) => {
-        closureSourceCreds = sourceCreds;
-        if (!stsClient) {
-          const { logger, region, requestHandler } = stsOptions;
-          stsClient = new stsClientCtor({
-            logger,
-            credentialDefaultProvider: () => async () => closureSourceCreds,
-            region: decorateDefaultRegion(region || stsOptions.region),
-            ...requestHandler ? { requestHandler } : {}
-          });
-        }
-        const { Credentials } = await stsClient.send(new AssumeRoleCommand_1.AssumeRoleCommand(params));
-        if (!Credentials || !Credentials.AccessKeyId || !Credentials.SecretAccessKey) {
-          throw new Error(`Invalid response from STS.assumeRole call with role ${params.RoleArn}`);
-        }
-        return {
-          accessKeyId: Credentials.AccessKeyId,
-          secretAccessKey: Credentials.SecretAccessKey,
-          sessionToken: Credentials.SessionToken,
-          expiration: Credentials.Expiration,
-          credentialScope: Credentials.CredentialScope
-        };
-      };
-    };
-    exports2.getDefaultRoleAssumer = getDefaultRoleAssumer;
-    var getDefaultRoleAssumerWithWebIdentity = (stsOptions, stsClientCtor) => {
-      let stsClient;
-      return async (params) => {
-        if (!stsClient) {
-          const { logger, region, requestHandler } = stsOptions;
-          stsClient = new stsClientCtor({
-            logger,
-            region: decorateDefaultRegion(region || stsOptions.region),
-            ...requestHandler ? { requestHandler } : {}
-          });
-        }
-        const { Credentials } = await stsClient.send(new AssumeRoleWithWebIdentityCommand_1.AssumeRoleWithWebIdentityCommand(params));
-        if (!Credentials || !Credentials.AccessKeyId || !Credentials.SecretAccessKey) {
-          throw new Error(`Invalid response from STS.assumeRoleWithWebIdentity call with role ${params.RoleArn}`);
-        }
-        return {
-          accessKeyId: Credentials.AccessKeyId,
-          secretAccessKey: Credentials.SecretAccessKey,
-          sessionToken: Credentials.SessionToken,
-          expiration: Credentials.Expiration,
-          credentialScope: Credentials.CredentialScope
-        };
-      };
-    };
-    exports2.getDefaultRoleAssumerWithWebIdentity = getDefaultRoleAssumerWithWebIdentity;
-    var decorateDefaultCredentialProvider = (provider) => (input) => provider({
-      roleAssumer: (0, exports2.getDefaultRoleAssumer)(input, input.stsClientCtor),
-      roleAssumerWithWebIdentity: (0, exports2.getDefaultRoleAssumerWithWebIdentity)(input, input.stsClientCtor),
-      ...input
-    });
-    exports2.decorateDefaultCredentialProvider = decorateDefaultCredentialProvider;
   }
 });
 
@@ -31700,8 +30106,214 @@ var require_dist_cjs45 = __commonJS({
   }
 });
 
-// ../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js
+// ../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/checkUrl.js
+var require_checkUrl = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/checkUrl.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.checkUrl = void 0;
+    var property_provider_1 = require_dist_cjs25();
+    var ECS_CONTAINER_HOST = "169.254.170.2";
+    var EKS_CONTAINER_HOST_IPv4 = "169.254.170.23";
+    var EKS_CONTAINER_HOST_IPv6 = "[fd00:ec2::23]";
+    var checkUrl = (url) => {
+      if (url.protocol === "https:") {
+        return;
+      }
+      if (url.hostname === ECS_CONTAINER_HOST || url.hostname === EKS_CONTAINER_HOST_IPv4 || url.hostname === EKS_CONTAINER_HOST_IPv6) {
+        return;
+      }
+      if (url.hostname.includes("[")) {
+        if (url.hostname === "[::1]" || url.hostname === "[0000:0000:0000:0000:0000:0000:0000:0001]") {
+          return;
+        }
+      } else {
+        if (url.hostname === "localhost") {
+          return;
+        }
+        const ipComponents = url.hostname.split(".");
+        const inRange = (component) => {
+          const num = parseInt(component, 10);
+          return 0 <= num && num <= 255;
+        };
+        if (ipComponents[0] === "127" && inRange(ipComponents[1]) && inRange(ipComponents[2]) && inRange(ipComponents[3]) && ipComponents.length === 4) {
+          return;
+        }
+      }
+      throw new property_provider_1.CredentialsProviderError(`URL not accepted. It must either be HTTPS or match one of the following:
+  - loopback CIDR 127.0.0.0/8 or [::1/128]
+  - ECS container host 169.254.170.2
+  - EKS container host 169.254.170.23 or [fd00:ec2::23]`);
+    };
+    exports2.checkUrl = checkUrl;
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/requestHelpers.js
+var require_requestHelpers = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/requestHelpers.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.getCredentials = exports2.createGetRequest = void 0;
+    var property_provider_1 = require_dist_cjs25();
+    var protocol_http_1 = require_dist_cjs2();
+    var smithy_client_1 = require_dist_cjs16();
+    var util_stream_1 = require_dist_cjs15();
+    function createGetRequest(url) {
+      return new protocol_http_1.HttpRequest({
+        protocol: url.protocol,
+        hostname: url.hostname,
+        port: Number(url.port),
+        path: url.pathname,
+        query: Array.from(url.searchParams.entries()).reduce((acc, [k, v]) => {
+          acc[k] = v;
+          return acc;
+        }, {}),
+        fragment: url.hash
+      });
+    }
+    exports2.createGetRequest = createGetRequest;
+    async function getCredentials(response) {
+      var _a, _b;
+      const contentType = (_b = (_a = response === null || response === void 0 ? void 0 : response.headers["content-type"]) !== null && _a !== void 0 ? _a : response === null || response === void 0 ? void 0 : response.headers["Content-Type"]) !== null && _b !== void 0 ? _b : "";
+      if (!contentType.includes("json")) {
+        console.warn("HTTP credential provider response header content-type was not application/json. Observed: " + contentType + ".");
+      }
+      const stream = (0, util_stream_1.sdkStreamMixin)(response.body);
+      const str = await stream.transformToString();
+      if (response.statusCode === 200) {
+        const parsed = JSON.parse(str);
+        if (typeof parsed.AccessKeyId !== "string" || typeof parsed.SecretAccessKey !== "string" || typeof parsed.Token !== "string" || typeof parsed.Expiration !== "string") {
+          throw new property_provider_1.CredentialsProviderError("HTTP credential provider response not of the required format, an object matching: { AccessKeyId: string, SecretAccessKey: string, Token: string, Expiration: string(rfc3339) }");
+        }
+        return {
+          accessKeyId: parsed.AccessKeyId,
+          secretAccessKey: parsed.SecretAccessKey,
+          sessionToken: parsed.Token,
+          expiration: (0, smithy_client_1.parseRfc3339DateTime)(parsed.Expiration)
+        };
+      }
+      if (response.statusCode >= 400 && response.statusCode < 500) {
+        let parsedBody = {};
+        try {
+          parsedBody = JSON.parse(str);
+        } catch (e) {
+        }
+        throw Object.assign(new property_provider_1.CredentialsProviderError(`Server responded with status: ${response.statusCode}`), {
+          Code: parsedBody.Code,
+          Message: parsedBody.Message
+        });
+      }
+      throw new property_provider_1.CredentialsProviderError(`Server responded with status: ${response.statusCode}`);
+    }
+    exports2.getCredentials = getCredentials;
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/retry-wrapper.js
+var require_retry_wrapper = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/retry-wrapper.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.retryWrapper = void 0;
+    var retryWrapper = (toRetry, maxRetries, delayMs) => {
+      return async () => {
+        for (let i = 0; i < maxRetries; ++i) {
+          try {
+            return await toRetry();
+          } catch (e) {
+            await new Promise((resolve) => setTimeout(resolve, delayMs));
+          }
+        }
+        return await toRetry();
+      };
+    };
+    exports2.retryWrapper = retryWrapper;
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/fromHttp.js
+var require_fromHttp = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/fromHttp/fromHttp.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.fromHttp = void 0;
+    var tslib_1 = (init_tslib_es62(), __toCommonJS(tslib_es6_exports2));
+    var node_http_handler_1 = require_dist_cjs14();
+    var property_provider_1 = require_dist_cjs25();
+    var promises_1 = tslib_1.__importDefault(require("fs/promises"));
+    var checkUrl_1 = require_checkUrl();
+    var requestHelpers_1 = require_requestHelpers();
+    var retry_wrapper_1 = require_retry_wrapper();
+    var AWS_CONTAINER_CREDENTIALS_RELATIVE_URI = "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI";
+    var DEFAULT_LINK_LOCAL_HOST = "http://169.254.170.2";
+    var AWS_CONTAINER_CREDENTIALS_FULL_URI = "AWS_CONTAINER_CREDENTIALS_FULL_URI";
+    var AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE = "AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE";
+    var AWS_CONTAINER_AUTHORIZATION_TOKEN = "AWS_CONTAINER_AUTHORIZATION_TOKEN";
+    var fromHttp = (options) => {
+      var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+      (_a = options.logger) === null || _a === void 0 ? void 0 : _a.debug("@aws-sdk/credential-provider-http", "fromHttp");
+      let host;
+      const relative = (_b = options.awsContainerCredentialsRelativeUri) !== null && _b !== void 0 ? _b : process.env[AWS_CONTAINER_CREDENTIALS_RELATIVE_URI];
+      const full = (_c = options.awsContainerCredentialsFullUri) !== null && _c !== void 0 ? _c : process.env[AWS_CONTAINER_CREDENTIALS_FULL_URI];
+      const token = (_d = options.awsContainerAuthorizationToken) !== null && _d !== void 0 ? _d : process.env[AWS_CONTAINER_AUTHORIZATION_TOKEN];
+      const tokenFile = (_e = options.awsContainerAuthorizationTokenFile) !== null && _e !== void 0 ? _e : process.env[AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE];
+      if (relative && full) {
+        console.warn("AWS SDK HTTP credentials provider:", "you have set both awsContainerCredentialsRelativeUri and awsContainerCredentialsFullUri.");
+        console.warn("awsContainerCredentialsFullUri will take precedence.");
+      }
+      if (token && tokenFile) {
+        console.warn("AWS SDK HTTP credentials provider:", "you have set both awsContainerAuthorizationToken and awsContainerAuthorizationTokenFile.");
+        console.warn("awsContainerAuthorizationToken will take precedence.");
+      }
+      if (full) {
+        host = full;
+      } else if (relative) {
+        host = `${DEFAULT_LINK_LOCAL_HOST}${relative}`;
+      } else {
+        throw new property_provider_1.CredentialsProviderError(`No HTTP credential provider host provided.
+Set AWS_CONTAINER_CREDENTIALS_FULL_URI or AWS_CONTAINER_CREDENTIALS_RELATIVE_URI.`);
+      }
+      const url = new URL(host);
+      (0, checkUrl_1.checkUrl)(url);
+      const requestHandler = new node_http_handler_1.NodeHttpHandler({
+        requestTimeout: (_f = options.timeout) !== null && _f !== void 0 ? _f : 1e3,
+        connectionTimeout: (_g = options.timeout) !== null && _g !== void 0 ? _g : 1e3
+      });
+      return (0, retry_wrapper_1.retryWrapper)(async () => {
+        const request = (0, requestHelpers_1.createGetRequest)(url);
+        if (token) {
+          request.headers.Authorization = token;
+        } else if (tokenFile) {
+          request.headers.Authorization = (await promises_1.default.readFile(tokenFile)).toString();
+        }
+        try {
+          const result = await requestHandler.handle(request);
+          return (0, requestHelpers_1.getCredentials)(result.response);
+        } catch (e) {
+          throw new property_provider_1.CredentialsProviderError(String(e));
+        }
+      }, (_h = options.maxRetries) !== null && _h !== void 0 ? _h : 3, (_j = options.timeout) !== null && _j !== void 0 ? _j : 1e3);
+    };
+    exports2.fromHttp = fromHttp;
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/index.js
 var require_dist_cjs46 = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/index.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.fromHttp = void 0;
+    var fromHttp_1 = require_fromHttp();
+    Object.defineProperty(exports2, "fromHttp", { enumerable: true, get: function() {
+      return fromHttp_1.fromHttp;
+    } });
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js
+var require_dist_cjs47 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -31737,7 +30349,9 @@ var require_dist_cjs46 = __commonJS({
     var ENV_SESSION = "AWS_SESSION_TOKEN";
     var ENV_EXPIRATION = "AWS_CREDENTIAL_EXPIRATION";
     var ENV_CREDENTIAL_SCOPE = "AWS_CREDENTIAL_SCOPE";
-    var fromEnv = /* @__PURE__ */ __name(() => async () => {
+    var fromEnv = /* @__PURE__ */ __name((init) => async () => {
+      var _a;
+      (_a = init == null ? void 0 : init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-env", "fromEnv");
       const accessKeyId = process.env[ENV_KEY];
       const secretAccessKey = process.env[ENV_SECRET];
       const sessionToken = process.env[ENV_SESSION];
@@ -31758,12 +30372,12 @@ var require_dist_cjs46 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sso/package.json
-var require_package3 = __commonJS({
+var require_package2 = __commonJS({
   "../../node_modules/@aws-sdk/client-sso/package.json"(exports2, module2) {
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.496.0",
+      version: "3.511.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -31782,16 +30396,16 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.496.0",
-        "@aws-sdk/middleware-host-header": "3.496.0",
-        "@aws-sdk/middleware-logger": "3.496.0",
-        "@aws-sdk/middleware-recursion-detection": "3.496.0",
-        "@aws-sdk/middleware-user-agent": "3.496.0",
-        "@aws-sdk/region-config-resolver": "3.496.0",
-        "@aws-sdk/types": "3.496.0",
-        "@aws-sdk/util-endpoints": "3.496.0",
-        "@aws-sdk/util-user-agent-browser": "3.496.0",
-        "@aws-sdk/util-user-agent-node": "3.496.0",
+        "@aws-sdk/core": "3.511.0",
+        "@aws-sdk/middleware-host-header": "3.511.0",
+        "@aws-sdk/middleware-logger": "3.511.0",
+        "@aws-sdk/middleware-recursion-detection": "3.511.0",
+        "@aws-sdk/middleware-user-agent": "3.511.0",
+        "@aws-sdk/region-config-resolver": "3.511.0",
+        "@aws-sdk/types": "3.511.0",
+        "@aws-sdk/util-endpoints": "3.511.0",
+        "@aws-sdk/util-user-agent-browser": "3.511.0",
+        "@aws-sdk/util-user-agent-node": "3.511.0",
         "@smithy/config-resolver": "^2.1.1",
         "@smithy/core": "^1.3.1",
         "@smithy/fetch-http-handler": "^2.4.1",
@@ -31862,7 +30476,7 @@ var require_package3 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/util-user-agent-node/dist-cjs/index.js
-var require_dist_cjs47 = __commonJS({
+var require_dist_cjs48 = __commonJS({
   "../../node_modules/@aws-sdk/util-user-agent-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -31945,7 +30559,7 @@ var require_dist_cjs47 = __commonJS({
 });
 
 // ../../node_modules/@smithy/hash-node/dist-cjs/index.js
-var require_dist_cjs48 = __commonJS({
+var require_dist_cjs49 = __commonJS({
   "../../node_modules/@smithy/hash-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -32009,7 +30623,7 @@ var require_dist_cjs48 = __commonJS({
 });
 
 // ../../node_modules/@smithy/util-body-length-node/dist-cjs/index.js
-var require_dist_cjs49 = __commonJS({
+var require_dist_cjs50 = __commonJS({
   "../../node_modules/@smithy/util-body-length-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -32141,7 +30755,7 @@ var require_runtimeConfig_shared = __commonJS({
 });
 
 // ../../node_modules/@smithy/util-defaults-mode-node/dist-cjs/index.js
-var require_dist_cjs50 = __commonJS({
+var require_dist_cjs51 = __commonJS({
   "../../node_modules/@smithy/util-defaults-mode-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -32246,19 +30860,19 @@ var require_runtimeConfig = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es62(), __toCommonJS(tslib_es6_exports2));
-    var package_json_1 = tslib_1.__importDefault(require_package3());
+    var package_json_1 = tslib_1.__importDefault(require_package2());
     var core_1 = require_dist_cjs44();
-    var util_user_agent_node_1 = require_dist_cjs47();
+    var util_user_agent_node_1 = require_dist_cjs48();
     var config_resolver_1 = require_dist_cjs30();
-    var hash_node_1 = require_dist_cjs48();
+    var hash_node_1 = require_dist_cjs49();
     var middleware_retry_1 = require_dist_cjs35();
     var node_config_provider_1 = require_dist_cjs37();
     var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs49();
+    var util_body_length_node_1 = require_dist_cjs50();
     var util_retry_1 = require_dist_cjs34();
     var runtimeConfig_shared_1 = require_runtimeConfig_shared();
     var smithy_client_1 = require_dist_cjs16();
-    var util_defaults_mode_node_1 = require_dist_cjs50();
+    var util_defaults_mode_node_1 = require_dist_cjs51();
     var smithy_client_2 = require_dist_cjs16();
     var getRuntimeConfig = (config) => {
       (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
@@ -32291,7 +30905,7 @@ var require_runtimeConfig = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/region-config-resolver/dist-cjs/index.js
-var require_dist_cjs51 = __commonJS({
+var require_dist_cjs52 = __commonJS({
   "../../node_modules/@aws-sdk/region-config-resolver/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -32388,7 +31002,7 @@ var require_dist_cjs51 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sso/dist-cjs/index.js
-var require_dist_cjs52 = __commonJS({
+var require_dist_cjs53 = __commonJS({
   "../../node_modules/@aws-sdk/client-sso/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -32414,7 +31028,7 @@ var require_dist_cjs52 = __commonJS({
       GetRoleCredentialsCommand: () => GetRoleCredentialsCommand,
       GetRoleCredentialsRequestFilterSensitiveLog: () => GetRoleCredentialsRequestFilterSensitiveLog,
       GetRoleCredentialsResponseFilterSensitiveLog: () => GetRoleCredentialsResponseFilterSensitiveLog,
-      InvalidRequestException: () => InvalidRequestException2,
+      InvalidRequestException: () => InvalidRequestException,
       ListAccountRolesCommand: () => ListAccountRolesCommand,
       ListAccountRolesRequestFilterSensitiveLog: () => ListAccountRolesRequestFilterSensitiveLog,
       ListAccountsCommand: () => ListAccountsCommand,
@@ -32456,7 +31070,7 @@ var require_dist_cjs52 = __commonJS({
       UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
     };
     var import_runtimeConfig = require_runtimeConfig();
-    var import_region_config_resolver = require_dist_cjs51();
+    var import_region_config_resolver = require_dist_cjs52();
     var import_protocol_http = require_dist_cjs2();
     var import_smithy_client = require_dist_cjs16();
     var asPartial = /* @__PURE__ */ __name((t) => t, "asPartial");
@@ -32533,7 +31147,7 @@ var require_dist_cjs52 = __commonJS({
       }
     };
     __name(_InvalidRequestException, "InvalidRequestException");
-    var InvalidRequestException2 = _InvalidRequestException;
+    var InvalidRequestException = _InvalidRequestException;
     var _ResourceNotFoundException = class _ResourceNotFoundException2 extends SSOServiceException {
       /**
        * @internal
@@ -32666,7 +31280,7 @@ var require_dist_cjs52 = __commonJS({
     }, "se_LogoutCommand");
     var de_GetRoleCredentialsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetRoleCredentialsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -32678,37 +31292,9 @@ var require_dist_cjs52 = __commonJS({
       Object.assign(contents, doc);
       return contents;
     }, "de_GetRoleCredentialsCommand");
-    var de_GetRoleCredentialsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "InvalidRequestException":
-        case "com.amazonaws.sso#InvalidRequestException":
-          throw await de_InvalidRequestExceptionRes(parsedOutput, context);
-        case "ResourceNotFoundException":
-        case "com.amazonaws.sso#ResourceNotFoundException":
-          throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
-        case "TooManyRequestsException":
-        case "com.amazonaws.sso#TooManyRequestsException":
-          throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
-        case "UnauthorizedException":
-        case "com.amazonaws.sso#UnauthorizedException":
-          throw await de_UnauthorizedExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_GetRoleCredentialsCommandError");
     var de_ListAccountRolesCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListAccountRolesCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -32721,37 +31307,9 @@ var require_dist_cjs52 = __commonJS({
       Object.assign(contents, doc);
       return contents;
     }, "de_ListAccountRolesCommand");
-    var de_ListAccountRolesCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "InvalidRequestException":
-        case "com.amazonaws.sso#InvalidRequestException":
-          throw await de_InvalidRequestExceptionRes(parsedOutput, context);
-        case "ResourceNotFoundException":
-        case "com.amazonaws.sso#ResourceNotFoundException":
-          throw await de_ResourceNotFoundExceptionRes(parsedOutput, context);
-        case "TooManyRequestsException":
-        case "com.amazonaws.sso#TooManyRequestsException":
-          throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
-        case "UnauthorizedException":
-        case "com.amazonaws.sso#UnauthorizedException":
-          throw await de_UnauthorizedExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_ListAccountRolesCommandError");
     var de_ListAccountsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListAccountsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -32764,7 +31322,17 @@ var require_dist_cjs52 = __commonJS({
       Object.assign(contents, doc);
       return contents;
     }, "de_ListAccountsCommand");
-    var de_ListAccountsCommandError = /* @__PURE__ */ __name(async (output, context) => {
+    var de_LogoutCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode !== 200 && output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const contents = (0, import_smithy_client.map)({
+        $metadata: deserializeMetadata(output)
+      });
+      await (0, import_smithy_client.collectBody)(output.body, context);
+      return contents;
+    }, "de_LogoutCommand");
+    var de_CommandError = /* @__PURE__ */ __name(async (output, context) => {
       const parsedOutput = {
         ...output,
         body: await parseErrorBody(output.body, context)
@@ -32791,42 +31359,7 @@ var require_dist_cjs52 = __commonJS({
             errorCode
           });
       }
-    }, "de_ListAccountsCommandError");
-    var de_LogoutCommand = /* @__PURE__ */ __name(async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_LogoutCommandError(output, context);
-      }
-      const contents = (0, import_smithy_client.map)({
-        $metadata: deserializeMetadata(output)
-      });
-      await (0, import_smithy_client.collectBody)(output.body, context);
-      return contents;
-    }, "de_LogoutCommand");
-    var de_LogoutCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "InvalidRequestException":
-        case "com.amazonaws.sso#InvalidRequestException":
-          throw await de_InvalidRequestExceptionRes(parsedOutput, context);
-        case "TooManyRequestsException":
-        case "com.amazonaws.sso#TooManyRequestsException":
-          throw await de_TooManyRequestsExceptionRes(parsedOutput, context);
-        case "UnauthorizedException":
-        case "com.amazonaws.sso#UnauthorizedException":
-          throw await de_UnauthorizedExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_LogoutCommandError");
+    }, "de_CommandError");
     var throwDefaultError = (0, import_smithy_client.withBaseException)(SSOServiceException);
     var de_InvalidRequestExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const contents = (0, import_smithy_client.map)({});
@@ -32835,7 +31368,7 @@ var require_dist_cjs52 = __commonJS({
         message: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new InvalidRequestException2({
+      const exception = new InvalidRequestException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
@@ -32999,275 +31532,438 @@ var require_dist_cjs52 = __commonJS({
   }
 });
 
-// ../../node_modules/@aws-sdk/token-providers/dist-cjs/bundle/client-sso-oidc-node.js
-var require_client_sso_oidc_node = __commonJS({
-  "../../node_modules/@aws-sdk/token-providers/dist-cjs/bundle/client-sso-oidc-node.js"(exports2) {
+// ../../node_modules/@aws-sdk/client-sso-oidc/package.json
+var require_package3 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/package.json"(exports2, module2) {
+    module2.exports = {
+      name: "@aws-sdk/client-sso-oidc",
+      description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
+      version: "3.511.0",
+      scripts: {
+        build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
+        "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
+        "build:es": "tsc -p tsconfig.es.json",
+        "build:include:deps": "lerna run --scope $npm_package_name --include-dependencies build",
+        "build:types": "tsc -p tsconfig.types.json",
+        "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
+        clean: "rimraf ./dist-* && rimraf *.tsbuildinfo",
+        "extract:docs": "api-extractor run --local",
+        "generate:client": "node ../../scripts/generate-clients/single-service --solo sso-oidc"
+      },
+      main: "./dist-cjs/index.js",
+      types: "./dist-types/index.d.ts",
+      module: "./dist-es/index.js",
+      sideEffects: false,
+      dependencies: {
+        "@aws-crypto/sha256-browser": "3.0.0",
+        "@aws-crypto/sha256-js": "3.0.0",
+        "@aws-sdk/client-sts": "3.511.0",
+        "@aws-sdk/core": "3.511.0",
+        "@aws-sdk/middleware-host-header": "3.511.0",
+        "@aws-sdk/middleware-logger": "3.511.0",
+        "@aws-sdk/middleware-recursion-detection": "3.511.0",
+        "@aws-sdk/middleware-signing": "3.511.0",
+        "@aws-sdk/middleware-user-agent": "3.511.0",
+        "@aws-sdk/region-config-resolver": "3.511.0",
+        "@aws-sdk/types": "3.511.0",
+        "@aws-sdk/util-endpoints": "3.511.0",
+        "@aws-sdk/util-user-agent-browser": "3.511.0",
+        "@aws-sdk/util-user-agent-node": "3.511.0",
+        "@smithy/config-resolver": "^2.1.1",
+        "@smithy/core": "^1.3.1",
+        "@smithy/fetch-http-handler": "^2.4.1",
+        "@smithy/hash-node": "^2.1.1",
+        "@smithy/invalid-dependency": "^2.1.1",
+        "@smithy/middleware-content-length": "^2.1.1",
+        "@smithy/middleware-endpoint": "^2.4.1",
+        "@smithy/middleware-retry": "^2.1.1",
+        "@smithy/middleware-serde": "^2.1.1",
+        "@smithy/middleware-stack": "^2.1.1",
+        "@smithy/node-config-provider": "^2.2.1",
+        "@smithy/node-http-handler": "^2.3.1",
+        "@smithy/protocol-http": "^3.1.1",
+        "@smithy/smithy-client": "^2.3.1",
+        "@smithy/types": "^2.9.1",
+        "@smithy/url-parser": "^2.1.1",
+        "@smithy/util-base64": "^2.1.1",
+        "@smithy/util-body-length-browser": "^2.1.1",
+        "@smithy/util-body-length-node": "^2.2.1",
+        "@smithy/util-defaults-mode-browser": "^2.1.1",
+        "@smithy/util-defaults-mode-node": "^2.1.1",
+        "@smithy/util-endpoints": "^1.1.1",
+        "@smithy/util-retry": "^2.1.1",
+        "@smithy/util-utf8": "^2.1.1",
+        tslib: "^2.5.0"
+      },
+      devDependencies: {
+        "@smithy/service-client-documentation-generator": "^2.1.1",
+        "@tsconfig/node14": "1.0.3",
+        "@types/node": "^14.14.31",
+        concurrently: "7.0.0",
+        "downlevel-dts": "0.10.1",
+        rimraf: "3.0.2",
+        typescript: "~4.9.5"
+      },
+      engines: {
+        node: ">=14.0.0"
+      },
+      typesVersions: {
+        "<4.0": {
+          "dist-types/*": [
+            "dist-types/ts3.4/*"
+          ]
+        }
+      },
+      files: [
+        "dist-*/**"
+      ],
+      author: {
+        name: "AWS SDK for JavaScript Team",
+        url: "https://aws.amazon.com/javascript/"
+      },
+      license: "Apache-2.0",
+      peerDependencies: {
+        "@aws-sdk/credential-provider-node": "^3.511.0"
+      },
+      browser: {
+        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
+      },
+      "react-native": {
+        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.native"
+      },
+      homepage: "https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso-oidc",
+      repository: {
+        type: "git",
+        url: "https://github.com/aws/aws-sdk-js-v3.git",
+        directory: "clients/client-sso-oidc"
+      }
+    };
+  }
+});
+
+// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/credentialDefaultProvider.js
+var require_credentialDefaultProvider = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/credentialDefaultProvider.js"(exports2) {
+    "use strict";
+    var __createBinding4 = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() {
+          return m[k];
+        } };
+      }
+      Object.defineProperty(o, k2, desc);
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault2 = exports2 && exports2.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar4 = exports2 && exports2.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding4(result, mod, k);
+      }
+      __setModuleDefault2(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.defaultProvider = void 0;
+    exports2.defaultProvider = (input) => {
+      return () => Promise.resolve().then(() => __importStar4(require_dist_cjs61())).then(({ defaultProvider }) => defaultProvider(input)());
+    };
+  }
+});
+
+// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/endpoint/ruleset.js
+var require_ruleset2 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/endpoint/ruleset.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.UnsupportedGrantTypeException = exports2.UnauthorizedClientException = exports2.SlowDownException = exports2.SSOOIDCClient = exports2.InvalidScopeException = exports2.InvalidRequestException = exports2.InvalidClientException = exports2.InternalServerException = exports2.ExpiredTokenException = exports2.CreateTokenCommand = exports2.AuthorizationPendingException = exports2.AccessDeniedException = void 0;
-    var middleware_host_header_1 = require_dist_cjs4();
-    var middleware_logger_1 = require_dist_cjs5();
-    var middleware_recursion_detection_1 = require_dist_cjs6();
-    var middleware_user_agent_1 = require_dist_cjs29();
-    var config_resolver_1 = require_dist_cjs30();
-    var middleware_content_length_1 = require_dist_cjs32();
-    var middleware_endpoint_1 = require_dist_cjs41();
-    var middleware_retry_1 = require_dist_cjs35();
-    var smithy_client_1 = require_dist_cjs16();
-    var resolveClientEndpointParameters = (options) => {
-      var _a, _b;
-      return {
-        ...options,
-        useDualstackEndpoint: (_a = options.useDualstackEndpoint) !== null && _a !== void 0 ? _a : false,
-        useFipsEndpoint: (_b = options.useFipsEndpoint) !== null && _b !== void 0 ? _b : false,
-        defaultSigningName: "awsssooidc"
-      };
-    };
-    var package_default = { version: "3.429.0" };
-    var util_user_agent_node_1 = require_dist_cjs47();
-    var config_resolver_2 = require_dist_cjs30();
-    var hash_node_1 = require_dist_cjs48();
-    var middleware_retry_2 = require_dist_cjs35();
-    var node_config_provider_1 = require_dist_cjs37();
-    var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs49();
-    var util_retry_1 = require_dist_cjs34();
-    var smithy_client_2 = require_dist_cjs16();
-    var url_parser_1 = require_dist_cjs39();
-    var util_base64_1 = require_dist_cjs10();
-    var util_utf8_1 = require_dist_cjs11();
+    exports2.ruleSet = void 0;
+    var u = "required";
+    var v = "fn";
+    var w = "argv";
+    var x = "ref";
+    var a = true;
+    var b = "isSet";
+    var c = "booleanEquals";
+    var d = "error";
+    var e = "endpoint";
+    var f = "tree";
+    var g = "PartitionResult";
+    var h = "getAttr";
+    var i = { [u]: false, "type": "String" };
+    var j = { [u]: true, "default": false, "type": "Boolean" };
+    var k = { [x]: "Endpoint" };
+    var l = { [v]: c, [w]: [{ [x]: "UseFIPS" }, true] };
+    var m = { [v]: c, [w]: [{ [x]: "UseDualStack" }, true] };
+    var n = {};
+    var o = { [v]: h, [w]: [{ [x]: g }, "supportsFIPS"] };
+    var p = { [x]: g };
+    var q = { [v]: c, [w]: [true, { [v]: h, [w]: [p, "supportsDualStack"] }] };
+    var r = [l];
+    var s = [m];
+    var t = [{ [x]: "Region" }];
+    var _data = { version: "1.0", parameters: { Region: i, UseDualStack: j, UseFIPS: j, Endpoint: i }, rules: [{ conditions: [{ [v]: b, [w]: [k] }], rules: [{ conditions: r, error: "Invalid Configuration: FIPS and custom endpoint are not supported", type: d }, { conditions: s, error: "Invalid Configuration: Dualstack and custom endpoint are not supported", type: d }, { endpoint: { url: k, properties: n, headers: n }, type: e }], type: f }, { conditions: [{ [v]: b, [w]: t }], rules: [{ conditions: [{ [v]: "aws.partition", [w]: t, assign: g }], rules: [{ conditions: [l, m], rules: [{ conditions: [{ [v]: c, [w]: [a, o] }, q], rules: [{ endpoint: { url: "https://oidc-fips.{Region}.{PartitionResult#dualStackDnsSuffix}", properties: n, headers: n }, type: e }], type: f }, { error: "FIPS and DualStack are enabled, but this partition does not support one or both", type: d }], type: f }, { conditions: r, rules: [{ conditions: [{ [v]: c, [w]: [o, a] }], rules: [{ conditions: [{ [v]: "stringEquals", [w]: [{ [v]: h, [w]: [p, "name"] }, "aws-us-gov"] }], endpoint: { url: "https://oidc.{Region}.amazonaws.com", properties: n, headers: n }, type: e }, { endpoint: { url: "https://oidc-fips.{Region}.{PartitionResult#dnsSuffix}", properties: n, headers: n }, type: e }], type: f }, { error: "FIPS is enabled but this partition does not support FIPS", type: d }], type: f }, { conditions: s, rules: [{ conditions: [q], rules: [{ endpoint: { url: "https://oidc.{Region}.{PartitionResult#dualStackDnsSuffix}", properties: n, headers: n }, type: e }], type: f }, { error: "DualStack is enabled but this partition does not support DualStack", type: d }], type: f }, { endpoint: { url: "https://oidc.{Region}.{PartitionResult#dnsSuffix}", properties: n, headers: n }, type: e }], type: f }], type: f }, { error: "Invalid Configuration: Missing Region", type: d }] };
+    exports2.ruleSet = _data;
+  }
+});
+
+// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/endpoint/endpointResolver.js
+var require_endpointResolver2 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/endpoint/endpointResolver.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.defaultEndpointResolver = void 0;
     var util_endpoints_1 = require_dist_cjs27();
-    var s = "required";
-    var t = "fn";
-    var u = "argv";
-    var v = "ref";
-    var a = "isSet";
-    var b = "tree";
-    var c = "error";
-    var d = "endpoint";
-    var e = "PartitionResult";
-    var f = "getAttr";
-    var g = { [s]: false, type: "String" };
-    var h = { [s]: true, default: false, type: "Boolean" };
-    var i = { [v]: "Endpoint" };
-    var j = { [t]: "booleanEquals", [u]: [{ [v]: "UseFIPS" }, true] };
-    var k = { [t]: "booleanEquals", [u]: [{ [v]: "UseDualStack" }, true] };
-    var l = {};
-    var m = { [t]: "booleanEquals", [u]: [true, { [t]: f, [u]: [{ [v]: e }, "supportsFIPS"] }] };
-    var n = { [v]: e };
-    var o = { [t]: "booleanEquals", [u]: [true, { [t]: f, [u]: [n, "supportsDualStack"] }] };
-    var p = [j];
-    var q = [k];
-    var r = [{ [v]: "Region" }];
-    var _data = {
-      version: "1.0",
-      parameters: { Region: g, UseDualStack: h, UseFIPS: h, Endpoint: g },
-      rules: [
-        {
-          conditions: [{ [t]: a, [u]: [i] }],
-          type: b,
-          rules: [
-            { conditions: p, error: "Invalid Configuration: FIPS and custom endpoint are not supported", type: c },
-            { conditions: q, error: "Invalid Configuration: Dualstack and custom endpoint are not supported", type: c },
-            { endpoint: { url: i, properties: l, headers: l }, type: d }
-          ]
-        },
-        {
-          conditions: [{ [t]: a, [u]: r }],
-          type: b,
-          rules: [
-            {
-              conditions: [{ [t]: "aws.partition", [u]: r, assign: e }],
-              type: b,
-              rules: [
-                {
-                  conditions: [j, k],
-                  type: b,
-                  rules: [
-                    {
-                      conditions: [m, o],
-                      type: b,
-                      rules: [
-                        {
-                          endpoint: {
-                            url: "https://oidc-fips.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                            properties: l,
-                            headers: l
-                          },
-                          type: d
-                        }
-                      ]
-                    },
-                    { error: "FIPS and DualStack are enabled, but this partition does not support one or both", type: c }
-                  ]
-                },
-                {
-                  conditions: p,
-                  type: b,
-                  rules: [
-                    {
-                      conditions: [m],
-                      type: b,
-                      rules: [
-                        {
-                          conditions: [{ [t]: "stringEquals", [u]: ["aws-us-gov", { [t]: f, [u]: [n, "name"] }] }],
-                          endpoint: { url: "https://oidc.{Region}.amazonaws.com", properties: l, headers: l },
-                          type: d
-                        },
-                        {
-                          endpoint: {
-                            url: "https://oidc-fips.{Region}.{PartitionResult#dnsSuffix}",
-                            properties: l,
-                            headers: l
-                          },
-                          type: d
-                        }
-                      ]
-                    },
-                    { error: "FIPS is enabled but this partition does not support FIPS", type: c }
-                  ]
-                },
-                {
-                  conditions: q,
-                  type: b,
-                  rules: [
-                    {
-                      conditions: [o],
-                      type: b,
-                      rules: [
-                        {
-                          endpoint: {
-                            url: "https://oidc.{Region}.{PartitionResult#dualStackDnsSuffix}",
-                            properties: l,
-                            headers: l
-                          },
-                          type: d
-                        }
-                      ]
-                    },
-                    { error: "DualStack is enabled but this partition does not support DualStack", type: c }
-                  ]
-                },
-                {
-                  endpoint: { url: "https://oidc.{Region}.{PartitionResult#dnsSuffix}", properties: l, headers: l },
-                  type: d
-                }
-              ]
-            }
-          ]
-        },
-        { error: "Invalid Configuration: Missing Region", type: c }
-      ]
-    };
-    var ruleSet = _data;
+    var ruleset_1 = require_ruleset2();
     var defaultEndpointResolver = (endpointParams, context = {}) => {
-      return (0, util_endpoints_1.resolveEndpoint)(ruleSet, {
+      return (0, util_endpoints_1.resolveEndpoint)(ruleset_1.ruleSet, {
         endpointParams,
         logger: context.logger
       });
     };
+    exports2.defaultEndpointResolver = defaultEndpointResolver;
+  }
+});
+
+// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/runtimeConfig.shared.js
+var require_runtimeConfig_shared2 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/runtimeConfig.shared.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.getRuntimeConfig = void 0;
+    var smithy_client_1 = require_dist_cjs16();
+    var url_parser_1 = require_dist_cjs39();
+    var util_base64_1 = require_dist_cjs10();
+    var util_utf8_1 = require_dist_cjs11();
+    var endpointResolver_1 = require_endpointResolver2();
     var getRuntimeConfig = (config) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
       return {
         apiVersion: "2019-06-10",
-        base64Decoder: (_a = config === null || config === void 0 ? void 0 : config.base64Decoder) !== null && _a !== void 0 ? _a : util_base64_1.fromBase64,
-        base64Encoder: (_b = config === null || config === void 0 ? void 0 : config.base64Encoder) !== null && _b !== void 0 ? _b : util_base64_1.toBase64,
-        disableHostPrefix: (_c = config === null || config === void 0 ? void 0 : config.disableHostPrefix) !== null && _c !== void 0 ? _c : false,
-        endpointProvider: (_d = config === null || config === void 0 ? void 0 : config.endpointProvider) !== null && _d !== void 0 ? _d : defaultEndpointResolver,
-        extensions: (_e = config === null || config === void 0 ? void 0 : config.extensions) !== null && _e !== void 0 ? _e : [],
-        logger: (_f = config === null || config === void 0 ? void 0 : config.logger) !== null && _f !== void 0 ? _f : new smithy_client_2.NoOpLogger(),
-        serviceId: (_g = config === null || config === void 0 ? void 0 : config.serviceId) !== null && _g !== void 0 ? _g : "SSO OIDC",
-        urlParser: (_h = config === null || config === void 0 ? void 0 : config.urlParser) !== null && _h !== void 0 ? _h : url_parser_1.parseUrl,
-        utf8Decoder: (_j = config === null || config === void 0 ? void 0 : config.utf8Decoder) !== null && _j !== void 0 ? _j : util_utf8_1.fromUtf8,
-        utf8Encoder: (_k = config === null || config === void 0 ? void 0 : config.utf8Encoder) !== null && _k !== void 0 ? _k : util_utf8_1.toUtf8
+        base64Decoder: config?.base64Decoder ?? util_base64_1.fromBase64,
+        base64Encoder: config?.base64Encoder ?? util_base64_1.toBase64,
+        disableHostPrefix: config?.disableHostPrefix ?? false,
+        endpointProvider: config?.endpointProvider ?? endpointResolver_1.defaultEndpointResolver,
+        extensions: config?.extensions ?? [],
+        logger: config?.logger ?? new smithy_client_1.NoOpLogger(),
+        serviceId: config?.serviceId ?? "SSO OIDC",
+        urlParser: config?.urlParser ?? url_parser_1.parseUrl,
+        utf8Decoder: config?.utf8Decoder ?? util_utf8_1.fromUtf8,
+        utf8Encoder: config?.utf8Encoder ?? util_utf8_1.toUtf8
       };
     };
-    var smithy_client_3 = require_dist_cjs16();
-    var util_defaults_mode_node_1 = require_dist_cjs50();
-    var smithy_client_4 = require_dist_cjs16();
-    var getRuntimeConfig2 = (config) => {
-      var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-      (0, smithy_client_4.emitWarningIfUnsupportedVersion)(process.version);
+    exports2.getRuntimeConfig = getRuntimeConfig;
+  }
+});
+
+// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/runtimeConfig.js
+var require_runtimeConfig2 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/runtimeConfig.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.getRuntimeConfig = void 0;
+    var tslib_1 = (init_tslib_es62(), __toCommonJS(tslib_es6_exports2));
+    var package_json_1 = tslib_1.__importDefault(require_package3());
+    var credentialDefaultProvider_1 = require_credentialDefaultProvider();
+    var core_1 = require_dist_cjs44();
+    var util_user_agent_node_1 = require_dist_cjs48();
+    var config_resolver_1 = require_dist_cjs30();
+    var hash_node_1 = require_dist_cjs49();
+    var middleware_retry_1 = require_dist_cjs35();
+    var node_config_provider_1 = require_dist_cjs37();
+    var node_http_handler_1 = require_dist_cjs14();
+    var util_body_length_node_1 = require_dist_cjs50();
+    var util_retry_1 = require_dist_cjs34();
+    var runtimeConfig_shared_1 = require_runtimeConfig_shared2();
+    var smithy_client_1 = require_dist_cjs16();
+    var util_defaults_mode_node_1 = require_dist_cjs51();
+    var smithy_client_2 = require_dist_cjs16();
+    var getRuntimeConfig = (config) => {
+      (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
       const defaultsMode = (0, util_defaults_mode_node_1.resolveDefaultsModeConfig)(config);
-      const defaultConfigProvider = () => defaultsMode().then(smithy_client_3.loadConfigsForDefaultMode);
-      const clientSharedValues = getRuntimeConfig(config);
+      const defaultConfigProvider = () => defaultsMode().then(smithy_client_1.loadConfigsForDefaultMode);
+      const clientSharedValues = (0, runtimeConfig_shared_1.getRuntimeConfig)(config);
+      (0, core_1.emitWarningIfUnsupportedVersion)(process.version);
       return {
         ...clientSharedValues,
         ...config,
         runtime: "node",
         defaultsMode,
-        bodyLengthChecker: (_a = config === null || config === void 0 ? void 0 : config.bodyLengthChecker) !== null && _a !== void 0 ? _a : util_body_length_node_1.calculateBodyLength,
-        defaultUserAgentProvider: (_b = config === null || config === void 0 ? void 0 : config.defaultUserAgentProvider) !== null && _b !== void 0 ? _b : (0, util_user_agent_node_1.defaultUserAgent)({ serviceId: clientSharedValues.serviceId, clientVersion: package_default.version }),
-        maxAttempts: (_c = config === null || config === void 0 ? void 0 : config.maxAttempts) !== null && _c !== void 0 ? _c : (0, node_config_provider_1.loadConfig)(middleware_retry_2.NODE_MAX_ATTEMPT_CONFIG_OPTIONS),
-        region: (_d = config === null || config === void 0 ? void 0 : config.region) !== null && _d !== void 0 ? _d : (0, node_config_provider_1.loadConfig)(config_resolver_2.NODE_REGION_CONFIG_OPTIONS, config_resolver_2.NODE_REGION_CONFIG_FILE_OPTIONS),
-        requestHandler: (_e = config === null || config === void 0 ? void 0 : config.requestHandler) !== null && _e !== void 0 ? _e : new node_http_handler_1.NodeHttpHandler(defaultConfigProvider),
-        retryMode: (_f = config === null || config === void 0 ? void 0 : config.retryMode) !== null && _f !== void 0 ? _f : (0, node_config_provider_1.loadConfig)({
-          ...middleware_retry_2.NODE_RETRY_MODE_CONFIG_OPTIONS,
+        bodyLengthChecker: config?.bodyLengthChecker ?? util_body_length_node_1.calculateBodyLength,
+        credentialDefaultProvider: config?.credentialDefaultProvider ?? credentialDefaultProvider_1.defaultProvider,
+        defaultUserAgentProvider: config?.defaultUserAgentProvider ?? (0, util_user_agent_node_1.defaultUserAgent)({ serviceId: clientSharedValues.serviceId, clientVersion: package_json_1.default.version }),
+        maxAttempts: config?.maxAttempts ?? (0, node_config_provider_1.loadConfig)(middleware_retry_1.NODE_MAX_ATTEMPT_CONFIG_OPTIONS),
+        region: config?.region ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_REGION_CONFIG_OPTIONS, config_resolver_1.NODE_REGION_CONFIG_FILE_OPTIONS),
+        requestHandler: config?.requestHandler ?? new node_http_handler_1.NodeHttpHandler(defaultConfigProvider),
+        retryMode: config?.retryMode ?? (0, node_config_provider_1.loadConfig)({
+          ...middleware_retry_1.NODE_RETRY_MODE_CONFIG_OPTIONS,
           default: async () => (await defaultConfigProvider()).retryMode || util_retry_1.DEFAULT_RETRY_MODE
         }),
-        sha256: (_g = config === null || config === void 0 ? void 0 : config.sha256) !== null && _g !== void 0 ? _g : hash_node_1.Hash.bind(null, "sha256"),
-        streamCollector: (_h = config === null || config === void 0 ? void 0 : config.streamCollector) !== null && _h !== void 0 ? _h : node_http_handler_1.streamCollector,
-        useDualstackEndpoint: (_j = config === null || config === void 0 ? void 0 : config.useDualstackEndpoint) !== null && _j !== void 0 ? _j : (0, node_config_provider_1.loadConfig)(config_resolver_2.NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS),
-        useFipsEndpoint: (_k = config === null || config === void 0 ? void 0 : config.useFipsEndpoint) !== null && _k !== void 0 ? _k : (0, node_config_provider_1.loadConfig)(config_resolver_2.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS)
+        sha256: config?.sha256 ?? hash_node_1.Hash.bind(null, "sha256"),
+        streamCollector: config?.streamCollector ?? node_http_handler_1.streamCollector,
+        useDualstackEndpoint: config?.useDualstackEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS),
+        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS)
       };
     };
-    var region_config_resolver_1 = require_dist_cjs51();
-    var protocol_http_1 = require_dist_cjs2();
-    var smithy_client_5 = require_dist_cjs16();
-    var asPartial = (t2) => t2;
-    var resolveRuntimeExtensions = (runtimeConfig, extensions) => {
+    exports2.getRuntimeConfig = getRuntimeConfig;
+  }
+});
+
+// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/index.js
+var require_dist_cjs54 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/index.js"(exports2, module2) {
+    "use strict";
+    var __defProp2 = Object.defineProperty;
+    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
+    var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
+    var __export2 = (target, all) => {
+      for (var name in all)
+        __defProp2(target, name, { get: all[name], enumerable: true });
+    };
+    var __copyProps2 = (to, from, except, desc) => {
+      if (from && typeof from === "object" || typeof from === "function") {
+        for (let key of __getOwnPropNames2(from))
+          if (!__hasOwnProp2.call(to, key) && key !== except)
+            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
+      }
+      return to;
+    };
+    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var src_exports = {};
+    __export2(src_exports, {
+      AccessDeniedException: () => AccessDeniedException,
+      AuthorizationPendingException: () => AuthorizationPendingException,
+      CreateTokenCommand: () => CreateTokenCommand,
+      CreateTokenRequestFilterSensitiveLog: () => CreateTokenRequestFilterSensitiveLog,
+      CreateTokenResponseFilterSensitiveLog: () => CreateTokenResponseFilterSensitiveLog,
+      CreateTokenWithIAMCommand: () => CreateTokenWithIAMCommand,
+      CreateTokenWithIAMRequestFilterSensitiveLog: () => CreateTokenWithIAMRequestFilterSensitiveLog,
+      CreateTokenWithIAMResponseFilterSensitiveLog: () => CreateTokenWithIAMResponseFilterSensitiveLog,
+      ExpiredTokenException: () => ExpiredTokenException,
+      InternalServerException: () => InternalServerException,
+      InvalidClientException: () => InvalidClientException,
+      InvalidClientMetadataException: () => InvalidClientMetadataException,
+      InvalidGrantException: () => InvalidGrantException,
+      InvalidRequestException: () => InvalidRequestException,
+      InvalidRequestRegionException: () => InvalidRequestRegionException,
+      InvalidScopeException: () => InvalidScopeException,
+      RegisterClientCommand: () => RegisterClientCommand,
+      RegisterClientResponseFilterSensitiveLog: () => RegisterClientResponseFilterSensitiveLog,
+      SSOOIDC: () => SSOOIDC,
+      SSOOIDCClient: () => SSOOIDCClient,
+      SSOOIDCServiceException: () => SSOOIDCServiceException,
+      SlowDownException: () => SlowDownException,
+      StartDeviceAuthorizationCommand: () => StartDeviceAuthorizationCommand,
+      StartDeviceAuthorizationRequestFilterSensitiveLog: () => StartDeviceAuthorizationRequestFilterSensitiveLog,
+      UnauthorizedClientException: () => UnauthorizedClientException,
+      UnsupportedGrantTypeException: () => UnsupportedGrantTypeException,
+      __Client: () => import_smithy_client.Client
+    });
+    module2.exports = __toCommonJS2(src_exports);
+    var import_middleware_host_header = require_dist_cjs4();
+    var import_middleware_logger = require_dist_cjs5();
+    var import_middleware_recursion_detection = require_dist_cjs6();
+    var import_middleware_signing = require_dist_cjs26();
+    var import_middleware_user_agent = require_dist_cjs29();
+    var import_config_resolver = require_dist_cjs30();
+    var import_middleware_content_length = require_dist_cjs32();
+    var import_middleware_endpoint = require_dist_cjs41();
+    var import_middleware_retry = require_dist_cjs35();
+    var resolveClientEndpointParameters = /* @__PURE__ */ __name((options) => {
+      return {
+        ...options,
+        useDualstackEndpoint: options.useDualstackEndpoint ?? false,
+        useFipsEndpoint: options.useFipsEndpoint ?? false,
+        defaultSigningName: "sso-oauth"
+      };
+    }, "resolveClientEndpointParameters");
+    var commonParams = {
+      UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
+      Endpoint: { type: "builtInParams", name: "endpoint" },
+      Region: { type: "builtInParams", name: "region" },
+      UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
+    };
+    var import_runtimeConfig = require_runtimeConfig2();
+    var import_region_config_resolver = require_dist_cjs52();
+    var import_protocol_http = require_dist_cjs2();
+    var import_smithy_client = require_dist_cjs16();
+    var asPartial = /* @__PURE__ */ __name((t) => t, "asPartial");
+    var resolveRuntimeExtensions = /* @__PURE__ */ __name((runtimeConfig, extensions) => {
       const extensionConfiguration = {
-        ...asPartial((0, region_config_resolver_1.getAwsRegionExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, smithy_client_5.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, protocol_http_1.getHttpHandlerExtensionConfiguration)(runtimeConfig))
+        ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_smithy_client.getDefaultExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_protocol_http.getHttpHandlerExtensionConfiguration)(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
       return {
         ...runtimeConfig,
-        ...(0, region_config_resolver_1.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
-        ...(0, smithy_client_5.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, protocol_http_1.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
+        ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
+        ...(0, import_smithy_client.resolveDefaultRuntimeConfig)(extensionConfiguration),
+        ...(0, import_protocol_http.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
       };
-    };
-    var SSOOIDCClient2 = class extends smithy_client_1.Client {
+    }, "resolveRuntimeExtensions");
+    var _SSOOIDCClient = class _SSOOIDCClient extends import_smithy_client.Client {
       constructor(...[configuration2]) {
-        const _config_0 = getRuntimeConfig2(configuration2 || {});
+        const _config_0 = (0, import_runtimeConfig.getRuntimeConfig)(configuration2 || {});
         const _config_1 = resolveClientEndpointParameters(_config_0);
-        const _config_2 = (0, config_resolver_1.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, middleware_endpoint_1.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, middleware_retry_1.resolveRetryConfig)(_config_3);
-        const _config_5 = (0, middleware_host_header_1.resolveHostHeaderConfig)(_config_4);
-        const _config_6 = (0, middleware_user_agent_1.resolveUserAgentConfig)(_config_5);
-        const _config_7 = resolveRuntimeExtensions(_config_6, (configuration2 === null || configuration2 === void 0 ? void 0 : configuration2.extensions) || []);
-        super(_config_7);
-        this.config = _config_7;
-        this.middlewareStack.use((0, middleware_retry_1.getRetryPlugin)(this.config));
-        this.middlewareStack.use((0, middleware_content_length_1.getContentLengthPlugin)(this.config));
-        this.middlewareStack.use((0, middleware_host_header_1.getHostHeaderPlugin)(this.config));
-        this.middlewareStack.use((0, middleware_logger_1.getLoggerPlugin)(this.config));
-        this.middlewareStack.use((0, middleware_recursion_detection_1.getRecursionDetectionPlugin)(this.config));
-        this.middlewareStack.use((0, middleware_user_agent_1.getUserAgentPlugin)(this.config));
+        const _config_2 = (0, import_config_resolver.resolveRegionConfig)(_config_1);
+        const _config_3 = (0, import_middleware_endpoint.resolveEndpointConfig)(_config_2);
+        const _config_4 = (0, import_middleware_retry.resolveRetryConfig)(_config_3);
+        const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
+        const _config_6 = (0, import_middleware_signing.resolveAwsAuthConfig)(_config_5);
+        const _config_7 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_6);
+        const _config_8 = resolveRuntimeExtensions(_config_7, (configuration2 == null ? void 0 : configuration2.extensions) || []);
+        super(_config_8);
+        this.config = _config_8;
+        this.middlewareStack.use((0, import_middleware_retry.getRetryPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_user_agent.getUserAgentPlugin)(this.config));
       }
+      /**
+       * Destroy underlying resources, like sockets. It's usually not necessary to do this.
+       * However in Node.js, it's best to explicitly shut down the client's agent when it is no longer needed.
+       * Otherwise, sockets might stay open for quite a long time before the server terminates them.
+       */
       destroy() {
         super.destroy();
       }
     };
-    exports2.SSOOIDCClient = SSOOIDCClient2;
-    var smithy_client_6 = require_dist_cjs16();
-    var middleware_endpoint_2 = require_dist_cjs41();
-    var middleware_serde_1 = require_dist_cjs40();
-    var smithy_client_7 = require_dist_cjs16();
-    var types_1 = require_dist_cjs();
-    var protocol_http_2 = require_dist_cjs2();
-    var smithy_client_8 = require_dist_cjs16();
-    var smithy_client_9 = require_dist_cjs16();
-    var SSOOIDCServiceException = class _SSOOIDCServiceException extends smithy_client_9.ServiceException {
+    __name(_SSOOIDCClient, "SSOOIDCClient");
+    var SSOOIDCClient = _SSOOIDCClient;
+    var import_middleware_serde = require_dist_cjs40();
+    var import_types = require_dist_cjs();
+    var _SSOOIDCServiceException = class _SSOOIDCServiceException2 extends import_smithy_client.ServiceException {
+      /**
+       * @internal
+       */
       constructor(options) {
         super(options);
-        Object.setPrototypeOf(this, _SSOOIDCServiceException.prototype);
+        Object.setPrototypeOf(this, _SSOOIDCServiceException2.prototype);
       }
     };
-    var AccessDeniedException2 = class _AccessDeniedException extends SSOOIDCServiceException {
+    __name(_SSOOIDCServiceException, "SSOOIDCServiceException");
+    var SSOOIDCServiceException = _SSOOIDCServiceException;
+    var _AccessDeniedException = class _AccessDeniedException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "AccessDeniedException",
@@ -33276,13 +31972,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "AccessDeniedException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _AccessDeniedException.prototype);
+        Object.setPrototypeOf(this, _AccessDeniedException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.AccessDeniedException = AccessDeniedException2;
-    var AuthorizationPendingException2 = class _AuthorizationPendingException extends SSOOIDCServiceException {
+    __name(_AccessDeniedException, "AccessDeniedException");
+    var AccessDeniedException = _AccessDeniedException;
+    var _AuthorizationPendingException = class _AuthorizationPendingException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "AuthorizationPendingException",
@@ -33291,13 +31991,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "AuthorizationPendingException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _AuthorizationPendingException.prototype);
+        Object.setPrototypeOf(this, _AuthorizationPendingException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.AuthorizationPendingException = AuthorizationPendingException2;
-    var ExpiredTokenException2 = class _ExpiredTokenException extends SSOOIDCServiceException {
+    __name(_AuthorizationPendingException, "AuthorizationPendingException");
+    var AuthorizationPendingException = _AuthorizationPendingException;
+    var _ExpiredTokenException = class _ExpiredTokenException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "ExpiredTokenException",
@@ -33306,13 +32010,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "ExpiredTokenException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _ExpiredTokenException.prototype);
+        Object.setPrototypeOf(this, _ExpiredTokenException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.ExpiredTokenException = ExpiredTokenException2;
-    var InternalServerException2 = class _InternalServerException extends SSOOIDCServiceException {
+    __name(_ExpiredTokenException, "ExpiredTokenException");
+    var ExpiredTokenException = _ExpiredTokenException;
+    var _InternalServerException = class _InternalServerException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "InternalServerException",
@@ -33321,13 +32029,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "InternalServerException";
         this.$fault = "server";
-        Object.setPrototypeOf(this, _InternalServerException.prototype);
+        Object.setPrototypeOf(this, _InternalServerException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.InternalServerException = InternalServerException2;
-    var InvalidClientException2 = class _InvalidClientException extends SSOOIDCServiceException {
+    __name(_InternalServerException, "InternalServerException");
+    var InternalServerException = _InternalServerException;
+    var _InvalidClientException = class _InvalidClientException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "InvalidClientException",
@@ -33336,13 +32048,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "InvalidClientException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _InvalidClientException.prototype);
+        Object.setPrototypeOf(this, _InvalidClientException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.InvalidClientException = InvalidClientException2;
-    var InvalidGrantException = class _InvalidGrantException extends SSOOIDCServiceException {
+    __name(_InvalidClientException, "InvalidClientException");
+    var InvalidClientException = _InvalidClientException;
+    var _InvalidGrantException = class _InvalidGrantException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "InvalidGrantException",
@@ -33351,12 +32067,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "InvalidGrantException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _InvalidGrantException.prototype);
+        Object.setPrototypeOf(this, _InvalidGrantException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    var InvalidRequestException2 = class _InvalidRequestException extends SSOOIDCServiceException {
+    __name(_InvalidGrantException, "InvalidGrantException");
+    var InvalidGrantException = _InvalidGrantException;
+    var _InvalidRequestException = class _InvalidRequestException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "InvalidRequestException",
@@ -33365,13 +32086,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "InvalidRequestException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _InvalidRequestException.prototype);
+        Object.setPrototypeOf(this, _InvalidRequestException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.InvalidRequestException = InvalidRequestException2;
-    var InvalidScopeException2 = class _InvalidScopeException extends SSOOIDCServiceException {
+    __name(_InvalidRequestException, "InvalidRequestException");
+    var InvalidRequestException = _InvalidRequestException;
+    var _InvalidScopeException = class _InvalidScopeException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "InvalidScopeException",
@@ -33380,13 +32105,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "InvalidScopeException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _InvalidScopeException.prototype);
+        Object.setPrototypeOf(this, _InvalidScopeException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.InvalidScopeException = InvalidScopeException2;
-    var SlowDownException2 = class _SlowDownException extends SSOOIDCServiceException {
+    __name(_InvalidScopeException, "InvalidScopeException");
+    var InvalidScopeException = _InvalidScopeException;
+    var _SlowDownException = class _SlowDownException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "SlowDownException",
@@ -33395,13 +32124,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "SlowDownException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _SlowDownException.prototype);
+        Object.setPrototypeOf(this, _SlowDownException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.SlowDownException = SlowDownException2;
-    var UnauthorizedClientException2 = class _UnauthorizedClientException extends SSOOIDCServiceException {
+    __name(_SlowDownException, "SlowDownException");
+    var SlowDownException = _SlowDownException;
+    var _UnauthorizedClientException = class _UnauthorizedClientException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "UnauthorizedClientException",
@@ -33410,13 +32143,17 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "UnauthorizedClientException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _UnauthorizedClientException.prototype);
+        Object.setPrototypeOf(this, _UnauthorizedClientException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.UnauthorizedClientException = UnauthorizedClientException2;
-    var UnsupportedGrantTypeException2 = class _UnsupportedGrantTypeException extends SSOOIDCServiceException {
+    __name(_UnauthorizedClientException, "UnauthorizedClientException");
+    var UnauthorizedClientException = _UnauthorizedClientException;
+    var _UnsupportedGrantTypeException = class _UnsupportedGrantTypeException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "UnsupportedGrantTypeException",
@@ -33425,13 +32162,38 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "UnsupportedGrantTypeException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _UnsupportedGrantTypeException.prototype);
+        Object.setPrototypeOf(this, _UnsupportedGrantTypeException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    exports2.UnsupportedGrantTypeException = UnsupportedGrantTypeException2;
-    var InvalidClientMetadataException = class _InvalidClientMetadataException extends SSOOIDCServiceException {
+    __name(_UnsupportedGrantTypeException, "UnsupportedGrantTypeException");
+    var UnsupportedGrantTypeException = _UnsupportedGrantTypeException;
+    var _InvalidRequestRegionException = class _InvalidRequestRegionException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "InvalidRequestRegionException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "InvalidRequestRegionException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _InvalidRequestRegionException2.prototype);
+        this.error = opts.error;
+        this.error_description = opts.error_description;
+        this.endpoint = opts.endpoint;
+        this.region = opts.region;
+      }
+    };
+    __name(_InvalidRequestRegionException, "InvalidRequestRegionException");
+    var InvalidRequestRegionException = _InvalidRequestRegionException;
+    var _InvalidClientMetadataException = class _InvalidClientMetadataException2 extends SSOOIDCServiceException {
+      /**
+       * @internal
+       */
       constructor(opts) {
         super({
           name: "InvalidClientMetadataException",
@@ -33440,101 +32202,205 @@ var require_client_sso_oidc_node = __commonJS({
         });
         this.name = "InvalidClientMetadataException";
         this.$fault = "client";
-        Object.setPrototypeOf(this, _InvalidClientMetadataException.prototype);
+        Object.setPrototypeOf(this, _InvalidClientMetadataException2.prototype);
         this.error = opts.error;
         this.error_description = opts.error_description;
       }
     };
-    var se_CreateTokenCommand = async (input, context) => {
-      const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+    __name(_InvalidClientMetadataException, "InvalidClientMetadataException");
+    var InvalidClientMetadataException = _InvalidClientMetadataException;
+    var CreateTokenRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.clientSecret && { clientSecret: import_smithy_client.SENSITIVE_STRING },
+      ...obj.refreshToken && { refreshToken: import_smithy_client.SENSITIVE_STRING }
+    }), "CreateTokenRequestFilterSensitiveLog");
+    var CreateTokenResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.accessToken && { accessToken: import_smithy_client.SENSITIVE_STRING },
+      ...obj.refreshToken && { refreshToken: import_smithy_client.SENSITIVE_STRING },
+      ...obj.idToken && { idToken: import_smithy_client.SENSITIVE_STRING }
+    }), "CreateTokenResponseFilterSensitiveLog");
+    var CreateTokenWithIAMRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.refreshToken && { refreshToken: import_smithy_client.SENSITIVE_STRING },
+      ...obj.assertion && { assertion: import_smithy_client.SENSITIVE_STRING },
+      ...obj.subjectToken && { subjectToken: import_smithy_client.SENSITIVE_STRING }
+    }), "CreateTokenWithIAMRequestFilterSensitiveLog");
+    var CreateTokenWithIAMResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.accessToken && { accessToken: import_smithy_client.SENSITIVE_STRING },
+      ...obj.refreshToken && { refreshToken: import_smithy_client.SENSITIVE_STRING },
+      ...obj.idToken && { idToken: import_smithy_client.SENSITIVE_STRING }
+    }), "CreateTokenWithIAMResponseFilterSensitiveLog");
+    var RegisterClientResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.clientSecret && { clientSecret: import_smithy_client.SENSITIVE_STRING }
+    }), "RegisterClientResponseFilterSensitiveLog");
+    var StartDeviceAuthorizationRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.clientSecret && { clientSecret: import_smithy_client.SENSITIVE_STRING }
+    }), "StartDeviceAuthorizationRequestFilterSensitiveLog");
+    var import_core = require_dist_cjs43();
+    var se_CreateTokenCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const b = (0, import_core.requestBuilder)(input, context);
       const headers = {
         "content-type": "application/json"
       };
-      const resolvedPath = `${(basePath === null || basePath === void 0 ? void 0 : basePath.endsWith("/")) ? basePath.slice(0, -1) : basePath || ""}/token`;
+      b.bp("/token");
       let body;
-      body = JSON.stringify((0, smithy_client_8.take)(input, {
-        clientId: [],
-        clientSecret: [],
-        code: [],
-        deviceCode: [],
-        grantType: [],
-        redirectUri: [],
-        refreshToken: [],
-        scope: (_) => (0, smithy_client_8._json)(_)
-      }));
-      return new protocol_http_2.HttpRequest({
-        protocol,
-        hostname,
-        port,
-        method: "POST",
-        headers,
-        path: resolvedPath,
-        body
-      });
-    };
-    var se_RegisterClientCommand = async (input, context) => {
-      const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+      body = JSON.stringify(
+        (0, import_smithy_client.take)(input, {
+          clientId: [],
+          clientSecret: [],
+          code: [],
+          deviceCode: [],
+          grantType: [],
+          redirectUri: [],
+          refreshToken: [],
+          scope: (_) => (0, import_smithy_client._json)(_)
+        })
+      );
+      b.m("POST").h(headers).b(body);
+      return b.build();
+    }, "se_CreateTokenCommand");
+    var se_CreateTokenWithIAMCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const b = (0, import_core.requestBuilder)(input, context);
       const headers = {
         "content-type": "application/json"
       };
-      const resolvedPath = `${(basePath === null || basePath === void 0 ? void 0 : basePath.endsWith("/")) ? basePath.slice(0, -1) : basePath || ""}/client/register`;
-      let body;
-      body = JSON.stringify((0, smithy_client_8.take)(input, {
-        clientName: [],
-        clientType: [],
-        scopes: (_) => (0, smithy_client_8._json)(_)
-      }));
-      return new protocol_http_2.HttpRequest({
-        protocol,
-        hostname,
-        port,
-        method: "POST",
-        headers,
-        path: resolvedPath,
-        body
+      b.bp("/token");
+      const query = (0, import_smithy_client.map)({
+        [_ai]: [, "t"]
       });
-    };
-    var se_StartDeviceAuthorizationCommand = async (input, context) => {
-      const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+      let body;
+      body = JSON.stringify(
+        (0, import_smithy_client.take)(input, {
+          assertion: [],
+          clientId: [],
+          code: [],
+          grantType: [],
+          redirectUri: [],
+          refreshToken: [],
+          requestedTokenType: [],
+          scope: (_) => (0, import_smithy_client._json)(_),
+          subjectToken: [],
+          subjectTokenType: []
+        })
+      );
+      b.m("POST").h(headers).q(query).b(body);
+      return b.build();
+    }, "se_CreateTokenWithIAMCommand");
+    var se_RegisterClientCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const b = (0, import_core.requestBuilder)(input, context);
       const headers = {
         "content-type": "application/json"
       };
-      const resolvedPath = `${(basePath === null || basePath === void 0 ? void 0 : basePath.endsWith("/")) ? basePath.slice(0, -1) : basePath || ""}/device_authorization`;
+      b.bp("/client/register");
       let body;
-      body = JSON.stringify((0, smithy_client_8.take)(input, {
-        clientId: [],
-        clientSecret: [],
-        startUrl: []
-      }));
-      return new protocol_http_2.HttpRequest({
-        protocol,
-        hostname,
-        port,
-        method: "POST",
-        headers,
-        path: resolvedPath,
-        body
-      });
-    };
-    var de_CreateTokenCommand = async (output, context) => {
+      body = JSON.stringify(
+        (0, import_smithy_client.take)(input, {
+          clientName: [],
+          clientType: [],
+          scopes: (_) => (0, import_smithy_client._json)(_)
+        })
+      );
+      b.m("POST").h(headers).b(body);
+      return b.build();
+    }, "se_RegisterClientCommand");
+    var se_StartDeviceAuthorizationCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const b = (0, import_core.requestBuilder)(input, context);
+      const headers = {
+        "content-type": "application/json"
+      };
+      b.bp("/device_authorization");
+      let body;
+      body = JSON.stringify(
+        (0, import_smithy_client.take)(input, {
+          clientId: [],
+          clientSecret: [],
+          startUrl: []
+        })
+      );
+      b.m("POST").h(headers).b(body);
+      return b.build();
+    }, "se_StartDeviceAuthorizationCommand");
+    var de_CreateTokenCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CreateTokenCommandError(output, context);
+        return de_CommandError(output, context);
       }
-      const contents = (0, smithy_client_8.map)({
+      const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, smithy_client_8.expectNonNull)((0, smithy_client_8.expectObject)(await parseBody(output.body, context)), "body");
-      const doc = (0, smithy_client_8.take)(data, {
-        accessToken: smithy_client_8.expectString,
-        expiresIn: smithy_client_8.expectInt32,
-        idToken: smithy_client_8.expectString,
-        refreshToken: smithy_client_8.expectString,
-        tokenType: smithy_client_8.expectString
+      const data = (0, import_smithy_client.expectNonNull)((0, import_smithy_client.expectObject)(await parseBody(output.body, context)), "body");
+      const doc = (0, import_smithy_client.take)(data, {
+        accessToken: import_smithy_client.expectString,
+        expiresIn: import_smithy_client.expectInt32,
+        idToken: import_smithy_client.expectString,
+        refreshToken: import_smithy_client.expectString,
+        tokenType: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
       return contents;
-    };
-    var de_CreateTokenCommandError = async (output, context) => {
+    }, "de_CreateTokenCommand");
+    var de_CreateTokenWithIAMCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode !== 200 && output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const contents = (0, import_smithy_client.map)({
+        $metadata: deserializeMetadata(output)
+      });
+      const data = (0, import_smithy_client.expectNonNull)((0, import_smithy_client.expectObject)(await parseBody(output.body, context)), "body");
+      const doc = (0, import_smithy_client.take)(data, {
+        accessToken: import_smithy_client.expectString,
+        expiresIn: import_smithy_client.expectInt32,
+        idToken: import_smithy_client.expectString,
+        issuedTokenType: import_smithy_client.expectString,
+        refreshToken: import_smithy_client.expectString,
+        scope: import_smithy_client._json,
+        tokenType: import_smithy_client.expectString
+      });
+      Object.assign(contents, doc);
+      return contents;
+    }, "de_CreateTokenWithIAMCommand");
+    var de_RegisterClientCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode !== 200 && output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const contents = (0, import_smithy_client.map)({
+        $metadata: deserializeMetadata(output)
+      });
+      const data = (0, import_smithy_client.expectNonNull)((0, import_smithy_client.expectObject)(await parseBody(output.body, context)), "body");
+      const doc = (0, import_smithy_client.take)(data, {
+        authorizationEndpoint: import_smithy_client.expectString,
+        clientId: import_smithy_client.expectString,
+        clientIdIssuedAt: import_smithy_client.expectLong,
+        clientSecret: import_smithy_client.expectString,
+        clientSecretExpiresAt: import_smithy_client.expectLong,
+        tokenEndpoint: import_smithy_client.expectString
+      });
+      Object.assign(contents, doc);
+      return contents;
+    }, "de_RegisterClientCommand");
+    var de_StartDeviceAuthorizationCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode !== 200 && output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const contents = (0, import_smithy_client.map)({
+        $metadata: deserializeMetadata(output)
+      });
+      const data = (0, import_smithy_client.expectNonNull)((0, import_smithy_client.expectObject)(await parseBody(output.body, context)), "body");
+      const doc = (0, import_smithy_client.take)(data, {
+        deviceCode: import_smithy_client.expectString,
+        expiresIn: import_smithy_client.expectInt32,
+        interval: import_smithy_client.expectInt32,
+        userCode: import_smithy_client.expectString,
+        verificationUri: import_smithy_client.expectString,
+        verificationUriComplete: import_smithy_client.expectString
+      });
+      Object.assign(contents, doc);
+      return contents;
+    }, "de_StartDeviceAuthorizationCommand");
+    var de_CommandError = /* @__PURE__ */ __name(async (output, context) => {
       const parsedOutput = {
         ...output,
         body: await parseErrorBody(output.body, context)
@@ -33574,53 +32440,12 @@ var require_client_sso_oidc_node = __commonJS({
         case "UnsupportedGrantTypeException":
         case "com.amazonaws.ssooidc#UnsupportedGrantTypeException":
           throw await de_UnsupportedGrantTypeExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    };
-    var de_RegisterClientCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_RegisterClientCommandError(output, context);
-      }
-      const contents = (0, smithy_client_8.map)({
-        $metadata: deserializeMetadata(output)
-      });
-      const data = (0, smithy_client_8.expectNonNull)((0, smithy_client_8.expectObject)(await parseBody(output.body, context)), "body");
-      const doc = (0, smithy_client_8.take)(data, {
-        authorizationEndpoint: smithy_client_8.expectString,
-        clientId: smithy_client_8.expectString,
-        clientIdIssuedAt: smithy_client_8.expectLong,
-        clientSecret: smithy_client_8.expectString,
-        clientSecretExpiresAt: smithy_client_8.expectLong,
-        tokenEndpoint: smithy_client_8.expectString
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    var de_RegisterClientCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "InternalServerException":
-        case "com.amazonaws.ssooidc#InternalServerException":
-          throw await de_InternalServerExceptionRes(parsedOutput, context);
+        case "InvalidRequestRegionException":
+        case "com.amazonaws.ssooidc#InvalidRequestRegionException":
+          throw await de_InvalidRequestRegionExceptionRes(parsedOutput, context);
         case "InvalidClientMetadataException":
         case "com.amazonaws.ssooidc#InvalidClientMetadataException":
           throw await de_InvalidClientMetadataExceptionRes(parsedOutput, context);
-        case "InvalidRequestException":
-        case "com.amazonaws.ssooidc#InvalidRequestException":
-          throw await de_InvalidRequestExceptionRes(parsedOutput, context);
-        case "InvalidScopeException":
-        case "com.amazonaws.ssooidc#InvalidScopeException":
-          throw await de_InvalidScopeExceptionRes(parsedOutput, context);
         default:
           const parsedBody = parsedOutput.body;
           return throwDefaultError({
@@ -33629,251 +32454,214 @@ var require_client_sso_oidc_node = __commonJS({
             errorCode
           });
       }
-    };
-    var de_StartDeviceAuthorizationCommand = async (output, context) => {
-      if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_StartDeviceAuthorizationCommandError(output, context);
-      }
-      const contents = (0, smithy_client_8.map)({
-        $metadata: deserializeMetadata(output)
-      });
-      const data = (0, smithy_client_8.expectNonNull)((0, smithy_client_8.expectObject)(await parseBody(output.body, context)), "body");
-      const doc = (0, smithy_client_8.take)(data, {
-        deviceCode: smithy_client_8.expectString,
-        expiresIn: smithy_client_8.expectInt32,
-        interval: smithy_client_8.expectInt32,
-        userCode: smithy_client_8.expectString,
-        verificationUri: smithy_client_8.expectString,
-        verificationUriComplete: smithy_client_8.expectString
-      });
-      Object.assign(contents, doc);
-      return contents;
-    };
-    var de_StartDeviceAuthorizationCommandError = async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestJsonErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "InternalServerException":
-        case "com.amazonaws.ssooidc#InternalServerException":
-          throw await de_InternalServerExceptionRes(parsedOutput, context);
-        case "InvalidClientException":
-        case "com.amazonaws.ssooidc#InvalidClientException":
-          throw await de_InvalidClientExceptionRes(parsedOutput, context);
-        case "InvalidRequestException":
-        case "com.amazonaws.ssooidc#InvalidRequestException":
-          throw await de_InvalidRequestExceptionRes(parsedOutput, context);
-        case "SlowDownException":
-        case "com.amazonaws.ssooidc#SlowDownException":
-          throw await de_SlowDownExceptionRes(parsedOutput, context);
-        case "UnauthorizedClientException":
-        case "com.amazonaws.ssooidc#UnauthorizedClientException":
-          throw await de_UnauthorizedClientExceptionRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    };
-    var throwDefaultError = (0, smithy_client_8.withBaseException)(SSOOIDCServiceException);
-    var de_AccessDeniedExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+    }, "de_CommandError");
+    var throwDefaultError = (0, import_smithy_client.withBaseException)(SSOOIDCServiceException);
+    var de_AccessDeniedExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new AccessDeniedException2({
+      const exception = new AccessDeniedException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_AuthorizationPendingExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_AccessDeniedExceptionRes");
+    var de_AuthorizationPendingExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new AuthorizationPendingException2({
+      const exception = new AuthorizationPendingException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_ExpiredTokenExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_AuthorizationPendingExceptionRes");
+    var de_ExpiredTokenExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new ExpiredTokenException2({
+      const exception = new ExpiredTokenException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_InternalServerExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_ExpiredTokenExceptionRes");
+    var de_InternalServerExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new InternalServerException2({
+      const exception = new InternalServerException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_InvalidClientExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_InternalServerExceptionRes");
+    var de_InvalidClientExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new InvalidClientException2({
+      const exception = new InvalidClientException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_InvalidClientMetadataExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_InvalidClientExceptionRes");
+    var de_InvalidClientMetadataExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidClientMetadataException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_InvalidGrantExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_InvalidClientMetadataExceptionRes");
+    var de_InvalidGrantExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidGrantException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_InvalidRequestExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_InvalidGrantExceptionRes");
+    var de_InvalidRequestExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new InvalidRequestException2({
+      const exception = new InvalidRequestException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_InvalidScopeExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_InvalidRequestExceptionRes");
+    var de_InvalidRequestRegionExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        endpoint: import_smithy_client.expectString,
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString,
+        region: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new InvalidScopeException2({
+      const exception = new InvalidRequestRegionException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_SlowDownExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_InvalidRequestRegionExceptionRes");
+    var de_InvalidScopeExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new SlowDownException2({
+      const exception = new InvalidScopeException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_UnauthorizedClientExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_InvalidScopeExceptionRes");
+    var de_SlowDownExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new UnauthorizedClientException2({
+      const exception = new SlowDownException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var de_UnsupportedGrantTypeExceptionRes = async (parsedOutput, context) => {
-      const contents = (0, smithy_client_8.map)({});
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_SlowDownExceptionRes");
+    var de_UnauthorizedClientExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
       const data = parsedOutput.body;
-      const doc = (0, smithy_client_8.take)(data, {
-        error: smithy_client_8.expectString,
-        error_description: smithy_client_8.expectString
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
       });
       Object.assign(contents, doc);
-      const exception = new UnsupportedGrantTypeException2({
+      const exception = new UnauthorizedClientException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, smithy_client_8.decorateServiceException)(exception, parsedOutput.body);
-    };
-    var deserializeMetadata = (output) => {
-      var _a, _b;
-      return {
-        httpStatusCode: output.statusCode,
-        requestId: (_b = (_a = output.headers["x-amzn-requestid"]) !== null && _a !== void 0 ? _a : output.headers["x-amzn-request-id"]) !== null && _b !== void 0 ? _b : output.headers["x-amz-request-id"],
-        extendedRequestId: output.headers["x-amz-id-2"],
-        cfId: output.headers["x-amz-cf-id"]
-      };
-    };
-    var collectBodyString = (streamBody, context) => (0, smithy_client_8.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
-    var parseBody = (streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_UnauthorizedClientExceptionRes");
+    var de_UnsupportedGrantTypeExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const contents = (0, import_smithy_client.map)({});
+      const data = parsedOutput.body;
+      const doc = (0, import_smithy_client.take)(data, {
+        error: import_smithy_client.expectString,
+        error_description: import_smithy_client.expectString
+      });
+      Object.assign(contents, doc);
+      const exception = new UnsupportedGrantTypeException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...contents
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+    }, "de_UnsupportedGrantTypeExceptionRes");
+    var deserializeMetadata = /* @__PURE__ */ __name((output) => ({
+      httpStatusCode: output.statusCode,
+      requestId: output.headers["x-amzn-requestid"] ?? output.headers["x-amzn-request-id"] ?? output.headers["x-amz-request-id"],
+      extendedRequestId: output.headers["x-amz-id-2"],
+      cfId: output.headers["x-amz-cf-id"]
+    }), "deserializeMetadata");
+    var collectBodyString = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
+    var _ai = "aws_iam";
+    var parseBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
       if (encoded.length) {
         return JSON.parse(encoded);
       }
       return {};
-    });
-    var parseErrorBody = async (errorBody, context) => {
-      var _a;
+    }), "parseBody");
+    var parseErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
       const value = await parseBody(errorBody, context);
-      value.message = (_a = value.message) !== null && _a !== void 0 ? _a : value.Message;
+      value.message = value.message ?? value.Message;
       return value;
-    };
-    var loadRestJsonErrorCode = (output, data) => {
-      const findKey = (object, key) => Object.keys(object).find((k2) => k2.toLowerCase() === key.toLowerCase());
-      const sanitizeErrorCode = (rawValue) => {
+    }, "parseErrorBody");
+    var loadRestJsonErrorCode = /* @__PURE__ */ __name((output, data) => {
+      const findKey = /* @__PURE__ */ __name((object, key) => Object.keys(object).find((k) => k.toLowerCase() === key.toLowerCase()), "findKey");
+      const sanitizeErrorCode = /* @__PURE__ */ __name((rawValue) => {
         let cleanValue = rawValue;
         if (typeof cleanValue === "number") {
           cleanValue = cleanValue.toString();
@@ -33888,7 +32676,7 @@ var require_client_sso_oidc_node = __commonJS({
           cleanValue = cleanValue.split("#")[1];
         }
         return cleanValue;
-      };
+      }, "sanitizeErrorCode");
       const headerKey = findKey(output.headers, "x-amzn-errortype");
       if (headerKey !== void 0) {
         return sanitizeErrorCode(output.headers[headerKey]);
@@ -33899,158 +32687,78 @@ var require_client_sso_oidc_node = __commonJS({
       if (data["__type"] !== void 0) {
         return sanitizeErrorCode(data["__type"]);
       }
+    }, "loadRestJsonErrorCode");
+    var _CreateTokenCommand = class _CreateTokenCommand extends import_smithy_client.Command.classBuilder().ep({
+      ...commonParams
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+      ];
+    }).s("AWSSSOOIDCService", "CreateToken", {}).n("SSOOIDCClient", "CreateTokenCommand").f(CreateTokenRequestFilterSensitiveLog, CreateTokenResponseFilterSensitiveLog).ser(se_CreateTokenCommand).de(de_CreateTokenCommand).build() {
     };
-    var CreateTokenCommand2 = class _CreateTokenCommand extends smithy_client_7.Command {
-      constructor(input) {
-        super();
-        this.input = input;
-      }
-      static getEndpointParameterInstructions() {
-        return {
-          UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
-          Endpoint: { type: "builtInParams", name: "endpoint" },
-          Region: { type: "builtInParams", name: "region" },
-          UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
-        };
-      }
-      resolveMiddleware(clientStack, configuration2, options) {
-        this.middlewareStack.use((0, middleware_serde_1.getSerdePlugin)(configuration2, this.serialize, this.deserialize));
-        this.middlewareStack.use((0, middleware_endpoint_2.getEndpointPlugin)(configuration2, _CreateTokenCommand.getEndpointParameterInstructions()));
-        const stack = clientStack.concat(this.middlewareStack);
-        const { logger } = configuration2;
-        const clientName = "SSOOIDCClient";
-        const commandName = "CreateTokenCommand";
-        const handlerExecutionContext = {
-          logger,
-          clientName,
-          commandName,
-          inputFilterSensitiveLog: (_) => _,
-          outputFilterSensitiveLog: (_) => _,
-          [types_1.SMITHY_CONTEXT_KEY]: {
-            service: "AWSSSOOIDCService",
-            operation: "CreateToken"
-          }
-        };
-        const { requestHandler } = configuration2;
-        return stack.resolve((request) => requestHandler.handle(request.request, options || {}), handlerExecutionContext);
-      }
-      serialize(input, context) {
-        return se_CreateTokenCommand(input, context);
-      }
-      deserialize(output, context) {
-        return de_CreateTokenCommand(output, context);
-      }
+    __name(_CreateTokenCommand, "CreateTokenCommand");
+    var CreateTokenCommand = _CreateTokenCommand;
+    var _CreateTokenWithIAMCommand = class _CreateTokenWithIAMCommand extends import_smithy_client.Command.classBuilder().ep({
+      ...commonParams
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_signing.getAwsAuthPlugin)(config)
+      ];
+    }).s("AWSSSOOIDCService", "CreateTokenWithIAM", {}).n("SSOOIDCClient", "CreateTokenWithIAMCommand").f(CreateTokenWithIAMRequestFilterSensitiveLog, CreateTokenWithIAMResponseFilterSensitiveLog).ser(se_CreateTokenWithIAMCommand).de(de_CreateTokenWithIAMCommand).build() {
     };
-    exports2.CreateTokenCommand = CreateTokenCommand2;
-    var middleware_endpoint_3 = require_dist_cjs41();
-    var middleware_serde_2 = require_dist_cjs40();
-    var smithy_client_10 = require_dist_cjs16();
-    var types_2 = require_dist_cjs();
-    var RegisterClientCommand = class extends smithy_client_10.Command {
-      constructor(input) {
-        super();
-        this.input = input;
-      }
-      static getEndpointParameterInstructions() {
-        return {
-          UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
-          Endpoint: { type: "builtInParams", name: "endpoint" },
-          Region: { type: "builtInParams", name: "region" },
-          UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
-        };
-      }
-      resolveMiddleware(clientStack, configuration2, options) {
-        this.middlewareStack.use((0, middleware_serde_2.getSerdePlugin)(configuration2, this.serialize, this.deserialize));
-        this.middlewareStack.use((0, middleware_endpoint_3.getEndpointPlugin)(configuration2, _RegisterClientCommand.getEndpointParameterInstructions()));
-        const stack = clientStack.concat(this.middlewareStack);
-        const { logger } = configuration2;
-        const clientName = "SSOOIDCClient";
-        const commandName = "RegisterClientCommand";
-        const handlerExecutionContext = {
-          logger,
-          clientName,
-          commandName,
-          inputFilterSensitiveLog: (_) => _,
-          outputFilterSensitiveLog: (_) => _,
-          [types_2.SMITHY_CONTEXT_KEY]: {
-            service: "AWSSSOOIDCService",
-            operation: "RegisterClient"
-          }
-        };
-        const { requestHandler } = configuration2;
-        return stack.resolve((request) => requestHandler.handle(request.request, options || {}), handlerExecutionContext);
-      }
-      serialize(input, context) {
-        return se_RegisterClientCommand(input, context);
-      }
-      deserialize(output, context) {
-        return de_RegisterClientCommand(output, context);
-      }
+    __name(_CreateTokenWithIAMCommand, "CreateTokenWithIAMCommand");
+    var CreateTokenWithIAMCommand = _CreateTokenWithIAMCommand;
+    var _RegisterClientCommand = class _RegisterClientCommand extends import_smithy_client.Command.classBuilder().ep({
+      ...commonParams
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+      ];
+    }).s("AWSSSOOIDCService", "RegisterClient", {}).n("SSOOIDCClient", "RegisterClientCommand").f(void 0, RegisterClientResponseFilterSensitiveLog).ser(se_RegisterClientCommand).de(de_RegisterClientCommand).build() {
     };
-    var middleware_endpoint_4 = require_dist_cjs41();
-    var middleware_serde_3 = require_dist_cjs40();
-    var smithy_client_11 = require_dist_cjs16();
-    var types_3 = require_dist_cjs();
-    var StartDeviceAuthorizationCommand = class extends smithy_client_11.Command {
-      constructor(input) {
-        super();
-        this.input = input;
-      }
-      static getEndpointParameterInstructions() {
-        return {
-          UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
-          Endpoint: { type: "builtInParams", name: "endpoint" },
-          Region: { type: "builtInParams", name: "region" },
-          UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
-        };
-      }
-      resolveMiddleware(clientStack, configuration2, options) {
-        this.middlewareStack.use((0, middleware_serde_3.getSerdePlugin)(configuration2, this.serialize, this.deserialize));
-        this.middlewareStack.use((0, middleware_endpoint_4.getEndpointPlugin)(configuration2, _StartDeviceAuthorizationCommand.getEndpointParameterInstructions()));
-        const stack = clientStack.concat(this.middlewareStack);
-        const { logger } = configuration2;
-        const clientName = "SSOOIDCClient";
-        const commandName = "StartDeviceAuthorizationCommand";
-        const handlerExecutionContext = {
-          logger,
-          clientName,
-          commandName,
-          inputFilterSensitiveLog: (_) => _,
-          outputFilterSensitiveLog: (_) => _,
-          [types_3.SMITHY_CONTEXT_KEY]: {
-            service: "AWSSSOOIDCService",
-            operation: "StartDeviceAuthorization"
-          }
-        };
-        const { requestHandler } = configuration2;
-        return stack.resolve((request) => requestHandler.handle(request.request, options || {}), handlerExecutionContext);
-      }
-      serialize(input, context) {
-        return se_StartDeviceAuthorizationCommand(input, context);
-      }
-      deserialize(output, context) {
-        return de_StartDeviceAuthorizationCommand(output, context);
-      }
+    __name(_RegisterClientCommand, "RegisterClientCommand");
+    var RegisterClientCommand = _RegisterClientCommand;
+    var _StartDeviceAuthorizationCommand = class _StartDeviceAuthorizationCommand extends import_smithy_client.Command.classBuilder().ep({
+      ...commonParams
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+      ];
+    }).s("AWSSSOOIDCService", "StartDeviceAuthorization", {}).n("SSOOIDCClient", "StartDeviceAuthorizationCommand").f(StartDeviceAuthorizationRequestFilterSensitiveLog, void 0).ser(se_StartDeviceAuthorizationCommand).de(de_StartDeviceAuthorizationCommand).build() {
     };
+    __name(_StartDeviceAuthorizationCommand, "StartDeviceAuthorizationCommand");
+    var StartDeviceAuthorizationCommand = _StartDeviceAuthorizationCommand;
     var commands = {
-      CreateTokenCommand: CreateTokenCommand2,
+      CreateTokenCommand,
+      CreateTokenWithIAMCommand,
       RegisterClientCommand,
       StartDeviceAuthorizationCommand
     };
-    var SSOOIDC = class extends SSOOIDCClient2 {
+    var _SSOOIDC = class _SSOOIDC extends SSOOIDCClient {
     };
-    (0, smithy_client_6.createAggregatedClient)(commands, SSOOIDC);
+    __name(_SSOOIDC, "SSOOIDC");
+    var SSOOIDC = _SSOOIDC;
+    (0, import_smithy_client.createAggregatedClient)(commands, SSOOIDC);
+    var import_util_endpoints = require_dist_cjs28();
   }
 });
 
 // ../../node_modules/@aws-sdk/token-providers/dist-cjs/index.js
-var require_dist_cjs53 = __commonJS({
+var require_dist_cjs55 = __commonJS({
   "../../node_modules/@aws-sdk/token-providers/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
     var __hasOwnProp2 = Object.prototype.hasOwnProperty;
     var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
+    var __esm2 = (fn, res) => function __init() {
+      return fn && (res = (0, fn[__getOwnPropNames2(fn)[0]])(fn = 0)), res;
+    };
     var __export2 = (target, all) => {
       for (var name in all)
         __defProp2(target, name, { get: all[name], enumerable: true });
@@ -34063,8 +32771,18 @@ var require_dist_cjs53 = __commonJS({
       }
       return to;
     };
-    var __reExport = (target, mod, secondTarget) => (__copyProps2(target, mod, "default"), secondTarget && __copyProps2(secondTarget, mod, "default"));
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var loadSsoOidc_exports = {};
+    __export2(loadSsoOidc_exports, {
+      CreateTokenCommand: () => import_client_sso_oidc.CreateTokenCommand,
+      SSOOIDCClient: () => import_client_sso_oidc.SSOOIDCClient
+    });
+    var import_client_sso_oidc;
+    var init_loadSsoOidc = __esm2({
+      "src/loadSsoOidc.ts"() {
+        import_client_sso_oidc = require_dist_cjs54();
+      }
+    });
     var src_exports = {};
     __export2(src_exports, {
       fromSso: () => fromSso,
@@ -34072,24 +32790,23 @@ var require_dist_cjs53 = __commonJS({
       nodeProvider: () => nodeProvider
     });
     module2.exports = __toCommonJS2(src_exports);
-    __reExport(src_exports, require_client_sso_oidc_node(), module2.exports);
     var EXPIRE_WINDOW_MS = 5 * 60 * 1e3;
     var REFRESH_MESSAGE = `To refresh this SSO session run 'aws sso login' with the corresponding profile.`;
-    var import_client_sso_oidc_node2 = require_client_sso_oidc_node();
-    var import_client_sso_oidc_node = require_client_sso_oidc_node();
     var ssoOidcClientsHash = {};
-    var getSsoOidcClient = /* @__PURE__ */ __name((ssoRegion) => {
+    var getSsoOidcClient = /* @__PURE__ */ __name(async (ssoRegion) => {
+      const { SSOOIDCClient: SSOOIDCClient2 } = await Promise.resolve().then(() => (init_loadSsoOidc(), loadSsoOidc_exports));
       if (ssoOidcClientsHash[ssoRegion]) {
         return ssoOidcClientsHash[ssoRegion];
       }
-      const ssoOidcClient = new import_client_sso_oidc_node.SSOOIDCClient({ region: ssoRegion });
+      const ssoOidcClient = new SSOOIDCClient2({ region: ssoRegion });
       ssoOidcClientsHash[ssoRegion] = ssoOidcClient;
       return ssoOidcClient;
     }, "getSsoOidcClient");
-    var getNewSsoOidcToken = /* @__PURE__ */ __name((ssoToken, ssoRegion) => {
-      const ssoOidcClient = getSsoOidcClient(ssoRegion);
+    var getNewSsoOidcToken = /* @__PURE__ */ __name(async (ssoToken, ssoRegion) => {
+      const { CreateTokenCommand: CreateTokenCommand2 } = await Promise.resolve().then(() => (init_loadSsoOidc(), loadSsoOidc_exports));
+      const ssoOidcClient = await getSsoOidcClient(ssoRegion);
       return ssoOidcClient.send(
-        new import_client_sso_oidc_node2.CreateTokenCommand({
+        new CreateTokenCommand2({
           clientId: ssoToken.clientId,
           clientSecret: ssoToken.clientSecret,
           refreshToken: ssoToken.refreshToken,
@@ -34121,6 +32838,8 @@ var require_dist_cjs53 = __commonJS({
     }, "writeSSOTokenToFile");
     var lastRefreshAttemptTime = /* @__PURE__ */ new Date(0);
     var fromSso = /* @__PURE__ */ __name((init = {}) => async () => {
+      var _a;
+      (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/token-providers", "fromSso");
       const profiles = await (0, import_shared_ini_file_loader.parseKnownFiles)(init);
       const profileName = (0, import_shared_ini_file_loader.getProfileName)(init);
       const profile = profiles[profileName];
@@ -34195,7 +32914,8 @@ var require_dist_cjs53 = __commonJS({
         return existingToken;
       }
     }, "fromSso");
-    var fromStatic = /* @__PURE__ */ __name(({ token }) => async () => {
+    var fromStatic = /* @__PURE__ */ __name(({ token, logger }) => async () => {
+      logger == null ? void 0 : logger.debug("@aws-sdk/token-providers", "fromStatic");
       if (!token || !token.token) {
         throw new import_property_provider.TokenProviderError(`Please pass a valid token to fromStatic`, false);
       }
@@ -34212,13 +32932,16 @@ var require_dist_cjs53 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-sso/dist-cjs/index.js
-var require_dist_cjs54 = __commonJS({
+var require_dist_cjs56 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-sso/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
     var __hasOwnProp2 = Object.prototype.hasOwnProperty;
     var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
+    var __esm2 = (fn, res) => function __init() {
+      return fn && (res = (0, fn[__getOwnPropNames2(fn)[0]])(fn = 0)), res;
+    };
     var __export2 = (target, all) => {
       for (var name in all)
         __defProp2(target, name, { get: all[name], enumerable: true });
@@ -34232,6 +32955,17 @@ var require_dist_cjs54 = __commonJS({
       return to;
     };
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var loadSso_exports = {};
+    __export2(loadSso_exports, {
+      GetRoleCredentialsCommand: () => import_client_sso.GetRoleCredentialsCommand,
+      SSOClient: () => import_client_sso.SSOClient
+    });
+    var import_client_sso;
+    var init_loadSso = __esm2({
+      "src/loadSso.ts"() {
+        import_client_sso = require_dist_cjs53();
+      }
+    });
     var src_exports = {};
     __export2(src_exports, {
       fromSSO: () => fromSSO,
@@ -34240,8 +32974,7 @@ var require_dist_cjs54 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     var isSsoProfile = /* @__PURE__ */ __name((arg) => arg && (typeof arg.sso_start_url === "string" || typeof arg.sso_account_id === "string" || typeof arg.sso_session === "string" || typeof arg.sso_region === "string" || typeof arg.sso_role_name === "string"), "isSsoProfile");
-    var import_client_sso = require_dist_cjs52();
-    var import_token_providers = require_dist_cjs53();
+    var import_token_providers = require_dist_cjs55();
     var import_property_provider = require_dist_cjs25();
     var import_shared_ini_file_loader = require_dist_cjs36();
     var SHOULD_FAIL_CREDENTIAL_CHAIN = false;
@@ -34252,9 +32985,9 @@ var require_dist_cjs54 = __commonJS({
       ssoRegion,
       ssoRoleName,
       ssoClient,
+      clientConfig,
       profile
     }) => {
-      var _a;
       let token;
       const refreshMessage = `To refresh this SSO session run aws sso login with the corresponding profile.`;
       if (ssoSession) {
@@ -34284,11 +33017,16 @@ var require_dist_cjs54 = __commonJS({
         );
       }
       const { accessToken } = token;
-      const sso = ssoClient || new import_client_sso.SSOClient({ region: ssoRegion });
+      const { SSOClient: SSOClient2, GetRoleCredentialsCommand: GetRoleCredentialsCommand2 } = await Promise.resolve().then(() => (init_loadSso(), loadSso_exports));
+      const sso = ssoClient || new SSOClient2(
+        Object.assign({}, clientConfig ?? {}, {
+          region: (clientConfig == null ? void 0 : clientConfig.region) ?? ssoRegion
+        })
+      );
       let ssoResp;
       try {
         ssoResp = await sso.send(
-          new import_client_sso.GetRoleCredentialsCommand({
+          new GetRoleCredentialsCommand2({
             accountId: ssoAccountId,
             roleName: ssoRoleName,
             accessToken
@@ -34297,8 +33035,7 @@ var require_dist_cjs54 = __commonJS({
       } catch (e) {
         throw import_property_provider.CredentialsProviderError.from(e, SHOULD_FAIL_CREDENTIAL_CHAIN);
       }
-      const { roleCredentials: { accessKeyId, secretAccessKey, sessionToken, expiration } = {} } = ssoResp;
-      const credentialScope = (_a = ssoResp == null ? void 0 : ssoResp.roleCredentials) == null ? void 0 : _a.credentialScope;
+      const { roleCredentials: { accessKeyId, secretAccessKey, sessionToken, expiration, credentialScope } = {} } = ssoResp;
       if (!accessKeyId || !secretAccessKey || !sessionToken || !expiration) {
         throw new import_property_provider.CredentialsProviderError("SSO returns an invalid temporary credential.", SHOULD_FAIL_CREDENTIAL_CHAIN);
       }
@@ -34318,7 +33055,10 @@ Reference: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.ht
       return profile;
     }, "validateSsoProfile");
     var fromSSO = /* @__PURE__ */ __name((init = {}) => async () => {
-      const { ssoStartUrl, ssoAccountId, ssoRegion, ssoRoleName, ssoClient, ssoSession } = init;
+      var _a;
+      (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-sso", "fromSSO");
+      const { ssoStartUrl, ssoAccountId, ssoRegion, ssoRoleName, ssoSession } = init;
+      const { ssoClient } = init;
       const profileName = (0, import_shared_ini_file_loader.getProfileName)(init);
       if (!ssoStartUrl && !ssoAccountId && !ssoRegion && !ssoRoleName && !ssoSession) {
         const profiles = await (0, import_shared_ini_file_loader.parseKnownFiles)(init);
@@ -34350,6 +33090,7 @@ Reference: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.ht
           ssoRegion: sso_region,
           ssoRoleName: sso_role_name,
           ssoClient,
+          clientConfig: init.clientConfig,
           profile: profileName
         });
       } else if (!ssoStartUrl || !ssoAccountId || !ssoRegion || !ssoRoleName) {
@@ -34364,6 +33105,7 @@ Reference: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.ht
           ssoRegion,
           ssoRoleName,
           ssoClient,
+          clientConfig: init.clientConfig,
           profile: profileName
         });
       }
@@ -34371,412 +33113,261 @@ Reference: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.ht
   }
 });
 
-// ../../node_modules/@aws-sdk/credential-provider-process/dist-cjs/index.js
-var require_dist_cjs55 = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-process/dist-cjs/index.js"(exports2, module2) {
-    var __defProp2 = Object.defineProperty;
-    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-    var __export2 = (target, all) => {
-      for (var name in all)
-        __defProp2(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps2 = (to, from, except, desc) => {
-      if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames2(from))
-          if (!__hasOwnProp2.call(to, key) && key !== except)
-            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var src_exports = {};
-    __export2(src_exports, {
-      fromProcess: () => fromProcess
-    });
-    module2.exports = __toCommonJS2(src_exports);
-    var import_shared_ini_file_loader = require_dist_cjs36();
-    var import_property_provider = require_dist_cjs25();
-    var import_child_process = require("child_process");
-    var import_util = require("util");
-    var getValidatedProcessCredentials = /* @__PURE__ */ __name((profileName, data) => {
-      if (data.Version !== 1) {
-        throw Error(`Profile ${profileName} credential_process did not return Version 1.`);
-      }
-      if (data.AccessKeyId === void 0 || data.SecretAccessKey === void 0) {
-        throw Error(`Profile ${profileName} credential_process returned invalid credentials.`);
-      }
-      if (data.Expiration) {
-        const currentTime = /* @__PURE__ */ new Date();
-        const expireTime = new Date(data.Expiration);
-        if (expireTime < currentTime) {
-          throw Error(`Profile ${profileName} credential_process returned expired credentials.`);
-        }
-      }
+// ../../node_modules/@aws-sdk/client-sts/dist-cjs/auth/httpAuthSchemeProvider.js
+var require_httpAuthSchemeProvider = __commonJS({
+  "../../node_modules/@aws-sdk/client-sts/dist-cjs/auth/httpAuthSchemeProvider.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.resolveHttpAuthSchemeConfig = exports2.resolveStsAuthConfig = exports2.defaultSTSHttpAuthSchemeProvider = exports2.defaultSTSHttpAuthSchemeParametersProvider = void 0;
+    var core_1 = require_dist_cjs44();
+    var util_middleware_1 = require_dist_cjs20();
+    var STSClient_1 = require_STSClient();
+    var defaultSTSHttpAuthSchemeParametersProvider = async (config, context, input) => {
       return {
-        accessKeyId: data.AccessKeyId,
-        secretAccessKey: data.SecretAccessKey,
-        ...data.SessionToken && { sessionToken: data.SessionToken },
-        ...data.Expiration && { expiration: new Date(data.Expiration) },
-        ...data.CredentialScope && { credentialScope: data.CredentialScope }
+        operation: (0, util_middleware_1.getSmithyContext)(context).operation,
+        region: await (0, util_middleware_1.normalizeProvider)(config.region)() || (() => {
+          throw new Error("expected `region` to be configured for `aws.auth#sigv4`");
+        })()
       };
-    }, "getValidatedProcessCredentials");
-    var resolveProcessCredentials = /* @__PURE__ */ __name(async (profileName, profiles) => {
-      const profile = profiles[profileName];
-      if (profiles[profileName]) {
-        const credentialProcess = profile["credential_process"];
-        if (credentialProcess !== void 0) {
-          const execPromise = (0, import_util.promisify)(import_child_process.exec);
-          try {
-            const { stdout } = await execPromise(credentialProcess);
-            let data;
-            try {
-              data = JSON.parse(stdout.trim());
-            } catch {
-              throw Error(`Profile ${profileName} credential_process returned invalid JSON.`);
-            }
-            return getValidatedProcessCredentials(profileName, data);
-          } catch (error2) {
-            throw new import_property_provider.CredentialsProviderError(error2.message);
+    };
+    exports2.defaultSTSHttpAuthSchemeParametersProvider = defaultSTSHttpAuthSchemeParametersProvider;
+    function createAwsAuthSigv4HttpAuthOption(authParameters) {
+      return {
+        schemeId: "aws.auth#sigv4",
+        signingProperties: {
+          name: "sts",
+          region: authParameters.region
+        },
+        propertiesExtractor: (config, context) => ({
+          signingProperties: {
+            config,
+            context
           }
-        } else {
-          throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} did not contain credential_process.`);
+        })
+      };
+    }
+    function createSmithyApiNoAuthHttpAuthOption(authParameters) {
+      return {
+        schemeId: "smithy.api#noAuth"
+      };
+    }
+    var defaultSTSHttpAuthSchemeProvider = (authParameters) => {
+      const options = [];
+      switch (authParameters.operation) {
+        case "AssumeRoleWithSAML": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
         }
-      } else {
-        throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} could not be found in shared credentials file.`);
+        case "AssumeRoleWithWebIdentity": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        default: {
+          options.push(createAwsAuthSigv4HttpAuthOption(authParameters));
+        }
       }
-    }, "resolveProcessCredentials");
-    var fromProcess = /* @__PURE__ */ __name((init = {}) => async () => {
-      const profiles = await (0, import_shared_ini_file_loader.parseKnownFiles)(init);
-      return resolveProcessCredentials((0, import_shared_ini_file_loader.getProfileName)(init), profiles);
-    }, "fromProcess");
+      return options;
+    };
+    exports2.defaultSTSHttpAuthSchemeProvider = defaultSTSHttpAuthSchemeProvider;
+    var resolveStsAuthConfig = (input) => ({
+      ...input,
+      stsClientCtor: STSClient_1.STSClient
+    });
+    exports2.resolveStsAuthConfig = resolveStsAuthConfig;
+    var resolveHttpAuthSchemeConfig = (config) => {
+      const config_0 = (0, exports2.resolveStsAuthConfig)(config);
+      const config_1 = (0, core_1.resolveAwsSdkSigV4Config)(config_0);
+      return {
+        ...config_1
+      };
+    };
+    exports2.resolveHttpAuthSchemeConfig = resolveHttpAuthSchemeConfig;
   }
 });
 
-// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromWebToken.js
-var require_fromWebToken = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromWebToken.js"(exports2) {
+// ../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/EndpointParameters.js
+var require_EndpointParameters = __commonJS({
+  "../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/EndpointParameters.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.fromWebToken = void 0;
-    var property_provider_1 = require_dist_cjs25();
-    var fromWebToken2 = (init) => () => {
-      const { roleArn, roleSessionName, webIdentityToken, providerId, policyArns, policy, durationSeconds, roleAssumerWithWebIdentity } = init;
-      if (!roleAssumerWithWebIdentity) {
-        throw new property_provider_1.CredentialsProviderError(`Role Arn '${roleArn}' needs to be assumed with web identity, but no role assumption callback was provided.`, false);
-      }
-      return roleAssumerWithWebIdentity({
-        RoleArn: roleArn,
-        RoleSessionName: roleSessionName !== null && roleSessionName !== void 0 ? roleSessionName : `aws-sdk-js-session-${Date.now()}`,
-        WebIdentityToken: webIdentityToken,
-        ProviderId: providerId,
-        PolicyArns: policyArns,
-        Policy: policy,
-        DurationSeconds: durationSeconds
-      });
+    exports2.commonParams = exports2.resolveClientEndpointParameters = void 0;
+    var resolveClientEndpointParameters = (options) => {
+      return {
+        ...options,
+        useDualstackEndpoint: options.useDualstackEndpoint ?? false,
+        useFipsEndpoint: options.useFipsEndpoint ?? false,
+        useGlobalEndpoint: options.useGlobalEndpoint ?? false,
+        defaultSigningName: "sts"
+      };
     };
-    exports2.fromWebToken = fromWebToken2;
+    exports2.resolveClientEndpointParameters = resolveClientEndpointParameters;
+    exports2.commonParams = {
+      UseGlobalEndpoint: { type: "builtInParams", name: "useGlobalEndpoint" },
+      UseFIPS: { type: "builtInParams", name: "useFipsEndpoint" },
+      Endpoint: { type: "builtInParams", name: "endpoint" },
+      Region: { type: "builtInParams", name: "region" },
+      UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
+    };
   }
 });
 
-// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromTokenFile.js
-var require_fromTokenFile = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromTokenFile.js"(exports2) {
+// ../../node_modules/@aws-sdk/client-sts/package.json
+var require_package4 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sts/package.json"(exports2, module2) {
+    module2.exports = {
+      name: "@aws-sdk/client-sts",
+      description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
+      version: "3.511.0",
+      scripts: {
+        build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
+        "build:cjs": "node ../../scripts/compilation/inline client-sts",
+        "build:es": "tsc -p tsconfig.es.json",
+        "build:include:deps": "lerna run --scope $npm_package_name --include-dependencies build",
+        "build:types": "rimraf ./dist-types tsconfig.types.tsbuildinfo && tsc -p tsconfig.types.json",
+        "build:types:downlevel": "downlevel-dts dist-types dist-types/ts3.4",
+        clean: "rimraf ./dist-* && rimraf *.tsbuildinfo",
+        "extract:docs": "api-extractor run --local",
+        "generate:client": "node ../../scripts/generate-clients/single-service --solo sts",
+        test: "yarn test:unit",
+        "test:unit": "jest"
+      },
+      main: "./dist-cjs/index.js",
+      types: "./dist-types/index.d.ts",
+      module: "./dist-es/index.js",
+      sideEffects: false,
+      dependencies: {
+        "@aws-crypto/sha256-browser": "3.0.0",
+        "@aws-crypto/sha256-js": "3.0.0",
+        "@aws-sdk/core": "3.511.0",
+        "@aws-sdk/middleware-host-header": "3.511.0",
+        "@aws-sdk/middleware-logger": "3.511.0",
+        "@aws-sdk/middleware-recursion-detection": "3.511.0",
+        "@aws-sdk/middleware-user-agent": "3.511.0",
+        "@aws-sdk/region-config-resolver": "3.511.0",
+        "@aws-sdk/types": "3.511.0",
+        "@aws-sdk/util-endpoints": "3.511.0",
+        "@aws-sdk/util-user-agent-browser": "3.511.0",
+        "@aws-sdk/util-user-agent-node": "3.511.0",
+        "@smithy/config-resolver": "^2.1.1",
+        "@smithy/core": "^1.3.1",
+        "@smithy/fetch-http-handler": "^2.4.1",
+        "@smithy/hash-node": "^2.1.1",
+        "@smithy/invalid-dependency": "^2.1.1",
+        "@smithy/middleware-content-length": "^2.1.1",
+        "@smithy/middleware-endpoint": "^2.4.1",
+        "@smithy/middleware-retry": "^2.1.1",
+        "@smithy/middleware-serde": "^2.1.1",
+        "@smithy/middleware-stack": "^2.1.1",
+        "@smithy/node-config-provider": "^2.2.1",
+        "@smithy/node-http-handler": "^2.3.1",
+        "@smithy/protocol-http": "^3.1.1",
+        "@smithy/smithy-client": "^2.3.1",
+        "@smithy/types": "^2.9.1",
+        "@smithy/url-parser": "^2.1.1",
+        "@smithy/util-base64": "^2.1.1",
+        "@smithy/util-body-length-browser": "^2.1.1",
+        "@smithy/util-body-length-node": "^2.2.1",
+        "@smithy/util-defaults-mode-browser": "^2.1.1",
+        "@smithy/util-defaults-mode-node": "^2.1.1",
+        "@smithy/util-endpoints": "^1.1.1",
+        "@smithy/util-middleware": "^2.1.1",
+        "@smithy/util-retry": "^2.1.1",
+        "@smithy/util-utf8": "^2.1.1",
+        "fast-xml-parser": "4.2.5",
+        tslib: "^2.5.0"
+      },
+      devDependencies: {
+        "@smithy/service-client-documentation-generator": "^2.1.1",
+        "@tsconfig/node14": "1.0.3",
+        "@types/node": "^14.14.31",
+        concurrently: "7.0.0",
+        "downlevel-dts": "0.10.1",
+        rimraf: "3.0.2",
+        typescript: "~4.9.5"
+      },
+      engines: {
+        node: ">=14.0.0"
+      },
+      typesVersions: {
+        "<4.0": {
+          "dist-types/*": [
+            "dist-types/ts3.4/*"
+          ]
+        }
+      },
+      files: [
+        "dist-*/**"
+      ],
+      author: {
+        name: "AWS SDK for JavaScript Team",
+        url: "https://aws.amazon.com/javascript/"
+      },
+      license: "Apache-2.0",
+      peerDependencies: {
+        "@aws-sdk/credential-provider-node": "^3.511.0"
+      },
+      browser: {
+        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
+      },
+      "react-native": {
+        "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.native"
+      },
+      homepage: "https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sts",
+      repository: {
+        type: "git",
+        url: "https://github.com/aws/aws-sdk-js-v3.git",
+        directory: "clients/client-sts"
+      }
+    };
+  }
+});
+
+// ../../node_modules/@aws-sdk/client-sts/dist-cjs/credentialDefaultProvider.js
+var require_credentialDefaultProvider2 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sts/dist-cjs/credentialDefaultProvider.js"(exports2) {
     "use strict";
+    var __createBinding4 = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() {
+          return m[k];
+        } };
+      }
+      Object.defineProperty(o, k2, desc);
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault2 = exports2 && exports2.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar4 = exports2 && exports2.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding4(result, mod, k);
+      }
+      __setModuleDefault2(result, mod);
+      return result;
+    };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.fromTokenFile = void 0;
-    var property_provider_1 = require_dist_cjs25();
-    var fs_1 = require("fs");
-    var fromWebToken_1 = require_fromWebToken();
-    var ENV_TOKEN_FILE = "AWS_WEB_IDENTITY_TOKEN_FILE";
-    var ENV_ROLE_ARN = "AWS_ROLE_ARN";
-    var ENV_ROLE_SESSION_NAME = "AWS_ROLE_SESSION_NAME";
-    var fromTokenFile2 = (init = {}) => async () => {
-      var _a, _b, _c;
-      const webIdentityTokenFile = (_a = init === null || init === void 0 ? void 0 : init.webIdentityTokenFile) !== null && _a !== void 0 ? _a : process.env[ENV_TOKEN_FILE];
-      const roleArn = (_b = init === null || init === void 0 ? void 0 : init.roleArn) !== null && _b !== void 0 ? _b : process.env[ENV_ROLE_ARN];
-      const roleSessionName = (_c = init === null || init === void 0 ? void 0 : init.roleSessionName) !== null && _c !== void 0 ? _c : process.env[ENV_ROLE_SESSION_NAME];
-      if (!webIdentityTokenFile || !roleArn) {
-        throw new property_provider_1.CredentialsProviderError("Web identity configuration not specified");
-      }
-      return (0, fromWebToken_1.fromWebToken)({
-        ...init,
-        webIdentityToken: (0, fs_1.readFileSync)(webIdentityTokenFile, { encoding: "ascii" }),
-        roleArn,
-        roleSessionName
-      })();
+    exports2.defaultProvider = void 0;
+    exports2.defaultProvider = (input) => {
+      return () => Promise.resolve().then(() => __importStar4(require_dist_cjs61())).then(({ defaultProvider }) => defaultProvider(input)());
     };
-    exports2.fromTokenFile = fromTokenFile2;
-  }
-});
-
-// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/index.js
-var require_dist_cjs56 = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/index.js"(exports2, module2) {
-    var __defProp2 = Object.defineProperty;
-    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-    var __copyProps2 = (to, from, except, desc) => {
-      if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames2(from))
-          if (!__hasOwnProp2.call(to, key) && key !== except)
-            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __reExport = (target, mod, secondTarget) => (__copyProps2(target, mod, "default"), secondTarget && __copyProps2(secondTarget, mod, "default"));
-    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var src_exports = {};
-    module2.exports = __toCommonJS2(src_exports);
-    __reExport(src_exports, require_fromTokenFile(), module2.exports);
-    __reExport(src_exports, require_fromWebToken(), module2.exports);
-  }
-});
-
-// ../../node_modules/@aws-sdk/credential-provider-ini/dist-cjs/index.js
-var require_dist_cjs57 = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-ini/dist-cjs/index.js"(exports2, module2) {
-    var __defProp2 = Object.defineProperty;
-    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-    var __export2 = (target, all) => {
-      for (var name in all)
-        __defProp2(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps2 = (to, from, except, desc) => {
-      if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames2(from))
-          if (!__hasOwnProp2.call(to, key) && key !== except)
-            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var src_exports = {};
-    __export2(src_exports, {
-      fromIni: () => fromIni
-    });
-    module2.exports = __toCommonJS2(src_exports);
-    var import_shared_ini_file_loader = require_dist_cjs36();
-    var import_credential_provider_env = require_dist_cjs46();
-    var import_credential_provider_imds = require_dist_cjs45();
-    var import_property_provider = require_dist_cjs25();
-    var resolveCredentialSource = /* @__PURE__ */ __name((credentialSource, profileName) => {
-      const sourceProvidersMap = {
-        EcsContainer: import_credential_provider_imds.fromContainerMetadata,
-        Ec2InstanceMetadata: import_credential_provider_imds.fromInstanceMetadata,
-        Environment: import_credential_provider_env.fromEnv
-      };
-      if (credentialSource in sourceProvidersMap) {
-        return sourceProvidersMap[credentialSource]();
-      } else {
-        throw new import_property_provider.CredentialsProviderError(
-          `Unsupported credential source in profile ${profileName}. Got ${credentialSource}, expected EcsContainer or Ec2InstanceMetadata or Environment.`
-        );
-      }
-    }, "resolveCredentialSource");
-    var isAssumeRoleProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.role_arn === "string" && ["undefined", "string"].indexOf(typeof arg.role_session_name) > -1 && ["undefined", "string"].indexOf(typeof arg.external_id) > -1 && ["undefined", "string"].indexOf(typeof arg.mfa_serial) > -1 && (isAssumeRoleWithSourceProfile(arg) || isAssumeRoleWithProviderProfile(arg)), "isAssumeRoleProfile");
-    var isAssumeRoleWithSourceProfile = /* @__PURE__ */ __name((arg) => typeof arg.source_profile === "string" && typeof arg.credential_source === "undefined", "isAssumeRoleWithSourceProfile");
-    var isAssumeRoleWithProviderProfile = /* @__PURE__ */ __name((arg) => typeof arg.credential_source === "string" && typeof arg.source_profile === "undefined", "isAssumeRoleWithProviderProfile");
-    var resolveAssumeRoleCredentials = /* @__PURE__ */ __name(async (profileName, profiles, options, visitedProfiles = {}) => {
-      const data = profiles[profileName];
-      if (!options.roleAssumer) {
-        throw new import_property_provider.CredentialsProviderError(
-          `Profile ${profileName} requires a role to be assumed, but no role assumption callback was provided.`,
-          false
-        );
-      }
-      const { source_profile } = data;
-      if (source_profile && source_profile in visitedProfiles) {
-        throw new import_property_provider.CredentialsProviderError(
-          `Detected a cycle attempting to resolve credentials for profile ${(0, import_shared_ini_file_loader.getProfileName)(options)}. Profiles visited: ` + Object.keys(visitedProfiles).join(", "),
-          false
-        );
-      }
-      const sourceCredsProvider = source_profile ? resolveProfileData(source_profile, profiles, options, {
-        ...visitedProfiles,
-        [source_profile]: true
-      }) : resolveCredentialSource(data.credential_source, profileName)();
-      const params = {
-        RoleArn: data.role_arn,
-        RoleSessionName: data.role_session_name || `aws-sdk-js-${Date.now()}`,
-        ExternalId: data.external_id,
-        DurationSeconds: parseInt(data.duration_seconds || "3600", 10)
-      };
-      const { mfa_serial } = data;
-      if (mfa_serial) {
-        if (!options.mfaCodeProvider) {
-          throw new import_property_provider.CredentialsProviderError(
-            `Profile ${profileName} requires multi-factor authentication, but no MFA code callback was provided.`,
-            false
-          );
-        }
-        params.SerialNumber = mfa_serial;
-        params.TokenCode = await options.mfaCodeProvider(mfa_serial);
-      }
-      const sourceCreds = await sourceCredsProvider;
-      return options.roleAssumer(sourceCreds, params);
-    }, "resolveAssumeRoleCredentials");
-    var import_credential_provider_process = require_dist_cjs55();
-    var isProcessProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.credential_process === "string", "isProcessProfile");
-    var resolveProcessCredentials = /* @__PURE__ */ __name(async (options, profile) => (0, import_credential_provider_process.fromProcess)({
-      ...options,
-      profile
-    })(), "resolveProcessCredentials");
-    var import_credential_provider_sso = require_dist_cjs54();
-    var resolveSsoCredentials = /* @__PURE__ */ __name((data) => {
-      const { sso_start_url, sso_account_id, sso_session, sso_region, sso_role_name } = (0, import_credential_provider_sso.validateSsoProfile)(data);
-      return (0, import_credential_provider_sso.fromSSO)({
-        ssoStartUrl: sso_start_url,
-        ssoAccountId: sso_account_id,
-        ssoSession: sso_session,
-        ssoRegion: sso_region,
-        ssoRoleName: sso_role_name
-      })();
-    }, "resolveSsoCredentials");
-    var isStaticCredsProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.aws_access_key_id === "string" && typeof arg.aws_secret_access_key === "string" && ["undefined", "string"].indexOf(typeof arg.aws_session_token) > -1, "isStaticCredsProfile");
-    var resolveStaticCredentials = /* @__PURE__ */ __name((profile) => Promise.resolve({
-      accessKeyId: profile.aws_access_key_id,
-      secretAccessKey: profile.aws_secret_access_key,
-      sessionToken: profile.aws_session_token,
-      credentialScope: profile.aws_credential_scope
-    }), "resolveStaticCredentials");
-    var import_credential_provider_web_identity = require_dist_cjs56();
-    var isWebIdentityProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.web_identity_token_file === "string" && typeof arg.role_arn === "string" && ["undefined", "string"].indexOf(typeof arg.role_session_name) > -1, "isWebIdentityProfile");
-    var resolveWebIdentityCredentials = /* @__PURE__ */ __name(async (profile, options) => (0, import_credential_provider_web_identity.fromTokenFile)({
-      webIdentityTokenFile: profile.web_identity_token_file,
-      roleArn: profile.role_arn,
-      roleSessionName: profile.role_session_name,
-      roleAssumerWithWebIdentity: options.roleAssumerWithWebIdentity
-    })(), "resolveWebIdentityCredentials");
-    var resolveProfileData = /* @__PURE__ */ __name(async (profileName, profiles, options, visitedProfiles = {}) => {
-      const data = profiles[profileName];
-      if (Object.keys(visitedProfiles).length > 0 && isStaticCredsProfile(data)) {
-        return resolveStaticCredentials(data);
-      }
-      if (isAssumeRoleProfile(data)) {
-        return resolveAssumeRoleCredentials(profileName, profiles, options, visitedProfiles);
-      }
-      if (isStaticCredsProfile(data)) {
-        return resolveStaticCredentials(data);
-      }
-      if (isWebIdentityProfile(data)) {
-        return resolveWebIdentityCredentials(data, options);
-      }
-      if (isProcessProfile(data)) {
-        return resolveProcessCredentials(options, profileName);
-      }
-      if ((0, import_credential_provider_sso.isSsoProfile)(data)) {
-        return resolveSsoCredentials(data);
-      }
-      throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} could not be found or parsed in shared credentials file.`);
-    }, "resolveProfileData");
-    var fromIni = /* @__PURE__ */ __name((init = {}) => async () => {
-      const profiles = await (0, import_shared_ini_file_loader.parseKnownFiles)(init);
-      return resolveProfileData((0, import_shared_ini_file_loader.getProfileName)(init), profiles, init);
-    }, "fromIni");
-  }
-});
-
-// ../../node_modules/@aws-sdk/credential-provider-node/dist-cjs/index.js
-var require_dist_cjs58 = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-node/dist-cjs/index.js"(exports2, module2) {
-    var __create2 = Object.create;
-    var __defProp2 = Object.defineProperty;
-    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __getProtoOf2 = Object.getPrototypeOf;
-    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-    var __export2 = (target, all) => {
-      for (var name in all)
-        __defProp2(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps2 = (to, from, except, desc) => {
-      if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames2(from))
-          if (!__hasOwnProp2.call(to, key) && key !== except)
-            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM2 = (mod, isNodeMode, target) => (target = mod != null ? __create2(__getProtoOf2(mod)) : {}, __copyProps2(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var src_exports = {};
-    __export2(src_exports, {
-      credentialsTreatedAsExpired: () => credentialsTreatedAsExpired,
-      credentialsWillNeedRefresh: () => credentialsWillNeedRefresh,
-      defaultProvider: () => defaultProvider
-    });
-    module2.exports = __toCommonJS2(src_exports);
-    var import_shared_ini_file_loader = require_dist_cjs36();
-    var import_property_provider = require_dist_cjs25();
-    var ENV_IMDS_DISABLED = "AWS_EC2_METADATA_DISABLED";
-    var remoteProvider = /* @__PURE__ */ __name(async (init) => {
-      const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs45()));
-      if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
-        return fromContainerMetadata(init);
-      }
-      if (process.env[ENV_IMDS_DISABLED]) {
-        return async () => {
-          throw new import_property_provider.CredentialsProviderError("EC2 Instance Metadata Service access disabled");
-        };
-      }
-      return fromInstanceMetadata(init);
-    }, "remoteProvider");
-    var defaultProvider = /* @__PURE__ */ __name((init = {}) => (0, import_property_provider.memoize)(
-      (0, import_property_provider.chain)(
-        ...init.profile || process.env[import_shared_ini_file_loader.ENV_PROFILE] ? [] : [
-          async () => {
-            const { fromEnv } = await Promise.resolve().then(() => __toESM2(require_dist_cjs46()));
-            return fromEnv()();
-          }
-        ],
-        async () => {
-          const { fromSSO } = await Promise.resolve().then(() => __toESM2(require_dist_cjs54()));
-          return fromSSO(init)();
-        },
-        async () => {
-          const { fromIni } = await Promise.resolve().then(() => __toESM2(require_dist_cjs57()));
-          return fromIni(init)();
-        },
-        async () => {
-          const { fromProcess } = await Promise.resolve().then(() => __toESM2(require_dist_cjs55()));
-          return fromProcess(init)();
-        },
-        async () => {
-          const { fromTokenFile: fromTokenFile2 } = await Promise.resolve().then(() => __toESM2(require_dist_cjs56()));
-          return fromTokenFile2(init)();
-        },
-        async () => {
-          return (await remoteProvider(init))();
-        },
-        async () => {
-          throw new import_property_provider.CredentialsProviderError("Could not load credentials from any providers", false);
-        }
-      ),
-      credentialsTreatedAsExpired,
-      credentialsWillNeedRefresh
-    ), "defaultProvider");
-    var credentialsWillNeedRefresh = /* @__PURE__ */ __name((credentials) => (credentials == null ? void 0 : credentials.expiration) !== void 0, "credentialsWillNeedRefresh");
-    var credentialsTreatedAsExpired = /* @__PURE__ */ __name((credentials) => (credentials == null ? void 0 : credentials.expiration) !== void 0 && credentials.expiration.getTime() - Date.now() < 3e5, "credentialsTreatedAsExpired");
   }
 });
 
 // ../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/ruleset.js
-var require_ruleset2 = __commonJS({
+var require_ruleset3 = __commonJS({
   "../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/ruleset.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -34823,13 +33414,13 @@ var require_ruleset2 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/endpointResolver.js
-var require_endpointResolver2 = __commonJS({
+var require_endpointResolver3 = __commonJS({
   "../../node_modules/@aws-sdk/client-sts/dist-cjs/endpoint/endpointResolver.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.defaultEndpointResolver = void 0;
     var util_endpoints_1 = require_dist_cjs27();
-    var ruleset_1 = require_ruleset2();
+    var ruleset_1 = require_ruleset3();
     var defaultEndpointResolver = (endpointParams, context = {}) => {
       return (0, util_endpoints_1.resolveEndpoint)(ruleset_1.ruleSet, {
         endpointParams,
@@ -34841,7 +33432,7 @@ var require_endpointResolver2 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sts/dist-cjs/runtimeConfig.shared.js
-var require_runtimeConfig_shared2 = __commonJS({
+var require_runtimeConfig_shared3 = __commonJS({
   "../../node_modules/@aws-sdk/client-sts/dist-cjs/runtimeConfig.shared.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -34853,7 +33444,7 @@ var require_runtimeConfig_shared2 = __commonJS({
     var util_base64_1 = require_dist_cjs10();
     var util_utf8_1 = require_dist_cjs11();
     var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider();
-    var endpointResolver_1 = require_endpointResolver2();
+    var endpointResolver_1 = require_endpointResolver3();
     var getRuntimeConfig = (config) => {
       return {
         apiVersion: "2011-06-15",
@@ -34887,28 +33478,27 @@ var require_runtimeConfig_shared2 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sts/dist-cjs/runtimeConfig.js
-var require_runtimeConfig2 = __commonJS({
+var require_runtimeConfig3 = __commonJS({
   "../../node_modules/@aws-sdk/client-sts/dist-cjs/runtimeConfig.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es62(), __toCommonJS(tslib_es6_exports2));
-    var package_json_1 = tslib_1.__importDefault(require_package2());
-    var defaultStsRoleAssumers_1 = require_defaultStsRoleAssumers();
+    var package_json_1 = tslib_1.__importDefault(require_package4());
+    var credentialDefaultProvider_1 = require_credentialDefaultProvider2();
     var core_1 = require_dist_cjs44();
-    var credential_provider_node_1 = require_dist_cjs58();
-    var util_user_agent_node_1 = require_dist_cjs47();
+    var util_user_agent_node_1 = require_dist_cjs48();
     var config_resolver_1 = require_dist_cjs30();
     var core_2 = require_dist_cjs43();
-    var hash_node_1 = require_dist_cjs48();
+    var hash_node_1 = require_dist_cjs49();
     var middleware_retry_1 = require_dist_cjs35();
     var node_config_provider_1 = require_dist_cjs37();
     var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs49();
+    var util_body_length_node_1 = require_dist_cjs50();
     var util_retry_1 = require_dist_cjs34();
-    var runtimeConfig_shared_1 = require_runtimeConfig_shared2();
+    var runtimeConfig_shared_1 = require_runtimeConfig_shared3();
     var smithy_client_1 = require_dist_cjs16();
-    var util_defaults_mode_node_1 = require_dist_cjs50();
+    var util_defaults_mode_node_1 = require_dist_cjs51();
     var smithy_client_2 = require_dist_cjs16();
     var getRuntimeConfig = (config) => {
       (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
@@ -34922,12 +33512,12 @@ var require_runtimeConfig2 = __commonJS({
         runtime: "node",
         defaultsMode,
         bodyLengthChecker: config?.bodyLengthChecker ?? util_body_length_node_1.calculateBodyLength,
-        credentialDefaultProvider: config?.credentialDefaultProvider ?? (0, defaultStsRoleAssumers_1.decorateDefaultCredentialProvider)(credential_provider_node_1.defaultProvider),
+        credentialDefaultProvider: config?.credentialDefaultProvider ?? credentialDefaultProvider_1.defaultProvider,
         defaultUserAgentProvider: config?.defaultUserAgentProvider ?? (0, util_user_agent_node_1.defaultUserAgent)({ serviceId: clientSharedValues.serviceId, clientVersion: package_json_1.default.version }),
         httpAuthSchemes: config?.httpAuthSchemes ?? [
           {
             schemeId: "aws.auth#sigv4",
-            identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4") || (async (idProps) => await (0, defaultStsRoleAssumers_1.decorateDefaultCredentialProvider)(credential_provider_node_1.defaultProvider)(idProps?.__config || {})()),
+            identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4") || (async (idProps) => await (0, credentialDefaultProvider_1.defaultProvider)(idProps?.__config || {})()),
             signer: new core_1.AwsSdkSigV4Signer()
           },
           {
@@ -35007,7 +33597,7 @@ var require_runtimeExtensions = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveRuntimeExtensions = void 0;
-    var region_config_resolver_1 = require_dist_cjs51();
+    var region_config_resolver_1 = require_dist_cjs52();
     var protocol_http_1 = require_dist_cjs2();
     var smithy_client_1 = require_dist_cjs16();
     var httpAuthExtensionConfiguration_1 = require_httpAuthExtensionConfiguration();
@@ -35053,7 +33643,7 @@ var require_STSClient = __commonJS({
     } });
     var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider();
     var EndpointParameters_1 = require_EndpointParameters();
-    var runtimeConfig_1 = require_runtimeConfig2();
+    var runtimeConfig_1 = require_runtimeConfig3();
     var runtimeExtensions_1 = require_runtimeExtensions();
     var STSClient2 = class extends smithy_client_1.Client {
       constructor(...[configuration2]) {
@@ -35097,7 +33687,7 @@ var require_STSClient = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sts/dist-cjs/index.js
-var require_dist_cjs59 = __commonJS({
+var require_dist_cjs57 = __commonJS({
   "../../node_modules/@aws-sdk/client-sts/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -35121,114 +33711,1241 @@ var require_dist_cjs59 = __commonJS({
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
     var src_exports = {};
     __export2(src_exports, {
+      AssumeRoleCommand: () => AssumeRoleCommand,
+      AssumeRoleResponseFilterSensitiveLog: () => AssumeRoleResponseFilterSensitiveLog,
       AssumeRoleWithSAMLCommand: () => AssumeRoleWithSAMLCommand,
-      ClientInputEndpointParameters: () => import_EndpointParameters7.ClientInputEndpointParameters,
+      AssumeRoleWithSAMLRequestFilterSensitiveLog: () => AssumeRoleWithSAMLRequestFilterSensitiveLog,
+      AssumeRoleWithSAMLResponseFilterSensitiveLog: () => AssumeRoleWithSAMLResponseFilterSensitiveLog,
+      AssumeRoleWithWebIdentityCommand: () => AssumeRoleWithWebIdentityCommand,
+      AssumeRoleWithWebIdentityRequestFilterSensitiveLog: () => AssumeRoleWithWebIdentityRequestFilterSensitiveLog,
+      AssumeRoleWithWebIdentityResponseFilterSensitiveLog: () => AssumeRoleWithWebIdentityResponseFilterSensitiveLog,
+      ClientInputEndpointParameters: () => import_EndpointParameters9.ClientInputEndpointParameters,
+      CredentialsFilterSensitiveLog: () => CredentialsFilterSensitiveLog,
       DecodeAuthorizationMessageCommand: () => DecodeAuthorizationMessageCommand,
+      ExpiredTokenException: () => ExpiredTokenException,
       GetAccessKeyInfoCommand: () => GetAccessKeyInfoCommand,
       GetCallerIdentityCommand: () => GetCallerIdentityCommand,
       GetFederationTokenCommand: () => GetFederationTokenCommand,
+      GetFederationTokenResponseFilterSensitiveLog: () => GetFederationTokenResponseFilterSensitiveLog,
       GetSessionTokenCommand: () => GetSessionTokenCommand,
+      GetSessionTokenResponseFilterSensitiveLog: () => GetSessionTokenResponseFilterSensitiveLog,
+      IDPCommunicationErrorException: () => IDPCommunicationErrorException,
+      IDPRejectedClaimException: () => IDPRejectedClaimException,
+      InvalidAuthorizationMessageException: () => InvalidAuthorizationMessageException,
+      InvalidIdentityTokenException: () => InvalidIdentityTokenException,
+      MalformedPolicyDocumentException: () => MalformedPolicyDocumentException,
+      PackedPolicyTooLargeException: () => PackedPolicyTooLargeException,
+      RegionDisabledException: () => RegionDisabledException,
       RuntimeExtension: () => import_runtimeExtensions.RuntimeExtension,
       STS: () => STS,
-      STSServiceException: () => import_STSServiceException.STSServiceException,
+      STSServiceException: () => STSServiceException,
       decorateDefaultCredentialProvider: () => decorateDefaultCredentialProvider,
-      getDefaultRoleAssumer: () => getDefaultRoleAssumer,
-      getDefaultRoleAssumerWithWebIdentity: () => getDefaultRoleAssumerWithWebIdentity
+      getDefaultRoleAssumer: () => getDefaultRoleAssumer2,
+      getDefaultRoleAssumerWithWebIdentity: () => getDefaultRoleAssumerWithWebIdentity2
     });
     module2.exports = __toCommonJS2(src_exports);
     __reExport(src_exports, require_STSClient(), module2.exports);
-    var import_AssumeRoleCommand = require_AssumeRoleCommand();
     var import_middleware_endpoint = require_dist_cjs41();
     var import_middleware_serde = require_dist_cjs40();
-    var import_smithy_client = require_dist_cjs16();
     var import_types = require_dist_cjs();
     var import_EndpointParameters = require_EndpointParameters();
-    var import_models_0 = require_models_0();
-    var import_Aws_query = require_Aws_query();
-    var _AssumeRoleWithSAMLCommand = class _AssumeRoleWithSAMLCommand extends import_smithy_client.Command.classBuilder().ep({
+    var import_smithy_client = require_dist_cjs16();
+    var _STSServiceException = class _STSServiceException2 extends import_smithy_client.ServiceException {
+      /**
+       * @internal
+       */
+      constructor(options) {
+        super(options);
+        Object.setPrototypeOf(this, _STSServiceException2.prototype);
+      }
+    };
+    __name(_STSServiceException, "STSServiceException");
+    var STSServiceException = _STSServiceException;
+    var _ExpiredTokenException = class _ExpiredTokenException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "ExpiredTokenException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "ExpiredTokenException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _ExpiredTokenException2.prototype);
+      }
+    };
+    __name(_ExpiredTokenException, "ExpiredTokenException");
+    var ExpiredTokenException = _ExpiredTokenException;
+    var _MalformedPolicyDocumentException = class _MalformedPolicyDocumentException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "MalformedPolicyDocumentException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "MalformedPolicyDocumentException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _MalformedPolicyDocumentException2.prototype);
+      }
+    };
+    __name(_MalformedPolicyDocumentException, "MalformedPolicyDocumentException");
+    var MalformedPolicyDocumentException = _MalformedPolicyDocumentException;
+    var _PackedPolicyTooLargeException = class _PackedPolicyTooLargeException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "PackedPolicyTooLargeException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "PackedPolicyTooLargeException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _PackedPolicyTooLargeException2.prototype);
+      }
+    };
+    __name(_PackedPolicyTooLargeException, "PackedPolicyTooLargeException");
+    var PackedPolicyTooLargeException = _PackedPolicyTooLargeException;
+    var _RegionDisabledException = class _RegionDisabledException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "RegionDisabledException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "RegionDisabledException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _RegionDisabledException2.prototype);
+      }
+    };
+    __name(_RegionDisabledException, "RegionDisabledException");
+    var RegionDisabledException = _RegionDisabledException;
+    var _IDPRejectedClaimException = class _IDPRejectedClaimException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "IDPRejectedClaimException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "IDPRejectedClaimException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _IDPRejectedClaimException2.prototype);
+      }
+    };
+    __name(_IDPRejectedClaimException, "IDPRejectedClaimException");
+    var IDPRejectedClaimException = _IDPRejectedClaimException;
+    var _InvalidIdentityTokenException = class _InvalidIdentityTokenException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "InvalidIdentityTokenException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "InvalidIdentityTokenException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _InvalidIdentityTokenException2.prototype);
+      }
+    };
+    __name(_InvalidIdentityTokenException, "InvalidIdentityTokenException");
+    var InvalidIdentityTokenException = _InvalidIdentityTokenException;
+    var _IDPCommunicationErrorException = class _IDPCommunicationErrorException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "IDPCommunicationErrorException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "IDPCommunicationErrorException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _IDPCommunicationErrorException2.prototype);
+      }
+    };
+    __name(_IDPCommunicationErrorException, "IDPCommunicationErrorException");
+    var IDPCommunicationErrorException = _IDPCommunicationErrorException;
+    var _InvalidAuthorizationMessageException = class _InvalidAuthorizationMessageException2 extends STSServiceException {
+      /**
+       * @internal
+       */
+      constructor(opts) {
+        super({
+          name: "InvalidAuthorizationMessageException",
+          $fault: "client",
+          ...opts
+        });
+        this.name = "InvalidAuthorizationMessageException";
+        this.$fault = "client";
+        Object.setPrototypeOf(this, _InvalidAuthorizationMessageException2.prototype);
+      }
+    };
+    __name(_InvalidAuthorizationMessageException, "InvalidAuthorizationMessageException");
+    var InvalidAuthorizationMessageException = _InvalidAuthorizationMessageException;
+    var CredentialsFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.SecretAccessKey && { SecretAccessKey: import_smithy_client.SENSITIVE_STRING }
+    }), "CredentialsFilterSensitiveLog");
+    var AssumeRoleResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.Credentials && { Credentials: CredentialsFilterSensitiveLog(obj.Credentials) }
+    }), "AssumeRoleResponseFilterSensitiveLog");
+    var AssumeRoleWithSAMLRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.SAMLAssertion && { SAMLAssertion: import_smithy_client.SENSITIVE_STRING }
+    }), "AssumeRoleWithSAMLRequestFilterSensitiveLog");
+    var AssumeRoleWithSAMLResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.Credentials && { Credentials: CredentialsFilterSensitiveLog(obj.Credentials) }
+    }), "AssumeRoleWithSAMLResponseFilterSensitiveLog");
+    var AssumeRoleWithWebIdentityRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.WebIdentityToken && { WebIdentityToken: import_smithy_client.SENSITIVE_STRING }
+    }), "AssumeRoleWithWebIdentityRequestFilterSensitiveLog");
+    var AssumeRoleWithWebIdentityResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.Credentials && { Credentials: CredentialsFilterSensitiveLog(obj.Credentials) }
+    }), "AssumeRoleWithWebIdentityResponseFilterSensitiveLog");
+    var GetFederationTokenResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.Credentials && { Credentials: CredentialsFilterSensitiveLog(obj.Credentials) }
+    }), "GetFederationTokenResponseFilterSensitiveLog");
+    var GetSessionTokenResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.Credentials && { Credentials: CredentialsFilterSensitiveLog(obj.Credentials) }
+    }), "GetSessionTokenResponseFilterSensitiveLog");
+    var import_protocol_http = require_dist_cjs2();
+    var import_fast_xml_parser = require_fxp();
+    var se_AssumeRoleCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_AssumeRoleRequest(input, context),
+        [_A]: _AR,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_AssumeRoleCommand");
+    var se_AssumeRoleWithSAMLCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_AssumeRoleWithSAMLRequest(input, context),
+        [_A]: _ARWSAML,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_AssumeRoleWithSAMLCommand");
+    var se_AssumeRoleWithWebIdentityCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_AssumeRoleWithWebIdentityRequest(input, context),
+        [_A]: _ARWWI,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_AssumeRoleWithWebIdentityCommand");
+    var se_DecodeAuthorizationMessageCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_DecodeAuthorizationMessageRequest(input, context),
+        [_A]: _DAM,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_DecodeAuthorizationMessageCommand");
+    var se_GetAccessKeyInfoCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_GetAccessKeyInfoRequest(input, context),
+        [_A]: _GAKI,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_GetAccessKeyInfoCommand");
+    var se_GetCallerIdentityCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_GetCallerIdentityRequest(input, context),
+        [_A]: _GCI,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_GetCallerIdentityCommand");
+    var se_GetFederationTokenCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_GetFederationTokenRequest(input, context),
+        [_A]: _GFT,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_GetFederationTokenCommand");
+    var se_GetSessionTokenCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const headers = SHARED_HEADERS;
+      let body;
+      body = buildFormUrlencodedString({
+        ...se_GetSessionTokenRequest(input, context),
+        [_A]: _GST,
+        [_V]: _
+      });
+      return buildHttpRpcRequest(context, headers, "/", void 0, body);
+    }, "se_GetSessionTokenCommand");
+    var de_AssumeRoleCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_AssumeRoleResponse(data.AssumeRoleResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_AssumeRoleCommand");
+    var de_AssumeRoleWithSAMLCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_AssumeRoleWithSAMLResponse(data.AssumeRoleWithSAMLResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_AssumeRoleWithSAMLCommand");
+    var de_AssumeRoleWithWebIdentityCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_AssumeRoleWithWebIdentityResponse(data.AssumeRoleWithWebIdentityResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_AssumeRoleWithWebIdentityCommand");
+    var de_DecodeAuthorizationMessageCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_DecodeAuthorizationMessageResponse(data.DecodeAuthorizationMessageResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_DecodeAuthorizationMessageCommand");
+    var de_GetAccessKeyInfoCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_GetAccessKeyInfoResponse(data.GetAccessKeyInfoResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_GetAccessKeyInfoCommand");
+    var de_GetCallerIdentityCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_GetCallerIdentityResponse(data.GetCallerIdentityResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_GetCallerIdentityCommand");
+    var de_GetFederationTokenCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_GetFederationTokenResponse(data.GetFederationTokenResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_GetFederationTokenCommand");
+    var de_GetSessionTokenCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const data = await parseBody(output.body, context);
+      let contents = {};
+      contents = de_GetSessionTokenResponse(data.GetSessionTokenResult, context);
+      const response = {
+        $metadata: deserializeMetadata(output),
+        ...contents
+      };
+      return response;
+    }, "de_GetSessionTokenCommand");
+    var de_CommandError = /* @__PURE__ */ __name(async (output, context) => {
+      const parsedOutput = {
+        ...output,
+        body: await parseErrorBody(output.body, context)
+      };
+      const errorCode = loadQueryErrorCode(output, parsedOutput.body);
+      switch (errorCode) {
+        case "ExpiredTokenException":
+        case "com.amazonaws.sts#ExpiredTokenException":
+          throw await de_ExpiredTokenExceptionRes(parsedOutput, context);
+        case "MalformedPolicyDocument":
+        case "com.amazonaws.sts#MalformedPolicyDocumentException":
+          throw await de_MalformedPolicyDocumentExceptionRes(parsedOutput, context);
+        case "PackedPolicyTooLarge":
+        case "com.amazonaws.sts#PackedPolicyTooLargeException":
+          throw await de_PackedPolicyTooLargeExceptionRes(parsedOutput, context);
+        case "RegionDisabledException":
+        case "com.amazonaws.sts#RegionDisabledException":
+          throw await de_RegionDisabledExceptionRes(parsedOutput, context);
+        case "IDPRejectedClaim":
+        case "com.amazonaws.sts#IDPRejectedClaimException":
+          throw await de_IDPRejectedClaimExceptionRes(parsedOutput, context);
+        case "InvalidIdentityToken":
+        case "com.amazonaws.sts#InvalidIdentityTokenException":
+          throw await de_InvalidIdentityTokenExceptionRes(parsedOutput, context);
+        case "IDPCommunicationError":
+        case "com.amazonaws.sts#IDPCommunicationErrorException":
+          throw await de_IDPCommunicationErrorExceptionRes(parsedOutput, context);
+        case "InvalidAuthorizationMessageException":
+        case "com.amazonaws.sts#InvalidAuthorizationMessageException":
+          throw await de_InvalidAuthorizationMessageExceptionRes(parsedOutput, context);
+        default:
+          const parsedBody = parsedOutput.body;
+          return throwDefaultError({
+            output,
+            parsedBody: parsedBody.Error,
+            errorCode
+          });
+      }
+    }, "de_CommandError");
+    var de_ExpiredTokenExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_ExpiredTokenException(body.Error, context);
+      const exception = new ExpiredTokenException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_ExpiredTokenExceptionRes");
+    var de_IDPCommunicationErrorExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_IDPCommunicationErrorException(body.Error, context);
+      const exception = new IDPCommunicationErrorException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_IDPCommunicationErrorExceptionRes");
+    var de_IDPRejectedClaimExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_IDPRejectedClaimException(body.Error, context);
+      const exception = new IDPRejectedClaimException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_IDPRejectedClaimExceptionRes");
+    var de_InvalidAuthorizationMessageExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_InvalidAuthorizationMessageException(body.Error, context);
+      const exception = new InvalidAuthorizationMessageException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_InvalidAuthorizationMessageExceptionRes");
+    var de_InvalidIdentityTokenExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_InvalidIdentityTokenException(body.Error, context);
+      const exception = new InvalidIdentityTokenException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_InvalidIdentityTokenExceptionRes");
+    var de_MalformedPolicyDocumentExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_MalformedPolicyDocumentException(body.Error, context);
+      const exception = new MalformedPolicyDocumentException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_MalformedPolicyDocumentExceptionRes");
+    var de_PackedPolicyTooLargeExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_PackedPolicyTooLargeException(body.Error, context);
+      const exception = new PackedPolicyTooLargeException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_PackedPolicyTooLargeExceptionRes");
+    var de_RegionDisabledExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+      const body = parsedOutput.body;
+      const deserialized = de_RegionDisabledException(body.Error, context);
+      const exception = new RegionDisabledException({
+        $metadata: deserializeMetadata(parsedOutput),
+        ...deserialized
+      });
+      return (0, import_smithy_client.decorateServiceException)(exception, body);
+    }, "de_RegionDisabledExceptionRes");
+    var se_AssumeRoleRequest = /* @__PURE__ */ __name((input, context) => {
+      var _a2, _b, _c, _d;
+      const entries = {};
+      if (input[_RA] != null) {
+        entries[_RA] = input[_RA];
+      }
+      if (input[_RSN] != null) {
+        entries[_RSN] = input[_RSN];
+      }
+      if (input[_PA] != null) {
+        const memberEntries = se_policyDescriptorListType(input[_PA], context);
+        if (((_a2 = input[_PA]) == null ? void 0 : _a2.length) === 0) {
+          entries.PolicyArns = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `PolicyArns.${key}`;
+          entries[loc] = value;
+        });
+      }
+      if (input[_P] != null) {
+        entries[_P] = input[_P];
+      }
+      if (input[_DS] != null) {
+        entries[_DS] = input[_DS];
+      }
+      if (input[_T] != null) {
+        const memberEntries = se_tagListType(input[_T], context);
+        if (((_b = input[_T]) == null ? void 0 : _b.length) === 0) {
+          entries.Tags = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `Tags.${key}`;
+          entries[loc] = value;
+        });
+      }
+      if (input[_TTK] != null) {
+        const memberEntries = se_tagKeyListType(input[_TTK], context);
+        if (((_c = input[_TTK]) == null ? void 0 : _c.length) === 0) {
+          entries.TransitiveTagKeys = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `TransitiveTagKeys.${key}`;
+          entries[loc] = value;
+        });
+      }
+      if (input[_EI] != null) {
+        entries[_EI] = input[_EI];
+      }
+      if (input[_SN] != null) {
+        entries[_SN] = input[_SN];
+      }
+      if (input[_TC] != null) {
+        entries[_TC] = input[_TC];
+      }
+      if (input[_SI] != null) {
+        entries[_SI] = input[_SI];
+      }
+      if (input[_PC] != null) {
+        const memberEntries = se_ProvidedContextsListType(input[_PC], context);
+        if (((_d = input[_PC]) == null ? void 0 : _d.length) === 0) {
+          entries.ProvidedContexts = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `ProvidedContexts.${key}`;
+          entries[loc] = value;
+        });
+      }
+      return entries;
+    }, "se_AssumeRoleRequest");
+    var se_AssumeRoleWithSAMLRequest = /* @__PURE__ */ __name((input, context) => {
+      var _a2;
+      const entries = {};
+      if (input[_RA] != null) {
+        entries[_RA] = input[_RA];
+      }
+      if (input[_PAr] != null) {
+        entries[_PAr] = input[_PAr];
+      }
+      if (input[_SAMLA] != null) {
+        entries[_SAMLA] = input[_SAMLA];
+      }
+      if (input[_PA] != null) {
+        const memberEntries = se_policyDescriptorListType(input[_PA], context);
+        if (((_a2 = input[_PA]) == null ? void 0 : _a2.length) === 0) {
+          entries.PolicyArns = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `PolicyArns.${key}`;
+          entries[loc] = value;
+        });
+      }
+      if (input[_P] != null) {
+        entries[_P] = input[_P];
+      }
+      if (input[_DS] != null) {
+        entries[_DS] = input[_DS];
+      }
+      return entries;
+    }, "se_AssumeRoleWithSAMLRequest");
+    var se_AssumeRoleWithWebIdentityRequest = /* @__PURE__ */ __name((input, context) => {
+      var _a2;
+      const entries = {};
+      if (input[_RA] != null) {
+        entries[_RA] = input[_RA];
+      }
+      if (input[_RSN] != null) {
+        entries[_RSN] = input[_RSN];
+      }
+      if (input[_WIT] != null) {
+        entries[_WIT] = input[_WIT];
+      }
+      if (input[_PI] != null) {
+        entries[_PI] = input[_PI];
+      }
+      if (input[_PA] != null) {
+        const memberEntries = se_policyDescriptorListType(input[_PA], context);
+        if (((_a2 = input[_PA]) == null ? void 0 : _a2.length) === 0) {
+          entries.PolicyArns = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `PolicyArns.${key}`;
+          entries[loc] = value;
+        });
+      }
+      if (input[_P] != null) {
+        entries[_P] = input[_P];
+      }
+      if (input[_DS] != null) {
+        entries[_DS] = input[_DS];
+      }
+      return entries;
+    }, "se_AssumeRoleWithWebIdentityRequest");
+    var se_DecodeAuthorizationMessageRequest = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      if (input[_EM] != null) {
+        entries[_EM] = input[_EM];
+      }
+      return entries;
+    }, "se_DecodeAuthorizationMessageRequest");
+    var se_GetAccessKeyInfoRequest = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      if (input[_AKI] != null) {
+        entries[_AKI] = input[_AKI];
+      }
+      return entries;
+    }, "se_GetAccessKeyInfoRequest");
+    var se_GetCallerIdentityRequest = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      return entries;
+    }, "se_GetCallerIdentityRequest");
+    var se_GetFederationTokenRequest = /* @__PURE__ */ __name((input, context) => {
+      var _a2, _b;
+      const entries = {};
+      if (input[_N] != null) {
+        entries[_N] = input[_N];
+      }
+      if (input[_P] != null) {
+        entries[_P] = input[_P];
+      }
+      if (input[_PA] != null) {
+        const memberEntries = se_policyDescriptorListType(input[_PA], context);
+        if (((_a2 = input[_PA]) == null ? void 0 : _a2.length) === 0) {
+          entries.PolicyArns = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `PolicyArns.${key}`;
+          entries[loc] = value;
+        });
+      }
+      if (input[_DS] != null) {
+        entries[_DS] = input[_DS];
+      }
+      if (input[_T] != null) {
+        const memberEntries = se_tagListType(input[_T], context);
+        if (((_b = input[_T]) == null ? void 0 : _b.length) === 0) {
+          entries.Tags = [];
+        }
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          const loc = `Tags.${key}`;
+          entries[loc] = value;
+        });
+      }
+      return entries;
+    }, "se_GetFederationTokenRequest");
+    var se_GetSessionTokenRequest = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      if (input[_DS] != null) {
+        entries[_DS] = input[_DS];
+      }
+      if (input[_SN] != null) {
+        entries[_SN] = input[_SN];
+      }
+      if (input[_TC] != null) {
+        entries[_TC] = input[_TC];
+      }
+      return entries;
+    }, "se_GetSessionTokenRequest");
+    var se_policyDescriptorListType = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      let counter = 1;
+      for (const entry of input) {
+        if (entry === null) {
+          continue;
+        }
+        const memberEntries = se_PolicyDescriptorType(entry, context);
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          entries[`member.${counter}.${key}`] = value;
+        });
+        counter++;
+      }
+      return entries;
+    }, "se_policyDescriptorListType");
+    var se_PolicyDescriptorType = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      if (input[_a] != null) {
+        entries[_a] = input[_a];
+      }
+      return entries;
+    }, "se_PolicyDescriptorType");
+    var se_ProvidedContext = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      if (input[_PAro] != null) {
+        entries[_PAro] = input[_PAro];
+      }
+      if (input[_CA] != null) {
+        entries[_CA] = input[_CA];
+      }
+      return entries;
+    }, "se_ProvidedContext");
+    var se_ProvidedContextsListType = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      let counter = 1;
+      for (const entry of input) {
+        if (entry === null) {
+          continue;
+        }
+        const memberEntries = se_ProvidedContext(entry, context);
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          entries[`member.${counter}.${key}`] = value;
+        });
+        counter++;
+      }
+      return entries;
+    }, "se_ProvidedContextsListType");
+    var se_Tag = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      if (input[_K] != null) {
+        entries[_K] = input[_K];
+      }
+      if (input[_Va] != null) {
+        entries[_Va] = input[_Va];
+      }
+      return entries;
+    }, "se_Tag");
+    var se_tagKeyListType = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      let counter = 1;
+      for (const entry of input) {
+        if (entry === null) {
+          continue;
+        }
+        entries[`member.${counter}`] = entry;
+        counter++;
+      }
+      return entries;
+    }, "se_tagKeyListType");
+    var se_tagListType = /* @__PURE__ */ __name((input, context) => {
+      const entries = {};
+      let counter = 1;
+      for (const entry of input) {
+        if (entry === null) {
+          continue;
+        }
+        const memberEntries = se_Tag(entry, context);
+        Object.entries(memberEntries).forEach(([key, value]) => {
+          entries[`member.${counter}.${key}`] = value;
+        });
+        counter++;
+      }
+      return entries;
+    }, "se_tagListType");
+    var de_AssumedRoleUser = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_ARI] != null) {
+        contents[_ARI] = (0, import_smithy_client.expectString)(output[_ARI]);
+      }
+      if (output[_Ar] != null) {
+        contents[_Ar] = (0, import_smithy_client.expectString)(output[_Ar]);
+      }
+      return contents;
+    }, "de_AssumedRoleUser");
+    var de_AssumeRoleResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_C] != null) {
+        contents[_C] = de_Credentials(output[_C], context);
+      }
+      if (output[_ARU] != null) {
+        contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
+      }
+      if (output[_PPS] != null) {
+        contents[_PPS] = (0, import_smithy_client.strictParseInt32)(output[_PPS]);
+      }
+      if (output[_SI] != null) {
+        contents[_SI] = (0, import_smithy_client.expectString)(output[_SI]);
+      }
+      return contents;
+    }, "de_AssumeRoleResponse");
+    var de_AssumeRoleWithSAMLResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_C] != null) {
+        contents[_C] = de_Credentials(output[_C], context);
+      }
+      if (output[_ARU] != null) {
+        contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
+      }
+      if (output[_PPS] != null) {
+        contents[_PPS] = (0, import_smithy_client.strictParseInt32)(output[_PPS]);
+      }
+      if (output[_S] != null) {
+        contents[_S] = (0, import_smithy_client.expectString)(output[_S]);
+      }
+      if (output[_ST] != null) {
+        contents[_ST] = (0, import_smithy_client.expectString)(output[_ST]);
+      }
+      if (output[_I] != null) {
+        contents[_I] = (0, import_smithy_client.expectString)(output[_I]);
+      }
+      if (output[_Au] != null) {
+        contents[_Au] = (0, import_smithy_client.expectString)(output[_Au]);
+      }
+      if (output[_NQ] != null) {
+        contents[_NQ] = (0, import_smithy_client.expectString)(output[_NQ]);
+      }
+      if (output[_SI] != null) {
+        contents[_SI] = (0, import_smithy_client.expectString)(output[_SI]);
+      }
+      return contents;
+    }, "de_AssumeRoleWithSAMLResponse");
+    var de_AssumeRoleWithWebIdentityResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_C] != null) {
+        contents[_C] = de_Credentials(output[_C], context);
+      }
+      if (output[_SFWIT] != null) {
+        contents[_SFWIT] = (0, import_smithy_client.expectString)(output[_SFWIT]);
+      }
+      if (output[_ARU] != null) {
+        contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
+      }
+      if (output[_PPS] != null) {
+        contents[_PPS] = (0, import_smithy_client.strictParseInt32)(output[_PPS]);
+      }
+      if (output[_Pr] != null) {
+        contents[_Pr] = (0, import_smithy_client.expectString)(output[_Pr]);
+      }
+      if (output[_Au] != null) {
+        contents[_Au] = (0, import_smithy_client.expectString)(output[_Au]);
+      }
+      if (output[_SI] != null) {
+        contents[_SI] = (0, import_smithy_client.expectString)(output[_SI]);
+      }
+      return contents;
+    }, "de_AssumeRoleWithWebIdentityResponse");
+    var de_Credentials = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_AKI] != null) {
+        contents[_AKI] = (0, import_smithy_client.expectString)(output[_AKI]);
+      }
+      if (output[_SAK] != null) {
+        contents[_SAK] = (0, import_smithy_client.expectString)(output[_SAK]);
+      }
+      if (output[_STe] != null) {
+        contents[_STe] = (0, import_smithy_client.expectString)(output[_STe]);
+      }
+      if (output[_E] != null) {
+        contents[_E] = (0, import_smithy_client.expectNonNull)((0, import_smithy_client.parseRfc3339DateTimeWithOffset)(output[_E]));
+      }
+      return contents;
+    }, "de_Credentials");
+    var de_DecodeAuthorizationMessageResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_DM] != null) {
+        contents[_DM] = (0, import_smithy_client.expectString)(output[_DM]);
+      }
+      return contents;
+    }, "de_DecodeAuthorizationMessageResponse");
+    var de_ExpiredTokenException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_ExpiredTokenException");
+    var de_FederatedUser = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_FUI] != null) {
+        contents[_FUI] = (0, import_smithy_client.expectString)(output[_FUI]);
+      }
+      if (output[_Ar] != null) {
+        contents[_Ar] = (0, import_smithy_client.expectString)(output[_Ar]);
+      }
+      return contents;
+    }, "de_FederatedUser");
+    var de_GetAccessKeyInfoResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_Ac] != null) {
+        contents[_Ac] = (0, import_smithy_client.expectString)(output[_Ac]);
+      }
+      return contents;
+    }, "de_GetAccessKeyInfoResponse");
+    var de_GetCallerIdentityResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_UI] != null) {
+        contents[_UI] = (0, import_smithy_client.expectString)(output[_UI]);
+      }
+      if (output[_Ac] != null) {
+        contents[_Ac] = (0, import_smithy_client.expectString)(output[_Ac]);
+      }
+      if (output[_Ar] != null) {
+        contents[_Ar] = (0, import_smithy_client.expectString)(output[_Ar]);
+      }
+      return contents;
+    }, "de_GetCallerIdentityResponse");
+    var de_GetFederationTokenResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_C] != null) {
+        contents[_C] = de_Credentials(output[_C], context);
+      }
+      if (output[_FU] != null) {
+        contents[_FU] = de_FederatedUser(output[_FU], context);
+      }
+      if (output[_PPS] != null) {
+        contents[_PPS] = (0, import_smithy_client.strictParseInt32)(output[_PPS]);
+      }
+      return contents;
+    }, "de_GetFederationTokenResponse");
+    var de_GetSessionTokenResponse = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_C] != null) {
+        contents[_C] = de_Credentials(output[_C], context);
+      }
+      return contents;
+    }, "de_GetSessionTokenResponse");
+    var de_IDPCommunicationErrorException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_IDPCommunicationErrorException");
+    var de_IDPRejectedClaimException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_IDPRejectedClaimException");
+    var de_InvalidAuthorizationMessageException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_InvalidAuthorizationMessageException");
+    var de_InvalidIdentityTokenException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_InvalidIdentityTokenException");
+    var de_MalformedPolicyDocumentException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_MalformedPolicyDocumentException");
+    var de_PackedPolicyTooLargeException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_PackedPolicyTooLargeException");
+    var de_RegionDisabledException = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_m] != null) {
+        contents[_m] = (0, import_smithy_client.expectString)(output[_m]);
+      }
+      return contents;
+    }, "de_RegionDisabledException");
+    var deserializeMetadata = /* @__PURE__ */ __name((output) => ({
+      httpStatusCode: output.statusCode,
+      requestId: output.headers["x-amzn-requestid"] ?? output.headers["x-amzn-request-id"] ?? output.headers["x-amz-request-id"],
+      extendedRequestId: output.headers["x-amz-id-2"],
+      cfId: output.headers["x-amz-cf-id"]
+    }), "deserializeMetadata");
+    var collectBodyString = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
+    var throwDefaultError = (0, import_smithy_client.withBaseException)(STSServiceException);
+    var buildHttpRpcRequest = /* @__PURE__ */ __name(async (context, headers, path2, resolvedHostname, body) => {
+      const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
+      const contents = {
+        protocol,
+        hostname,
+        port,
+        method: "POST",
+        path: basePath.endsWith("/") ? basePath.slice(0, -1) + path2 : basePath + path2,
+        headers
+      };
+      if (resolvedHostname !== void 0) {
+        contents.hostname = resolvedHostname;
+      }
+      if (body !== void 0) {
+        contents.body = body;
+      }
+      return new import_protocol_http.HttpRequest(contents);
+    }, "buildHttpRpcRequest");
+    var SHARED_HEADERS = {
+      "content-type": "application/x-www-form-urlencoded"
+    };
+    var _ = "2011-06-15";
+    var _A = "Action";
+    var _AKI = "AccessKeyId";
+    var _AR = "AssumeRole";
+    var _ARI = "AssumedRoleId";
+    var _ARU = "AssumedRoleUser";
+    var _ARWSAML = "AssumeRoleWithSAML";
+    var _ARWWI = "AssumeRoleWithWebIdentity";
+    var _Ac = "Account";
+    var _Ar = "Arn";
+    var _Au = "Audience";
+    var _C = "Credentials";
+    var _CA = "ContextAssertion";
+    var _DAM = "DecodeAuthorizationMessage";
+    var _DM = "DecodedMessage";
+    var _DS = "DurationSeconds";
+    var _E = "Expiration";
+    var _EI = "ExternalId";
+    var _EM = "EncodedMessage";
+    var _FU = "FederatedUser";
+    var _FUI = "FederatedUserId";
+    var _GAKI = "GetAccessKeyInfo";
+    var _GCI = "GetCallerIdentity";
+    var _GFT = "GetFederationToken";
+    var _GST = "GetSessionToken";
+    var _I = "Issuer";
+    var _K = "Key";
+    var _N = "Name";
+    var _NQ = "NameQualifier";
+    var _P = "Policy";
+    var _PA = "PolicyArns";
+    var _PAr = "PrincipalArn";
+    var _PAro = "ProviderArn";
+    var _PC = "ProvidedContexts";
+    var _PI = "ProviderId";
+    var _PPS = "PackedPolicySize";
+    var _Pr = "Provider";
+    var _RA = "RoleArn";
+    var _RSN = "RoleSessionName";
+    var _S = "Subject";
+    var _SAK = "SecretAccessKey";
+    var _SAMLA = "SAMLAssertion";
+    var _SFWIT = "SubjectFromWebIdentityToken";
+    var _SI = "SourceIdentity";
+    var _SN = "SerialNumber";
+    var _ST = "SubjectType";
+    var _STe = "SessionToken";
+    var _T = "Tags";
+    var _TC = "TokenCode";
+    var _TTK = "TransitiveTagKeys";
+    var _UI = "UserId";
+    var _V = "Version";
+    var _Va = "Value";
+    var _WIT = "WebIdentityToken";
+    var _a = "arn";
+    var _m = "message";
+    var parseBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+      if (encoded.length) {
+        const parser = new import_fast_xml_parser.XMLParser({
+          attributeNamePrefix: "",
+          htmlEntities: true,
+          ignoreAttributes: false,
+          ignoreDeclaration: true,
+          parseTagValue: false,
+          trimValues: false,
+          tagValueProcessor: (_2, val2) => val2.trim() === "" && val2.includes("\n") ? "" : void 0
+        });
+        parser.addEntity("#xD", "\r");
+        parser.addEntity("#10", "\n");
+        const parsedObj = parser.parse(encoded);
+        const textNodeName = "#text";
+        const key = Object.keys(parsedObj)[0];
+        const parsedObjToReturn = parsedObj[key];
+        if (parsedObjToReturn[textNodeName]) {
+          parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+          delete parsedObjToReturn[textNodeName];
+        }
+        return (0, import_smithy_client.getValueFromTextNode)(parsedObjToReturn);
+      }
+      return {};
+    }), "parseBody");
+    var parseErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
+      const value = await parseBody(errorBody, context);
+      if (value.Error) {
+        value.Error.message = value.Error.message ?? value.Error.Message;
+      }
+      return value;
+    }, "parseErrorBody");
+    var buildFormUrlencodedString = /* @__PURE__ */ __name((formEntries) => Object.entries(formEntries).map(([key, value]) => (0, import_smithy_client.extendedEncodeURIComponent)(key) + "=" + (0, import_smithy_client.extendedEncodeURIComponent)(value)).join("&"), "buildFormUrlencodedString");
+    var loadQueryErrorCode = /* @__PURE__ */ __name((output, data) => {
+      var _a2;
+      if (((_a2 = data.Error) == null ? void 0 : _a2.Code) !== void 0) {
+        return data.Error.Code;
+      }
+      if (output.statusCode == 404) {
+        return "NotFound";
+      }
+    }, "loadQueryErrorCode");
+    var _AssumeRoleCommand = class _AssumeRoleCommand extends import_smithy_client.Command.classBuilder().ep({
       ...import_EndpointParameters.commonParams
     }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
-    }).s("AWSSecurityTokenServiceV20110615", "AssumeRoleWithSAML", {}).n("STSClient", "AssumeRoleWithSAMLCommand").f(import_models_0.AssumeRoleWithSAMLRequestFilterSensitiveLog, import_models_0.AssumeRoleWithSAMLResponseFilterSensitiveLog).ser(import_Aws_query.se_AssumeRoleWithSAMLCommand).de(import_Aws_query.de_AssumeRoleWithSAMLCommand).build() {
+    }).s("AWSSecurityTokenServiceV20110615", "AssumeRole", {}).n("STSClient", "AssumeRoleCommand").f(void 0, AssumeRoleResponseFilterSensitiveLog).ser(se_AssumeRoleCommand).de(de_AssumeRoleCommand).build() {
     };
-    __name(_AssumeRoleWithSAMLCommand, "AssumeRoleWithSAMLCommand");
-    var AssumeRoleWithSAMLCommand = _AssumeRoleWithSAMLCommand;
-    var import_AssumeRoleWithWebIdentityCommand = require_AssumeRoleWithWebIdentityCommand();
+    __name(_AssumeRoleCommand, "AssumeRoleCommand");
+    var AssumeRoleCommand = _AssumeRoleCommand;
     var import_EndpointParameters2 = require_EndpointParameters();
-    var import_Aws_query2 = require_Aws_query();
-    var _DecodeAuthorizationMessageCommand = class _DecodeAuthorizationMessageCommand extends import_smithy_client.Command.classBuilder().ep({
+    var _AssumeRoleWithSAMLCommand = class _AssumeRoleWithSAMLCommand extends import_smithy_client.Command.classBuilder().ep({
       ...import_EndpointParameters2.commonParams
     }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
-    }).s("AWSSecurityTokenServiceV20110615", "DecodeAuthorizationMessage", {}).n("STSClient", "DecodeAuthorizationMessageCommand").f(void 0, void 0).ser(import_Aws_query2.se_DecodeAuthorizationMessageCommand).de(import_Aws_query2.de_DecodeAuthorizationMessageCommand).build() {
+    }).s("AWSSecurityTokenServiceV20110615", "AssumeRoleWithSAML", {}).n("STSClient", "AssumeRoleWithSAMLCommand").f(AssumeRoleWithSAMLRequestFilterSensitiveLog, AssumeRoleWithSAMLResponseFilterSensitiveLog).ser(se_AssumeRoleWithSAMLCommand).de(de_AssumeRoleWithSAMLCommand).build() {
     };
-    __name(_DecodeAuthorizationMessageCommand, "DecodeAuthorizationMessageCommand");
-    var DecodeAuthorizationMessageCommand = _DecodeAuthorizationMessageCommand;
+    __name(_AssumeRoleWithSAMLCommand, "AssumeRoleWithSAMLCommand");
+    var AssumeRoleWithSAMLCommand = _AssumeRoleWithSAMLCommand;
     var import_EndpointParameters3 = require_EndpointParameters();
-    var import_Aws_query3 = require_Aws_query();
-    var _GetAccessKeyInfoCommand = class _GetAccessKeyInfoCommand extends import_smithy_client.Command.classBuilder().ep({
+    var _AssumeRoleWithWebIdentityCommand = class _AssumeRoleWithWebIdentityCommand extends import_smithy_client.Command.classBuilder().ep({
       ...import_EndpointParameters3.commonParams
     }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
-    }).s("AWSSecurityTokenServiceV20110615", "GetAccessKeyInfo", {}).n("STSClient", "GetAccessKeyInfoCommand").f(void 0, void 0).ser(import_Aws_query3.se_GetAccessKeyInfoCommand).de(import_Aws_query3.de_GetAccessKeyInfoCommand).build() {
+    }).s("AWSSecurityTokenServiceV20110615", "AssumeRoleWithWebIdentity", {}).n("STSClient", "AssumeRoleWithWebIdentityCommand").f(AssumeRoleWithWebIdentityRequestFilterSensitiveLog, AssumeRoleWithWebIdentityResponseFilterSensitiveLog).ser(se_AssumeRoleWithWebIdentityCommand).de(de_AssumeRoleWithWebIdentityCommand).build() {
     };
-    __name(_GetAccessKeyInfoCommand, "GetAccessKeyInfoCommand");
-    var GetAccessKeyInfoCommand = _GetAccessKeyInfoCommand;
+    __name(_AssumeRoleWithWebIdentityCommand, "AssumeRoleWithWebIdentityCommand");
+    var AssumeRoleWithWebIdentityCommand = _AssumeRoleWithWebIdentityCommand;
     var import_EndpointParameters4 = require_EndpointParameters();
-    var import_Aws_query4 = require_Aws_query();
-    var _GetCallerIdentityCommand = class _GetCallerIdentityCommand extends import_smithy_client.Command.classBuilder().ep({
+    var _DecodeAuthorizationMessageCommand = class _DecodeAuthorizationMessageCommand extends import_smithy_client.Command.classBuilder().ep({
       ...import_EndpointParameters4.commonParams
     }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
-    }).s("AWSSecurityTokenServiceV20110615", "GetCallerIdentity", {}).n("STSClient", "GetCallerIdentityCommand").f(void 0, void 0).ser(import_Aws_query4.se_GetCallerIdentityCommand).de(import_Aws_query4.de_GetCallerIdentityCommand).build() {
+    }).s("AWSSecurityTokenServiceV20110615", "DecodeAuthorizationMessage", {}).n("STSClient", "DecodeAuthorizationMessageCommand").f(void 0, void 0).ser(se_DecodeAuthorizationMessageCommand).de(de_DecodeAuthorizationMessageCommand).build() {
     };
-    __name(_GetCallerIdentityCommand, "GetCallerIdentityCommand");
-    var GetCallerIdentityCommand = _GetCallerIdentityCommand;
+    __name(_DecodeAuthorizationMessageCommand, "DecodeAuthorizationMessageCommand");
+    var DecodeAuthorizationMessageCommand = _DecodeAuthorizationMessageCommand;
     var import_EndpointParameters5 = require_EndpointParameters();
-    var import_models_02 = require_models_0();
-    var import_Aws_query5 = require_Aws_query();
-    var _GetFederationTokenCommand = class _GetFederationTokenCommand extends import_smithy_client.Command.classBuilder().ep({
+    var _GetAccessKeyInfoCommand = class _GetAccessKeyInfoCommand extends import_smithy_client.Command.classBuilder().ep({
       ...import_EndpointParameters5.commonParams
     }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
-    }).s("AWSSecurityTokenServiceV20110615", "GetFederationToken", {}).n("STSClient", "GetFederationTokenCommand").f(void 0, import_models_02.GetFederationTokenResponseFilterSensitiveLog).ser(import_Aws_query5.se_GetFederationTokenCommand).de(import_Aws_query5.de_GetFederationTokenCommand).build() {
+    }).s("AWSSecurityTokenServiceV20110615", "GetAccessKeyInfo", {}).n("STSClient", "GetAccessKeyInfoCommand").f(void 0, void 0).ser(se_GetAccessKeyInfoCommand).de(de_GetAccessKeyInfoCommand).build() {
     };
-    __name(_GetFederationTokenCommand, "GetFederationTokenCommand");
-    var GetFederationTokenCommand = _GetFederationTokenCommand;
+    __name(_GetAccessKeyInfoCommand, "GetAccessKeyInfoCommand");
+    var GetAccessKeyInfoCommand = _GetAccessKeyInfoCommand;
     var import_EndpointParameters6 = require_EndpointParameters();
-    var import_models_03 = require_models_0();
-    var import_Aws_query6 = require_Aws_query();
-    var _GetSessionTokenCommand = class _GetSessionTokenCommand extends import_smithy_client.Command.classBuilder().ep({
+    var _GetCallerIdentityCommand = class _GetCallerIdentityCommand extends import_smithy_client.Command.classBuilder().ep({
       ...import_EndpointParameters6.commonParams
     }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
-    }).s("AWSSecurityTokenServiceV20110615", "GetSessionToken", {}).n("STSClient", "GetSessionTokenCommand").f(void 0, import_models_03.GetSessionTokenResponseFilterSensitiveLog).ser(import_Aws_query6.se_GetSessionTokenCommand).de(import_Aws_query6.de_GetSessionTokenCommand).build() {
+    }).s("AWSSecurityTokenServiceV20110615", "GetCallerIdentity", {}).n("STSClient", "GetCallerIdentityCommand").f(void 0, void 0).ser(se_GetCallerIdentityCommand).de(de_GetCallerIdentityCommand).build() {
+    };
+    __name(_GetCallerIdentityCommand, "GetCallerIdentityCommand");
+    var GetCallerIdentityCommand = _GetCallerIdentityCommand;
+    var import_EndpointParameters7 = require_EndpointParameters();
+    var _GetFederationTokenCommand = class _GetFederationTokenCommand extends import_smithy_client.Command.classBuilder().ep({
+      ...import_EndpointParameters7.commonParams
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+      ];
+    }).s("AWSSecurityTokenServiceV20110615", "GetFederationToken", {}).n("STSClient", "GetFederationTokenCommand").f(void 0, GetFederationTokenResponseFilterSensitiveLog).ser(se_GetFederationTokenCommand).de(de_GetFederationTokenCommand).build() {
+    };
+    __name(_GetFederationTokenCommand, "GetFederationTokenCommand");
+    var GetFederationTokenCommand = _GetFederationTokenCommand;
+    var import_EndpointParameters8 = require_EndpointParameters();
+    var _GetSessionTokenCommand = class _GetSessionTokenCommand extends import_smithy_client.Command.classBuilder().ep({
+      ...import_EndpointParameters8.commonParams
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+      ];
+    }).s("AWSSecurityTokenServiceV20110615", "GetSessionToken", {}).n("STSClient", "GetSessionTokenCommand").f(void 0, GetSessionTokenResponseFilterSensitiveLog).ser(se_GetSessionTokenCommand).de(de_GetSessionTokenCommand).build() {
     };
     __name(_GetSessionTokenCommand, "GetSessionTokenCommand");
     var GetSessionTokenCommand = _GetSessionTokenCommand;
     var import_STSClient = require_STSClient();
     var commands = {
-      AssumeRoleCommand: import_AssumeRoleCommand.AssumeRoleCommand,
+      AssumeRoleCommand,
       AssumeRoleWithSAMLCommand,
-      AssumeRoleWithWebIdentityCommand: import_AssumeRoleWithWebIdentityCommand.AssumeRoleWithWebIdentityCommand,
+      AssumeRoleWithWebIdentityCommand,
       DecodeAuthorizationMessageCommand,
       GetAccessKeyInfoCommand,
       GetCallerIdentityCommand,
@@ -35240,53 +34957,644 @@ var require_dist_cjs59 = __commonJS({
     __name(_STS, "STS");
     var STS = _STS;
     (0, import_smithy_client.createAggregatedClient)(commands, STS);
-    var import_EndpointParameters7 = require_EndpointParameters();
+    var import_EndpointParameters9 = require_EndpointParameters();
     var import_runtimeExtensions = require_runtimeExtensions();
-    var commands_exports = {};
-    __export2(commands_exports, {
-      AssumeRoleWithSAMLCommand: () => AssumeRoleWithSAMLCommand,
-      DecodeAuthorizationMessageCommand: () => DecodeAuthorizationMessageCommand,
-      GetAccessKeyInfoCommand: () => GetAccessKeyInfoCommand,
-      GetCallerIdentityCommand: () => GetCallerIdentityCommand,
-      GetFederationTokenCommand: () => GetFederationTokenCommand,
-      GetSessionTokenCommand: () => GetSessionTokenCommand
-    });
-    __reExport(commands_exports, require_AssumeRoleCommand());
-    __reExport(commands_exports, require_AssumeRoleWithWebIdentityCommand());
-    __reExport(src_exports, commands_exports, module2.exports);
-    var models_exports = {};
-    __reExport(models_exports, require_models_0());
-    __reExport(src_exports, models_exports, module2.exports);
     var import_util_endpoints = require_dist_cjs28();
-    var import_defaultStsRoleAssumers = require_defaultStsRoleAssumers();
+    var ASSUME_ROLE_DEFAULT_REGION = "us-east-1";
+    var resolveRegion = /* @__PURE__ */ __name(async (_region, _parentRegion, credentialProviderLogger) => {
+      var _a2, _b;
+      const region = typeof _region === "function" ? await _region() : _region;
+      const parentRegion = typeof _parentRegion === "function" ? await _parentRegion() : _parentRegion;
+      if (!parentRegion || (0, import_util_endpoints.partition)(parentRegion).name === "aws") {
+        (_a2 = credentialProviderLogger == null ? void 0 : credentialProviderLogger.debug) == null ? void 0 : _a2.call(
+          credentialProviderLogger,
+          "@aws-sdk/client-sts::resolveRegion",
+          "accepting first of:",
+          `${region} (provider)`,
+          `${ASSUME_ROLE_DEFAULT_REGION} (STS default)`
+        );
+        return region ?? ASSUME_ROLE_DEFAULT_REGION;
+      } else {
+        (_b = credentialProviderLogger == null ? void 0 : credentialProviderLogger.debug) == null ? void 0 : _b.call(
+          credentialProviderLogger,
+          "@aws-sdk/client-sts::resolveRegion",
+          "accepting first of:",
+          `${region} (provider)`,
+          `${parentRegion} (parent client)`,
+          `${ASSUME_ROLE_DEFAULT_REGION} (STS default)`
+        );
+        return region ?? parentRegion ?? ASSUME_ROLE_DEFAULT_REGION;
+      }
+    }, "resolveRegion");
+    var getDefaultRoleAssumer = /* @__PURE__ */ __name((stsOptions, stsClientCtor) => {
+      let stsClient;
+      let closureSourceCreds;
+      return async (sourceCreds, params) => {
+        var _a2;
+        closureSourceCreds = sourceCreds;
+        if (!stsClient) {
+          const { logger, region, requestHandler, credentialProviderLogger } = stsOptions;
+          const resolvedRegion = await resolveRegion(
+            region,
+            (_a2 = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _a2.region,
+            credentialProviderLogger
+          );
+          stsClient = new stsClientCtor({
+            logger,
+            // A hack to make sts client uses the credential in current closure.
+            credentialDefaultProvider: () => async () => closureSourceCreds,
+            region: resolvedRegion,
+            ...requestHandler ? { requestHandler } : {}
+          });
+        }
+        const { Credentials: Credentials2 } = await stsClient.send(new AssumeRoleCommand(params));
+        if (!Credentials2 || !Credentials2.AccessKeyId || !Credentials2.SecretAccessKey) {
+          throw new Error(`Invalid response from STS.assumeRole call with role ${params.RoleArn}`);
+        }
+        return {
+          accessKeyId: Credentials2.AccessKeyId,
+          secretAccessKey: Credentials2.SecretAccessKey,
+          sessionToken: Credentials2.SessionToken,
+          expiration: Credentials2.Expiration,
+          // TODO(credentialScope): access normally when shape is updated.
+          credentialScope: Credentials2.CredentialScope
+        };
+      };
+    }, "getDefaultRoleAssumer");
+    var getDefaultRoleAssumerWithWebIdentity = /* @__PURE__ */ __name((stsOptions, stsClientCtor) => {
+      let stsClient;
+      return async (params) => {
+        var _a2;
+        if (!stsClient) {
+          const { logger, region, requestHandler, credentialProviderLogger } = stsOptions;
+          const resolvedRegion = await resolveRegion(
+            region,
+            (_a2 = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _a2.region,
+            credentialProviderLogger
+          );
+          stsClient = new stsClientCtor({
+            logger,
+            region: resolvedRegion,
+            ...requestHandler ? { requestHandler } : {}
+          });
+        }
+        const { Credentials: Credentials2 } = await stsClient.send(new AssumeRoleWithWebIdentityCommand(params));
+        if (!Credentials2 || !Credentials2.AccessKeyId || !Credentials2.SecretAccessKey) {
+          throw new Error(`Invalid response from STS.assumeRoleWithWebIdentity call with role ${params.RoleArn}`);
+        }
+        return {
+          accessKeyId: Credentials2.AccessKeyId,
+          secretAccessKey: Credentials2.SecretAccessKey,
+          sessionToken: Credentials2.SessionToken,
+          expiration: Credentials2.Expiration,
+          // TODO(credentialScope): access normally when shape is updated.
+          credentialScope: Credentials2.CredentialScope
+        };
+      };
+    }, "getDefaultRoleAssumerWithWebIdentity");
     var import_STSClient2 = require_STSClient();
     var getCustomizableStsClientCtor = /* @__PURE__ */ __name((baseCtor, customizations) => {
-      var _a;
+      var _a2;
       if (!customizations)
         return baseCtor;
       else
-        return _a = class extends baseCtor {
+        return _a2 = class extends baseCtor {
           constructor(config) {
             super(config);
             for (const customization of customizations) {
               this.middlewareStack.use(customization);
             }
           }
-        }, __name(_a, "CustomizableSTSClient"), _a;
+        }, __name(_a2, "CustomizableSTSClient"), _a2;
     }, "getCustomizableStsClientCtor");
-    var getDefaultRoleAssumer = /* @__PURE__ */ __name((stsOptions = {}, stsPlugins) => (0, import_defaultStsRoleAssumers.getDefaultRoleAssumer)(stsOptions, getCustomizableStsClientCtor(import_STSClient2.STSClient, stsPlugins)), "getDefaultRoleAssumer");
-    var getDefaultRoleAssumerWithWebIdentity = /* @__PURE__ */ __name((stsOptions = {}, stsPlugins) => (0, import_defaultStsRoleAssumers.getDefaultRoleAssumerWithWebIdentity)(stsOptions, getCustomizableStsClientCtor(import_STSClient2.STSClient, stsPlugins)), "getDefaultRoleAssumerWithWebIdentity");
+    var getDefaultRoleAssumer2 = /* @__PURE__ */ __name((stsOptions = {}, stsPlugins) => getDefaultRoleAssumer(stsOptions, getCustomizableStsClientCtor(import_STSClient2.STSClient, stsPlugins)), "getDefaultRoleAssumer");
+    var getDefaultRoleAssumerWithWebIdentity2 = /* @__PURE__ */ __name((stsOptions = {}, stsPlugins) => getDefaultRoleAssumerWithWebIdentity(stsOptions, getCustomizableStsClientCtor(import_STSClient2.STSClient, stsPlugins)), "getDefaultRoleAssumerWithWebIdentity");
     var decorateDefaultCredentialProvider = /* @__PURE__ */ __name((provider) => (input) => provider({
-      roleAssumer: getDefaultRoleAssumer(input),
-      roleAssumerWithWebIdentity: getDefaultRoleAssumerWithWebIdentity(input),
+      roleAssumer: getDefaultRoleAssumer2(input),
+      roleAssumerWithWebIdentity: getDefaultRoleAssumerWithWebIdentity2(input),
       ...input
     }), "decorateDefaultCredentialProvider");
-    var import_STSServiceException = require_STSServiceException();
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-process/dist-cjs/index.js
+var require_dist_cjs58 = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-process/dist-cjs/index.js"(exports2, module2) {
+    var __defProp2 = Object.defineProperty;
+    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
+    var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
+    var __export2 = (target, all) => {
+      for (var name in all)
+        __defProp2(target, name, { get: all[name], enumerable: true });
+    };
+    var __copyProps2 = (to, from, except, desc) => {
+      if (from && typeof from === "object" || typeof from === "function") {
+        for (let key of __getOwnPropNames2(from))
+          if (!__hasOwnProp2.call(to, key) && key !== except)
+            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
+      }
+      return to;
+    };
+    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var src_exports = {};
+    __export2(src_exports, {
+      fromProcess: () => fromProcess
+    });
+    module2.exports = __toCommonJS2(src_exports);
+    var import_shared_ini_file_loader = require_dist_cjs36();
+    var import_property_provider = require_dist_cjs25();
+    var import_child_process = require("child_process");
+    var import_util = require("util");
+    var getValidatedProcessCredentials = /* @__PURE__ */ __name((profileName, data) => {
+      if (data.Version !== 1) {
+        throw Error(`Profile ${profileName} credential_process did not return Version 1.`);
+      }
+      if (data.AccessKeyId === void 0 || data.SecretAccessKey === void 0) {
+        throw Error(`Profile ${profileName} credential_process returned invalid credentials.`);
+      }
+      if (data.Expiration) {
+        const currentTime = /* @__PURE__ */ new Date();
+        const expireTime = new Date(data.Expiration);
+        if (expireTime < currentTime) {
+          throw Error(`Profile ${profileName} credential_process returned expired credentials.`);
+        }
+      }
+      return {
+        accessKeyId: data.AccessKeyId,
+        secretAccessKey: data.SecretAccessKey,
+        ...data.SessionToken && { sessionToken: data.SessionToken },
+        ...data.Expiration && { expiration: new Date(data.Expiration) },
+        ...data.CredentialScope && { credentialScope: data.CredentialScope }
+      };
+    }, "getValidatedProcessCredentials");
+    var resolveProcessCredentials = /* @__PURE__ */ __name(async (profileName, profiles) => {
+      const profile = profiles[profileName];
+      if (profiles[profileName]) {
+        const credentialProcess = profile["credential_process"];
+        if (credentialProcess !== void 0) {
+          const execPromise = (0, import_util.promisify)(import_child_process.exec);
+          try {
+            const { stdout } = await execPromise(credentialProcess);
+            let data;
+            try {
+              data = JSON.parse(stdout.trim());
+            } catch {
+              throw Error(`Profile ${profileName} credential_process returned invalid JSON.`);
+            }
+            return getValidatedProcessCredentials(profileName, data);
+          } catch (error2) {
+            throw new import_property_provider.CredentialsProviderError(error2.message);
+          }
+        } else {
+          throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} did not contain credential_process.`);
+        }
+      } else {
+        throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} could not be found in shared credentials file.`);
+      }
+    }, "resolveProcessCredentials");
+    var fromProcess = /* @__PURE__ */ __name((init = {}) => async () => {
+      var _a;
+      (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-process", "fromProcess");
+      const profiles = await (0, import_shared_ini_file_loader.parseKnownFiles)(init);
+      return resolveProcessCredentials((0, import_shared_ini_file_loader.getProfileName)(init), profiles);
+    }, "fromProcess");
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/loadSts.js
+var require_loadSts = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/loadSts.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.getDefaultRoleAssumerWithWebIdentity = void 0;
+    var client_sts_1 = require_dist_cjs57();
+    Object.defineProperty(exports2, "getDefaultRoleAssumerWithWebIdentity", { enumerable: true, get: function() {
+      return client_sts_1.getDefaultRoleAssumerWithWebIdentity;
+    } });
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromWebToken.js
+var require_fromWebToken = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromWebToken.js"(exports2) {
+    "use strict";
+    var __createBinding4 = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      var desc = Object.getOwnPropertyDescriptor(m, k);
+      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() {
+          return m[k];
+        } };
+      }
+      Object.defineProperty(o, k2, desc);
+    } : function(o, m, k, k2) {
+      if (k2 === void 0)
+        k2 = k;
+      o[k2] = m[k];
+    });
+    var __setModuleDefault2 = exports2 && exports2.__setModuleDefault || (Object.create ? function(o, v) {
+      Object.defineProperty(o, "default", { enumerable: true, value: v });
+    } : function(o, v) {
+      o["default"] = v;
+    });
+    var __importStar4 = exports2 && exports2.__importStar || function(mod) {
+      if (mod && mod.__esModule)
+        return mod;
+      var result = {};
+      if (mod != null) {
+        for (var k in mod)
+          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
+            __createBinding4(result, mod, k);
+      }
+      __setModuleDefault2(result, mod);
+      return result;
+    };
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.fromWebToken = void 0;
+    var fromWebToken2 = (init) => async () => {
+      var _a;
+      (_a = init.logger) === null || _a === void 0 ? void 0 : _a.debug("@aws-sdk/credential-provider-web-identity", "fromWebToken");
+      const { roleArn, roleSessionName, webIdentityToken, providerId, policyArns, policy, durationSeconds } = init;
+      let { roleAssumerWithWebIdentity } = init;
+      if (!roleAssumerWithWebIdentity) {
+        const { getDefaultRoleAssumerWithWebIdentity } = await Promise.resolve().then(() => __importStar4(require_loadSts()));
+        roleAssumerWithWebIdentity = getDefaultRoleAssumerWithWebIdentity({
+          ...init.clientConfig,
+          credentialProviderLogger: init.logger,
+          parentClientConfig: init.parentClientConfig
+        }, init.clientPlugins);
+      }
+      return roleAssumerWithWebIdentity({
+        RoleArn: roleArn,
+        RoleSessionName: roleSessionName !== null && roleSessionName !== void 0 ? roleSessionName : `aws-sdk-js-session-${Date.now()}`,
+        WebIdentityToken: webIdentityToken,
+        ProviderId: providerId,
+        PolicyArns: policyArns,
+        Policy: policy,
+        DurationSeconds: durationSeconds
+      });
+    };
+    exports2.fromWebToken = fromWebToken2;
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromTokenFile.js
+var require_fromTokenFile = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromTokenFile.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.fromTokenFile = void 0;
+    var property_provider_1 = require_dist_cjs25();
+    var fs_1 = require("fs");
+    var fromWebToken_1 = require_fromWebToken();
+    var ENV_TOKEN_FILE = "AWS_WEB_IDENTITY_TOKEN_FILE";
+    var ENV_ROLE_ARN = "AWS_ROLE_ARN";
+    var ENV_ROLE_SESSION_NAME = "AWS_ROLE_SESSION_NAME";
+    var fromTokenFile2 = (init = {}) => async () => {
+      var _a, _b, _c, _d;
+      (_a = init.logger) === null || _a === void 0 ? void 0 : _a.debug("@aws-sdk/credential-provider-web-identity", "fromTokenFile");
+      const webIdentityTokenFile = (_b = init === null || init === void 0 ? void 0 : init.webIdentityTokenFile) !== null && _b !== void 0 ? _b : process.env[ENV_TOKEN_FILE];
+      const roleArn = (_c = init === null || init === void 0 ? void 0 : init.roleArn) !== null && _c !== void 0 ? _c : process.env[ENV_ROLE_ARN];
+      const roleSessionName = (_d = init === null || init === void 0 ? void 0 : init.roleSessionName) !== null && _d !== void 0 ? _d : process.env[ENV_ROLE_SESSION_NAME];
+      if (!webIdentityTokenFile || !roleArn) {
+        throw new property_provider_1.CredentialsProviderError("Web identity configuration not specified");
+      }
+      return (0, fromWebToken_1.fromWebToken)({
+        ...init,
+        webIdentityToken: (0, fs_1.readFileSync)(webIdentityTokenFile, { encoding: "ascii" }),
+        roleArn,
+        roleSessionName
+      })();
+    };
+    exports2.fromTokenFile = fromTokenFile2;
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/index.js
+var require_dist_cjs59 = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/index.js"(exports2, module2) {
+    var __defProp2 = Object.defineProperty;
+    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
+    var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+    var __copyProps2 = (to, from, except, desc) => {
+      if (from && typeof from === "object" || typeof from === "function") {
+        for (let key of __getOwnPropNames2(from))
+          if (!__hasOwnProp2.call(to, key) && key !== except)
+            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
+      }
+      return to;
+    };
+    var __reExport = (target, mod, secondTarget) => (__copyProps2(target, mod, "default"), secondTarget && __copyProps2(secondTarget, mod, "default"));
+    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var src_exports = {};
+    module2.exports = __toCommonJS2(src_exports);
+    __reExport(src_exports, require_fromTokenFile(), module2.exports);
+    __reExport(src_exports, require_fromWebToken(), module2.exports);
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-ini/dist-cjs/index.js
+var require_dist_cjs60 = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-ini/dist-cjs/index.js"(exports2, module2) {
+    var __create2 = Object.create;
+    var __defProp2 = Object.defineProperty;
+    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
+    var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __getProtoOf2 = Object.getPrototypeOf;
+    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
+    var __esm2 = (fn, res) => function __init() {
+      return fn && (res = (0, fn[__getOwnPropNames2(fn)[0]])(fn = 0)), res;
+    };
+    var __export2 = (target, all) => {
+      for (var name in all)
+        __defProp2(target, name, { get: all[name], enumerable: true });
+    };
+    var __copyProps2 = (to, from, except, desc) => {
+      if (from && typeof from === "object" || typeof from === "function") {
+        for (let key of __getOwnPropNames2(from))
+          if (!__hasOwnProp2.call(to, key) && key !== except)
+            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
+      }
+      return to;
+    };
+    var __toESM2 = (mod, isNodeMode, target) => (target = mod != null ? __create2(__getProtoOf2(mod)) : {}, __copyProps2(
+      // If the importer is in node compatibility mode or this is not an ESM
+      // file that has been converted to a CommonJS file using a Babel-
+      // compatible transform (i.e. "__esModule" has not been set), then set
+      // "default" to the CommonJS "module.exports" for node compatibility.
+      isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+      mod
+    ));
+    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var loadSts_exports = {};
+    __export2(loadSts_exports, {
+      getDefaultRoleAssumer: () => import_client_sts.getDefaultRoleAssumer
+    });
+    var import_client_sts;
+    var init_loadSts = __esm2({
+      "src/loadSts.ts"() {
+        import_client_sts = require_dist_cjs57();
+      }
+    });
+    var src_exports = {};
+    __export2(src_exports, {
+      fromIni: () => fromIni
+    });
+    module2.exports = __toCommonJS2(src_exports);
+    var import_shared_ini_file_loader = require_dist_cjs36();
+    var import_property_provider = require_dist_cjs25();
+    var resolveCredentialSource = /* @__PURE__ */ __name((credentialSource, profileName) => {
+      const sourceProvidersMap = {
+        EcsContainer: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs45())).then(({ fromContainerMetadata }) => fromContainerMetadata(options)),
+        Ec2InstanceMetadata: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs45())).then(({ fromInstanceMetadata }) => fromInstanceMetadata(options)),
+        Environment: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs47())).then(({ fromEnv }) => fromEnv(options))
+      };
+      if (credentialSource in sourceProvidersMap) {
+        return sourceProvidersMap[credentialSource];
+      } else {
+        throw new import_property_provider.CredentialsProviderError(
+          `Unsupported credential source in profile ${profileName}. Got ${credentialSource}, expected EcsContainer or Ec2InstanceMetadata or Environment.`
+        );
+      }
+    }, "resolveCredentialSource");
+    var isAssumeRoleProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.role_arn === "string" && ["undefined", "string"].indexOf(typeof arg.role_session_name) > -1 && ["undefined", "string"].indexOf(typeof arg.external_id) > -1 && ["undefined", "string"].indexOf(typeof arg.mfa_serial) > -1 && (isAssumeRoleWithSourceProfile(arg) || isAssumeRoleWithProviderProfile(arg)), "isAssumeRoleProfile");
+    var isAssumeRoleWithSourceProfile = /* @__PURE__ */ __name((arg) => typeof arg.source_profile === "string" && typeof arg.credential_source === "undefined", "isAssumeRoleWithSourceProfile");
+    var isAssumeRoleWithProviderProfile = /* @__PURE__ */ __name((arg) => typeof arg.credential_source === "string" && typeof arg.source_profile === "undefined", "isAssumeRoleWithProviderProfile");
+    var resolveAssumeRoleCredentials = /* @__PURE__ */ __name(async (profileName, profiles, options, visitedProfiles = {}) => {
+      var _a;
+      (_a = options.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-ini", "resolveAssumeRoleCredentials (STS)");
+      const data = profiles[profileName];
+      if (!options.roleAssumer) {
+        const { getDefaultRoleAssumer: getDefaultRoleAssumer2 } = await Promise.resolve().then(() => (init_loadSts(), loadSts_exports));
+        options.roleAssumer = getDefaultRoleAssumer2(
+          {
+            ...options.clientConfig,
+            credentialProviderLogger: options.logger,
+            parentClientConfig: options == null ? void 0 : options.parentClientConfig
+          },
+          options.clientPlugins
+        );
+      }
+      const { source_profile } = data;
+      if (source_profile && source_profile in visitedProfiles) {
+        throw new import_property_provider.CredentialsProviderError(
+          `Detected a cycle attempting to resolve credentials for profile ${(0, import_shared_ini_file_loader.getProfileName)(options)}. Profiles visited: ` + Object.keys(visitedProfiles).join(", "),
+          false
+        );
+      }
+      const sourceCredsProvider = source_profile ? resolveProfileData(source_profile, profiles, options, {
+        ...visitedProfiles,
+        [source_profile]: true
+      }) : (await resolveCredentialSource(data.credential_source, profileName)(options))();
+      const params = {
+        RoleArn: data.role_arn,
+        RoleSessionName: data.role_session_name || `aws-sdk-js-${Date.now()}`,
+        ExternalId: data.external_id,
+        DurationSeconds: parseInt(data.duration_seconds || "3600", 10)
+      };
+      const { mfa_serial } = data;
+      if (mfa_serial) {
+        if (!options.mfaCodeProvider) {
+          throw new import_property_provider.CredentialsProviderError(
+            `Profile ${profileName} requires multi-factor authentication, but no MFA code callback was provided.`,
+            false
+          );
+        }
+        params.SerialNumber = mfa_serial;
+        params.TokenCode = await options.mfaCodeProvider(mfa_serial);
+      }
+      const sourceCreds = await sourceCredsProvider;
+      return options.roleAssumer(sourceCreds, params);
+    }, "resolveAssumeRoleCredentials");
+    var isProcessProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.credential_process === "string", "isProcessProfile");
+    var resolveProcessCredentials = /* @__PURE__ */ __name(async (options, profile) => Promise.resolve().then(() => __toESM2(require_dist_cjs58())).then(
+      ({ fromProcess }) => fromProcess({
+        ...options,
+        profile
+      })()
+    ), "resolveProcessCredentials");
+    var resolveSsoCredentials = /* @__PURE__ */ __name(async (profile, options = {}) => {
+      const { fromSSO } = await Promise.resolve().then(() => __toESM2(require_dist_cjs56()));
+      return fromSSO({
+        profile,
+        logger: options.logger
+      })();
+    }, "resolveSsoCredentials");
+    var isSsoProfile = /* @__PURE__ */ __name((arg) => arg && (typeof arg.sso_start_url === "string" || typeof arg.sso_account_id === "string" || typeof arg.sso_session === "string" || typeof arg.sso_region === "string" || typeof arg.sso_role_name === "string"), "isSsoProfile");
+    var isStaticCredsProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.aws_access_key_id === "string" && typeof arg.aws_secret_access_key === "string" && ["undefined", "string"].indexOf(typeof arg.aws_session_token) > -1, "isStaticCredsProfile");
+    var resolveStaticCredentials = /* @__PURE__ */ __name((profile, options) => {
+      var _a;
+      (_a = options == null ? void 0 : options.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-ini", "resolveStaticCredentials");
+      return Promise.resolve({
+        accessKeyId: profile.aws_access_key_id,
+        secretAccessKey: profile.aws_secret_access_key,
+        sessionToken: profile.aws_session_token,
+        credentialScope: profile.aws_credential_scope
+      });
+    }, "resolveStaticCredentials");
+    var isWebIdentityProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.web_identity_token_file === "string" && typeof arg.role_arn === "string" && ["undefined", "string"].indexOf(typeof arg.role_session_name) > -1, "isWebIdentityProfile");
+    var resolveWebIdentityCredentials = /* @__PURE__ */ __name(async (profile, options) => Promise.resolve().then(() => __toESM2(require_dist_cjs59())).then(
+      ({ fromTokenFile: fromTokenFile2 }) => fromTokenFile2({
+        webIdentityTokenFile: profile.web_identity_token_file,
+        roleArn: profile.role_arn,
+        roleSessionName: profile.role_session_name,
+        roleAssumerWithWebIdentity: options.roleAssumerWithWebIdentity,
+        logger: options.logger,
+        parentClientConfig: options.parentClientConfig
+      })()
+    ), "resolveWebIdentityCredentials");
+    var resolveProfileData = /* @__PURE__ */ __name(async (profileName, profiles, options, visitedProfiles = {}) => {
+      const data = profiles[profileName];
+      if (Object.keys(visitedProfiles).length > 0 && isStaticCredsProfile(data)) {
+        return resolveStaticCredentials(data, options);
+      }
+      if (isAssumeRoleProfile(data)) {
+        return resolveAssumeRoleCredentials(profileName, profiles, options, visitedProfiles);
+      }
+      if (isStaticCredsProfile(data)) {
+        return resolveStaticCredentials(data, options);
+      }
+      if (isWebIdentityProfile(data)) {
+        return resolveWebIdentityCredentials(data, options);
+      }
+      if (isProcessProfile(data)) {
+        return resolveProcessCredentials(options, profileName);
+      }
+      if (isSsoProfile(data)) {
+        return await resolveSsoCredentials(profileName, options);
+      }
+      throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} could not be found or parsed in shared credentials file.`);
+    }, "resolveProfileData");
+    var fromIni = /* @__PURE__ */ __name((init = {}) => async () => {
+      var _a;
+      (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-ini", "fromIni");
+      const profiles = await (0, import_shared_ini_file_loader.parseKnownFiles)(init);
+      return resolveProfileData((0, import_shared_ini_file_loader.getProfileName)(init), profiles, init);
+    }, "fromIni");
+  }
+});
+
+// ../../node_modules/@aws-sdk/credential-provider-node/dist-cjs/index.js
+var require_dist_cjs61 = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-node/dist-cjs/index.js"(exports2, module2) {
+    var __create2 = Object.create;
+    var __defProp2 = Object.defineProperty;
+    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
+    var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __getProtoOf2 = Object.getPrototypeOf;
+    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
+    var __export2 = (target, all) => {
+      for (var name in all)
+        __defProp2(target, name, { get: all[name], enumerable: true });
+    };
+    var __copyProps2 = (to, from, except, desc) => {
+      if (from && typeof from === "object" || typeof from === "function") {
+        for (let key of __getOwnPropNames2(from))
+          if (!__hasOwnProp2.call(to, key) && key !== except)
+            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
+      }
+      return to;
+    };
+    var __toESM2 = (mod, isNodeMode, target) => (target = mod != null ? __create2(__getProtoOf2(mod)) : {}, __copyProps2(
+      // If the importer is in node compatibility mode or this is not an ESM
+      // file that has been converted to a CommonJS file using a Babel-
+      // compatible transform (i.e. "__esModule" has not been set), then set
+      // "default" to the CommonJS "module.exports" for node compatibility.
+      isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+      mod
+    ));
+    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var src_exports = {};
+    __export2(src_exports, {
+      credentialsTreatedAsExpired: () => credentialsTreatedAsExpired,
+      credentialsWillNeedRefresh: () => credentialsWillNeedRefresh,
+      defaultProvider: () => defaultProvider
+    });
+    module2.exports = __toCommonJS2(src_exports);
+    var import_shared_ini_file_loader = require_dist_cjs36();
+    var import_property_provider = require_dist_cjs25();
+    var ENV_IMDS_DISABLED = "AWS_EC2_METADATA_DISABLED";
+    var remoteProvider = /* @__PURE__ */ __name(async (init) => {
+      var _a, _b;
+      const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs45()));
+      if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
+        (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "remoteProvider::fromHttp/fromContainerMetadata");
+        const { fromHttp } = await Promise.resolve().then(() => __toESM2(require_dist_cjs46()));
+        return (0, import_property_provider.chain)(fromHttp(init), fromContainerMetadata(init));
+      }
+      if (process.env[ENV_IMDS_DISABLED]) {
+        return async () => {
+          throw new import_property_provider.CredentialsProviderError("EC2 Instance Metadata Service access disabled");
+        };
+      }
+      (_b = init.logger) == null ? void 0 : _b.debug("@aws-sdk/credential-provider-node", "remoteProvider::fromInstanceMetadata");
+      return fromInstanceMetadata(init);
+    }, "remoteProvider");
+    var defaultProvider = /* @__PURE__ */ __name((init = {}) => (0, import_property_provider.memoize)(
+      (0, import_property_provider.chain)(
+        ...init.profile || process.env[import_shared_ini_file_loader.ENV_PROFILE] ? [] : [
+          async () => {
+            var _a;
+            (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "defaultProvider::fromEnv");
+            const { fromEnv } = await Promise.resolve().then(() => __toESM2(require_dist_cjs47()));
+            return fromEnv(init)();
+          }
+        ],
+        async () => {
+          var _a;
+          (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "defaultProvider::fromSSO");
+          const { ssoStartUrl, ssoAccountId, ssoRegion, ssoRoleName, ssoSession } = init;
+          if (!ssoStartUrl && !ssoAccountId && !ssoRegion && !ssoRoleName && !ssoSession) {
+            throw new import_property_provider.CredentialsProviderError(
+              "Skipping SSO provider in default chain (inputs do not include SSO fields)."
+            );
+          }
+          const { fromSSO } = await Promise.resolve().then(() => __toESM2(require_dist_cjs56()));
+          return fromSSO(init)();
+        },
+        async () => {
+          var _a;
+          (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "defaultProvider::fromIni");
+          const { fromIni } = await Promise.resolve().then(() => __toESM2(require_dist_cjs60()));
+          return fromIni(init)();
+        },
+        async () => {
+          var _a;
+          (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "defaultProvider::fromProcess");
+          const { fromProcess } = await Promise.resolve().then(() => __toESM2(require_dist_cjs58()));
+          return fromProcess(init)();
+        },
+        async () => {
+          var _a;
+          (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "defaultProvider::fromTokenFile");
+          const { fromTokenFile: fromTokenFile2 } = await Promise.resolve().then(() => __toESM2(require_dist_cjs59()));
+          return fromTokenFile2(init)();
+        },
+        async () => {
+          var _a;
+          (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "defaultProvider::remoteProvider");
+          return (await remoteProvider(init))();
+        },
+        async () => {
+          throw new import_property_provider.CredentialsProviderError("Could not load credentials from any providers", false);
+        }
+      ),
+      credentialsTreatedAsExpired,
+      credentialsWillNeedRefresh
+    ), "defaultProvider");
+    var credentialsWillNeedRefresh = /* @__PURE__ */ __name((credentials) => (credentials == null ? void 0 : credentials.expiration) !== void 0, "credentialsWillNeedRefresh");
+    var credentialsTreatedAsExpired = /* @__PURE__ */ __name((credentials) => (credentials == null ? void 0 : credentials.expiration) !== void 0 && credentials.expiration.getTime() - Date.now() < 3e5, "credentialsTreatedAsExpired");
   }
 });
 
 // ../../node_modules/@aws-sdk/middleware-bucket-endpoint/dist-cjs/index.js
-var require_dist_cjs60 = __commonJS({
+var require_dist_cjs62 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-bucket-endpoint/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -35750,7 +36058,7 @@ var require_dist_cjs60 = __commonJS({
 });
 
 // ../../node_modules/@smithy/eventstream-serde-universal/dist-cjs/index.js
-var require_dist_cjs61 = __commonJS({
+var require_dist_cjs63 = __commonJS({
   "../../node_modules/@smithy/eventstream-serde-universal/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -35919,7 +36227,7 @@ var require_dist_cjs61 = __commonJS({
 });
 
 // ../../node_modules/@smithy/eventstream-serde-node/dist-cjs/index.js
-var require_dist_cjs62 = __commonJS({
+var require_dist_cjs64 = __commonJS({
   "../../node_modules/@smithy/eventstream-serde-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -35945,7 +36253,7 @@ var require_dist_cjs62 = __commonJS({
       eventStreamSerdeProvider: () => eventStreamSerdeProvider
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_eventstream_serde_universal = require_dist_cjs61();
+    var import_eventstream_serde_universal = require_dist_cjs63();
     var import_stream = require("stream");
     async function* readabletoIterable(readStream) {
       let streamEnded = false;
@@ -35996,7 +36304,7 @@ var require_dist_cjs62 = __commonJS({
 });
 
 // ../../node_modules/@smithy/hash-stream-node/dist-cjs/index.js
-var require_dist_cjs63 = __commonJS({
+var require_dist_cjs65 = __commonJS({
   "../../node_modules/@smithy/hash-stream-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -36085,7 +36393,7 @@ var require_dist_cjs63 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-cjs/index.js
-var require_dist_cjs64 = __commonJS({
+var require_dist_cjs66 = __commonJS({
   "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -36181,7 +36489,7 @@ For more information please go to https://github.com/aws/aws-sdk-js-v3#functiona
 });
 
 // ../../node_modules/@aws-sdk/client-s3/dist-cjs/endpoint/ruleset.js
-var require_ruleset3 = __commonJS({
+var require_ruleset4 = __commonJS({
   "../../node_modules/@aws-sdk/client-s3/dist-cjs/endpoint/ruleset.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -36365,13 +36673,13 @@ var require_ruleset3 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-s3/dist-cjs/endpoint/endpointResolver.js
-var require_endpointResolver3 = __commonJS({
+var require_endpointResolver4 = __commonJS({
   "../../node_modules/@aws-sdk/client-s3/dist-cjs/endpoint/endpointResolver.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.defaultEndpointResolver = void 0;
     var util_endpoints_1 = require_dist_cjs27();
-    var ruleset_1 = require_ruleset3();
+    var ruleset_1 = require_ruleset4();
     var defaultEndpointResolver = (endpointParams, context = {}) => {
       return (0, util_endpoints_1.resolveEndpoint)(ruleset_1.ruleSet, {
         endpointParams,
@@ -36383,18 +36691,18 @@ var require_endpointResolver3 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-s3/dist-cjs/runtimeConfig.shared.js
-var require_runtimeConfig_shared3 = __commonJS({
+var require_runtimeConfig_shared4 = __commonJS({
   "../../node_modules/@aws-sdk/client-s3/dist-cjs/runtimeConfig.shared.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
-    var signature_v4_multi_region_1 = require_dist_cjs64();
+    var signature_v4_multi_region_1 = require_dist_cjs66();
     var smithy_client_1 = require_dist_cjs16();
     var url_parser_1 = require_dist_cjs39();
     var util_base64_1 = require_dist_cjs10();
     var util_stream_1 = require_dist_cjs15();
     var util_utf8_1 = require_dist_cjs11();
-    var endpointResolver_1 = require_endpointResolver3();
+    var endpointResolver_1 = require_endpointResolver4();
     var getRuntimeConfig = (config) => {
       return {
         apiVersion: "2006-03-01",
@@ -36420,31 +36728,30 @@ var require_runtimeConfig_shared3 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-s3/dist-cjs/runtimeConfig.js
-var require_runtimeConfig3 = __commonJS({
+var require_runtimeConfig4 = __commonJS({
   "../../node_modules/@aws-sdk/client-s3/dist-cjs/runtimeConfig.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es62(), __toCommonJS(tslib_es6_exports2));
     var package_json_1 = tslib_1.__importDefault(require_package());
-    var client_sts_1 = require_dist_cjs59();
     var core_1 = require_dist_cjs44();
-    var credential_provider_node_1 = require_dist_cjs58();
-    var middleware_bucket_endpoint_1 = require_dist_cjs60();
+    var credential_provider_node_1 = require_dist_cjs61();
+    var middleware_bucket_endpoint_1 = require_dist_cjs62();
     var middleware_sdk_s3_1 = require_dist_cjs24();
-    var util_user_agent_node_1 = require_dist_cjs47();
+    var util_user_agent_node_1 = require_dist_cjs48();
     var config_resolver_1 = require_dist_cjs30();
-    var eventstream_serde_node_1 = require_dist_cjs62();
-    var hash_node_1 = require_dist_cjs48();
-    var hash_stream_node_1 = require_dist_cjs63();
+    var eventstream_serde_node_1 = require_dist_cjs64();
+    var hash_node_1 = require_dist_cjs49();
+    var hash_stream_node_1 = require_dist_cjs65();
     var middleware_retry_1 = require_dist_cjs35();
     var node_config_provider_1 = require_dist_cjs37();
     var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs49();
+    var util_body_length_node_1 = require_dist_cjs50();
     var util_retry_1 = require_dist_cjs34();
-    var runtimeConfig_shared_1 = require_runtimeConfig_shared3();
+    var runtimeConfig_shared_1 = require_runtimeConfig_shared4();
     var smithy_client_1 = require_dist_cjs16();
-    var util_defaults_mode_node_1 = require_dist_cjs50();
+    var util_defaults_mode_node_1 = require_dist_cjs51();
     var smithy_client_2 = require_dist_cjs16();
     var getRuntimeConfig = (config) => {
       (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
@@ -36458,7 +36765,7 @@ var require_runtimeConfig3 = __commonJS({
         runtime: "node",
         defaultsMode,
         bodyLengthChecker: config?.bodyLengthChecker ?? util_body_length_node_1.calculateBodyLength,
-        credentialDefaultProvider: config?.credentialDefaultProvider ?? (0, client_sts_1.decorateDefaultCredentialProvider)(credential_provider_node_1.defaultProvider),
+        credentialDefaultProvider: config?.credentialDefaultProvider ?? credential_provider_node_1.defaultProvider,
         defaultUserAgentProvider: config?.defaultUserAgentProvider ?? (0, util_user_agent_node_1.defaultUserAgent)({ serviceId: clientSharedValues.serviceId, clientVersion: package_json_1.default.version }),
         disableS3ExpressSessionAuth: config?.disableS3ExpressSessionAuth ?? (0, node_config_provider_1.loadConfig)(middleware_sdk_s3_1.NODE_DISABLE_S3_EXPRESS_SESSION_AUTH_OPTIONS),
         eventStreamSerdeProvider: config?.eventStreamSerdeProvider ?? eventstream_serde_node_1.eventStreamSerdeProvider,
@@ -36484,7 +36791,7 @@ var require_runtimeConfig3 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/middleware-ssec/dist-cjs/index.js
-var require_dist_cjs65 = __commonJS({
+var require_dist_cjs67 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-ssec/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -36567,7 +36874,7 @@ var require_dist_cjs65 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/middleware-location-constraint/dist-cjs/index.js
-var require_dist_cjs66 = __commonJS({
+var require_dist_cjs68 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-location-constraint/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -37353,7 +37660,7 @@ var require_create_read_stream_on_buffer = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-cjs/index.js
-var require_dist_cjs67 = __commonJS({
+var require_dist_cjs69 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -37633,7 +37940,7 @@ var require_dist_cjs67 = __commonJS({
 });
 
 // ../../node_modules/@smithy/util-waiter/dist-cjs/index.js
-var require_dist_cjs68 = __commonJS({
+var require_dist_cjs70 = __commonJS({
   "../../node_modules/@smithy/util-waiter/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -37782,7 +38089,7 @@ var require_dist_cjs68 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-s3/dist-cjs/index.js
-var require_dist_cjs69 = __commonJS({
+var require_dist_cjs71 = __commonJS({
   "../../node_modules/@aws-sdk/client-s3/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -40907,7 +41214,7 @@ var require_dist_cjs69 = __commonJS({
     }, "se_WriteGetObjectResponseCommand");
     var de_AbortMultipartUploadCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_AbortMultipartUploadCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -40916,28 +41223,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_AbortMultipartUploadCommand");
-    var de_AbortMultipartUploadCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NoSuchUpload":
-        case "com.amazonaws.s3#NoSuchUpload":
-          throw await de_NoSuchUploadRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_AbortMultipartUploadCommandError");
     var de_CompleteMultipartUploadCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CompleteMultipartUploadCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -40975,22 +41263,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_CompleteMultipartUploadCommand");
-    var de_CompleteMultipartUploadCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_CompleteMultipartUploadCommandError");
     var de_CopyObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CopyObjectCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -41009,28 +41284,9 @@ var require_dist_cjs69 = __commonJS({
       contents.CopyObjectResult = de_CopyObjectResult(data, context);
       return contents;
     }, "de_CopyObjectCommand");
-    var de_CopyObjectCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "ObjectNotInActiveTierError":
-        case "com.amazonaws.s3#ObjectNotInActiveTierError":
-          throw await de_ObjectNotInActiveTierErrorRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_CopyObjectCommandError");
     var de_CreateBucketCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CreateBucketCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -41039,31 +41295,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_CreateBucketCommand");
-    var de_CreateBucketCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "BucketAlreadyExists":
-        case "com.amazonaws.s3#BucketAlreadyExists":
-          throw await de_BucketAlreadyExistsRes(parsedOutput, context);
-        case "BucketAlreadyOwnedByYou":
-        case "com.amazonaws.s3#BucketAlreadyOwnedByYou":
-          throw await de_BucketAlreadyOwnedByYouRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_CreateBucketCommandError");
     var de_CreateMultipartUploadCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CreateMultipartUploadCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -41093,22 +41327,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_CreateMultipartUploadCommand");
-    var de_CreateMultipartUploadCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_CreateMultipartUploadCommandError");
     var de_CreateSessionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_CreateSessionCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41119,28 +41340,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_CreateSessionCommand");
-    var de_CreateSessionCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NoSuchBucket":
-        case "com.amazonaws.s3#NoSuchBucket":
-          throw await de_NoSuchBucketRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_CreateSessionCommandError");
     var de_DeleteBucketCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41148,22 +41350,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketCommand");
-    var de_DeleteBucketCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketCommandError");
     var de_DeleteBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketAnalyticsConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41171,22 +41360,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketAnalyticsConfigurationCommand");
-    var de_DeleteBucketAnalyticsConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketAnalyticsConfigurationCommandError");
     var de_DeleteBucketCorsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketCorsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41194,22 +41370,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketCorsCommand");
-    var de_DeleteBucketCorsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketCorsCommandError");
     var de_DeleteBucketEncryptionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketEncryptionCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41217,22 +41380,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketEncryptionCommand");
-    var de_DeleteBucketEncryptionCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketEncryptionCommandError");
     var de_DeleteBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketIntelligentTieringConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41240,22 +41390,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketIntelligentTieringConfigurationCommand");
-    var de_DeleteBucketIntelligentTieringConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketIntelligentTieringConfigurationCommandError");
     var de_DeleteBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketInventoryConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41263,22 +41400,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketInventoryConfigurationCommand");
-    var de_DeleteBucketInventoryConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketInventoryConfigurationCommandError");
     var de_DeleteBucketLifecycleCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketLifecycleCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41286,22 +41410,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketLifecycleCommand");
-    var de_DeleteBucketLifecycleCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketLifecycleCommandError");
     var de_DeleteBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketMetricsConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41309,22 +41420,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketMetricsConfigurationCommand");
-    var de_DeleteBucketMetricsConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketMetricsConfigurationCommandError");
     var de_DeleteBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketOwnershipControlsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41332,22 +41430,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketOwnershipControlsCommand");
-    var de_DeleteBucketOwnershipControlsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketOwnershipControlsCommandError");
     var de_DeleteBucketPolicyCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketPolicyCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41355,22 +41440,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketPolicyCommand");
-    var de_DeleteBucketPolicyCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketPolicyCommandError");
     var de_DeleteBucketReplicationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketReplicationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41378,22 +41450,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketReplicationCommand");
-    var de_DeleteBucketReplicationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketReplicationCommandError");
     var de_DeleteBucketTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketTaggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41401,22 +41460,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketTaggingCommand");
-    var de_DeleteBucketTaggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketTaggingCommandError");
     var de_DeleteBucketWebsiteCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteBucketWebsiteCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41424,22 +41470,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketWebsiteCommand");
-    var de_DeleteBucketWebsiteCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteBucketWebsiteCommandError");
     var de_DeleteObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteObjectCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -41450,22 +41483,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteObjectCommand");
-    var de_DeleteObjectCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteObjectCommandError");
     var de_DeleteObjectsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_DeleteObjectsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -41484,22 +41504,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_DeleteObjectsCommand");
-    var de_DeleteObjectsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteObjectsCommandError");
     var de_DeleteObjectTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeleteObjectTaggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -41508,22 +41515,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteObjectTaggingCommand");
-    var de_DeleteObjectTaggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeleteObjectTaggingCommandError");
     var de_DeletePublicAccessBlockCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
-        return de_DeletePublicAccessBlockCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41531,22 +41525,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_DeletePublicAccessBlockCommand");
-    var de_DeletePublicAccessBlockCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_DeletePublicAccessBlockCommandError");
     var de_GetBucketAccelerateConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketAccelerateConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -41558,22 +41539,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketAccelerateConfigurationCommand");
-    var de_GetBucketAccelerateConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketAccelerateConfigurationCommandError");
     var de_GetBucketAclCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketAclCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41589,22 +41557,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketAclCommand");
-    var de_GetBucketAclCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketAclCommandError");
     var de_GetBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketAnalyticsConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41613,22 +41568,9 @@ var require_dist_cjs69 = __commonJS({
       contents.AnalyticsConfiguration = de_AnalyticsConfiguration(data, context);
       return contents;
     }, "de_GetBucketAnalyticsConfigurationCommand");
-    var de_GetBucketAnalyticsConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketAnalyticsConfigurationCommandError");
     var de_GetBucketCorsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketCorsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41641,22 +41583,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketCorsCommand");
-    var de_GetBucketCorsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketCorsCommandError");
     var de_GetBucketEncryptionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketEncryptionCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41665,22 +41594,9 @@ var require_dist_cjs69 = __commonJS({
       contents.ServerSideEncryptionConfiguration = de_ServerSideEncryptionConfiguration(data, context);
       return contents;
     }, "de_GetBucketEncryptionCommand");
-    var de_GetBucketEncryptionCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketEncryptionCommandError");
     var de_GetBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketIntelligentTieringConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41689,22 +41605,9 @@ var require_dist_cjs69 = __commonJS({
       contents.IntelligentTieringConfiguration = de_IntelligentTieringConfiguration(data, context);
       return contents;
     }, "de_GetBucketIntelligentTieringConfigurationCommand");
-    var de_GetBucketIntelligentTieringConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketIntelligentTieringConfigurationCommandError");
     var de_GetBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketInventoryConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41713,22 +41616,9 @@ var require_dist_cjs69 = __commonJS({
       contents.InventoryConfiguration = de_InventoryConfiguration(data, context);
       return contents;
     }, "de_GetBucketInventoryConfigurationCommand");
-    var de_GetBucketInventoryConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketInventoryConfigurationCommandError");
     var de_GetBucketLifecycleConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketLifecycleConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41741,22 +41631,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketLifecycleConfigurationCommand");
-    var de_GetBucketLifecycleConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketLifecycleConfigurationCommandError");
     var de_GetBucketLocationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketLocationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41767,22 +41644,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketLocationCommand");
-    var de_GetBucketLocationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketLocationCommandError");
     var de_GetBucketLoggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketLoggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41793,22 +41657,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketLoggingCommand");
-    var de_GetBucketLoggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketLoggingCommandError");
     var de_GetBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketMetricsConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41817,22 +41668,9 @@ var require_dist_cjs69 = __commonJS({
       contents.MetricsConfiguration = de_MetricsConfiguration(data, context);
       return contents;
     }, "de_GetBucketMetricsConfigurationCommand");
-    var de_GetBucketMetricsConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketMetricsConfigurationCommandError");
     var de_GetBucketNotificationConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketNotificationConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41858,22 +41696,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketNotificationConfigurationCommand");
-    var de_GetBucketNotificationConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketNotificationConfigurationCommandError");
     var de_GetBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketOwnershipControlsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41882,22 +41707,9 @@ var require_dist_cjs69 = __commonJS({
       contents.OwnershipControls = de_OwnershipControls(data, context);
       return contents;
     }, "de_GetBucketOwnershipControlsCommand");
-    var de_GetBucketOwnershipControlsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketOwnershipControlsCommandError");
     var de_GetBucketPolicyCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketPolicyCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41906,22 +41718,9 @@ var require_dist_cjs69 = __commonJS({
       contents.Policy = (0, import_smithy_client.expectString)(data);
       return contents;
     }, "de_GetBucketPolicyCommand");
-    var de_GetBucketPolicyCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketPolicyCommandError");
     var de_GetBucketPolicyStatusCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketPolicyStatusCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41930,22 +41729,9 @@ var require_dist_cjs69 = __commonJS({
       contents.PolicyStatus = de_PolicyStatus(data, context);
       return contents;
     }, "de_GetBucketPolicyStatusCommand");
-    var de_GetBucketPolicyStatusCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketPolicyStatusCommandError");
     var de_GetBucketReplicationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketReplicationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41954,22 +41740,9 @@ var require_dist_cjs69 = __commonJS({
       contents.ReplicationConfiguration = de_ReplicationConfiguration(data, context);
       return contents;
     }, "de_GetBucketReplicationCommand");
-    var de_GetBucketReplicationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketReplicationCommandError");
     var de_GetBucketRequestPaymentCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketRequestPaymentCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -41980,22 +41753,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketRequestPaymentCommand");
-    var de_GetBucketRequestPaymentCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketRequestPaymentCommandError");
     var de_GetBucketTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketTaggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42008,22 +41768,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketTaggingCommand");
-    var de_GetBucketTaggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketTaggingCommandError");
     var de_GetBucketVersioningCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketVersioningCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42037,22 +41784,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketVersioningCommand");
-    var de_GetBucketVersioningCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketVersioningCommandError");
     var de_GetBucketWebsiteCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetBucketWebsiteCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42074,22 +41808,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetBucketWebsiteCommand");
-    var de_GetBucketWebsiteCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetBucketWebsiteCommandError");
     var de_GetObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42144,31 +41865,9 @@ var require_dist_cjs69 = __commonJS({
       contents.Body = data;
       return contents;
     }, "de_GetObjectCommand");
-    var de_GetObjectCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "InvalidObjectState":
-        case "com.amazonaws.s3#InvalidObjectState":
-          throw await de_InvalidObjectStateRes(parsedOutput, context);
-        case "NoSuchKey":
-        case "com.amazonaws.s3#NoSuchKey":
-          throw await de_NoSuchKeyRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_GetObjectCommandError");
     var de_GetObjectAclCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectAclCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42185,28 +41884,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetObjectAclCommand");
-    var de_GetObjectAclCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NoSuchKey":
-        case "com.amazonaws.s3#NoSuchKey":
-          throw await de_NoSuchKeyRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_GetObjectAclCommandError");
     var de_GetObjectAttributesCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectAttributesCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42233,28 +41913,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetObjectAttributesCommand");
-    var de_GetObjectAttributesCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NoSuchKey":
-        case "com.amazonaws.s3#NoSuchKey":
-          throw await de_NoSuchKeyRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_GetObjectAttributesCommandError");
     var de_GetObjectLegalHoldCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectLegalHoldCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42263,22 +41924,9 @@ var require_dist_cjs69 = __commonJS({
       contents.LegalHold = de_ObjectLockLegalHold(data, context);
       return contents;
     }, "de_GetObjectLegalHoldCommand");
-    var de_GetObjectLegalHoldCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetObjectLegalHoldCommandError");
     var de_GetObjectLockConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectLockConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42287,22 +41935,9 @@ var require_dist_cjs69 = __commonJS({
       contents.ObjectLockConfiguration = de_ObjectLockConfiguration(data, context);
       return contents;
     }, "de_GetObjectLockConfigurationCommand");
-    var de_GetObjectLockConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetObjectLockConfigurationCommandError");
     var de_GetObjectRetentionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectRetentionCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42311,22 +41946,9 @@ var require_dist_cjs69 = __commonJS({
       contents.Retention = de_ObjectLockRetention(data, context);
       return contents;
     }, "de_GetObjectRetentionCommand");
-    var de_GetObjectRetentionCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetObjectRetentionCommandError");
     var de_GetObjectTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectTaggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42340,22 +41962,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_GetObjectTaggingCommand");
-    var de_GetObjectTaggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetObjectTaggingCommandError");
     var de_GetObjectTorrentCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetObjectTorrentCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42366,22 +41975,9 @@ var require_dist_cjs69 = __commonJS({
       contents.Body = data;
       return contents;
     }, "de_GetObjectTorrentCommand");
-    var de_GetObjectTorrentCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetObjectTorrentCommandError");
     var de_GetPublicAccessBlockCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_GetPublicAccessBlockCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42390,22 +41986,9 @@ var require_dist_cjs69 = __commonJS({
       contents.PublicAccessBlockConfiguration = de_PublicAccessBlockConfiguration(data, context);
       return contents;
     }, "de_GetPublicAccessBlockCommand");
-    var de_GetPublicAccessBlockCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_GetPublicAccessBlockCommandError");
     var de_HeadBucketCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_HeadBucketCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42417,28 +42000,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_HeadBucketCommand");
-    var de_HeadBucketCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NotFound":
-        case "com.amazonaws.s3#NotFound":
-          throw await de_NotFoundRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_HeadBucketCommandError");
     var de_HeadObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_HeadObjectCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42490,28 +42054,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_HeadObjectCommand");
-    var de_HeadObjectCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NotFound":
-        case "com.amazonaws.s3#NotFound":
-          throw await de_NotFoundRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_HeadObjectCommandError");
     var de_ListBucketAnalyticsConfigurationsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListBucketAnalyticsConfigurationsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42533,22 +42078,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListBucketAnalyticsConfigurationsCommand");
-    var de_ListBucketAnalyticsConfigurationsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListBucketAnalyticsConfigurationsCommandError");
     var de_ListBucketIntelligentTieringConfigurationsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListBucketIntelligentTieringConfigurationsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42570,22 +42102,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListBucketIntelligentTieringConfigurationsCommand");
-    var de_ListBucketIntelligentTieringConfigurationsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListBucketIntelligentTieringConfigurationsCommandError");
     var de_ListBucketInventoryConfigurationsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListBucketInventoryConfigurationsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42607,22 +42126,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListBucketInventoryConfigurationsCommand");
-    var de_ListBucketInventoryConfigurationsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListBucketInventoryConfigurationsCommandError");
     var de_ListBucketMetricsConfigurationsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListBucketMetricsConfigurationsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42644,22 +42150,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListBucketMetricsConfigurationsCommand");
-    var de_ListBucketMetricsConfigurationsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListBucketMetricsConfigurationsCommandError");
     var de_ListBucketsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListBucketsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42675,22 +42168,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListBucketsCommand");
-    var de_ListBucketsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListBucketsCommandError");
     var de_ListDirectoryBucketsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListDirectoryBucketsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -42706,22 +42186,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListDirectoryBucketsCommand");
-    var de_ListDirectoryBucketsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListDirectoryBucketsCommandError");
     var de_ListMultipartUploadsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListMultipartUploadsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42770,22 +42237,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListMultipartUploadsCommand");
-    var de_ListMultipartUploadsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListMultipartUploadsCommandError");
     var de_ListObjectsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListObjectsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42828,28 +42282,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListObjectsCommand");
-    var de_ListObjectsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NoSuchBucket":
-        case "com.amazonaws.s3#NoSuchBucket":
-          throw await de_NoSuchBucketRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_ListObjectsCommandError");
     var de_ListObjectsV2Command = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListObjectsV2CommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42898,28 +42333,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListObjectsV2Command");
-    var de_ListObjectsV2CommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NoSuchBucket":
-        case "com.amazonaws.s3#NoSuchBucket":
-          throw await de_NoSuchBucketRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_ListObjectsV2CommandError");
     var de_ListObjectVersionsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListObjectVersionsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -42973,22 +42389,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListObjectVersionsCommand");
-    var de_ListObjectVersionsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListObjectVersionsCommandError");
     var de_ListPartsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_ListPartsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43040,22 +42443,9 @@ var require_dist_cjs69 = __commonJS({
       }
       return contents;
     }, "de_ListPartsCommand");
-    var de_ListPartsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_ListPartsCommandError");
     var de_PutBucketAccelerateConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketAccelerateConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43063,22 +42453,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketAccelerateConfigurationCommand");
-    var de_PutBucketAccelerateConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketAccelerateConfigurationCommandError");
     var de_PutBucketAclCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketAclCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43086,22 +42463,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketAclCommand");
-    var de_PutBucketAclCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketAclCommandError");
     var de_PutBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketAnalyticsConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43109,22 +42473,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketAnalyticsConfigurationCommand");
-    var de_PutBucketAnalyticsConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketAnalyticsConfigurationCommandError");
     var de_PutBucketCorsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketCorsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43132,22 +42483,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketCorsCommand");
-    var de_PutBucketCorsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketCorsCommandError");
     var de_PutBucketEncryptionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketEncryptionCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43155,22 +42493,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketEncryptionCommand");
-    var de_PutBucketEncryptionCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketEncryptionCommandError");
     var de_PutBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketIntelligentTieringConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43178,22 +42503,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketIntelligentTieringConfigurationCommand");
-    var de_PutBucketIntelligentTieringConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketIntelligentTieringConfigurationCommandError");
     var de_PutBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketInventoryConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43201,22 +42513,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketInventoryConfigurationCommand");
-    var de_PutBucketInventoryConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketInventoryConfigurationCommandError");
     var de_PutBucketLifecycleConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketLifecycleConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43224,22 +42523,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketLifecycleConfigurationCommand");
-    var de_PutBucketLifecycleConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketLifecycleConfigurationCommandError");
     var de_PutBucketLoggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketLoggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43247,22 +42533,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketLoggingCommand");
-    var de_PutBucketLoggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketLoggingCommandError");
     var de_PutBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketMetricsConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43270,22 +42543,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketMetricsConfigurationCommand");
-    var de_PutBucketMetricsConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketMetricsConfigurationCommandError");
     var de_PutBucketNotificationConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketNotificationConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43293,22 +42553,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketNotificationConfigurationCommand");
-    var de_PutBucketNotificationConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketNotificationConfigurationCommandError");
     var de_PutBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketOwnershipControlsCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43316,22 +42563,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketOwnershipControlsCommand");
-    var de_PutBucketOwnershipControlsCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketOwnershipControlsCommandError");
     var de_PutBucketPolicyCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketPolicyCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43339,22 +42573,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketPolicyCommand");
-    var de_PutBucketPolicyCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketPolicyCommandError");
     var de_PutBucketReplicationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketReplicationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43362,22 +42583,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketReplicationCommand");
-    var de_PutBucketReplicationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketReplicationCommandError");
     var de_PutBucketRequestPaymentCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketRequestPaymentCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43385,22 +42593,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketRequestPaymentCommand");
-    var de_PutBucketRequestPaymentCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketRequestPaymentCommandError");
     var de_PutBucketTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketTaggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43408,22 +42603,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketTaggingCommand");
-    var de_PutBucketTaggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketTaggingCommandError");
     var de_PutBucketVersioningCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketVersioningCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43431,22 +42613,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketVersioningCommand");
-    var de_PutBucketVersioningCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketVersioningCommandError");
     var de_PutBucketWebsiteCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutBucketWebsiteCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43454,22 +42623,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketWebsiteCommand");
-    var de_PutBucketWebsiteCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutBucketWebsiteCommandError");
     var de_PutObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutObjectCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43491,22 +42647,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectCommand");
-    var de_PutObjectCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutObjectCommandError");
     var de_PutObjectAclCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutObjectAclCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43515,28 +42658,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectAclCommand");
-    var de_PutObjectAclCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "NoSuchKey":
-        case "com.amazonaws.s3#NoSuchKey":
-          throw await de_NoSuchKeyRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_PutObjectAclCommandError");
     var de_PutObjectLegalHoldCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutObjectLegalHoldCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43545,22 +42669,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectLegalHoldCommand");
-    var de_PutObjectLegalHoldCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutObjectLegalHoldCommandError");
     var de_PutObjectLockConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutObjectLockConfigurationCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43569,22 +42680,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectLockConfigurationCommand");
-    var de_PutObjectLockConfigurationCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutObjectLockConfigurationCommandError");
     var de_PutObjectRetentionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutObjectRetentionCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43593,22 +42691,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectRetentionCommand");
-    var de_PutObjectRetentionCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutObjectRetentionCommandError");
     var de_PutObjectTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutObjectTaggingCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43617,22 +42702,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectTaggingCommand");
-    var de_PutObjectTaggingCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutObjectTaggingCommandError");
     var de_PutPublicAccessBlockCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_PutPublicAccessBlockCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43640,22 +42712,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_PutPublicAccessBlockCommand");
-    var de_PutPublicAccessBlockCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_PutPublicAccessBlockCommandError");
     var de_RestoreObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_RestoreObjectCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43665,28 +42724,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_RestoreObjectCommand");
-    var de_RestoreObjectCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      switch (errorCode) {
-        case "ObjectAlreadyInActiveTierError":
-        case "com.amazonaws.s3#ObjectAlreadyInActiveTierError":
-          throw await de_ObjectAlreadyInActiveTierErrorRes(parsedOutput, context);
-        default:
-          const parsedBody = parsedOutput.body;
-          return throwDefaultError({
-            output,
-            parsedBody,
-            errorCode
-          });
-      }
-    }, "de_RestoreObjectCommandError");
     var de_SelectObjectContentCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_SelectObjectContentCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43695,22 +42735,9 @@ var require_dist_cjs69 = __commonJS({
       contents.Payload = de_SelectObjectContentEventStream(data, context);
       return contents;
     }, "de_SelectObjectContentCommand");
-    var de_SelectObjectContentCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_SelectObjectContentCommandError");
     var de_UploadPartCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_UploadPartCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43729,22 +42756,9 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_UploadPartCommand");
-    var de_UploadPartCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_UploadPartCommandError");
     var de_UploadPartCopyCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_UploadPartCopyCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output),
@@ -43760,22 +42774,9 @@ var require_dist_cjs69 = __commonJS({
       contents.CopyPartResult = de_CopyPartResult(data, context);
       return contents;
     }, "de_UploadPartCopyCommand");
-    var de_UploadPartCopyCommandError = /* @__PURE__ */ __name(async (output, context) => {
-      const parsedOutput = {
-        ...output,
-        body: await parseErrorBody(output.body, context)
-      };
-      const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_UploadPartCopyCommandError");
     var de_WriteGetObjectResponseCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
-        return de_WriteGetObjectResponseCommandError(output, context);
+        return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client.map)({
         $metadata: deserializeMetadata(output)
@@ -43783,19 +42784,49 @@ var require_dist_cjs69 = __commonJS({
       await (0, import_smithy_client.collectBody)(output.body, context);
       return contents;
     }, "de_WriteGetObjectResponseCommand");
-    var de_WriteGetObjectResponseCommandError = /* @__PURE__ */ __name(async (output, context) => {
+    var de_CommandError = /* @__PURE__ */ __name(async (output, context) => {
       const parsedOutput = {
         ...output,
         body: await parseErrorBody(output.body, context)
       };
       const errorCode = loadRestXmlErrorCode(output, parsedOutput.body);
-      const parsedBody = parsedOutput.body;
-      return throwDefaultError({
-        output,
-        parsedBody,
-        errorCode
-      });
-    }, "de_WriteGetObjectResponseCommandError");
+      switch (errorCode) {
+        case "NoSuchUpload":
+        case "com.amazonaws.s3#NoSuchUpload":
+          throw await de_NoSuchUploadRes(parsedOutput, context);
+        case "ObjectNotInActiveTierError":
+        case "com.amazonaws.s3#ObjectNotInActiveTierError":
+          throw await de_ObjectNotInActiveTierErrorRes(parsedOutput, context);
+        case "BucketAlreadyExists":
+        case "com.amazonaws.s3#BucketAlreadyExists":
+          throw await de_BucketAlreadyExistsRes(parsedOutput, context);
+        case "BucketAlreadyOwnedByYou":
+        case "com.amazonaws.s3#BucketAlreadyOwnedByYou":
+          throw await de_BucketAlreadyOwnedByYouRes(parsedOutput, context);
+        case "NoSuchBucket":
+        case "com.amazonaws.s3#NoSuchBucket":
+          throw await de_NoSuchBucketRes(parsedOutput, context);
+        case "InvalidObjectState":
+        case "com.amazonaws.s3#InvalidObjectState":
+          throw await de_InvalidObjectStateRes(parsedOutput, context);
+        case "NoSuchKey":
+        case "com.amazonaws.s3#NoSuchKey":
+          throw await de_NoSuchKeyRes(parsedOutput, context);
+        case "NotFound":
+        case "com.amazonaws.s3#NotFound":
+          throw await de_NotFoundRes(parsedOutput, context);
+        case "ObjectAlreadyInActiveTierError":
+        case "com.amazonaws.s3#ObjectAlreadyInActiveTierError":
+          throw await de_ObjectAlreadyInActiveTierErrorRes(parsedOutput, context);
+        default:
+          const parsedBody = parsedOutput.body;
+          return throwDefaultError({
+            output,
+            parsedBody,
+            errorCode
+          });
+      }
+    }, "de_CommandError");
     var throwDefaultError = (0, import_smithy_client.withBaseException)(S3ServiceException);
     var de_BucketAlreadyExistsRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const contents = (0, import_smithy_client.map)({});
@@ -47483,8 +46514,8 @@ var require_dist_cjs69 = __commonJS({
     };
     __name(_CreateSessionCommand, "CreateSessionCommand");
     var CreateSessionCommand = _CreateSessionCommand;
-    var import_runtimeConfig = require_runtimeConfig3();
-    var import_region_config_resolver = require_dist_cjs51();
+    var import_runtimeConfig = require_runtimeConfig4();
+    var import_region_config_resolver = require_dist_cjs52();
     var asPartial = /* @__PURE__ */ __name((t) => t, "asPartial");
     var resolveRuntimeExtensions = /* @__PURE__ */ __name((runtimeConfig, extensions) => {
       const extensionConfiguration = {
@@ -47552,7 +46583,7 @@ var require_dist_cjs69 = __commonJS({
     __name(_AbortMultipartUploadCommand, "AbortMultipartUploadCommand");
     var AbortMultipartUploadCommand = _AbortMultipartUploadCommand;
     var import_middleware_sdk_s32 = require_dist_cjs24();
-    var import_middleware_ssec = require_dist_cjs65();
+    var import_middleware_ssec = require_dist_cjs67();
     var _CompleteMultipartUploadCommand = class _CompleteMultipartUploadCommand extends import_smithy_client.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -47584,7 +46615,7 @@ var require_dist_cjs69 = __commonJS({
     };
     __name(_CopyObjectCommand, "CopyObjectCommand");
     var CopyObjectCommand = _CopyObjectCommand;
-    var import_middleware_location_constraint = require_dist_cjs66();
+    var import_middleware_location_constraint = require_dist_cjs68();
     var _CreateBucketCommand = class _CreateBucketCommand extends import_smithy_client.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
@@ -47796,7 +46827,7 @@ var require_dist_cjs69 = __commonJS({
     };
     __name(_DeleteObjectCommand, "DeleteObjectCommand");
     var DeleteObjectCommand = _DeleteObjectCommand;
-    var import_middleware_flexible_checksums = require_dist_cjs67();
+    var import_middleware_flexible_checksums = require_dist_cjs69();
     var _DeleteObjectsCommand = class _DeleteObjectsCommand extends import_smithy_client.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -48997,7 +48028,7 @@ var require_dist_cjs69 = __commonJS({
     var paginateListDirectoryBuckets = (0, import_core.createPaginator)(S3Client, ListDirectoryBucketsCommand, "ContinuationToken", "ContinuationToken", "MaxDirectoryBuckets");
     var paginateListObjectsV2 = (0, import_core.createPaginator)(S3Client, ListObjectsV2Command, "ContinuationToken", "NextContinuationToken", "MaxKeys");
     var paginateListParts = (0, import_core.createPaginator)(S3Client, ListPartsCommand, "PartNumberMarker", "NextPartNumberMarker", "MaxParts");
-    var import_util_waiter = require_dist_cjs68();
+    var import_util_waiter = require_dist_cjs70();
     var checkState = /* @__PURE__ */ __name(async (client, input) => {
       let reason;
       try {
@@ -57719,7 +56750,7 @@ var require_mime_types = __commonJS({
 var import_fs = __toESM(require("fs"));
 var import_path = __toESM(require("path"));
 var core = __toESM(require_core());
-var import_client_s3 = __toESM(require_dist_cjs69());
+var import_client_s3 = __toESM(require_dist_cjs71());
 var import_mime_types = __toESM(require_mime_types());
 var req = {
   required: true
