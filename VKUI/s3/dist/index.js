@@ -27066,13 +27066,24 @@ var require_dist_cjs43 = __commonJS({
           }
           yield page;
           const prevToken = token;
-          token = page[outputTokenName];
+          token = get(page, outputTokenName);
           hasNext = !!(token && (!config.stopOnSameToken || token !== prevToken));
         }
         return void 0;
       }, "paginateOperation");
     }
     __name(createPaginator, "createPaginator");
+    var get = /* @__PURE__ */ __name((fromObject, path2) => {
+      let cursor = fromObject;
+      const pathComponents = path2.split(".");
+      for (const step of pathComponents) {
+        if (!cursor || typeof cursor !== "object") {
+          return void 0;
+        }
+        cursor = cursor[step];
+      }
+      return cursor;
+    }, "get");
   }
 });
 
@@ -29307,7 +29318,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.511.0",
+      version: "3.515.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29332,29 +29343,29 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.511.0",
-        "@aws-sdk/core": "3.511.0",
-        "@aws-sdk/credential-provider-node": "3.511.0",
-        "@aws-sdk/middleware-bucket-endpoint": "3.511.0",
-        "@aws-sdk/middleware-expect-continue": "3.511.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.511.0",
-        "@aws-sdk/middleware-host-header": "3.511.0",
-        "@aws-sdk/middleware-location-constraint": "3.511.0",
-        "@aws-sdk/middleware-logger": "3.511.0",
-        "@aws-sdk/middleware-recursion-detection": "3.511.0",
-        "@aws-sdk/middleware-sdk-s3": "3.511.0",
-        "@aws-sdk/middleware-signing": "3.511.0",
-        "@aws-sdk/middleware-ssec": "3.511.0",
-        "@aws-sdk/middleware-user-agent": "3.511.0",
-        "@aws-sdk/region-config-resolver": "3.511.0",
-        "@aws-sdk/signature-v4-multi-region": "3.511.0",
-        "@aws-sdk/types": "3.511.0",
-        "@aws-sdk/util-endpoints": "3.511.0",
-        "@aws-sdk/util-user-agent-browser": "3.511.0",
-        "@aws-sdk/util-user-agent-node": "3.511.0",
+        "@aws-sdk/client-sts": "3.515.0",
+        "@aws-sdk/core": "3.513.0",
+        "@aws-sdk/credential-provider-node": "3.515.0",
+        "@aws-sdk/middleware-bucket-endpoint": "3.515.0",
+        "@aws-sdk/middleware-expect-continue": "3.515.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.515.0",
+        "@aws-sdk/middleware-host-header": "3.515.0",
+        "@aws-sdk/middleware-location-constraint": "3.515.0",
+        "@aws-sdk/middleware-logger": "3.515.0",
+        "@aws-sdk/middleware-recursion-detection": "3.515.0",
+        "@aws-sdk/middleware-sdk-s3": "3.515.0",
+        "@aws-sdk/middleware-signing": "3.515.0",
+        "@aws-sdk/middleware-ssec": "3.515.0",
+        "@aws-sdk/middleware-user-agent": "3.515.0",
+        "@aws-sdk/region-config-resolver": "3.515.0",
+        "@aws-sdk/signature-v4-multi-region": "3.515.0",
+        "@aws-sdk/types": "3.515.0",
+        "@aws-sdk/util-endpoints": "3.515.0",
+        "@aws-sdk/util-user-agent-browser": "3.515.0",
+        "@aws-sdk/util-user-agent-node": "3.515.0",
         "@aws-sdk/xml-builder": "3.496.0",
         "@smithy/config-resolver": "^2.1.1",
-        "@smithy/core": "^1.3.1",
+        "@smithy/core": "^1.3.2",
         "@smithy/eventstream-serde-browser": "^2.1.1",
         "@smithy/eventstream-serde-config-resolver": "^2.1.1",
         "@smithy/eventstream-serde-node": "^2.1.1",
@@ -29379,7 +29390,7 @@ var require_package = __commonJS({
         "@smithy/util-body-length-browser": "^2.1.1",
         "@smithy/util-body-length-node": "^2.2.1",
         "@smithy/util-defaults-mode-browser": "^2.1.1",
-        "@smithy/util-defaults-mode-node": "^2.1.1",
+        "@smithy/util-defaults-mode-node": "^2.2.0",
         "@smithy/util-endpoints": "^1.1.1",
         "@smithy/util-retry": "^2.1.1",
         "@smithy/util-stream": "^2.1.1",
@@ -29389,7 +29400,7 @@ var require_package = __commonJS({
         tslib: "^2.5.0"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.511.0",
+        "@aws-sdk/signature-v4-crt": "3.515.0",
         "@smithy/service-client-documentation-generator": "^2.1.1",
         "@tsconfig/node14": "1.0.3",
         "@types/chai": "^4.2.11",
@@ -30371,13 +30382,86 @@ var require_dist_cjs47 = __commonJS({
   }
 });
 
+// ../../node_modules/@aws-sdk/client-sso/dist-cjs/auth/httpAuthSchemeProvider.js
+var require_httpAuthSchemeProvider = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso/dist-cjs/auth/httpAuthSchemeProvider.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.resolveHttpAuthSchemeConfig = exports2.defaultSSOHttpAuthSchemeProvider = exports2.defaultSSOHttpAuthSchemeParametersProvider = void 0;
+    var core_1 = require_dist_cjs44();
+    var util_middleware_1 = require_dist_cjs20();
+    var defaultSSOHttpAuthSchemeParametersProvider = async (config, context, input) => {
+      return {
+        operation: (0, util_middleware_1.getSmithyContext)(context).operation,
+        region: await (0, util_middleware_1.normalizeProvider)(config.region)() || (() => {
+          throw new Error("expected `region` to be configured for `aws.auth#sigv4`");
+        })()
+      };
+    };
+    exports2.defaultSSOHttpAuthSchemeParametersProvider = defaultSSOHttpAuthSchemeParametersProvider;
+    function createAwsAuthSigv4HttpAuthOption(authParameters) {
+      return {
+        schemeId: "aws.auth#sigv4",
+        signingProperties: {
+          name: "awsssoportal",
+          region: authParameters.region
+        },
+        propertiesExtractor: (config, context) => ({
+          signingProperties: {
+            config,
+            context
+          }
+        })
+      };
+    }
+    function createSmithyApiNoAuthHttpAuthOption(authParameters) {
+      return {
+        schemeId: "smithy.api#noAuth"
+      };
+    }
+    var defaultSSOHttpAuthSchemeProvider = (authParameters) => {
+      const options = [];
+      switch (authParameters.operation) {
+        case "GetRoleCredentials": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        case "ListAccountRoles": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        case "ListAccounts": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        case "Logout": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        default: {
+          options.push(createAwsAuthSigv4HttpAuthOption(authParameters));
+        }
+      }
+      return options;
+    };
+    exports2.defaultSSOHttpAuthSchemeProvider = defaultSSOHttpAuthSchemeProvider;
+    var resolveHttpAuthSchemeConfig = (config) => {
+      const config_0 = (0, core_1.resolveAwsSdkSigV4Config)(config);
+      return {
+        ...config_0
+      };
+    };
+    exports2.resolveHttpAuthSchemeConfig = resolveHttpAuthSchemeConfig;
+  }
+});
+
 // ../../node_modules/@aws-sdk/client-sso/package.json
 var require_package2 = __commonJS({
   "../../node_modules/@aws-sdk/client-sso/package.json"(exports2, module2) {
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.511.0",
+      version: "3.515.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -30396,18 +30480,18 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.511.0",
-        "@aws-sdk/middleware-host-header": "3.511.0",
-        "@aws-sdk/middleware-logger": "3.511.0",
-        "@aws-sdk/middleware-recursion-detection": "3.511.0",
-        "@aws-sdk/middleware-user-agent": "3.511.0",
-        "@aws-sdk/region-config-resolver": "3.511.0",
-        "@aws-sdk/types": "3.511.0",
-        "@aws-sdk/util-endpoints": "3.511.0",
-        "@aws-sdk/util-user-agent-browser": "3.511.0",
-        "@aws-sdk/util-user-agent-node": "3.511.0",
+        "@aws-sdk/core": "3.513.0",
+        "@aws-sdk/middleware-host-header": "3.515.0",
+        "@aws-sdk/middleware-logger": "3.515.0",
+        "@aws-sdk/middleware-recursion-detection": "3.515.0",
+        "@aws-sdk/middleware-user-agent": "3.515.0",
+        "@aws-sdk/region-config-resolver": "3.515.0",
+        "@aws-sdk/types": "3.515.0",
+        "@aws-sdk/util-endpoints": "3.515.0",
+        "@aws-sdk/util-user-agent-browser": "3.515.0",
+        "@aws-sdk/util-user-agent-node": "3.515.0",
         "@smithy/config-resolver": "^2.1.1",
-        "@smithy/core": "^1.3.1",
+        "@smithy/core": "^1.3.2",
         "@smithy/fetch-http-handler": "^2.4.1",
         "@smithy/hash-node": "^2.1.1",
         "@smithy/invalid-dependency": "^2.1.1",
@@ -30426,8 +30510,9 @@ var require_package2 = __commonJS({
         "@smithy/util-body-length-browser": "^2.1.1",
         "@smithy/util-body-length-node": "^2.2.1",
         "@smithy/util-defaults-mode-browser": "^2.1.1",
-        "@smithy/util-defaults-mode-node": "^2.1.1",
+        "@smithy/util-defaults-mode-node": "^2.2.0",
         "@smithy/util-endpoints": "^1.1.1",
+        "@smithy/util-middleware": "^2.1.1",
         "@smithy/util-retry": "^2.1.1",
         "@smithy/util-utf8": "^2.1.1",
         tslib: "^2.5.0"
@@ -30730,10 +30815,13 @@ var require_runtimeConfig_shared = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
+    var core_1 = require_dist_cjs44();
+    var core_2 = require_dist_cjs43();
     var smithy_client_1 = require_dist_cjs16();
     var url_parser_1 = require_dist_cjs39();
     var util_base64_1 = require_dist_cjs10();
     var util_utf8_1 = require_dist_cjs11();
+    var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider();
     var endpointResolver_1 = require_endpointResolver();
     var getRuntimeConfig = (config) => {
       return {
@@ -30743,6 +30831,19 @@ var require_runtimeConfig_shared = __commonJS({
         disableHostPrefix: config?.disableHostPrefix ?? false,
         endpointProvider: config?.endpointProvider ?? endpointResolver_1.defaultEndpointResolver,
         extensions: config?.extensions ?? [],
+        httpAuthSchemeProvider: config?.httpAuthSchemeProvider ?? httpAuthSchemeProvider_1.defaultSSOHttpAuthSchemeProvider,
+        httpAuthSchemes: config?.httpAuthSchemes ?? [
+          {
+            schemeId: "aws.auth#sigv4",
+            identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4"),
+            signer: new core_1.AwsSdkSigV4Signer()
+          },
+          {
+            schemeId: "smithy.api#noAuth",
+            identityProvider: (ipc) => ipc.getIdentityProvider("smithy.api#noAuth") || (async () => ({})),
+            signer: new core_2.NoAuthSigner()
+          }
+        ],
         logger: config?.logger ?? new smithy_client_1.NoOpLogger(),
         serviceId: config?.serviceId ?? "SSO",
         urlParser: config?.urlParser ?? url_parser_1.parseUrl,
@@ -30757,9 +30858,11 @@ var require_runtimeConfig_shared = __commonJS({
 // ../../node_modules/@smithy/util-defaults-mode-node/dist-cjs/index.js
 var require_dist_cjs51 = __commonJS({
   "../../node_modules/@smithy/util-defaults-mode-node/dist-cjs/index.js"(exports2, module2) {
+    var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __getProtoOf2 = Object.getPrototypeOf;
     var __hasOwnProp2 = Object.prototype.hasOwnProperty;
     var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
     var __export2 = (target, all) => {
@@ -30774,6 +30877,14 @@ var require_dist_cjs51 = __commonJS({
       }
       return to;
     };
+    var __toESM2 = (mod, isNodeMode, target) => (target = mod != null ? __create2(__getProtoOf2(mod)) : {}, __copyProps2(
+      // If the importer is in node compatibility mode or this is not an ESM
+      // file that has been converted to a CommonJS file using a Babel-
+      // compatible transform (i.e. "__esModule" has not been set), then set
+      // "default" to the CommonJS "module.exports" for node compatibility.
+      isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+      mod
+    ));
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
     var src_exports = {};
     __export2(src_exports, {
@@ -30781,7 +30892,6 @@ var require_dist_cjs51 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     var import_config_resolver = require_dist_cjs30();
-    var import_credential_provider_imds = require_dist_cjs45();
     var import_node_config_provider = require_dist_cjs37();
     var import_property_provider = require_dist_cjs25();
     var AWS_EXECUTION_ENV = "AWS_EXECUTION_ENV";
@@ -30844,8 +30954,9 @@ var require_dist_cjs51 = __commonJS({
       }
       if (!process.env[ENV_IMDS_DISABLED]) {
         try {
-          const endpoint = await (0, import_credential_provider_imds.getInstanceMetadataEndpoint)();
-          return (await (0, import_credential_provider_imds.httpRequest)({ ...endpoint, path: IMDS_REGION_PATH })).toString();
+          const { getInstanceMetadataEndpoint, httpRequest } = await Promise.resolve().then(() => __toESM2(require_dist_cjs45()));
+          const endpoint = await getInstanceMetadataEndpoint();
+          return (await httpRequest({ ...endpoint, path: IMDS_REGION_PATH })).toString();
         } catch (e) {
         }
       }
@@ -31052,9 +31163,11 @@ var require_dist_cjs53 = __commonJS({
     var import_middleware_recursion_detection = require_dist_cjs6();
     var import_middleware_user_agent = require_dist_cjs29();
     var import_config_resolver = require_dist_cjs30();
+    var import_core = require_dist_cjs43();
     var import_middleware_content_length = require_dist_cjs32();
     var import_middleware_endpoint = require_dist_cjs41();
     var import_middleware_retry = require_dist_cjs35();
+    var import_httpAuthSchemeProvider = require_httpAuthSchemeProvider();
     var resolveClientEndpointParameters = /* @__PURE__ */ __name((options) => {
       return {
         ...options,
@@ -31073,19 +31186,58 @@ var require_dist_cjs53 = __commonJS({
     var import_region_config_resolver = require_dist_cjs52();
     var import_protocol_http = require_dist_cjs2();
     var import_smithy_client = require_dist_cjs16();
+    var getHttpAuthExtensionConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
+      const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
+      let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
+      let _credentials = runtimeConfig.credentials;
+      return {
+        setHttpAuthScheme(httpAuthScheme) {
+          const index = _httpAuthSchemes.findIndex((scheme) => scheme.schemeId === httpAuthScheme.schemeId);
+          if (index === -1) {
+            _httpAuthSchemes.push(httpAuthScheme);
+          } else {
+            _httpAuthSchemes.splice(index, 1, httpAuthScheme);
+          }
+        },
+        httpAuthSchemes() {
+          return _httpAuthSchemes;
+        },
+        setHttpAuthSchemeProvider(httpAuthSchemeProvider) {
+          _httpAuthSchemeProvider = httpAuthSchemeProvider;
+        },
+        httpAuthSchemeProvider() {
+          return _httpAuthSchemeProvider;
+        },
+        setCredentials(credentials) {
+          _credentials = credentials;
+        },
+        credentials() {
+          return _credentials;
+        }
+      };
+    }, "getHttpAuthExtensionConfiguration");
+    var resolveHttpAuthRuntimeConfig = /* @__PURE__ */ __name((config) => {
+      return {
+        httpAuthSchemes: config.httpAuthSchemes(),
+        httpAuthSchemeProvider: config.httpAuthSchemeProvider(),
+        credentials: config.credentials()
+      };
+    }, "resolveHttpAuthRuntimeConfig");
     var asPartial = /* @__PURE__ */ __name((t) => t, "asPartial");
     var resolveRuntimeExtensions = /* @__PURE__ */ __name((runtimeConfig, extensions) => {
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
         ...asPartial((0, import_smithy_client.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http.getHttpHandlerExtensionConfiguration)(runtimeConfig))
+        ...asPartial((0, import_protocol_http.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
+        ...asPartial(getHttpAuthExtensionConfiguration(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
       return {
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
         ...(0, import_smithy_client.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
+        ...(0, import_protocol_http.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
+        ...resolveHttpAuthRuntimeConfig(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
     var _SSOClient = class _SSOClient extends import_smithy_client.Client {
@@ -31097,15 +31249,23 @@ var require_dist_cjs53 = __commonJS({
         const _config_4 = (0, import_middleware_retry.resolveRetryConfig)(_config_3);
         const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
         const _config_6 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_5);
-        const _config_7 = resolveRuntimeExtensions(_config_6, (configuration2 == null ? void 0 : configuration2.extensions) || []);
-        super(_config_7);
-        this.config = _config_7;
+        const _config_7 = (0, import_httpAuthSchemeProvider.resolveHttpAuthSchemeConfig)(_config_6);
+        const _config_8 = resolveRuntimeExtensions(_config_7, (configuration2 == null ? void 0 : configuration2.extensions) || []);
+        super(_config_8);
+        this.config = _config_8;
         this.middlewareStack.use((0, import_middleware_retry.getRetryPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_user_agent.getUserAgentPlugin)(this.config));
+        this.middlewareStack.use(
+          (0, import_core.getHttpAuthSchemeEndpointRuleSetPlugin)(this.config, {
+            httpAuthSchemeParametersProvider: this.getDefaultHttpAuthSchemeParametersProvider(),
+            identityProviderConfigProvider: this.getIdentityProviderConfigProvider()
+          })
+        );
+        this.middlewareStack.use((0, import_core.getHttpSigningPlugin)(this.config));
       }
       /**
        * Destroy underlying resources, like sockets. It's usually not necessary to do this.
@@ -31114,6 +31274,14 @@ var require_dist_cjs53 = __commonJS({
        */
       destroy() {
         super.destroy();
+      }
+      getDefaultHttpAuthSchemeParametersProvider() {
+        return import_httpAuthSchemeProvider.defaultSSOHttpAuthSchemeParametersProvider;
+      }
+      getIdentityProviderConfigProvider() {
+        return async (config) => new import_core.DefaultIdentityProviderConfig({
+          "aws.auth#sigv4": config.credentials
+        });
       }
     };
     __name(_SSOClient, "SSOClient");
@@ -31224,7 +31392,6 @@ var require_dist_cjs53 = __commonJS({
       ...obj,
       ...obj.accessToken && { accessToken: import_smithy_client.SENSITIVE_STRING }
     }), "LogoutRequestFilterSensitiveLog");
-    var import_core = require_dist_cjs43();
     var se_GetRoleCredentialsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core.requestBuilder)(input, context);
       const headers = (0, import_smithy_client.map)({}, isSerializableHeaderValue, {
@@ -31532,13 +31699,82 @@ var require_dist_cjs53 = __commonJS({
   }
 });
 
+// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/auth/httpAuthSchemeProvider.js
+var require_httpAuthSchemeProvider2 = __commonJS({
+  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/auth/httpAuthSchemeProvider.js"(exports2) {
+    "use strict";
+    Object.defineProperty(exports2, "__esModule", { value: true });
+    exports2.resolveHttpAuthSchemeConfig = exports2.defaultSSOOIDCHttpAuthSchemeProvider = exports2.defaultSSOOIDCHttpAuthSchemeParametersProvider = void 0;
+    var core_1 = require_dist_cjs44();
+    var util_middleware_1 = require_dist_cjs20();
+    var defaultSSOOIDCHttpAuthSchemeParametersProvider = async (config, context, input) => {
+      return {
+        operation: (0, util_middleware_1.getSmithyContext)(context).operation,
+        region: await (0, util_middleware_1.normalizeProvider)(config.region)() || (() => {
+          throw new Error("expected `region` to be configured for `aws.auth#sigv4`");
+        })()
+      };
+    };
+    exports2.defaultSSOOIDCHttpAuthSchemeParametersProvider = defaultSSOOIDCHttpAuthSchemeParametersProvider;
+    function createAwsAuthSigv4HttpAuthOption(authParameters) {
+      return {
+        schemeId: "aws.auth#sigv4",
+        signingProperties: {
+          name: "sso-oauth",
+          region: authParameters.region
+        },
+        propertiesExtractor: (config, context) => ({
+          signingProperties: {
+            config,
+            context
+          }
+        })
+      };
+    }
+    function createSmithyApiNoAuthHttpAuthOption(authParameters) {
+      return {
+        schemeId: "smithy.api#noAuth"
+      };
+    }
+    var defaultSSOOIDCHttpAuthSchemeProvider = (authParameters) => {
+      const options = [];
+      switch (authParameters.operation) {
+        case "CreateToken": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        case "RegisterClient": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        case "StartDeviceAuthorization": {
+          options.push(createSmithyApiNoAuthHttpAuthOption(authParameters));
+          break;
+        }
+        default: {
+          options.push(createAwsAuthSigv4HttpAuthOption(authParameters));
+        }
+      }
+      return options;
+    };
+    exports2.defaultSSOOIDCHttpAuthSchemeProvider = defaultSSOOIDCHttpAuthSchemeProvider;
+    var resolveHttpAuthSchemeConfig = (config) => {
+      const config_0 = (0, core_1.resolveAwsSdkSigV4Config)(config);
+      return {
+        ...config_0
+      };
+    };
+    exports2.resolveHttpAuthSchemeConfig = resolveHttpAuthSchemeConfig;
+  }
+});
+
 // ../../node_modules/@aws-sdk/client-sso-oidc/package.json
 var require_package3 = __commonJS({
   "../../node_modules/@aws-sdk/client-sso-oidc/package.json"(exports2, module2) {
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.511.0",
+      version: "3.515.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -31557,20 +31793,19 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.511.0",
-        "@aws-sdk/core": "3.511.0",
-        "@aws-sdk/middleware-host-header": "3.511.0",
-        "@aws-sdk/middleware-logger": "3.511.0",
-        "@aws-sdk/middleware-recursion-detection": "3.511.0",
-        "@aws-sdk/middleware-signing": "3.511.0",
-        "@aws-sdk/middleware-user-agent": "3.511.0",
-        "@aws-sdk/region-config-resolver": "3.511.0",
-        "@aws-sdk/types": "3.511.0",
-        "@aws-sdk/util-endpoints": "3.511.0",
-        "@aws-sdk/util-user-agent-browser": "3.511.0",
-        "@aws-sdk/util-user-agent-node": "3.511.0",
+        "@aws-sdk/client-sts": "3.515.0",
+        "@aws-sdk/core": "3.513.0",
+        "@aws-sdk/middleware-host-header": "3.515.0",
+        "@aws-sdk/middleware-logger": "3.515.0",
+        "@aws-sdk/middleware-recursion-detection": "3.515.0",
+        "@aws-sdk/middleware-user-agent": "3.515.0",
+        "@aws-sdk/region-config-resolver": "3.515.0",
+        "@aws-sdk/types": "3.515.0",
+        "@aws-sdk/util-endpoints": "3.515.0",
+        "@aws-sdk/util-user-agent-browser": "3.515.0",
+        "@aws-sdk/util-user-agent-node": "3.515.0",
         "@smithy/config-resolver": "^2.1.1",
-        "@smithy/core": "^1.3.1",
+        "@smithy/core": "^1.3.2",
         "@smithy/fetch-http-handler": "^2.4.1",
         "@smithy/hash-node": "^2.1.1",
         "@smithy/invalid-dependency": "^2.1.1",
@@ -31589,8 +31824,9 @@ var require_package3 = __commonJS({
         "@smithy/util-body-length-browser": "^2.1.1",
         "@smithy/util-body-length-node": "^2.2.1",
         "@smithy/util-defaults-mode-browser": "^2.1.1",
-        "@smithy/util-defaults-mode-node": "^2.1.1",
+        "@smithy/util-defaults-mode-node": "^2.2.0",
         "@smithy/util-endpoints": "^1.1.1",
+        "@smithy/util-middleware": "^2.1.1",
         "@smithy/util-retry": "^2.1.1",
         "@smithy/util-utf8": "^2.1.1",
         tslib: "^2.5.0"
@@ -31623,7 +31859,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.511.0"
+        "@aws-sdk/credential-provider-node": "^3.515.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -31744,10 +31980,13 @@ var require_runtimeConfig_shared2 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
+    var core_1 = require_dist_cjs44();
+    var core_2 = require_dist_cjs43();
     var smithy_client_1 = require_dist_cjs16();
     var url_parser_1 = require_dist_cjs39();
     var util_base64_1 = require_dist_cjs10();
     var util_utf8_1 = require_dist_cjs11();
+    var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider2();
     var endpointResolver_1 = require_endpointResolver2();
     var getRuntimeConfig = (config) => {
       return {
@@ -31757,6 +31996,19 @@ var require_runtimeConfig_shared2 = __commonJS({
         disableHostPrefix: config?.disableHostPrefix ?? false,
         endpointProvider: config?.endpointProvider ?? endpointResolver_1.defaultEndpointResolver,
         extensions: config?.extensions ?? [],
+        httpAuthSchemeProvider: config?.httpAuthSchemeProvider ?? httpAuthSchemeProvider_1.defaultSSOOIDCHttpAuthSchemeProvider,
+        httpAuthSchemes: config?.httpAuthSchemes ?? [
+          {
+            schemeId: "aws.auth#sigv4",
+            identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4"),
+            signer: new core_1.AwsSdkSigV4Signer()
+          },
+          {
+            schemeId: "smithy.api#noAuth",
+            identityProvider: (ipc) => ipc.getIdentityProvider("smithy.api#noAuth") || (async () => ({})),
+            signer: new core_2.NoAuthSigner()
+          }
+        ],
         logger: config?.logger ?? new smithy_client_1.NoOpLogger(),
         serviceId: config?.serviceId ?? "SSO OIDC",
         urlParser: config?.urlParser ?? url_parser_1.parseUrl,
@@ -31877,12 +32129,13 @@ var require_dist_cjs54 = __commonJS({
     var import_middleware_host_header = require_dist_cjs4();
     var import_middleware_logger = require_dist_cjs5();
     var import_middleware_recursion_detection = require_dist_cjs6();
-    var import_middleware_signing = require_dist_cjs26();
     var import_middleware_user_agent = require_dist_cjs29();
     var import_config_resolver = require_dist_cjs30();
+    var import_core = require_dist_cjs43();
     var import_middleware_content_length = require_dist_cjs32();
     var import_middleware_endpoint = require_dist_cjs41();
     var import_middleware_retry = require_dist_cjs35();
+    var import_httpAuthSchemeProvider = require_httpAuthSchemeProvider2();
     var resolveClientEndpointParameters = /* @__PURE__ */ __name((options) => {
       return {
         ...options,
@@ -31901,19 +32154,58 @@ var require_dist_cjs54 = __commonJS({
     var import_region_config_resolver = require_dist_cjs52();
     var import_protocol_http = require_dist_cjs2();
     var import_smithy_client = require_dist_cjs16();
+    var getHttpAuthExtensionConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
+      const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
+      let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
+      let _credentials = runtimeConfig.credentials;
+      return {
+        setHttpAuthScheme(httpAuthScheme) {
+          const index = _httpAuthSchemes.findIndex((scheme) => scheme.schemeId === httpAuthScheme.schemeId);
+          if (index === -1) {
+            _httpAuthSchemes.push(httpAuthScheme);
+          } else {
+            _httpAuthSchemes.splice(index, 1, httpAuthScheme);
+          }
+        },
+        httpAuthSchemes() {
+          return _httpAuthSchemes;
+        },
+        setHttpAuthSchemeProvider(httpAuthSchemeProvider) {
+          _httpAuthSchemeProvider = httpAuthSchemeProvider;
+        },
+        httpAuthSchemeProvider() {
+          return _httpAuthSchemeProvider;
+        },
+        setCredentials(credentials) {
+          _credentials = credentials;
+        },
+        credentials() {
+          return _credentials;
+        }
+      };
+    }, "getHttpAuthExtensionConfiguration");
+    var resolveHttpAuthRuntimeConfig = /* @__PURE__ */ __name((config) => {
+      return {
+        httpAuthSchemes: config.httpAuthSchemes(),
+        httpAuthSchemeProvider: config.httpAuthSchemeProvider(),
+        credentials: config.credentials()
+      };
+    }, "resolveHttpAuthRuntimeConfig");
     var asPartial = /* @__PURE__ */ __name((t) => t, "asPartial");
     var resolveRuntimeExtensions = /* @__PURE__ */ __name((runtimeConfig, extensions) => {
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
         ...asPartial((0, import_smithy_client.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http.getHttpHandlerExtensionConfiguration)(runtimeConfig))
+        ...asPartial((0, import_protocol_http.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
+        ...asPartial(getHttpAuthExtensionConfiguration(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
       return {
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
         ...(0, import_smithy_client.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
+        ...(0, import_protocol_http.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
+        ...resolveHttpAuthRuntimeConfig(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
     var _SSOOIDCClient = class _SSOOIDCClient extends import_smithy_client.Client {
@@ -31924,8 +32216,8 @@ var require_dist_cjs54 = __commonJS({
         const _config_3 = (0, import_middleware_endpoint.resolveEndpointConfig)(_config_2);
         const _config_4 = (0, import_middleware_retry.resolveRetryConfig)(_config_3);
         const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
-        const _config_6 = (0, import_middleware_signing.resolveAwsAuthConfig)(_config_5);
-        const _config_7 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_6);
+        const _config_6 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_5);
+        const _config_7 = (0, import_httpAuthSchemeProvider.resolveHttpAuthSchemeConfig)(_config_6);
         const _config_8 = resolveRuntimeExtensions(_config_7, (configuration2 == null ? void 0 : configuration2.extensions) || []);
         super(_config_8);
         this.config = _config_8;
@@ -31935,6 +32227,13 @@ var require_dist_cjs54 = __commonJS({
         this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_user_agent.getUserAgentPlugin)(this.config));
+        this.middlewareStack.use(
+          (0, import_core.getHttpAuthSchemeEndpointRuleSetPlugin)(this.config, {
+            httpAuthSchemeParametersProvider: this.getDefaultHttpAuthSchemeParametersProvider(),
+            identityProviderConfigProvider: this.getIdentityProviderConfigProvider()
+          })
+        );
+        this.middlewareStack.use((0, import_core.getHttpSigningPlugin)(this.config));
       }
       /**
        * Destroy underlying resources, like sockets. It's usually not necessary to do this.
@@ -31943,6 +32242,14 @@ var require_dist_cjs54 = __commonJS({
        */
       destroy() {
         super.destroy();
+      }
+      getDefaultHttpAuthSchemeParametersProvider() {
+        return import_httpAuthSchemeProvider.defaultSSOOIDCHttpAuthSchemeParametersProvider;
+      }
+      getIdentityProviderConfigProvider() {
+        return async (config) => new import_core.DefaultIdentityProviderConfig({
+          "aws.auth#sigv4": config.credentials
+        });
       }
     };
     __name(_SSOOIDCClient, "SSOOIDCClient");
@@ -32240,7 +32547,6 @@ var require_dist_cjs54 = __commonJS({
       ...obj,
       ...obj.clientSecret && { clientSecret: import_smithy_client.SENSITIVE_STRING }
     }), "StartDeviceAuthorizationRequestFilterSensitiveLog");
-    var import_core = require_dist_cjs43();
     var se_CreateTokenCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core.requestBuilder)(input, context);
       const headers = {
@@ -32704,8 +33010,7 @@ var require_dist_cjs54 = __commonJS({
     }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_signing.getAwsAuthPlugin)(config)
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSSOOIDCService", "CreateTokenWithIAM", {}).n("SSOOIDCClient", "CreateTokenWithIAMCommand").f(CreateTokenWithIAMRequestFilterSensitiveLog, CreateTokenWithIAMResponseFilterSensitiveLog).ser(se_CreateTokenWithIAMCommand).de(de_CreateTokenWithIAMCommand).build() {
     };
@@ -33114,7 +33419,7 @@ Reference: https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.ht
 });
 
 // ../../node_modules/@aws-sdk/client-sts/dist-cjs/auth/httpAuthSchemeProvider.js
-var require_httpAuthSchemeProvider = __commonJS({
+var require_httpAuthSchemeProvider3 = __commonJS({
   "../../node_modules/@aws-sdk/client-sts/dist-cjs/auth/httpAuthSchemeProvider.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -33217,7 +33522,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.511.0",
+      version: "3.515.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -33238,18 +33543,18 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.511.0",
-        "@aws-sdk/middleware-host-header": "3.511.0",
-        "@aws-sdk/middleware-logger": "3.511.0",
-        "@aws-sdk/middleware-recursion-detection": "3.511.0",
-        "@aws-sdk/middleware-user-agent": "3.511.0",
-        "@aws-sdk/region-config-resolver": "3.511.0",
-        "@aws-sdk/types": "3.511.0",
-        "@aws-sdk/util-endpoints": "3.511.0",
-        "@aws-sdk/util-user-agent-browser": "3.511.0",
-        "@aws-sdk/util-user-agent-node": "3.511.0",
+        "@aws-sdk/core": "3.513.0",
+        "@aws-sdk/middleware-host-header": "3.515.0",
+        "@aws-sdk/middleware-logger": "3.515.0",
+        "@aws-sdk/middleware-recursion-detection": "3.515.0",
+        "@aws-sdk/middleware-user-agent": "3.515.0",
+        "@aws-sdk/region-config-resolver": "3.515.0",
+        "@aws-sdk/types": "3.515.0",
+        "@aws-sdk/util-endpoints": "3.515.0",
+        "@aws-sdk/util-user-agent-browser": "3.515.0",
+        "@aws-sdk/util-user-agent-node": "3.515.0",
         "@smithy/config-resolver": "^2.1.1",
-        "@smithy/core": "^1.3.1",
+        "@smithy/core": "^1.3.2",
         "@smithy/fetch-http-handler": "^2.4.1",
         "@smithy/hash-node": "^2.1.1",
         "@smithy/invalid-dependency": "^2.1.1",
@@ -33268,7 +33573,7 @@ var require_package4 = __commonJS({
         "@smithy/util-body-length-browser": "^2.1.1",
         "@smithy/util-body-length-node": "^2.2.1",
         "@smithy/util-defaults-mode-browser": "^2.1.1",
-        "@smithy/util-defaults-mode-node": "^2.1.1",
+        "@smithy/util-defaults-mode-node": "^2.2.0",
         "@smithy/util-endpoints": "^1.1.1",
         "@smithy/util-middleware": "^2.1.1",
         "@smithy/util-retry": "^2.1.1",
@@ -33304,7 +33609,7 @@ var require_package4 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.511.0"
+        "@aws-sdk/credential-provider-node": "^3.515.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -33443,7 +33748,7 @@ var require_runtimeConfig_shared3 = __commonJS({
     var url_parser_1 = require_dist_cjs39();
     var util_base64_1 = require_dist_cjs10();
     var util_utf8_1 = require_dist_cjs11();
-    var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider();
+    var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider3();
     var endpointResolver_1 = require_endpointResolver3();
     var getRuntimeConfig = (config) => {
       return {
@@ -33641,7 +33946,7 @@ var require_STSClient = __commonJS({
     Object.defineProperty(exports2, "__Client", { enumerable: true, get: function() {
       return smithy_client_1.Client;
     } });
-    var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider();
+    var httpAuthSchemeProvider_1 = require_httpAuthSchemeProvider3();
     var EndpointParameters_1 = require_EndpointParameters();
     var runtimeConfig_1 = require_runtimeConfig3();
     var runtimeExtensions_1 = require_runtimeExtensions();
@@ -34962,49 +35267,43 @@ var require_dist_cjs57 = __commonJS({
     var import_util_endpoints = require_dist_cjs28();
     var ASSUME_ROLE_DEFAULT_REGION = "us-east-1";
     var resolveRegion = /* @__PURE__ */ __name(async (_region, _parentRegion, credentialProviderLogger) => {
-      var _a2, _b;
+      var _a2;
       const region = typeof _region === "function" ? await _region() : _region;
       const parentRegion = typeof _parentRegion === "function" ? await _parentRegion() : _parentRegion;
-      if (!parentRegion || (0, import_util_endpoints.partition)(parentRegion).name === "aws") {
-        (_a2 = credentialProviderLogger == null ? void 0 : credentialProviderLogger.debug) == null ? void 0 : _a2.call(
-          credentialProviderLogger,
-          "@aws-sdk/client-sts::resolveRegion",
-          "accepting first of:",
-          `${region} (provider)`,
-          `${ASSUME_ROLE_DEFAULT_REGION} (STS default)`
-        );
-        return region ?? ASSUME_ROLE_DEFAULT_REGION;
-      } else {
-        (_b = credentialProviderLogger == null ? void 0 : credentialProviderLogger.debug) == null ? void 0 : _b.call(
-          credentialProviderLogger,
-          "@aws-sdk/client-sts::resolveRegion",
-          "accepting first of:",
-          `${region} (provider)`,
-          `${parentRegion} (parent client)`,
-          `${ASSUME_ROLE_DEFAULT_REGION} (STS default)`
-        );
-        return region ?? parentRegion ?? ASSUME_ROLE_DEFAULT_REGION;
-      }
+      (_a2 = credentialProviderLogger == null ? void 0 : credentialProviderLogger.debug) == null ? void 0 : _a2.call(
+        credentialProviderLogger,
+        "@aws-sdk/client-sts::resolveRegion",
+        "accepting first of:",
+        `${region} (provider)`,
+        `${parentRegion} (parent client)`,
+        `${ASSUME_ROLE_DEFAULT_REGION} (STS default)`
+      );
+      return region ?? parentRegion ?? ASSUME_ROLE_DEFAULT_REGION;
     }, "resolveRegion");
     var getDefaultRoleAssumer = /* @__PURE__ */ __name((stsOptions, stsClientCtor) => {
       let stsClient;
       let closureSourceCreds;
       return async (sourceCreds, params) => {
-        var _a2;
+        var _a2, _b, _c;
         closureSourceCreds = sourceCreds;
         if (!stsClient) {
-          const { logger, region, requestHandler, credentialProviderLogger } = stsOptions;
+          const {
+            logger = (_a2 = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _a2.logger,
+            region,
+            requestHandler = (_b = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _b.requestHandler,
+            credentialProviderLogger
+          } = stsOptions;
           const resolvedRegion = await resolveRegion(
             region,
-            (_a2 = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _a2.region,
+            (_c = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _c.region,
             credentialProviderLogger
           );
           stsClient = new stsClientCtor({
-            logger,
             // A hack to make sts client uses the credential in current closure.
             credentialDefaultProvider: () => async () => closureSourceCreds,
             region: resolvedRegion,
-            ...requestHandler ? { requestHandler } : {}
+            requestHandler,
+            logger
           });
         }
         const { Credentials: Credentials2 } = await stsClient.send(new AssumeRoleCommand(params));
@@ -35024,18 +35323,23 @@ var require_dist_cjs57 = __commonJS({
     var getDefaultRoleAssumerWithWebIdentity = /* @__PURE__ */ __name((stsOptions, stsClientCtor) => {
       let stsClient;
       return async (params) => {
-        var _a2;
+        var _a2, _b, _c;
         if (!stsClient) {
-          const { logger, region, requestHandler, credentialProviderLogger } = stsOptions;
+          const {
+            logger = (_a2 = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _a2.logger,
+            region,
+            requestHandler = (_b = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _b.requestHandler,
+            credentialProviderLogger
+          } = stsOptions;
           const resolvedRegion = await resolveRegion(
             region,
-            (_a2 = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _a2.region,
+            (_c = stsOptions == null ? void 0 : stsOptions.parentClientConfig) == null ? void 0 : _c.region,
             credentialProviderLogger
           );
           stsClient = new stsClientCtor({
-            logger,
             region: resolvedRegion,
-            ...requestHandler ? { requestHandler } : {}
+            requestHandler,
+            logger
           });
         }
         const { Credentials: Credentials2 } = await stsClient.send(new AssumeRoleWithWebIdentityCommand(params));
