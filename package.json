@@ -4,7 +4,8 @@
   "workspaces": {
     "packages": [
       "VKUI/*",
-      "vkui-tokens/*"
+      "vkui-tokens/*",
+      "shared/rust/cargo-update-toml"
     ]
   },
   "scripts": {

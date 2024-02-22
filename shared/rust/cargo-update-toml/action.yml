@@ -1,0 +1,10 @@
+name: 'Cargo update toml'
+description: 'Update dependency in Cargo.toml'
+inputs:
+  packages:
+    required: true
+    description: 'Packages that need to be updated'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
