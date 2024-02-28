@@ -10,6 +10,7 @@ async function run(): Promise<void> {
     const workflow = new WorkflowHandler(token, releaseTag);
 
     await workflow.processReleaseNotes(latest === 'true');
+    await workflow.processIssuesByTagLabel();
     await workflow.processMilestone();
 
     if (workflow.isProcessWithError()) {

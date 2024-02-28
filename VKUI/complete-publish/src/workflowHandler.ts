@@ -45,6 +45,19 @@ export class WorkflowHandler {
     }
   }
 
+  public async processIssuesByTagLabel() {
+    try {
+      const issueNumbers = await this.getIssueNumbersByTagLabel();
+
+      await this.commentOnIssues(issueNumbers);
+    } catch (error) {
+      if (error instanceof Error) {
+        core.error(error.message);
+      }
+      this.error = true;
+    }
+  }
+
   public async processReleaseNotes(latest: boolean) {
     try {
       const releaseNotes = await this.findReleaseNotes();
@@ -105,6 +118,21 @@ export class WorkflowHandler {
       ...github.context.repo,
       milestone: `${milestoneNumber}`,
       state: 'all',
+    });
+
+    return issues.reduce<number[]>((issueNumbers, issue) => {
+      if (issue.state_reason !== IGNORED_STATE && !issue.locked) {
+        issueNumbers.push(issue.number);
+      }
+      return issueNumbers;
+    }, []);
+  }
+
+  private async getIssueNumbersByTagLabel() {
+    const issues = await this.gh.paginate(this.gh.rest.issues.listForRepo, {
+      ...github.context.repo,
+      state: 'all',
+      labels: this.releaseTag,
     });
 
     return issues.reduce<number[]>((issueNumbers, issue) => {
