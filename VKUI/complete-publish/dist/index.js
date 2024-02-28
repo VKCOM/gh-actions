@@ -21830,6 +21830,17 @@ var WorkflowHandler = class {
       this.error = true;
     }
   }
+  async processIssuesByTagLabel() {
+    try {
+      const issueNumbers = await this.getIssueNumbersByTagLabel();
+      await this.commentOnIssues(issueNumbers);
+    } catch (error2) {
+      if (error2 instanceof Error) {
+        core.error(error2.message);
+      }
+      this.error = true;
+    }
+  }
   async processReleaseNotes(latest) {
     try {
       const releaseNotes = await this.findReleaseNotes();
@@ -21887,6 +21898,19 @@ var WorkflowHandler = class {
       return issueNumbers;
     }, []);
   }
+  async getIssueNumbersByTagLabel() {
+    const issues = await this.gh.paginate(this.gh.rest.issues.listForRepo, {
+      ...github.context.repo,
+      state: "all",
+      labels: this.releaseTag
+    });
+    return issues.reduce((issueNumbers, issue) => {
+      if (issue.state_reason !== IGNORED_STATE && !issue.locked) {
+        issueNumbers.push(issue.number);
+      }
+      return issueNumbers;
+    }, []);
+  }
   async commentOnIssues(issueNumbers) {
     core.debug(`Processing the following linked issues: [${issueNumbers}]`);
     const body = getIssueCommentBody(this.releaseTag);
@@ -21917,6 +21941,7 @@ async function run() {
     const latest = core2.getInput("latest", { required: true });
     const workflow = new WorkflowHandler(token, releaseTag);
     await workflow.processReleaseNotes(latest === "true");
+    await workflow.processIssuesByTagLabel();
     await workflow.processMilestone();
     if (workflow.isProcessWithError()) {
       throw new Error("There were errors during the process. Check the logs for more information");
