@@ -1,0 +1,29 @@
+name: 'size upload'
+description: 'Upload sizes to csv'
+inputs:
+  awsAccessKeyId:
+    required: true
+    description: 'aws accessKeyId'
+  awsSecretAccessKey:
+    required: true
+    description: 'aws secretAccessKey'
+  awsBucket:
+    required: true
+    description: 'awsBucket'
+  awsRegion:
+    required: false
+    description: 'awsRegion'
+  awsEndpoint:
+    required: false
+    description: 'endpoint'
+
+  awsKeyPrefix:
+    required: true
+    description: 'key prefix in s3'
+  sizePath:
+    required: true
+    description: 'path to json'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
