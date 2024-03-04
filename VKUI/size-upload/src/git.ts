@@ -1,7 +1,7 @@
 import * as exec from '@actions/exec';
 
 /**
- * Возвращает текущий хэш и таймпспент
+ * Возвращает текущий хэш и таймстемп
  */
 export async function getHashAndTimestamp(): Promise<`${string},${string},`> {
   const output = await exec.getExecOutput('git', [
