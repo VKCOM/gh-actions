@@ -6,7 +6,7 @@
   "private": true,
   "devDependencies": {
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^20.11.20",
+    "@types/node": "^20.11.24",
     "typescript": "^5.3.3"
   },
   "dependencies": {
