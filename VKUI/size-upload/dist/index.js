@@ -24372,6 +24372,7 @@ var require_dist_cjs28 = __commonJS({
       RuleSetObject: () => import_util_endpoints.RuleSetObject,
       RuleSetRules: () => import_util_endpoints.RuleSetRules,
       TreeRuleObject: () => import_util_endpoints.TreeRuleObject,
+      awsEndpointFunctions: () => awsEndpointFunctions,
       getUserAgentPrefix: () => getUserAgentPrefix,
       isIpAddress: () => import_util_endpoints.isIpAddress,
       partition: () => partition,
@@ -29879,7 +29880,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.536.0",
+      version: "3.540.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29904,9 +29905,9 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.535.0",
+        "@aws-sdk/client-sts": "3.540.0",
         "@aws-sdk/core": "3.535.0",
-        "@aws-sdk/credential-provider-node": "3.535.0",
+        "@aws-sdk/credential-provider-node": "3.540.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.535.0",
         "@aws-sdk/middleware-expect-continue": "3.535.0",
         "@aws-sdk/middleware-flexible-checksums": "3.535.0",
@@ -29916,12 +29917,12 @@ var require_package = __commonJS({
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
         "@aws-sdk/middleware-sdk-s3": "3.535.0",
         "@aws-sdk/middleware-signing": "3.535.0",
-        "@aws-sdk/middleware-ssec": "3.535.0",
-        "@aws-sdk/middleware-user-agent": "3.535.0",
+        "@aws-sdk/middleware-ssec": "3.537.0",
+        "@aws-sdk/middleware-user-agent": "3.540.0",
         "@aws-sdk/region-config-resolver": "3.535.0",
         "@aws-sdk/signature-v4-multi-region": "3.535.0",
         "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.535.0",
+        "@aws-sdk/util-endpoints": "3.540.0",
         "@aws-sdk/util-user-agent-browser": "3.535.0",
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@aws-sdk/xml-builder": "3.535.0",
@@ -30737,7 +30738,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.535.0",
+      version: "3.540.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -30760,10 +30761,10 @@ var require_package2 = __commonJS({
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-user-agent": "3.535.0",
+        "@aws-sdk/middleware-user-agent": "3.540.0",
         "@aws-sdk/region-config-resolver": "3.535.0",
         "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.535.0",
+        "@aws-sdk/util-endpoints": "3.540.0",
         "@aws-sdk/util-user-agent-browser": "3.535.0",
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@smithy/config-resolver": "^2.2.0",
@@ -31073,15 +31074,17 @@ var require_endpointResolver = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.defaultEndpointResolver = void 0;
-    var util_endpoints_1 = require_dist_cjs27();
+    var util_endpoints_1 = require_dist_cjs28();
+    var util_endpoints_2 = require_dist_cjs27();
     var ruleset_1 = require_ruleset();
     var defaultEndpointResolver = (endpointParams, context = {}) => {
-      return (0, util_endpoints_1.resolveEndpoint)(ruleset_1.ruleSet, {
+      return (0, util_endpoints_2.resolveEndpoint)(ruleset_1.ruleSet, {
         endpointParams,
         logger: context.logger
       });
     };
     exports2.defaultEndpointResolver = defaultEndpointResolver;
+    util_endpoints_2.customEndpointFunctions.aws = util_endpoints_1.awsEndpointFunctions;
   }
 });
 
@@ -31931,7 +31934,6 @@ var require_dist_cjs53 = __commonJS({
     (0, import_smithy_client.createAggregatedClient)(commands, SSO);
     var paginateListAccountRoles = (0, import_core.createPaginator)(SSOClient, ListAccountRolesCommand, "nextToken", "nextToken", "maxResults");
     var paginateListAccounts = (0, import_core.createPaginator)(SSOClient, ListAccountsCommand, "nextToken", "nextToken", "maxResults");
-    var import_util_endpoints = require_dist_cjs28();
   }
 });
 
@@ -32010,7 +32012,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.535.0",
+      version: "3.540.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -32029,15 +32031,15 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.535.0",
+        "@aws-sdk/client-sts": "3.540.0",
         "@aws-sdk/core": "3.535.0",
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-user-agent": "3.535.0",
+        "@aws-sdk/middleware-user-agent": "3.540.0",
         "@aws-sdk/region-config-resolver": "3.535.0",
         "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.535.0",
+        "@aws-sdk/util-endpoints": "3.540.0",
         "@aws-sdk/util-user-agent-browser": "3.535.0",
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@smithy/config-resolver": "^2.2.0",
@@ -32095,7 +32097,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.535.0"
+        "@aws-sdk/credential-provider-node": "^3.540.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -32198,15 +32200,17 @@ var require_endpointResolver2 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.defaultEndpointResolver = void 0;
-    var util_endpoints_1 = require_dist_cjs27();
+    var util_endpoints_1 = require_dist_cjs28();
+    var util_endpoints_2 = require_dist_cjs27();
     var ruleset_1 = require_ruleset2();
     var defaultEndpointResolver = (endpointParams, context = {}) => {
-      return (0, util_endpoints_1.resolveEndpoint)(ruleset_1.ruleSet, {
+      return (0, util_endpoints_2.resolveEndpoint)(ruleset_1.ruleSet, {
         endpointParams,
         logger: context.logger
       });
     };
     exports2.defaultEndpointResolver = defaultEndpointResolver;
+    util_endpoints_2.customEndpointFunctions.aws = util_endpoints_1.awsEndpointFunctions;
   }
 });
 
@@ -33245,7 +33249,6 @@ var require_dist_cjs54 = __commonJS({
     __name(_SSOOIDC, "SSOOIDC");
     var SSOOIDC = _SSOOIDC;
     (0, import_smithy_client.createAggregatedClient)(commands, SSOOIDC);
-    var import_util_endpoints = require_dist_cjs28();
   }
 });
 
@@ -33718,7 +33721,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.535.0",
+      version: "3.540.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -33743,10 +33746,10 @@ var require_package4 = __commonJS({
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-user-agent": "3.535.0",
+        "@aws-sdk/middleware-user-agent": "3.540.0",
         "@aws-sdk/region-config-resolver": "3.535.0",
         "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.535.0",
+        "@aws-sdk/util-endpoints": "3.540.0",
         "@aws-sdk/util-user-agent-browser": "3.535.0",
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@smithy/config-resolver": "^2.2.0",
@@ -33804,7 +33807,7 @@ var require_package4 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.535.0"
+        "@aws-sdk/credential-provider-node": "^3.540.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -33919,15 +33922,17 @@ var require_endpointResolver3 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.defaultEndpointResolver = void 0;
-    var util_endpoints_1 = require_dist_cjs27();
+    var util_endpoints_1 = require_dist_cjs28();
+    var util_endpoints_2 = require_dist_cjs27();
     var ruleset_1 = require_ruleset3();
     var defaultEndpointResolver = (endpointParams, context = {}) => {
-      return (0, util_endpoints_1.resolveEndpoint)(ruleset_1.ruleSet, {
+      return (0, util_endpoints_2.resolveEndpoint)(ruleset_1.ruleSet, {
         endpointParams,
         logger: context.logger
       });
     };
     exports2.defaultEndpointResolver = defaultEndpointResolver;
+    util_endpoints_2.customEndpointFunctions.aws = util_endpoints_1.awsEndpointFunctions;
   }
 });
 
@@ -35426,7 +35431,6 @@ var require_dist_cjs57 = __commonJS({
     (0, import_smithy_client.createAggregatedClient)(commands, STS);
     var import_EndpointParameters9 = require_EndpointParameters();
     var import_runtimeExtensions = require_runtimeExtensions();
-    var import_util_endpoints = require_dist_cjs28();
     var ASSUME_ROLE_DEFAULT_REGION = "us-east-1";
     var resolveRegion = /* @__PURE__ */ __name(async (_region, _parentRegion, credentialProviderLogger) => {
       var _a2;
@@ -37147,15 +37151,17 @@ var require_endpointResolver4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.defaultEndpointResolver = void 0;
-    var util_endpoints_1 = require_dist_cjs27();
+    var util_endpoints_1 = require_dist_cjs28();
+    var util_endpoints_2 = require_dist_cjs27();
     var ruleset_1 = require_ruleset4();
     var defaultEndpointResolver = (endpointParams, context = {}) => {
-      return (0, util_endpoints_1.resolveEndpoint)(ruleset_1.ruleSet, {
+      return (0, util_endpoints_2.resolveEndpoint)(ruleset_1.ruleSet, {
         endpointParams,
         logger: context.logger
       });
     };
     exports2.defaultEndpointResolver = defaultEndpointResolver;
+    util_endpoints_2.customEndpointFunctions.aws = util_endpoints_1.awsEndpointFunctions;
   }
 });
 
@@ -37283,6 +37289,7 @@ var require_dist_cjs67 = __commonJS({
     var src_exports = {};
     __export2(src_exports, {
       getSsecPlugin: () => getSsecPlugin,
+      isValidBase64EncodedSSECustomerKey: () => isValidBase64EncodedSSECustomerKey,
       ssecMiddleware: () => ssecMiddleware,
       ssecMiddlewareOptions: () => ssecMiddlewareOptions
     });
@@ -37305,8 +37312,7 @@ var require_dist_cjs67 = __commonJS({
           if (value) {
             let valueForHash;
             if (typeof value === "string") {
-              const isBase64Encoded = /^(?:[A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value);
-              if (isBase64Encoded) {
+              if (isValidBase64EncodedSSECustomerKey(value, options)) {
                 valueForHash = options.base64Decoder(value);
               } else {
                 valueForHash = options.utf8Decoder(value);
@@ -37339,6 +37345,18 @@ var require_dist_cjs67 = __commonJS({
         clientStack.add(ssecMiddleware(config), ssecMiddlewareOptions);
       }
     }), "getSsecPlugin");
+    function isValidBase64EncodedSSECustomerKey(str, options) {
+      const base64Regex = /^(?:[A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
+      if (!base64Regex.test(str))
+        return false;
+      try {
+        const decodedBytes = options.base64Decoder(str);
+        return decodedBytes.length === 32;
+      } catch {
+        return false;
+      }
+    }
+    __name(isValidBase64EncodedSSECustomerKey, "isValidBase64EncodedSSECustomerKey");
   }
 });
 
@@ -48551,7 +48569,6 @@ var require_dist_cjs71 = __commonJS({
       const result = await (0, import_util_waiter.createWaiter)({ ...serviceDefaults, ...params }, input, checkState4);
       return (0, import_util_waiter.checkExceptions)(result);
     }, "waitUntilObjectNotExists");
-    var import_util_endpoints = require_dist_cjs28();
   }
 });
 
