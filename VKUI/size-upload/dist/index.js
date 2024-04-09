@@ -311,7 +311,7 @@ function stringToBytes(str) {
   }
   return bytes;
 }
-function v35_default(name, version2, hashfunc) {
+function v35_default(name, version3, hashfunc) {
   function generateUUID(value, namespace, buf, offset) {
     if (typeof value === "string") {
       value = stringToBytes(value);
@@ -326,7 +326,7 @@ function v35_default(name, version2, hashfunc) {
     bytes.set(namespace);
     bytes.set(value, namespace.length);
     bytes = hashfunc(bytes);
-    bytes[6] = bytes[6] & 15 | version2;
+    bytes[6] = bytes[6] & 15 | version3;
     bytes[8] = bytes[8] & 63 | 128;
     if (buf) {
       offset = offset || 0;
@@ -1138,7 +1138,7 @@ var require_util = __commonJS({
     var { InvalidArgumentError } = require_errors();
     var { Blob: Blob2 } = require("buffer");
     var nodeUtil = require("util");
-    var { stringify: stringify2 } = require("querystring");
+    var { stringify: stringify3 } = require("querystring");
     var [nodeMajor, nodeMinor] = process.versions.node.split(".").map((v) => Number(v));
     function nop() {
     }
@@ -1152,7 +1152,7 @@ var require_util = __commonJS({
       if (url.includes("?") || url.includes("#")) {
         throw new Error('Query params cannot be passed when url already contains "?" or "#".');
       }
-      const stringified = stringify2(queryParams);
+      const stringified = stringify3(queryParams);
       if (stringified) {
         url += "?" + stringified;
       }
@@ -3242,9 +3242,9 @@ var require_util2 = __commonJS({
     var { isBlobLike, toUSVString, ReadableStreamFrom } = require_util();
     var assert = require("assert");
     var { isUint8Array } = require("util/types");
-    var crypto5;
+    var crypto9;
     try {
-      crypto5 = require("crypto");
+      crypto9 = require("crypto");
     } catch {
     }
     function responseURL(response) {
@@ -3493,7 +3493,7 @@ var require_util2 = __commonJS({
       }
     }
     function bytesMatch(bytes, metadataList) {
-      if (crypto5 === void 0) {
+      if (crypto9 === void 0) {
         return true;
       }
       const parsedMetadata = parseMetadata(metadataList);
@@ -3512,14 +3512,14 @@ var require_util2 = __commonJS({
         if (expectedValue.endsWith("==")) {
           expectedValue = expectedValue.slice(0, -2);
         }
-        let actualValue = crypto5.createHash(algorithm).update(bytes).digest("base64");
+        let actualValue = crypto9.createHash(algorithm).update(bytes).digest("base64");
         if (actualValue.endsWith("==")) {
           actualValue = actualValue.slice(0, -2);
         }
         if (actualValue === expectedValue) {
           return true;
         }
-        let actualBase64URL = crypto5.createHash(algorithm).update(bytes).digest("base64url");
+        let actualBase64URL = crypto9.createHash(algorithm).update(bytes).digest("base64url");
         if (actualBase64URL.endsWith("==")) {
           actualBase64URL = actualBase64URL.slice(0, -2);
         }
@@ -3533,7 +3533,7 @@ var require_util2 = __commonJS({
     function parseMetadata(metadata) {
       const result = [];
       let empty = true;
-      const supportedHashes = crypto5.getHashes();
+      const supportedHashes = crypto9.getHashes();
       for (const token of metadata.split(" ")) {
         empty = false;
         const parsedToken = parseHashWithOptions.exec(token);
@@ -10536,7 +10536,7 @@ var require_proxy_agent = __commonJS({
   "../../node_modules/undici/lib/proxy-agent.js"(exports2, module2) {
     "use strict";
     var { kProxy, kClose, kDestroy, kInterceptors } = require_symbols();
-    var { URL: URL3 } = require("url");
+    var { URL: URL4 } = require("url");
     var Agent = require_agent();
     var Pool = require_pool();
     var DispatcherBase = require_dispatcher_base();
@@ -10592,7 +10592,7 @@ var require_proxy_agent = __commonJS({
         } else if (opts.token) {
           this[kProxyHeaders]["proxy-authorization"] = opts.token;
         }
-        const resolvedUrl = new URL3(opts.uri);
+        const resolvedUrl = new URL4(opts.uri);
         const { origin, port, host } = resolvedUrl;
         const connect = buildConnector({ ...opts.proxyTls });
         this[kConnectEndpoint] = buildConnector({ ...opts.requestTls });
@@ -10638,7 +10638,7 @@ var require_proxy_agent = __commonJS({
         });
       }
       dispatch(opts, handler) {
-        const { host } = new URL3(opts.origin);
+        const { host } = new URL4(opts.origin);
         const headers = buildHeaders(opts.headers);
         throwIfProxyAuthIsSent(headers);
         return this[kAgent].dispatch(
@@ -14744,7 +14744,7 @@ var require_util6 = __commonJS({
         throw new Error("Invalid cookie max-age");
       }
     }
-    function stringify2(cookie) {
+    function stringify3(cookie) {
       if (cookie.name.length === 0) {
         return null;
       }
@@ -14809,7 +14809,7 @@ var require_util6 = __commonJS({
     }
     module2.exports = {
       isCTLExcludingHtab,
-      stringify: stringify2,
+      stringify: stringify3,
       getHeadersList
     };
   }
@@ -14960,7 +14960,7 @@ var require_cookies = __commonJS({
   "../../node_modules/undici/lib/cookies/index.js"(exports2, module2) {
     "use strict";
     var { parseSetCookie } = require_parse();
-    var { stringify: stringify2, getHeadersList } = require_util6();
+    var { stringify: stringify3, getHeadersList } = require_util6();
     var { webidl } = require_webidl();
     var { Headers } = require_headers();
     function getCookies(headers) {
@@ -15002,9 +15002,9 @@ var require_cookies = __commonJS({
       webidl.argumentLengthCheck(arguments, 2, { header: "setCookie" });
       webidl.brandCheck(headers, Headers, { strict: false });
       cookie = webidl.converters.Cookie(cookie);
-      const str = stringify2(cookie);
+      const str = stringify3(cookie);
       if (str) {
-        headers.append("Set-Cookie", stringify2(cookie));
+        headers.append("Set-Cookie", stringify3(cookie));
       }
     }
     webidl.converters.DeleteCookieAttributes = webidl.dictionaryConverter([
@@ -15500,9 +15500,9 @@ var require_connection = __commonJS({
     channels.open = diagnosticsChannel.channel("undici:websocket:open");
     channels.close = diagnosticsChannel.channel("undici:websocket:close");
     channels.socketError = diagnosticsChannel.channel("undici:websocket:socket_error");
-    var crypto5;
+    var crypto9;
     try {
-      crypto5 = require("crypto");
+      crypto9 = require("crypto");
     } catch {
     }
     function establishWebSocketConnection(url, protocols, ws, onEstablish, options) {
@@ -15521,7 +15521,7 @@ var require_connection = __commonJS({
         const headersList = new Headers(options.headers)[kHeadersList];
         request.headersList = headersList;
       }
-      const keyValue = crypto5.randomBytes(16).toString("base64");
+      const keyValue = crypto9.randomBytes(16).toString("base64");
       request.headersList.append("sec-websocket-key", keyValue);
       request.headersList.append("sec-websocket-version", "13");
       for (const protocol of protocols) {
@@ -15550,7 +15550,7 @@ var require_connection = __commonJS({
             return;
           }
           const secWSAccept = response.headersList.get("Sec-WebSocket-Accept");
-          const digest = crypto5.createHash("sha1").update(keyValue + uid).digest("base64");
+          const digest = crypto9.createHash("sha1").update(keyValue + uid).digest("base64");
           if (secWSAccept !== digest) {
             failWebsocketConnection(ws, "Incorrect hash received in Sec-WebSocket-Accept header.");
             return;
@@ -15630,9 +15630,9 @@ var require_frame = __commonJS({
   "../../node_modules/undici/lib/websocket/frame.js"(exports2, module2) {
     "use strict";
     var { maxUnsigned16Bit } = require_constants4();
-    var crypto5;
+    var crypto9;
     try {
-      crypto5 = require("crypto");
+      crypto9 = require("crypto");
     } catch {
     }
     var WebsocketFrameSend = class {
@@ -15641,7 +15641,7 @@ var require_frame = __commonJS({
        */
       constructor(data) {
         this.frameData = data;
-        this.maskKey = crypto5.randomBytes(4);
+        this.maskKey = crypto9.randomBytes(4);
       }
       createFrame(opcode) {
         const bodyLength = this.frameData?.byteLength ?? 0;
@@ -20731,8 +20731,8 @@ var require_dist_cjs16 = __commonJS({
       }
     }, "loadConfigsForDefaultMode");
     var warningEmitted = false;
-    var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version2) => {
-      if (version2 && !warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 14) {
+    var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version3) => {
+      if (version3 && !warningEmitted && parseInt(version3.substring(1, version3.indexOf("."))) < 14) {
         warningEmitted = true;
       }
     }, "emitWarningIfUnsupportedVersion");
@@ -22980,12 +22980,12 @@ var require_dist_cjs23 = __commonJS({
     var src_exports = {};
     __export2(src_exports, {
       build: () => build,
-      parse: () => parse2,
-      validate: () => validate2
+      parse: () => parse3,
+      validate: () => validate3
     });
     module2.exports = __toCommonJS2(src_exports);
-    var validate2 = /* @__PURE__ */ __name((str) => typeof str === "string" && str.indexOf("arn:") === 0 && str.split(":").length >= 6, "validate");
-    var parse2 = /* @__PURE__ */ __name((arn) => {
+    var validate3 = /* @__PURE__ */ __name((str) => typeof str === "string" && str.indexOf("arn:") === 0 && str.split(":").length >= 6, "validate");
+    var parse3 = /* @__PURE__ */ __name((arn) => {
       const segments = arn.split(":");
       if (segments.length < 6 || segments[0] !== "arn")
         throw new Error("Malformed ARN");
@@ -24762,14 +24762,14 @@ var require_dist_cjs29 = __commonJS({
     var escapeUserAgent = /* @__PURE__ */ __name((userAgentPair) => {
       var _a;
       const name = userAgentPair[0].split(UA_NAME_SEPARATOR).map((part) => part.replace(UA_NAME_ESCAPE_REGEX, UA_ESCAPE_CHAR)).join(UA_NAME_SEPARATOR);
-      const version2 = (_a = userAgentPair[1]) == null ? void 0 : _a.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
+      const version3 = (_a = userAgentPair[1]) == null ? void 0 : _a.replace(UA_VALUE_ESCAPE_REGEX, UA_ESCAPE_CHAR);
       const prefixSeparatorIndex = name.indexOf(UA_NAME_SEPARATOR);
       const prefix = name.substring(0, prefixSeparatorIndex);
       let uaName = name.substring(prefixSeparatorIndex + 1);
       if (prefix === "api") {
         uaName = uaName.toLowerCase();
       }
-      return [prefix, uaName, version2].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
+      return [prefix, uaName, version3].filter((item) => item && item.length > 0).reduce((acc, item, index) => {
         switch (index) {
           case 0:
             return item;
@@ -25078,6 +25078,358 @@ var require_dist_cjs32 = __commonJS({
         clientStack.add(contentLengthMiddleware(options.bodyLengthChecker), contentLengthMiddlewareOptions);
       }
     }), "getContentLengthPlugin");
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/rng.js
+function rng2() {
+  if (poolPtr2 > rnds8Pool2.length - 16) {
+    import_crypto4.default.randomFillSync(rnds8Pool2);
+    poolPtr2 = 0;
+  }
+  return rnds8Pool2.slice(poolPtr2, poolPtr2 += 16);
+}
+var import_crypto4, rnds8Pool2, poolPtr2;
+var init_rng2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/rng.js"() {
+    import_crypto4 = __toESM(require("crypto"));
+    rnds8Pool2 = new Uint8Array(256);
+    poolPtr2 = rnds8Pool2.length;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/regex.js
+var regex_default2;
+var init_regex2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/regex.js"() {
+    regex_default2 = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/validate.js
+function validate2(uuid) {
+  return typeof uuid === "string" && regex_default2.test(uuid);
+}
+var validate_default2;
+var init_validate2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/validate.js"() {
+    init_regex2();
+    validate_default2 = validate2;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/stringify.js
+function unsafeStringify(arr, offset = 0) {
+  return byteToHex2[arr[offset + 0]] + byteToHex2[arr[offset + 1]] + byteToHex2[arr[offset + 2]] + byteToHex2[arr[offset + 3]] + "-" + byteToHex2[arr[offset + 4]] + byteToHex2[arr[offset + 5]] + "-" + byteToHex2[arr[offset + 6]] + byteToHex2[arr[offset + 7]] + "-" + byteToHex2[arr[offset + 8]] + byteToHex2[arr[offset + 9]] + "-" + byteToHex2[arr[offset + 10]] + byteToHex2[arr[offset + 11]] + byteToHex2[arr[offset + 12]] + byteToHex2[arr[offset + 13]] + byteToHex2[arr[offset + 14]] + byteToHex2[arr[offset + 15]];
+}
+function stringify2(arr, offset = 0) {
+  const uuid = unsafeStringify(arr, offset);
+  if (!validate_default2(uuid)) {
+    throw TypeError("Stringified UUID is invalid");
+  }
+  return uuid;
+}
+var byteToHex2, stringify_default2;
+var init_stringify2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/stringify.js"() {
+    init_validate2();
+    byteToHex2 = [];
+    for (let i = 0; i < 256; ++i) {
+      byteToHex2.push((i + 256).toString(16).slice(1));
+    }
+    stringify_default2 = stringify2;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v1.js
+function v12(options, buf, offset) {
+  let i = buf && offset || 0;
+  const b = buf || new Array(16);
+  options = options || {};
+  let node = options.node || _nodeId2;
+  let clockseq = options.clockseq !== void 0 ? options.clockseq : _clockseq2;
+  if (node == null || clockseq == null) {
+    const seedBytes = options.random || (options.rng || rng2)();
+    if (node == null) {
+      node = _nodeId2 = [seedBytes[0] | 1, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];
+    }
+    if (clockseq == null) {
+      clockseq = _clockseq2 = (seedBytes[6] << 8 | seedBytes[7]) & 16383;
+    }
+  }
+  let msecs = options.msecs !== void 0 ? options.msecs : Date.now();
+  let nsecs = options.nsecs !== void 0 ? options.nsecs : _lastNSecs2 + 1;
+  const dt = msecs - _lastMSecs2 + (nsecs - _lastNSecs2) / 1e4;
+  if (dt < 0 && options.clockseq === void 0) {
+    clockseq = clockseq + 1 & 16383;
+  }
+  if ((dt < 0 || msecs > _lastMSecs2) && options.nsecs === void 0) {
+    nsecs = 0;
+  }
+  if (nsecs >= 1e4) {
+    throw new Error("uuid.v1(): Can't create more than 10M uuids/sec");
+  }
+  _lastMSecs2 = msecs;
+  _lastNSecs2 = nsecs;
+  _clockseq2 = clockseq;
+  msecs += 122192928e5;
+  const tl = ((msecs & 268435455) * 1e4 + nsecs) % 4294967296;
+  b[i++] = tl >>> 24 & 255;
+  b[i++] = tl >>> 16 & 255;
+  b[i++] = tl >>> 8 & 255;
+  b[i++] = tl & 255;
+  const tmh = msecs / 4294967296 * 1e4 & 268435455;
+  b[i++] = tmh >>> 8 & 255;
+  b[i++] = tmh & 255;
+  b[i++] = tmh >>> 24 & 15 | 16;
+  b[i++] = tmh >>> 16 & 255;
+  b[i++] = clockseq >>> 8 | 128;
+  b[i++] = clockseq & 255;
+  for (let n = 0; n < 6; ++n) {
+    b[i + n] = node[n];
+  }
+  return buf || unsafeStringify(b);
+}
+var _nodeId2, _clockseq2, _lastMSecs2, _lastNSecs2, v1_default2;
+var init_v12 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v1.js"() {
+    init_rng2();
+    init_stringify2();
+    _lastMSecs2 = 0;
+    _lastNSecs2 = 0;
+    v1_default2 = v12;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/parse.js
+function parse2(uuid) {
+  if (!validate_default2(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  let v;
+  const arr = new Uint8Array(16);
+  arr[0] = (v = parseInt(uuid.slice(0, 8), 16)) >>> 24;
+  arr[1] = v >>> 16 & 255;
+  arr[2] = v >>> 8 & 255;
+  arr[3] = v & 255;
+  arr[4] = (v = parseInt(uuid.slice(9, 13), 16)) >>> 8;
+  arr[5] = v & 255;
+  arr[6] = (v = parseInt(uuid.slice(14, 18), 16)) >>> 8;
+  arr[7] = v & 255;
+  arr[8] = (v = parseInt(uuid.slice(19, 23), 16)) >>> 8;
+  arr[9] = v & 255;
+  arr[10] = (v = parseInt(uuid.slice(24, 36), 16)) / 1099511627776 & 255;
+  arr[11] = v / 4294967296 & 255;
+  arr[12] = v >>> 24 & 255;
+  arr[13] = v >>> 16 & 255;
+  arr[14] = v >>> 8 & 255;
+  arr[15] = v & 255;
+  return arr;
+}
+var parse_default2;
+var init_parse2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/parse.js"() {
+    init_validate2();
+    parse_default2 = parse2;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v35.js
+function stringToBytes2(str) {
+  str = unescape(encodeURIComponent(str));
+  const bytes = [];
+  for (let i = 0; i < str.length; ++i) {
+    bytes.push(str.charCodeAt(i));
+  }
+  return bytes;
+}
+function v35(name, version3, hashfunc) {
+  function generateUUID(value, namespace, buf, offset) {
+    var _namespace;
+    if (typeof value === "string") {
+      value = stringToBytes2(value);
+    }
+    if (typeof namespace === "string") {
+      namespace = parse_default2(namespace);
+    }
+    if (((_namespace = namespace) === null || _namespace === void 0 ? void 0 : _namespace.length) !== 16) {
+      throw TypeError("Namespace must be array-like (16 iterable integer values, 0-255)");
+    }
+    let bytes = new Uint8Array(16 + value.length);
+    bytes.set(namespace);
+    bytes.set(value, namespace.length);
+    bytes = hashfunc(bytes);
+    bytes[6] = bytes[6] & 15 | version3;
+    bytes[8] = bytes[8] & 63 | 128;
+    if (buf) {
+      offset = offset || 0;
+      for (let i = 0; i < 16; ++i) {
+        buf[offset + i] = bytes[i];
+      }
+      return buf;
+    }
+    return unsafeStringify(bytes);
+  }
+  try {
+    generateUUID.name = name;
+  } catch (err) {
+  }
+  generateUUID.DNS = DNS2;
+  generateUUID.URL = URL3;
+  return generateUUID;
+}
+var DNS2, URL3;
+var init_v352 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v35.js"() {
+    init_stringify2();
+    init_parse2();
+    DNS2 = "6ba7b810-9dad-11d1-80b4-00c04fd430c8";
+    URL3 = "6ba7b811-9dad-11d1-80b4-00c04fd430c8";
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/md5.js
+function md52(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto5.default.createHash("md5").update(bytes).digest();
+}
+var import_crypto5, md5_default2;
+var init_md52 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/md5.js"() {
+    import_crypto5 = __toESM(require("crypto"));
+    md5_default2 = md52;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v3.js
+var v32, v3_default2;
+var init_v32 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v3.js"() {
+    init_v352();
+    init_md52();
+    v32 = v35("v3", 48, md5_default2);
+    v3_default2 = v32;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/native.js
+var import_crypto6, native_default;
+var init_native = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/native.js"() {
+    import_crypto6 = __toESM(require("crypto"));
+    native_default = {
+      randomUUID: import_crypto6.default.randomUUID
+    };
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v4.js
+function v42(options, buf, offset) {
+  if (native_default.randomUUID && !buf && !options) {
+    return native_default.randomUUID();
+  }
+  options = options || {};
+  const rnds = options.random || (options.rng || rng2)();
+  rnds[6] = rnds[6] & 15 | 64;
+  rnds[8] = rnds[8] & 63 | 128;
+  if (buf) {
+    offset = offset || 0;
+    for (let i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+    return buf;
+  }
+  return unsafeStringify(rnds);
+}
+var v4_default2;
+var init_v42 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v4.js"() {
+    init_native();
+    init_rng2();
+    init_stringify2();
+    v4_default2 = v42;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/sha1.js
+function sha12(bytes) {
+  if (Array.isArray(bytes)) {
+    bytes = Buffer.from(bytes);
+  } else if (typeof bytes === "string") {
+    bytes = Buffer.from(bytes, "utf8");
+  }
+  return import_crypto7.default.createHash("sha1").update(bytes).digest();
+}
+var import_crypto7, sha1_default2;
+var init_sha12 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/sha1.js"() {
+    import_crypto7 = __toESM(require("crypto"));
+    sha1_default2 = sha12;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v5.js
+var v52, v5_default2;
+var init_v52 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/v5.js"() {
+    init_v352();
+    init_sha12();
+    v52 = v35("v5", 80, sha1_default2);
+    v5_default2 = v52;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/nil.js
+var nil_default2;
+var init_nil2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/nil.js"() {
+    nil_default2 = "00000000-0000-0000-0000-000000000000";
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/version.js
+function version2(uuid) {
+  if (!validate_default2(uuid)) {
+    throw TypeError("Invalid UUID");
+  }
+  return parseInt(uuid.slice(14, 15), 16);
+}
+var version_default2;
+var init_version2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/version.js"() {
+    init_validate2();
+    version_default2 = version2;
+  }
+});
+
+// ../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/index.js
+var esm_node_exports2 = {};
+__export(esm_node_exports2, {
+  NIL: () => nil_default2,
+  parse: () => parse_default2,
+  stringify: () => stringify_default2,
+  v1: () => v1_default2,
+  v3: () => v3_default2,
+  v4: () => v4_default2,
+  v5: () => v5_default2,
+  validate: () => validate_default2,
+  version: () => version_default2
+});
+var init_esm_node2 = __esm({
+  "../../node_modules/@smithy/middleware-retry/node_modules/uuid/dist/esm-node/index.js"() {
+    init_v12();
+    init_v32();
+    init_v42();
+    init_v52();
+    init_nil2();
+    init_version2();
+    init_validate2();
+    init_stringify2();
+    init_parse2();
   }
 });
 
@@ -25537,7 +25889,7 @@ var require_dist_cjs35 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     var import_protocol_http = require_dist_cjs2();
-    var import_uuid = (init_esm_node(), __toCommonJS(esm_node_exports));
+    var import_uuid = (init_esm_node2(), __toCommonJS(esm_node_exports2));
     var import_util_retry = require_dist_cjs34();
     var getDefaultRetryQuota = /* @__PURE__ */ __name((initialRetryTokens, options) => {
       const MAX_CAPACITY = initialRetryTokens;
@@ -26476,13 +26828,13 @@ var require_dist_cjs41 = __commonJS({
     var DOTS_PATTERN = /\.\./;
     var isDnsCompatibleBucketName = /* @__PURE__ */ __name((bucketName) => DOMAIN_PATTERN.test(bucketName) && !IP_ADDRESS_PATTERN.test(bucketName) && !DOTS_PATTERN.test(bucketName), "isDnsCompatibleBucketName");
     var isArnBucketName = /* @__PURE__ */ __name((bucketName) => {
-      const [arn, partition, service, region, account, typeOrId] = bucketName.split(":");
+      const [arn, partition, service, , , bucket] = bucketName.split(":");
       const isArn = arn === "arn" && bucketName.split(":").length >= 6;
-      const isValidArn = [arn, partition, service, account, typeOrId].filter(Boolean).length === 5;
+      const isValidArn = Boolean(isArn && partition && service && bucket);
       if (isArn && !isValidArn) {
         throw new Error(`Invalid ARN: ${bucketName} was an invalid ARN.`);
       }
-      return arn === "arn" && !!partition && !!service && !!account && !!typeOrId;
+      return isValidArn;
     }, "isArnBucketName");
     var createConfigValueProvider = /* @__PURE__ */ __name((configKey, canonicalEndpointParamKey, config) => {
       const configProvider = /* @__PURE__ */ __name(async () => {
@@ -28809,8 +29161,8 @@ var require_dist_cjs43 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     var warningEmitted = false;
-    var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version2) => {
-      if (version2 && !warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 16) {
+    var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version3) => {
+      if (version3 && !warningEmitted && parseInt(version3.substring(1, version3.indexOf("."))) < 16) {
         warningEmitted = true;
         process.emitWarning(
           `NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
@@ -29880,7 +30232,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.540.0",
+      version: "3.550.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29905,9 +30257,9 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.540.0",
-        "@aws-sdk/core": "3.535.0",
-        "@aws-sdk/credential-provider-node": "3.540.0",
+        "@aws-sdk/client-sts": "3.549.0",
+        "@aws-sdk/core": "3.549.0",
+        "@aws-sdk/credential-provider-node": "3.549.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.535.0",
         "@aws-sdk/middleware-expect-continue": "3.535.0",
         "@aws-sdk/middleware-flexible-checksums": "3.535.0",
@@ -29927,7 +30279,7 @@ var require_package = __commonJS({
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@aws-sdk/xml-builder": "3.535.0",
         "@smithy/config-resolver": "^2.2.0",
-        "@smithy/core": "^1.4.0",
+        "@smithy/core": "^1.4.1",
         "@smithy/eventstream-serde-browser": "^2.2.0",
         "@smithy/eventstream-serde-config-resolver": "^2.2.0",
         "@smithy/eventstream-serde-node": "^2.2.0",
@@ -29939,7 +30291,7 @@ var require_package = __commonJS({
         "@smithy/md5-js": "^2.2.0",
         "@smithy/middleware-content-length": "^2.2.0",
         "@smithy/middleware-endpoint": "^2.5.0",
-        "@smithy/middleware-retry": "^2.2.0",
+        "@smithy/middleware-retry": "^2.3.0",
         "@smithy/middleware-serde": "^2.3.0",
         "@smithy/middleware-stack": "^2.2.0",
         "@smithy/node-config-provider": "^2.3.0",
@@ -30738,7 +31090,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.540.0",
+      version: "3.549.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -30757,7 +31109,7 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.535.0",
+        "@aws-sdk/core": "3.549.0",
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
@@ -30768,13 +31120,13 @@ var require_package2 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.535.0",
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@smithy/config-resolver": "^2.2.0",
-        "@smithy/core": "^1.4.0",
+        "@smithy/core": "^1.4.1",
         "@smithy/fetch-http-handler": "^2.5.0",
         "@smithy/hash-node": "^2.2.0",
         "@smithy/invalid-dependency": "^2.2.0",
         "@smithy/middleware-content-length": "^2.2.0",
         "@smithy/middleware-endpoint": "^2.5.0",
-        "@smithy/middleware-retry": "^2.2.0",
+        "@smithy/middleware-retry": "^2.3.0",
         "@smithy/middleware-serde": "^2.3.0",
         "@smithy/middleware-stack": "^2.2.0",
         "@smithy/node-config-provider": "^2.3.0",
@@ -30949,7 +31301,7 @@ var require_dist_cjs49 = __commonJS({
     var import_util_buffer_from = require_dist_cjs9();
     var import_util_utf8 = require_dist_cjs10();
     var import_buffer = require("buffer");
-    var import_crypto4 = require("crypto");
+    var import_crypto8 = require("crypto");
     var _Hash = class _Hash {
       constructor(algorithmIdentifier, secret) {
         this.algorithmIdentifier = algorithmIdentifier;
@@ -30963,7 +31315,7 @@ var require_dist_cjs49 = __commonJS({
         return Promise.resolve(this.hash.digest());
       }
       reset() {
-        this.hash = this.secret ? (0, import_crypto4.createHmac)(this.algorithmIdentifier, castSourceData(this.secret)) : (0, import_crypto4.createHash)(this.algorithmIdentifier);
+        this.hash = this.secret ? (0, import_crypto8.createHmac)(this.algorithmIdentifier, castSourceData(this.secret)) : (0, import_crypto8.createHash)(this.algorithmIdentifier);
       }
     };
     __name(_Hash, "Hash");
@@ -32012,7 +32364,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.540.0",
+      version: "3.549.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -32031,8 +32383,8 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.540.0",
-        "@aws-sdk/core": "3.535.0",
+        "@aws-sdk/client-sts": "3.549.0",
+        "@aws-sdk/core": "3.549.0",
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
@@ -32043,13 +32395,13 @@ var require_package3 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.535.0",
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@smithy/config-resolver": "^2.2.0",
-        "@smithy/core": "^1.4.0",
+        "@smithy/core": "^1.4.1",
         "@smithy/fetch-http-handler": "^2.5.0",
         "@smithy/hash-node": "^2.2.0",
         "@smithy/invalid-dependency": "^2.2.0",
         "@smithy/middleware-content-length": "^2.2.0",
         "@smithy/middleware-endpoint": "^2.5.0",
-        "@smithy/middleware-retry": "^2.2.0",
+        "@smithy/middleware-retry": "^2.3.0",
         "@smithy/middleware-serde": "^2.3.0",
         "@smithy/middleware-stack": "^2.2.0",
         "@smithy/node-config-provider": "^2.3.0",
@@ -32097,7 +32449,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.540.0"
+        "@aws-sdk/credential-provider-node": "^3.549.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -33721,7 +34073,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.540.0",
+      version: "3.549.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -33742,7 +34094,7 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.535.0",
+        "@aws-sdk/core": "3.549.0",
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
@@ -33753,13 +34105,13 @@ var require_package4 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.535.0",
         "@aws-sdk/util-user-agent-node": "3.535.0",
         "@smithy/config-resolver": "^2.2.0",
-        "@smithy/core": "^1.4.0",
+        "@smithy/core": "^1.4.1",
         "@smithy/fetch-http-handler": "^2.5.0",
         "@smithy/hash-node": "^2.2.0",
         "@smithy/invalid-dependency": "^2.2.0",
         "@smithy/middleware-content-length": "^2.2.0",
         "@smithy/middleware-endpoint": "^2.5.0",
-        "@smithy/middleware-retry": "^2.2.0",
+        "@smithy/middleware-retry": "^2.3.0",
         "@smithy/middleware-serde": "^2.3.0",
         "@smithy/middleware-stack": "^2.2.0",
         "@smithy/node-config-provider": "^2.3.0",
@@ -33807,7 +34159,7 @@ var require_package4 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.540.0"
+        "@aws-sdk/credential-provider-node": "^3.549.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -58229,7 +58581,7 @@ var require_exec = __commonJS({
 
 // src/main.ts
 var path = __toESM(require("node:path"));
-var crypto4 = __toESM(require("node:crypto"));
+var crypto8 = __toESM(require("node:crypto"));
 var core = __toESM(require_core());
 var import_client_s3 = __toESM(require_dist_cjs71());
 var import_mime_types = __toESM(require_mime_types());
@@ -58275,7 +58627,7 @@ function configuration() {
   };
 }
 function generateSizeCheckFilename() {
-  return `${crypto4.randomUUID()}.csv`;
+  return `${crypto8.randomUUID()}.csv`;
 }
 var Action = class {
   constructor() {
