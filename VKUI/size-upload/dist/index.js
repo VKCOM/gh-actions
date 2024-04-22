@@ -29016,7 +29016,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.554.0",
+      version: "3.556.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29041,9 +29041,9 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.554.0",
-        "@aws-sdk/core": "3.554.0",
-        "@aws-sdk/credential-provider-node": "3.554.0",
+        "@aws-sdk/client-sts": "3.556.0",
+        "@aws-sdk/core": "3.556.0",
+        "@aws-sdk/credential-provider-node": "3.556.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.535.0",
         "@aws-sdk/middleware-expect-continue": "3.535.0",
         "@aws-sdk/middleware-flexible-checksums": "3.535.0",
@@ -29051,12 +29051,12 @@ var require_package = __commonJS({
         "@aws-sdk/middleware-location-constraint": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-sdk-s3": "3.552.0",
-        "@aws-sdk/middleware-signing": "3.552.0",
+        "@aws-sdk/middleware-sdk-s3": "3.556.0",
+        "@aws-sdk/middleware-signing": "3.556.0",
         "@aws-sdk/middleware-ssec": "3.537.0",
         "@aws-sdk/middleware-user-agent": "3.540.0",
         "@aws-sdk/region-config-resolver": "3.535.0",
-        "@aws-sdk/signature-v4-multi-region": "3.552.0",
+        "@aws-sdk/signature-v4-multi-region": "3.556.0",
         "@aws-sdk/types": "3.535.0",
         "@aws-sdk/util-endpoints": "3.540.0",
         "@aws-sdk/util-user-agent-browser": "3.535.0",
@@ -29097,7 +29097,7 @@ var require_package = __commonJS({
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.552.0",
+        "@aws-sdk/signature-v4-crt": "3.556.0",
         "@smithy/service-client-documentation-generator": "^2.2.0",
         "@tsconfig/node14": "1.0.3",
         "@types/chai": "^4.2.11",
@@ -29874,7 +29874,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.554.0",
+      version: "3.556.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -29893,7 +29893,7 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.554.0",
+        "@aws-sdk/core": "3.556.0",
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
@@ -31148,7 +31148,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.554.0",
+      version: "3.556.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -31167,8 +31167,8 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.554.0",
-        "@aws-sdk/core": "3.554.0",
+        "@aws-sdk/client-sts": "3.556.0",
+        "@aws-sdk/core": "3.556.0",
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
@@ -31233,7 +31233,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.554.0"
+        "@aws-sdk/credential-provider-node": "^3.556.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -32857,7 +32857,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.554.0",
+      version: "3.556.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -32878,7 +32878,7 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.554.0",
+        "@aws-sdk/core": "3.556.0",
         "@aws-sdk/middleware-host-header": "3.535.0",
         "@aws-sdk/middleware-logger": "3.535.0",
         "@aws-sdk/middleware-recursion-detection": "3.535.0",
@@ -32943,7 +32943,7 @@ var require_package4 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.554.0"
+        "@aws-sdk/credential-provider-node": "^3.556.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
