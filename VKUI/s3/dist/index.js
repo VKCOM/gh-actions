@@ -27948,15 +27948,6 @@ var require_dist_cjs41 = __commonJS({
     var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version3) => {
       if (version3 && !warningEmitted && parseInt(version3.substring(1, version3.indexOf("."))) < 16) {
         warningEmitted = true;
-        process.emitWarning(
-          `NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
-no longer support Node.js 14.x on May 1, 2024.
-
-To continue receiving updates to AWS services, bug fixes, and security
-updates please upgrade to an active Node.js LTS version.
-
-More information can be found at: https://a.co/dzr2AJd`
-        );
       }
     }, "emitWarningIfUnsupportedVersion");
     var import_protocol_http = require_dist_cjs2();
@@ -29016,7 +29007,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.556.0",
+      version: "3.569.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29041,27 +29032,28 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.556.0",
-        "@aws-sdk/core": "3.556.0",
-        "@aws-sdk/credential-provider-node": "3.556.0",
-        "@aws-sdk/middleware-bucket-endpoint": "3.535.0",
-        "@aws-sdk/middleware-expect-continue": "3.535.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.535.0",
-        "@aws-sdk/middleware-host-header": "3.535.0",
-        "@aws-sdk/middleware-location-constraint": "3.535.0",
-        "@aws-sdk/middleware-logger": "3.535.0",
-        "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-sdk-s3": "3.556.0",
-        "@aws-sdk/middleware-signing": "3.556.0",
-        "@aws-sdk/middleware-ssec": "3.537.0",
-        "@aws-sdk/middleware-user-agent": "3.540.0",
-        "@aws-sdk/region-config-resolver": "3.535.0",
-        "@aws-sdk/signature-v4-multi-region": "3.556.0",
-        "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.540.0",
-        "@aws-sdk/util-user-agent-browser": "3.535.0",
-        "@aws-sdk/util-user-agent-node": "3.535.0",
-        "@aws-sdk/xml-builder": "3.535.0",
+        "@aws-sdk/client-sso-oidc": "3.569.0",
+        "@aws-sdk/client-sts": "3.569.0",
+        "@aws-sdk/core": "3.567.0",
+        "@aws-sdk/credential-provider-node": "3.569.0",
+        "@aws-sdk/middleware-bucket-endpoint": "3.568.0",
+        "@aws-sdk/middleware-expect-continue": "3.567.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.567.0",
+        "@aws-sdk/middleware-host-header": "3.567.0",
+        "@aws-sdk/middleware-location-constraint": "3.567.0",
+        "@aws-sdk/middleware-logger": "3.568.0",
+        "@aws-sdk/middleware-recursion-detection": "3.567.0",
+        "@aws-sdk/middleware-sdk-s3": "3.569.0",
+        "@aws-sdk/middleware-signing": "3.567.0",
+        "@aws-sdk/middleware-ssec": "3.567.0",
+        "@aws-sdk/middleware-user-agent": "3.567.0",
+        "@aws-sdk/region-config-resolver": "3.567.0",
+        "@aws-sdk/signature-v4-multi-region": "3.569.0",
+        "@aws-sdk/types": "3.567.0",
+        "@aws-sdk/util-endpoints": "3.567.0",
+        "@aws-sdk/util-user-agent-browser": "3.567.0",
+        "@aws-sdk/util-user-agent-node": "3.568.0",
+        "@aws-sdk/xml-builder": "3.567.0",
         "@smithy/config-resolver": "^2.2.0",
         "@smithy/core": "^1.4.2",
         "@smithy/eventstream-serde-browser": "^2.2.0",
@@ -29097,19 +29089,18 @@ var require_package = __commonJS({
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.556.0",
-        "@smithy/service-client-documentation-generator": "^2.2.0",
-        "@tsconfig/node14": "1.0.3",
+        "@aws-sdk/signature-v4-crt": "3.569.0",
+        "@tsconfig/node16": "16.1.3",
         "@types/chai": "^4.2.11",
         "@types/mocha": "^8.0.4",
-        "@types/node": "^14.14.31",
+        "@types/node": "^16.18.96",
         concurrently: "7.0.0",
         "downlevel-dts": "0.10.1",
         rimraf: "3.0.2",
         typescript: "~4.9.5"
       },
       engines: {
-        node: ">=14.0.0"
+        node: ">=16.0.0"
       },
       typesVersions: {
         "<4.0": {
@@ -29142,8 +29133,67 @@ var require_package = __commonJS({
   }
 });
 
-// ../../node_modules/@smithy/credential-provider-imds/dist-cjs/index.js
+// ../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js
 var require_dist_cjs43 = __commonJS({
+  "../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js"(exports2, module2) {
+    var __defProp2 = Object.defineProperty;
+    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
+    var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
+    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
+    var __export2 = (target, all) => {
+      for (var name in all)
+        __defProp2(target, name, { get: all[name], enumerable: true });
+    };
+    var __copyProps2 = (to, from, except, desc) => {
+      if (from && typeof from === "object" || typeof from === "function") {
+        for (let key of __getOwnPropNames2(from))
+          if (!__hasOwnProp2.call(to, key) && key !== except)
+            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
+      }
+      return to;
+    };
+    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
+    var src_exports = {};
+    __export2(src_exports, {
+      ENV_CREDENTIAL_SCOPE: () => ENV_CREDENTIAL_SCOPE,
+      ENV_EXPIRATION: () => ENV_EXPIRATION,
+      ENV_KEY: () => ENV_KEY,
+      ENV_SECRET: () => ENV_SECRET,
+      ENV_SESSION: () => ENV_SESSION,
+      fromEnv: () => fromEnv
+    });
+    module2.exports = __toCommonJS2(src_exports);
+    var import_property_provider = require_dist_cjs23();
+    var ENV_KEY = "AWS_ACCESS_KEY_ID";
+    var ENV_SECRET = "AWS_SECRET_ACCESS_KEY";
+    var ENV_SESSION = "AWS_SESSION_TOKEN";
+    var ENV_EXPIRATION = "AWS_CREDENTIAL_EXPIRATION";
+    var ENV_CREDENTIAL_SCOPE = "AWS_CREDENTIAL_SCOPE";
+    var fromEnv = /* @__PURE__ */ __name((init) => async () => {
+      var _a;
+      (_a = init == null ? void 0 : init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-env", "fromEnv");
+      const accessKeyId = process.env[ENV_KEY];
+      const secretAccessKey = process.env[ENV_SECRET];
+      const sessionToken = process.env[ENV_SESSION];
+      const expiry = process.env[ENV_EXPIRATION];
+      const credentialScope = process.env[ENV_CREDENTIAL_SCOPE];
+      if (accessKeyId && secretAccessKey) {
+        return {
+          accessKeyId,
+          secretAccessKey,
+          ...sessionToken && { sessionToken },
+          ...expiry && { expiration: new Date(expiry) },
+          ...credentialScope && { credentialScope }
+        };
+      }
+      throw new import_property_provider.CredentialsProviderError("Unable to find environment variable credentials.");
+    }, "fromEnv");
+  }
+});
+
+// ../../node_modules/@smithy/credential-provider-imds/dist-cjs/index.js
+var require_dist_cjs44 = __commonJS({
   "../../node_modules/@smithy/credential-provider-imds/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -29724,7 +29774,7 @@ Set AWS_CONTAINER_CREDENTIALS_FULL_URI or AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/index.js
-var require_dist_cjs44 = __commonJS({
+var require_dist_cjs45 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -29733,65 +29783,6 @@ var require_dist_cjs44 = __commonJS({
     Object.defineProperty(exports2, "fromHttp", { enumerable: true, get: function() {
       return fromHttp_1.fromHttp;
     } });
-  }
-});
-
-// ../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js
-var require_dist_cjs45 = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js"(exports2, module2) {
-    var __defProp2 = Object.defineProperty;
-    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-    var __export2 = (target, all) => {
-      for (var name in all)
-        __defProp2(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps2 = (to, from, except, desc) => {
-      if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames2(from))
-          if (!__hasOwnProp2.call(to, key) && key !== except)
-            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var src_exports = {};
-    __export2(src_exports, {
-      ENV_CREDENTIAL_SCOPE: () => ENV_CREDENTIAL_SCOPE,
-      ENV_EXPIRATION: () => ENV_EXPIRATION,
-      ENV_KEY: () => ENV_KEY,
-      ENV_SECRET: () => ENV_SECRET,
-      ENV_SESSION: () => ENV_SESSION,
-      fromEnv: () => fromEnv
-    });
-    module2.exports = __toCommonJS2(src_exports);
-    var import_property_provider = require_dist_cjs23();
-    var ENV_KEY = "AWS_ACCESS_KEY_ID";
-    var ENV_SECRET = "AWS_SECRET_ACCESS_KEY";
-    var ENV_SESSION = "AWS_SESSION_TOKEN";
-    var ENV_EXPIRATION = "AWS_CREDENTIAL_EXPIRATION";
-    var ENV_CREDENTIAL_SCOPE = "AWS_CREDENTIAL_SCOPE";
-    var fromEnv = /* @__PURE__ */ __name((init) => async () => {
-      var _a;
-      (_a = init == null ? void 0 : init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-env", "fromEnv");
-      const accessKeyId = process.env[ENV_KEY];
-      const secretAccessKey = process.env[ENV_SECRET];
-      const sessionToken = process.env[ENV_SESSION];
-      const expiry = process.env[ENV_EXPIRATION];
-      const credentialScope = process.env[ENV_CREDENTIAL_SCOPE];
-      if (accessKeyId && secretAccessKey) {
-        return {
-          accessKeyId,
-          secretAccessKey,
-          ...sessionToken && { sessionToken },
-          ...expiry && { expiration: new Date(expiry) },
-          ...credentialScope && { credentialScope }
-        };
-      }
-      throw new import_property_provider.CredentialsProviderError("Unable to find environment variable credentials.");
-    }, "fromEnv");
   }
 });
 
@@ -29874,7 +29865,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.556.0",
+      version: "3.568.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -29893,16 +29884,16 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.556.0",
-        "@aws-sdk/middleware-host-header": "3.535.0",
-        "@aws-sdk/middleware-logger": "3.535.0",
-        "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-user-agent": "3.540.0",
-        "@aws-sdk/region-config-resolver": "3.535.0",
-        "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.540.0",
-        "@aws-sdk/util-user-agent-browser": "3.535.0",
-        "@aws-sdk/util-user-agent-node": "3.535.0",
+        "@aws-sdk/core": "3.567.0",
+        "@aws-sdk/middleware-host-header": "3.567.0",
+        "@aws-sdk/middleware-logger": "3.568.0",
+        "@aws-sdk/middleware-recursion-detection": "3.567.0",
+        "@aws-sdk/middleware-user-agent": "3.567.0",
+        "@aws-sdk/region-config-resolver": "3.567.0",
+        "@aws-sdk/types": "3.567.0",
+        "@aws-sdk/util-endpoints": "3.567.0",
+        "@aws-sdk/util-user-agent-browser": "3.567.0",
+        "@aws-sdk/util-user-agent-node": "3.568.0",
         "@smithy/config-resolver": "^2.2.0",
         "@smithy/core": "^1.4.2",
         "@smithy/fetch-http-handler": "^2.5.0",
@@ -29931,16 +29922,15 @@ var require_package2 = __commonJS({
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@smithy/service-client-documentation-generator": "^2.2.0",
-        "@tsconfig/node14": "1.0.3",
-        "@types/node": "^14.14.31",
+        "@tsconfig/node16": "16.1.3",
+        "@types/node": "^16.18.96",
         concurrently: "7.0.0",
         "downlevel-dts": "0.10.1",
         rimraf: "3.0.2",
         typescript: "~4.9.5"
       },
       engines: {
-        node: ">=14.0.0"
+        node: ">=16.0.0"
       },
       typesVersions: {
         "<4.0": {
@@ -30369,7 +30359,7 @@ var require_dist_cjs49 = __commonJS({
       }
       if (!process.env[ENV_IMDS_DISABLED]) {
         try {
-          const { getInstanceMetadataEndpoint, httpRequest } = await Promise.resolve().then(() => __toESM2(require_dist_cjs43()));
+          const { getInstanceMetadataEndpoint, httpRequest } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
           const endpoint = await getInstanceMetadataEndpoint();
           return (await httpRequest({ ...endpoint, path: IMDS_REGION_PATH })).toString();
         } catch (e) {
@@ -31148,7 +31138,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.556.0",
+      version: "3.569.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -31167,17 +31157,18 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.556.0",
-        "@aws-sdk/core": "3.556.0",
-        "@aws-sdk/middleware-host-header": "3.535.0",
-        "@aws-sdk/middleware-logger": "3.535.0",
-        "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-user-agent": "3.540.0",
-        "@aws-sdk/region-config-resolver": "3.535.0",
-        "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.540.0",
-        "@aws-sdk/util-user-agent-browser": "3.535.0",
-        "@aws-sdk/util-user-agent-node": "3.535.0",
+        "@aws-sdk/client-sts": "3.569.0",
+        "@aws-sdk/core": "3.567.0",
+        "@aws-sdk/credential-provider-node": "3.569.0",
+        "@aws-sdk/middleware-host-header": "3.567.0",
+        "@aws-sdk/middleware-logger": "3.568.0",
+        "@aws-sdk/middleware-recursion-detection": "3.567.0",
+        "@aws-sdk/middleware-user-agent": "3.567.0",
+        "@aws-sdk/region-config-resolver": "3.567.0",
+        "@aws-sdk/types": "3.567.0",
+        "@aws-sdk/util-endpoints": "3.567.0",
+        "@aws-sdk/util-user-agent-browser": "3.567.0",
+        "@aws-sdk/util-user-agent-node": "3.568.0",
         "@smithy/config-resolver": "^2.2.0",
         "@smithy/core": "^1.4.2",
         "@smithy/fetch-http-handler": "^2.5.0",
@@ -31206,16 +31197,15 @@ var require_package3 = __commonJS({
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@smithy/service-client-documentation-generator": "^2.2.0",
-        "@tsconfig/node14": "1.0.3",
-        "@types/node": "^14.14.31",
+        "@tsconfig/node16": "16.1.3",
+        "@types/node": "^16.18.96",
         concurrently: "7.0.0",
         "downlevel-dts": "0.10.1",
         rimraf: "3.0.2",
         typescript: "~4.9.5"
       },
       engines: {
-        node: ">=14.0.0"
+        node: ">=16.0.0"
       },
       typesVersions: {
         "<4.0": {
@@ -31232,9 +31222,6 @@ var require_package3 = __commonJS({
         url: "https://aws.amazon.com/javascript/"
       },
       license: "Apache-2.0",
-      peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.556.0"
-      },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
       },
@@ -31247,50 +31234,6 @@ var require_package3 = __commonJS({
         url: "https://github.com/aws/aws-sdk-js-v3.git",
         directory: "clients/client-sso-oidc"
       }
-    };
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/credentialDefaultProvider.js
-var require_credentialDefaultProvider = __commonJS({
-  "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/credentialDefaultProvider.js"(exports2) {
-    "use strict";
-    var __createBinding4 = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      var desc = Object.getOwnPropertyDescriptor(m, k);
-      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function() {
-          return m[k];
-        } };
-      }
-      Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault2 = exports2 && exports2.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar4 = exports2 && exports2.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding4(result, mod, k);
-      }
-      __setModuleDefault2(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.defaultProvider = void 0;
-    exports2.defaultProvider = (input) => {
-      return () => Promise.resolve().then(() => __importStar4(require_dist_cjs59())).then(({ defaultProvider }) => defaultProvider(input)());
     };
   }
 });
@@ -31404,8 +31347,8 @@ var require_runtimeConfig2 = __commonJS({
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var package_json_1 = tslib_1.__importDefault(require_package3());
-    var credentialDefaultProvider_1 = require_credentialDefaultProvider();
     var core_1 = require_dist_cjs41();
+    var credential_provider_node_1 = require_dist_cjs59();
     var util_user_agent_node_1 = require_dist_cjs46();
     var config_resolver_1 = require_dist_cjs28();
     var hash_node_1 = require_dist_cjs47();
@@ -31430,7 +31373,7 @@ var require_runtimeConfig2 = __commonJS({
         runtime: "node",
         defaultsMode,
         bodyLengthChecker: config?.bodyLengthChecker ?? util_body_length_node_1.calculateBodyLength,
-        credentialDefaultProvider: config?.credentialDefaultProvider ?? credentialDefaultProvider_1.defaultProvider,
+        credentialDefaultProvider: config?.credentialDefaultProvider ?? credential_provider_node_1.defaultProvider,
         defaultUserAgentProvider: config?.defaultUserAgentProvider ?? (0, util_user_agent_node_1.defaultUserAgent)({ serviceId: clientSharedValues.serviceId, clientVersion: package_json_1.default.version }),
         maxAttempts: config?.maxAttempts ?? (0, node_config_provider_1.loadConfig)(middleware_retry_1.NODE_MAX_ATTEMPT_CONFIG_OPTIONS),
         region: config?.region ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_REGION_CONFIG_OPTIONS, config_resolver_1.NODE_REGION_CONFIG_FILE_OPTIONS),
@@ -32391,14 +32334,13 @@ var require_dist_cjs52 = __commonJS({
 // ../../node_modules/@aws-sdk/token-providers/dist-cjs/index.js
 var require_dist_cjs53 = __commonJS({
   "../../node_modules/@aws-sdk/token-providers/dist-cjs/index.js"(exports2, module2) {
+    var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
+    var __getProtoOf2 = Object.getPrototypeOf;
     var __hasOwnProp2 = Object.prototype.hasOwnProperty;
     var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-    var __esm2 = (fn, res) => function __init() {
-      return fn && (res = (0, fn[__getOwnPropNames2(fn)[0]])(fn = 0)), res;
-    };
     var __export2 = (target, all) => {
       for (var name in all)
         __defProp2(target, name, { get: all[name], enumerable: true });
@@ -32411,18 +32353,15 @@ var require_dist_cjs53 = __commonJS({
       }
       return to;
     };
+    var __toESM2 = (mod, isNodeMode, target) => (target = mod != null ? __create2(__getProtoOf2(mod)) : {}, __copyProps2(
+      // If the importer is in node compatibility mode or this is not an ESM
+      // file that has been converted to a CommonJS file using a Babel-
+      // compatible transform (i.e. "__esModule" has not been set), then set
+      // "default" to the CommonJS "module.exports" for node compatibility.
+      isNodeMode || !mod || !mod.__esModule ? __defProp2(target, "default", { value: mod, enumerable: true }) : target,
+      mod
+    ));
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var loadSsoOidc_exports = {};
-    __export2(loadSsoOidc_exports, {
-      CreateTokenCommand: () => import_client_sso_oidc.CreateTokenCommand,
-      SSOOIDCClient: () => import_client_sso_oidc.SSOOIDCClient
-    });
-    var import_client_sso_oidc;
-    var init_loadSsoOidc = __esm2({
-      "src/loadSsoOidc.ts"() {
-        import_client_sso_oidc = require_dist_cjs52();
-      }
-    });
     var src_exports = {};
     __export2(src_exports, {
       fromSso: () => fromSso,
@@ -32434,19 +32373,19 @@ var require_dist_cjs53 = __commonJS({
     var REFRESH_MESSAGE = `To refresh this SSO session run 'aws sso login' with the corresponding profile.`;
     var ssoOidcClientsHash = {};
     var getSsoOidcClient = /* @__PURE__ */ __name(async (ssoRegion) => {
-      const { SSOOIDCClient: SSOOIDCClient2 } = await Promise.resolve().then(() => (init_loadSsoOidc(), loadSsoOidc_exports));
+      const { SSOOIDCClient } = await Promise.resolve().then(() => __toESM2(require_dist_cjs52()));
       if (ssoOidcClientsHash[ssoRegion]) {
         return ssoOidcClientsHash[ssoRegion];
       }
-      const ssoOidcClient = new SSOOIDCClient2({ region: ssoRegion });
+      const ssoOidcClient = new SSOOIDCClient({ region: ssoRegion });
       ssoOidcClientsHash[ssoRegion] = ssoOidcClient;
       return ssoOidcClient;
     }, "getSsoOidcClient");
     var getNewSsoOidcToken = /* @__PURE__ */ __name(async (ssoToken, ssoRegion) => {
-      const { CreateTokenCommand: CreateTokenCommand2 } = await Promise.resolve().then(() => (init_loadSsoOidc(), loadSsoOidc_exports));
+      const { CreateTokenCommand } = await Promise.resolve().then(() => __toESM2(require_dist_cjs52()));
       const ssoOidcClient = await getSsoOidcClient(ssoRegion);
       return ssoOidcClient.send(
-        new CreateTokenCommand2({
+        new CreateTokenCommand({
           clientId: ssoToken.clientId,
           clientSecret: ssoToken.clientSecret,
           refreshToken: ssoToken.refreshToken,
@@ -32857,7 +32796,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.556.0",
+      version: "3.569.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -32878,16 +32817,18 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.556.0",
-        "@aws-sdk/middleware-host-header": "3.535.0",
-        "@aws-sdk/middleware-logger": "3.535.0",
-        "@aws-sdk/middleware-recursion-detection": "3.535.0",
-        "@aws-sdk/middleware-user-agent": "3.540.0",
-        "@aws-sdk/region-config-resolver": "3.535.0",
-        "@aws-sdk/types": "3.535.0",
-        "@aws-sdk/util-endpoints": "3.540.0",
-        "@aws-sdk/util-user-agent-browser": "3.535.0",
-        "@aws-sdk/util-user-agent-node": "3.535.0",
+        "@aws-sdk/client-sso-oidc": "3.569.0",
+        "@aws-sdk/core": "3.567.0",
+        "@aws-sdk/credential-provider-node": "3.569.0",
+        "@aws-sdk/middleware-host-header": "3.567.0",
+        "@aws-sdk/middleware-logger": "3.568.0",
+        "@aws-sdk/middleware-recursion-detection": "3.567.0",
+        "@aws-sdk/middleware-user-agent": "3.567.0",
+        "@aws-sdk/region-config-resolver": "3.567.0",
+        "@aws-sdk/types": "3.567.0",
+        "@aws-sdk/util-endpoints": "3.567.0",
+        "@aws-sdk/util-user-agent-browser": "3.567.0",
+        "@aws-sdk/util-user-agent-node": "3.568.0",
         "@smithy/config-resolver": "^2.2.0",
         "@smithy/core": "^1.4.2",
         "@smithy/fetch-http-handler": "^2.5.0",
@@ -32916,16 +32857,15 @@ var require_package4 = __commonJS({
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@smithy/service-client-documentation-generator": "^2.2.0",
-        "@tsconfig/node14": "1.0.3",
-        "@types/node": "^14.14.31",
+        "@tsconfig/node16": "16.1.3",
+        "@types/node": "^16.18.96",
         concurrently: "7.0.0",
         "downlevel-dts": "0.10.1",
         rimraf: "3.0.2",
         typescript: "~4.9.5"
       },
       engines: {
-        node: ">=14.0.0"
+        node: ">=16.0.0"
       },
       typesVersions: {
         "<4.0": {
@@ -32942,9 +32882,6 @@ var require_package4 = __commonJS({
         url: "https://aws.amazon.com/javascript/"
       },
       license: "Apache-2.0",
-      peerDependencies: {
-        "@aws-sdk/credential-provider-node": "^3.556.0"
-      },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
       },
@@ -32957,50 +32894,6 @@ var require_package4 = __commonJS({
         url: "https://github.com/aws/aws-sdk-js-v3.git",
         directory: "clients/client-sts"
       }
-    };
-  }
-});
-
-// ../../node_modules/@aws-sdk/client-sts/dist-cjs/credentialDefaultProvider.js
-var require_credentialDefaultProvider2 = __commonJS({
-  "../../node_modules/@aws-sdk/client-sts/dist-cjs/credentialDefaultProvider.js"(exports2) {
-    "use strict";
-    var __createBinding4 = exports2 && exports2.__createBinding || (Object.create ? function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      var desc = Object.getOwnPropertyDescriptor(m, k);
-      if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-        desc = { enumerable: true, get: function() {
-          return m[k];
-        } };
-      }
-      Object.defineProperty(o, k2, desc);
-    } : function(o, m, k, k2) {
-      if (k2 === void 0)
-        k2 = k;
-      o[k2] = m[k];
-    });
-    var __setModuleDefault2 = exports2 && exports2.__setModuleDefault || (Object.create ? function(o, v) {
-      Object.defineProperty(o, "default", { enumerable: true, value: v });
-    } : function(o, v) {
-      o["default"] = v;
-    });
-    var __importStar4 = exports2 && exports2.__importStar || function(mod) {
-      if (mod && mod.__esModule)
-        return mod;
-      var result = {};
-      if (mod != null) {
-        for (var k in mod)
-          if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-            __createBinding4(result, mod, k);
-      }
-      __setModuleDefault2(result, mod);
-      return result;
-    };
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.defaultProvider = void 0;
-    exports2.defaultProvider = (input) => {
-      return () => Promise.resolve().then(() => __importStar4(require_dist_cjs59())).then(({ defaultProvider }) => defaultProvider(input)());
     };
   }
 });
@@ -33126,8 +33019,8 @@ var require_runtimeConfig3 = __commonJS({
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var package_json_1 = tslib_1.__importDefault(require_package4());
-    var credentialDefaultProvider_1 = require_credentialDefaultProvider2();
     var core_1 = require_dist_cjs41();
+    var credential_provider_node_1 = require_dist_cjs59();
     var util_user_agent_node_1 = require_dist_cjs46();
     var config_resolver_1 = require_dist_cjs28();
     var core_2 = require_dist_cjs40();
@@ -33153,12 +33046,12 @@ var require_runtimeConfig3 = __commonJS({
         runtime: "node",
         defaultsMode,
         bodyLengthChecker: config?.bodyLengthChecker ?? util_body_length_node_1.calculateBodyLength,
-        credentialDefaultProvider: config?.credentialDefaultProvider ?? credentialDefaultProvider_1.defaultProvider,
+        credentialDefaultProvider: config?.credentialDefaultProvider ?? credential_provider_node_1.defaultProvider,
         defaultUserAgentProvider: config?.defaultUserAgentProvider ?? (0, util_user_agent_node_1.defaultUserAgent)({ serviceId: clientSharedValues.serviceId, clientVersion: package_json_1.default.version }),
         httpAuthSchemes: config?.httpAuthSchemes ?? [
           {
             schemeId: "aws.auth#sigv4",
-            identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4") || (async (idProps) => await (0, credentialDefaultProvider_1.defaultProvider)(idProps?.__config || {})()),
+            identityProvider: (ipc) => ipc.getIdentityProvider("aws.auth#sigv4") || (async (idProps) => await (0, credential_provider_node_1.defaultProvider)(idProps?.__config || {})()),
             signer: new core_1.AwsSdkSigV4Signer()
           },
           {
@@ -34769,19 +34662,6 @@ var require_dist_cjs56 = __commonJS({
   }
 });
 
-// ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/loadSts.js
-var require_loadSts = __commonJS({
-  "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/loadSts.js"(exports2) {
-    "use strict";
-    Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.getDefaultRoleAssumerWithWebIdentity = void 0;
-    var client_sts_1 = require_dist_cjs55();
-    Object.defineProperty(exports2, "getDefaultRoleAssumerWithWebIdentity", { enumerable: true, get: function() {
-      return client_sts_1.getDefaultRoleAssumerWithWebIdentity;
-    } });
-  }
-});
-
 // ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromWebToken.js
 var require_fromWebToken = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/fromWebToken.js"(exports2) {
@@ -34826,7 +34706,7 @@ var require_fromWebToken = __commonJS({
       const { roleArn, roleSessionName, webIdentityToken, providerId, policyArns, policy, durationSeconds } = init;
       let { roleAssumerWithWebIdentity } = init;
       if (!roleAssumerWithWebIdentity) {
-        const { getDefaultRoleAssumerWithWebIdentity } = await Promise.resolve().then(() => __importStar4(require_loadSts()));
+        const { getDefaultRoleAssumerWithWebIdentity } = await Promise.resolve().then(() => __importStar4(require_dist_cjs55()));
         roleAssumerWithWebIdentity = getDefaultRoleAssumerWithWebIdentity({
           ...init.clientConfig,
           credentialProviderLogger: init.logger,
@@ -34913,9 +34793,6 @@ var require_dist_cjs58 = __commonJS({
     var __getProtoOf2 = Object.getPrototypeOf;
     var __hasOwnProp2 = Object.prototype.hasOwnProperty;
     var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-    var __esm2 = (fn, res) => function __init() {
-      return fn && (res = (0, fn[__getOwnPropNames2(fn)[0]])(fn = 0)), res;
-    };
     var __export2 = (target, all) => {
       for (var name in all)
         __defProp2(target, name, { get: all[name], enumerable: true });
@@ -34937,16 +34814,6 @@ var require_dist_cjs58 = __commonJS({
       mod
     ));
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var loadSts_exports = {};
-    __export2(loadSts_exports, {
-      getDefaultRoleAssumer: () => import_client_sts.getDefaultRoleAssumer
-    });
-    var import_client_sts;
-    var init_loadSts = __esm2({
-      "src/loadSts.ts"() {
-        import_client_sts = require_dist_cjs55();
-      }
-    });
     var src_exports = {};
     __export2(src_exports, {
       fromIni: () => fromIni
@@ -34956,9 +34823,9 @@ var require_dist_cjs58 = __commonJS({
     var import_property_provider = require_dist_cjs23();
     var resolveCredentialSource = /* @__PURE__ */ __name((credentialSource, profileName) => {
       const sourceProvidersMap = {
-        EcsContainer: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs43())).then(({ fromContainerMetadata }) => fromContainerMetadata(options)),
-        Ec2InstanceMetadata: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs43())).then(({ fromInstanceMetadata }) => fromInstanceMetadata(options)),
-        Environment: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs45())).then(({ fromEnv }) => fromEnv(options))
+        EcsContainer: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs44())).then(({ fromContainerMetadata }) => fromContainerMetadata(options)),
+        Ec2InstanceMetadata: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs44())).then(({ fromInstanceMetadata }) => fromInstanceMetadata(options)),
+        Environment: (options) => Promise.resolve().then(() => __toESM2(require_dist_cjs43())).then(({ fromEnv }) => fromEnv(options))
       };
       if (credentialSource in sourceProvidersMap) {
         return sourceProvidersMap[credentialSource];
@@ -34976,8 +34843,8 @@ var require_dist_cjs58 = __commonJS({
       (_a = options.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-ini", "resolveAssumeRoleCredentials (STS)");
       const data = profiles[profileName];
       if (!options.roleAssumer) {
-        const { getDefaultRoleAssumer: getDefaultRoleAssumer2 } = await Promise.resolve().then(() => (init_loadSts(), loadSts_exports));
-        options.roleAssumer = getDefaultRoleAssumer2(
+        const { getDefaultRoleAssumer } = await Promise.resolve().then(() => __toESM2(require_dist_cjs55()));
+        options.roleAssumer = getDefaultRoleAssumer(
           {
             ...options.clientConfig,
             credentialProviderLogger: options.logger,
@@ -35123,15 +34990,16 @@ var require_dist_cjs59 = __commonJS({
       defaultProvider: () => defaultProvider
     });
     module2.exports = __toCommonJS2(src_exports);
+    var import_credential_provider_env = require_dist_cjs43();
     var import_shared_ini_file_loader = require_dist_cjs34();
     var import_property_provider = require_dist_cjs23();
     var ENV_IMDS_DISABLED = "AWS_EC2_METADATA_DISABLED";
     var remoteProvider = /* @__PURE__ */ __name(async (init) => {
       var _a, _b;
-      const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs43()));
+      const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
       if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
         (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "remoteProvider::fromHttp/fromContainerMetadata");
-        const { fromHttp } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
+        const { fromHttp } = await Promise.resolve().then(() => __toESM2(require_dist_cjs45()));
         return (0, import_property_provider.chain)(fromHttp(init), fromContainerMetadata(init));
       }
       if (process.env[ENV_IMDS_DISABLED]) {
@@ -35148,8 +35016,7 @@ var require_dist_cjs59 = __commonJS({
           async () => {
             var _a;
             (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node", "defaultProvider::fromEnv");
-            const { fromEnv } = await Promise.resolve().then(() => __toESM2(require_dist_cjs45()));
-            return fromEnv(init)();
+            return (0, import_credential_provider_env.fromEnv)(init)();
           }
         ],
         async () => {
