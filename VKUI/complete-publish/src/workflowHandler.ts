@@ -26,8 +26,9 @@ export class WorkflowHandler {
   private readonly releaseTag: string;
   private error = false;
 
-  public constructor(token: string, releaseTag: string) {
+  public constructor(token: string, releaseTagProp: string) {
     this.gh = github.getOctokit(token, { request: { retries: 3 } }, retry);
+    const releaseTag = releaseTagProp.trim();
     this.releaseTag = releaseTag.startsWith('v') ? releaseTag : `v${releaseTag}`;
   }
 
@@ -74,7 +75,7 @@ export class WorkflowHandler {
         throw new Error(`There are no release notes for ${this.releaseTag}`);
       }
 
-      if (releaseNotes.published_at === null) {
+      if (releaseNotes.draft) {
         await this.publishReleaseNotes(releaseNotes.id, latest);
       }
 
@@ -92,15 +93,17 @@ export class WorkflowHandler {
   }
 
   private async findReleaseNotesByReleaseTag() {
-    const { data: releases } = await this.gh.rest.repos.listReleases({
-      ...github.context.repo,
-    });
-
-    return releases.find(({ draft, name }) => draft && name === this.releaseTag);
+    const { data: releases } = await this.gh.rest.repos.listReleases(github.context.repo);
+    return releases.find(({ name }) => name === this.releaseTag);
   }
 
   private async findMilestoneByReleaseTag() {
-    const { data: milestones } = await this.gh.rest.issues.listMilestones(github.context.repo);
+    const { data: milestones } = await this.gh.rest.issues.listMilestones({
+      ...github.context.repo,
+      state: 'all',
+      sort: 'completeness',
+      direction: 'desc',
+    });
     return milestones.find(({ title }) => title === this.releaseTag);
   }
 

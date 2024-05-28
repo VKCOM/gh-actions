@@ -23167,9 +23167,10 @@ function getIssueCommentBody(releaseTag) {
 var COMMENT_WAIT_INTERVAL_MS = 1500;
 var IGNORED_STATE = "not_planned";
 var WorkflowHandler = class {
-  constructor(token, releaseTag) {
+  constructor(token, releaseTagProp) {
     this.error = false;
     this.gh = github.getOctokit(token, { request: { retries: 3 } }, retry);
+    const releaseTag = releaseTagProp.trim();
     this.releaseTag = releaseTag.startsWith("v") ? releaseTag : `v${releaseTag}`;
   }
   async processMilestone() {
@@ -23208,7 +23209,7 @@ var WorkflowHandler = class {
       if (!releaseNotes) {
         throw new Error(`There are no release notes for ${this.releaseTag}`);
       }
-      if (releaseNotes.published_at === null) {
+      if (releaseNotes.draft) {
         await this.publishReleaseNotes(releaseNotes.id, latest);
       }
       core.debug(`[processReleaseNotes]: ${releaseNotes.name} release notes already published`);
@@ -23223,13 +23224,16 @@ var WorkflowHandler = class {
     return this.error;
   }
   async findReleaseNotesByReleaseTag() {
-    const { data: releases } = await this.gh.rest.repos.listReleases({
-      ...github.context.repo
-    });
-    return releases.find(({ draft, name }) => draft && name === this.releaseTag);
+    const { data: releases } = await this.gh.rest.repos.listReleases(github.context.repo);
+    return releases.find(({ name }) => name === this.releaseTag);
   }
   async findMilestoneByReleaseTag() {
-    const { data: milestones } = await this.gh.rest.issues.listMilestones(github.context.repo);
+    const { data: milestones } = await this.gh.rest.issues.listMilestones({
+      ...github.context.repo,
+      state: "all",
+      sort: "completeness",
+      direction: "desc"
+    });
     return milestones.find(({ title }) => title === this.releaseTag);
   }
   async getIssueNumbersByMilestone(milestoneNumber) {
