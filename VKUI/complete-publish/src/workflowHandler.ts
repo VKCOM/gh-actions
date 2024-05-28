@@ -32,11 +32,18 @@ export class WorkflowHandler {
 
   public async processMilestone() {
     try {
-      const milestoneNumber = await this.findMilestoneNumberByReleaseTag();
-      const issueNumbers = await this.getIssueNumbersByMilestone(milestoneNumber);
+      const milestone = await this.findMilestoneByReleaseTag();
 
+      if (!milestone) {
+        throw new Error(`There is no milestone for tag ${this.releaseTag}`);
+      } else if (milestone.closed_at === null) {
+        await this.closeMilestone(milestone.number);
+      } else {
+        core.debug(`[processMilestone]: milestone ${milestone.number} already closed`);
+      }
+
+      const issueNumbers = await this.getIssueNumbersByMilestone(milestone.number);
       await this.commentOnIssues(issueNumbers);
-      await this.closeMilestone(milestoneNumber);
     } catch (error) {
       if (error instanceof Error) {
         core.error(error.message);
@@ -60,13 +67,17 @@ export class WorkflowHandler {
 
   public async processReleaseNotes(latest: boolean) {
     try {
-      const releaseNotes = await this.findReleaseNotes();
+      const releaseNotes = await this.findReleaseNotesByReleaseTag();
 
       if (!releaseNotes) {
         throw new Error(`There are no release notes for ${this.releaseTag}`);
       }
 
-      await this.publishReleaseNotes(releaseNotes.id, latest);
+      if (releaseNotes.published_at === null) {
+        await this.publishReleaseNotes(releaseNotes.id, latest);
+      }
+
+      core.debug(`[processReleaseNotes]: ${releaseNotes.name} release notes already published`);
     } catch (error) {
       if (error instanceof Error) {
         core.error(error.message);
@@ -79,7 +90,7 @@ export class WorkflowHandler {
     return this.error;
   }
 
-  private async findReleaseNotes() {
+  private async findReleaseNotesByReleaseTag() {
     const { data: releases } = await this.gh.rest.repos.listReleases({
       ...github.context.repo,
     });
@@ -87,30 +98,9 @@ export class WorkflowHandler {
     return releases.find(({ draft, name }) => draft && name === this.releaseTag);
   }
 
-  private async publishReleaseNotes(release_id: number, latest: boolean) {
-    await this.gh.rest.repos.updateRelease({
-      ...github.context.repo,
-      tag_name: this.releaseTag,
-      release_id,
-      draft: false,
-      prerelease: this.releaseTag.includes('-'),
-      make_latest: latest ? 'true' : 'false',
-    });
-  }
-
-  private async findMilestoneNumberByReleaseTag() {
-    const { data: milestones } = await this.gh.rest.issues.listMilestones({
-      ...github.context.repo,
-      state: 'open',
-    });
-
-    const milestone = milestones.find(({ title }) => title === this.releaseTag);
-
-    if (milestone) {
-      return milestone.number;
-    }
-
-    throw new Error(`There is no milestone for tag ${this.releaseTag}`);
+  private async findMilestoneByReleaseTag() {
+    const { data: milestones } = await this.gh.rest.issues.listMilestones(github.context.repo);
+    return milestones.find(({ title }) => title === this.releaseTag);
   }
 
   private async getIssueNumbersByMilestone(milestoneNumber: number) {
@@ -143,16 +133,37 @@ export class WorkflowHandler {
     }, []);
   }
 
+  private async publishReleaseNotes(release_id: number, latest: boolean) {
+    await this.gh.rest.repos.updateRelease({
+      ...github.context.repo,
+      tag_name: this.releaseTag,
+      release_id,
+      draft: false,
+      prerelease: this.releaseTag.includes('-'),
+      make_latest: latest ? 'true' : 'false',
+    });
+  }
+
   private async commentOnIssues(issueNumbers: number[]) {
     core.debug(`Processing the following linked issues: [${issueNumbers}]`);
 
-    const body = getIssueCommentBody(this.releaseTag);
+    const issueCommentBody = getIssueCommentBody(this.releaseTag);
 
     for (let issue_number of issueNumbers) {
+      const { data: listComments } = await this.gh.rest.issues.listComments({
+        ...github.context.repo,
+        issue_number,
+      });
+
+      if (listComments.some(({ body }) => (body ? body.includes(issueCommentBody) : false))) {
+        core.debug(`[commentOnIssues] comment for #${issue_number} already exist`);
+        continue;
+      }
+
       await this.gh.rest.issues.createComment({
         ...github.context.repo,
         issue_number,
-        body,
+        body: issueCommentBody,
       });
 
       // https://docs.github.com/en/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits
