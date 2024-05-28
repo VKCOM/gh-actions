@@ -1,3 +1,4 @@
+import { retry } from '@octokit/plugin-retry';
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
@@ -26,7 +27,7 @@ export class WorkflowHandler {
   private error = false;
 
   public constructor(token: string, releaseTag: string) {
-    this.gh = github.getOctokit(token);
+    this.gh = github.getOctokit(token, { request: { retries: 3 } }, retry);
     this.releaseTag = releaseTag.startsWith('v') ? releaseTag : `v${releaseTag}`;
   }
 
