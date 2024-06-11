@@ -9849,10 +9849,10 @@ var require_mock_utils = __commonJS({
     }
     function getMockDispatch(mockDispatches, key) {
       const basePath = key.query ? buildURL(key.path, key.query) : key.path;
-      const resolvedPath = typeof basePath === "string" ? safeUrl(basePath) : basePath;
-      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path2 }) => matchValue(safeUrl(path2), resolvedPath));
+      const resolvedPath2 = typeof basePath === "string" ? safeUrl(basePath) : basePath;
+      let matchedMockDispatches = mockDispatches.filter(({ consumed }) => !consumed).filter(({ path: path2 }) => matchValue(safeUrl(path2), resolvedPath2));
       if (matchedMockDispatches.length === 0) {
-        throw new MockNotMatchedError(`Mock dispatch not matched for path '${resolvedPath}'`);
+        throw new MockNotMatchedError(`Mock dispatch not matched for path '${resolvedPath2}'`);
       }
       matchedMockDispatches = matchedMockDispatches.filter(({ method }) => matchValue(method, key.method));
       if (matchedMockDispatches.length === 0) {
@@ -17833,11 +17833,11 @@ var require_dist_cjs = __commonJS({
       AlgorithmId: () => AlgorithmId,
       EndpointURLScheme: () => EndpointURLScheme,
       FieldPosition: () => FieldPosition,
-      HttpApiKeyAuthLocation: () => HttpApiKeyAuthLocation,
+      HttpApiKeyAuthLocation: () => HttpApiKeyAuthLocation2,
       HttpAuthLocation: () => HttpAuthLocation,
       IniSectionType: () => IniSectionType,
       RequestHandlerProtocol: () => RequestHandlerProtocol,
-      SMITHY_CONTEXT_KEY: () => SMITHY_CONTEXT_KEY,
+      SMITHY_CONTEXT_KEY: () => SMITHY_CONTEXT_KEY4,
       getDefaultClientConfiguration: () => getDefaultClientConfiguration,
       resolveDefaultRuntimeConfig: () => resolveDefaultRuntimeConfig
     });
@@ -17847,11 +17847,11 @@ var require_dist_cjs = __commonJS({
       HttpAuthLocation2["QUERY"] = "query";
       return HttpAuthLocation2;
     })(HttpAuthLocation || {});
-    var HttpApiKeyAuthLocation = /* @__PURE__ */ ((HttpApiKeyAuthLocation2) => {
-      HttpApiKeyAuthLocation2["HEADER"] = "header";
-      HttpApiKeyAuthLocation2["QUERY"] = "query";
-      return HttpApiKeyAuthLocation2;
-    })(HttpApiKeyAuthLocation || {});
+    var HttpApiKeyAuthLocation2 = /* @__PURE__ */ ((HttpApiKeyAuthLocation22) => {
+      HttpApiKeyAuthLocation22["HEADER"] = "header";
+      HttpApiKeyAuthLocation22["QUERY"] = "query";
+      return HttpApiKeyAuthLocation22;
+    })(HttpApiKeyAuthLocation2 || {});
     var EndpointURLScheme = /* @__PURE__ */ ((EndpointURLScheme2) => {
       EndpointURLScheme2["HTTP"] = "http";
       EndpointURLScheme2["HTTPS"] = "https";
@@ -17911,7 +17911,7 @@ var require_dist_cjs = __commonJS({
       FieldPosition2[FieldPosition2["TRAILER"] = 1] = "TRAILER";
       return FieldPosition2;
     })(FieldPosition || {});
-    var SMITHY_CONTEXT_KEY = "__smithy_context";
+    var SMITHY_CONTEXT_KEY4 = "__smithy_context";
     var IniSectionType = /* @__PURE__ */ ((IniSectionType2) => {
       IniSectionType2["PROFILE"] = "profile";
       IniSectionType2["SSO_SESSION"] = "sso-session";
@@ -17952,7 +17952,7 @@ var require_dist_cjs2 = __commonJS({
     __export2(src_exports, {
       Field: () => Field,
       Fields: () => Fields,
-      HttpRequest: () => HttpRequest2,
+      HttpRequest: () => HttpRequest4,
       HttpResponse: () => HttpResponse2,
       getHttpHandlerExtensionConfiguration: () => getHttpHandlerExtensionConfiguration,
       isValidHostname: () => isValidHostname,
@@ -17981,9 +17981,9 @@ var require_dist_cjs2 = __commonJS({
         httpHandler: httpHandlerExtensionConfiguration.httpHandler()
       };
     }, "resolveHttpHandlerRuntimeConfig");
-    var import_types = require_dist_cjs();
+    var import_types5 = require_dist_cjs();
     var _Field = class _Field {
-      constructor({ name, kind = import_types.FieldPosition.HEADER, values = [] }) {
+      constructor({ name, kind = import_types5.FieldPosition.HEADER, values = [] }) {
         this.name = name;
         this.kind = kind;
         this.values = values;
@@ -18109,7 +18109,7 @@ var require_dist_cjs2 = __commonJS({
       }
     };
     __name(_HttpRequest, "HttpRequest");
-    var HttpRequest2 = _HttpRequest;
+    var HttpRequest4 = _HttpRequest;
     function cloneQuery(query) {
       return Object.keys(query).reduce((carry, paramName) => {
         const param = query[paramName];
@@ -18173,12 +18173,12 @@ var require_dist_cjs3 = __commonJS({
       getAddExpectContinuePlugin: () => getAddExpectContinuePlugin
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     function addExpectContinueMiddleware(options) {
       return (next) => async (args) => {
         var _a, _b;
         const { request } = args;
-        if (import_protocol_http3.HttpRequest.isInstance(request) && request.body && options.runtime === "node") {
+        if (import_protocol_http5.HttpRequest.isInstance(request) && request.body && options.runtime === "node") {
           if (((_b = (_a = options.requestHandler) == null ? void 0 : _a.constructor) == null ? void 0 : _b.name) !== "FetchHttpHandler") {
             request.headers = {
               ...request.headers,
@@ -18237,13 +18237,13 @@ var require_dist_cjs4 = __commonJS({
       resolveHostHeaderConfig: () => resolveHostHeaderConfig
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     function resolveHostHeaderConfig(input) {
       return input;
     }
     __name(resolveHostHeaderConfig, "resolveHostHeaderConfig");
     var hostHeaderMiddleware = /* @__PURE__ */ __name((options) => (next) => async (args) => {
-      if (!import_protocol_http3.HttpRequest.isInstance(args.request))
+      if (!import_protocol_http5.HttpRequest.isInstance(args.request))
         return next(args);
       const { request } = args;
       const { handlerProtocol = "" } = options.requestHandler.metadata || {};
@@ -18376,13 +18376,13 @@ var require_dist_cjs6 = __commonJS({
       recursionDetectionMiddleware: () => recursionDetectionMiddleware
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var TRACE_ID_HEADER_NAME = "X-Amzn-Trace-Id";
     var ENV_LAMBDA_FUNCTION_NAME = "AWS_LAMBDA_FUNCTION_NAME";
     var ENV_TRACE_ID = "_X_AMZN_TRACE_ID";
     var recursionDetectionMiddleware = /* @__PURE__ */ __name((options) => (next) => async (args) => {
       const { request } = args;
-      if (!import_protocol_http3.HttpRequest.isInstance(request) || options.runtime !== "node" || request.headers.hasOwnProperty(TRACE_ID_HEADER_NAME)) {
+      if (!import_protocol_http5.HttpRequest.isInstance(request) || options.runtime !== "node" || request.headers.hasOwnProperty(TRACE_ID_HEADER_NAME)) {
         return next(args);
       }
       const functionName = process.env[ENV_LAMBDA_FUNCTION_NAME];
@@ -19089,7 +19089,7 @@ var require_dist_cjs14 = __commonJS({
       streamCollector: () => streamCollector
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var import_querystring_builder = require_dist_cjs13();
     var import_http = require("http");
     var import_https = require("https");
@@ -19331,7 +19331,7 @@ var require_dist_cjs14 = __commonJS({
           };
           const requestFunc = isSSL ? import_https.request : import_http.request;
           const req2 = requestFunc(nodeHttpsOptions, (res) => {
-            const httpResponse = new import_protocol_http3.HttpResponse({
+            const httpResponse = new import_protocol_http5.HttpResponse({
               statusCode: res.statusCode || -1,
               reason: res.statusMessage,
               headers: getTransformedHeaders(res.headers),
@@ -19600,7 +19600,7 @@ var require_dist_cjs14 = __commonJS({
           });
           session.ref();
           req2.on("response", (headers) => {
-            const httpResponse = new import_protocol_http3.HttpResponse({
+            const httpResponse = new import_protocol_http5.HttpResponse({
               statusCode: headers[":status"] || -1,
               headers: getTransformedHeaders(headers),
               body: req2
@@ -19757,7 +19757,7 @@ var require_dist_cjs15 = __commonJS({
       streamCollector: () => streamCollector
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var import_querystring_builder = require_dist_cjs13();
     function requestTimeout(timeoutInMs = 0) {
       return new Promise((resolve, reject) => {
@@ -19848,7 +19848,7 @@ var require_dist_cjs15 = __commonJS({
             const hasReadableStream = response.body != void 0;
             if (!hasReadableStream) {
               return response.blob().then((body2) => ({
-                response: new import_protocol_http3.HttpResponse({
+                response: new import_protocol_http5.HttpResponse({
                   headers: transformedHeaders,
                   reason: response.statusText,
                   statusCode: response.status,
@@ -19857,7 +19857,7 @@ var require_dist_cjs15 = __commonJS({
               }));
             }
             return {
-              response: new import_protocol_http3.HttpResponse({
+              response: new import_protocol_http5.HttpResponse({
                 headers: transformedHeaders,
                 reason: response.statusText,
                 statusCode: response.status,
@@ -20287,7 +20287,7 @@ var require_dist_cjs18 = __commonJS({
       parseRfc3339DateTimeWithOffset: () => parseRfc3339DateTimeWithOffset,
       parseRfc7231DateTime: () => parseRfc7231DateTime,
       resolveDefaultRuntimeConfig: () => resolveDefaultRuntimeConfig,
-      resolvedPath: () => resolvedPath,
+      resolvedPath: () => resolvedPath2,
       serializeDateTime: () => serializeDateTime,
       serializeFloat: () => serializeFloat,
       splitEvery: () => splitEvery,
@@ -20360,7 +20360,7 @@ var require_dist_cjs18 = __commonJS({
       const fromContext = context.streamCollector(streamBody);
       return import_util_stream.Uint8ArrayBlobAdapter.mutate(await fromContext);
     }, "collectBody");
-    var import_types = require_dist_cjs();
+    var import_types5 = require_dist_cjs();
     var _Command = class _Command {
       constructor() {
         this.middlewareStack = (0, import_middleware_stack.constructStack)();
@@ -20396,7 +20396,7 @@ var require_dist_cjs18 = __commonJS({
           commandName,
           inputFilterSensitiveLog,
           outputFilterSensitiveLog,
-          [import_types.SMITHY_CONTEXT_KEY]: {
+          [import_types5.SMITHY_CONTEXT_KEY]: {
             ...smithyContext
           },
           ...additionalContext
@@ -21082,8 +21082,8 @@ var require_dist_cjs18 = __commonJS({
     }, "emitWarningIfUnsupportedVersion");
     var getChecksumConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
       const checksumAlgorithms = [];
-      for (const id in import_types.AlgorithmId) {
-        const algorithmId = import_types.AlgorithmId[id];
+      for (const id in import_types5.AlgorithmId) {
+        const algorithmId = import_types5.AlgorithmId[id];
         if (runtimeConfig[algorithmId] === void 0) {
           continue;
         }
@@ -21283,20 +21283,20 @@ var require_dist_cjs18 = __commonJS({
     }, "applyInstruction");
     var nonNullish = /* @__PURE__ */ __name((_) => _ != null, "nonNullish");
     var pass = /* @__PURE__ */ __name((_) => _, "pass");
-    var resolvedPath = /* @__PURE__ */ __name((resolvedPath2, input, memberName, labelValueProvider, uriLabel, isGreedyLabel) => {
+    var resolvedPath2 = /* @__PURE__ */ __name((resolvedPath22, input, memberName, labelValueProvider, uriLabel, isGreedyLabel) => {
       if (input != null && input[memberName] !== void 0) {
         const labelValue = labelValueProvider();
         if (labelValue.length <= 0) {
           throw new Error("Empty value provided for input HTTP label: " + memberName + ".");
         }
-        resolvedPath2 = resolvedPath2.replace(
+        resolvedPath22 = resolvedPath22.replace(
           uriLabel,
           isGreedyLabel ? labelValue.split("/").map((segment) => extendedEncodeURIComponent(segment)).join("/") : extendedEncodeURIComponent(labelValue)
         );
       } else {
         throw new Error("No value provided for input HTTP label: " + memberName + ".");
       }
-      return resolvedPath2;
+      return resolvedPath22;
     }, "resolvedPath");
     var serializeFloat = /* @__PURE__ */ __name((value) => {
       if (value !== value) {
@@ -21384,12 +21384,12 @@ var require_dist_cjs19 = __commonJS({
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
     var src_exports = {};
     __export2(src_exports, {
-      getSmithyContext: () => getSmithyContext2,
+      getSmithyContext: () => getSmithyContext4,
       normalizeProvider: () => normalizeProvider2
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_types = require_dist_cjs();
-    var getSmithyContext2 = /* @__PURE__ */ __name((context) => context[import_types.SMITHY_CONTEXT_KEY] || (context[import_types.SMITHY_CONTEXT_KEY] = {}), "getSmithyContext");
+    var import_types5 = require_dist_cjs();
+    var getSmithyContext4 = /* @__PURE__ */ __name((context) => context[import_types5.SMITHY_CONTEXT_KEY] || (context[import_types5.SMITHY_CONTEXT_KEY] = {}), "getSmithyContext");
     var normalizeProvider2 = /* @__PURE__ */ __name((input) => {
       if (typeof input === "function")
         return input;
@@ -21433,7 +21433,7 @@ var require_dist_cjs20 = __commonJS({
       prepareRequest: () => prepareRequest
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_util_middleware = require_dist_cjs19();
+    var import_util_middleware3 = require_dist_cjs19();
     var import_util_utf84 = require_dist_cjs10();
     var ALGORITHM_QUERY_PARAM = "X-Amz-Algorithm";
     var CREDENTIAL_QUERY_PARAM = "X-Amz-Credential";
@@ -21771,8 +21771,8 @@ var require_dist_cjs20 = __commonJS({
         this.sha256 = sha256;
         this.uriEscapePath = uriEscapePath;
         this.applyChecksum = typeof applyChecksum === "boolean" ? applyChecksum : true;
-        this.regionProvider = (0, import_util_middleware.normalizeProvider)(region);
-        this.credentialProvider = (0, import_util_middleware.normalizeProvider)(credentials);
+        this.regionProvider = (0, import_util_middleware3.normalizeProvider)(region);
+        this.credentialProvider = (0, import_util_middleware3.normalizeProvider)(credentials);
       }
       async presign(originalRequest, options = {}) {
         const {
@@ -22133,17 +22133,17 @@ var require_dist_cjs23 = __commonJS({
       validateBucketNameMiddlewareOptions: () => validateBucketNameMiddlewareOptions
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
-    var import_smithy_client4 = require_dist_cjs18();
+    var import_protocol_http5 = require_dist_cjs2();
+    var import_smithy_client5 = require_dist_cjs18();
     var CONTENT_LENGTH_HEADER = "content-length";
     function checkContentLengthHeader() {
       return (next, context) => async (args) => {
         var _a;
         const { request } = args;
-        if (import_protocol_http3.HttpRequest.isInstance(request)) {
+        if (import_protocol_http5.HttpRequest.isInstance(request)) {
           if (!(CONTENT_LENGTH_HEADER in request.headers)) {
             const message = `Are you using a Stream of unknown length as the Body of a PutObject request? Consider using Upload instead from @aws-sdk/lib-storage.`;
-            if (typeof ((_a = context == null ? void 0 : context.logger) == null ? void 0 : _a.warn) === "function" && !(context.logger instanceof import_smithy_client4.NoOpLogger)) {
+            if (typeof ((_a = context == null ? void 0 : context.logger) == null ? void 0 : _a.warn) === "function" && !(context.logger instanceof import_smithy_client5.NoOpLogger)) {
               context.logger.warn(message);
             } else {
               console.warn(message);
@@ -22232,11 +22232,11 @@ var require_dist_cjs23 = __commonJS({
         var _a;
         const result = await next(args);
         const { response } = result;
-        if (import_protocol_http3.HttpResponse.isInstance(response)) {
+        if (import_protocol_http5.HttpResponse.isInstance(response)) {
           if (response.headers.expires) {
             response.headers.expiresstring = response.headers.expires;
             try {
-              (0, import_smithy_client4.parseRfc7231DateTime)(response.headers.expires);
+              (0, import_smithy_client5.parseRfc7231DateTime)(response.headers.expires);
             } catch (e) {
               (_a = context.logger) == null ? void 0 : _a.warn(
                 `AWS SDK Warning for ${context.clientName}::${context.commandName} response parsing (${response.headers.expires}): ${e}`
@@ -22454,7 +22454,7 @@ var require_dist_cjs23 = __commonJS({
                 }
               );
               context.s3ExpressIdentity = s3ExpressIdentity;
-              if (import_protocol_http3.HttpRequest.isInstance(args.request) && s3ExpressIdentity.sessionToken) {
+              if (import_protocol_http5.HttpRequest.isInstance(args.request) && s3ExpressIdentity.sessionToken) {
                 args.request.headers[SESSION_TOKEN_HEADER] = s3ExpressIdentity.sessionToken;
               }
             }
@@ -22498,7 +22498,7 @@ var require_dist_cjs23 = __commonJS({
     var throw200ExceptionsMiddleware = /* @__PURE__ */ __name((config) => (next) => async (args) => {
       const result = await next(args);
       const { response } = result;
-      if (!import_protocol_http3.HttpResponse.isInstance(response))
+      if (!import_protocol_http5.HttpResponse.isInstance(response))
         return result;
       const { statusCode, body } = response;
       if (statusCode < 200 || statusCode >= 300)
@@ -22781,7 +22781,7 @@ var require_dist_cjs25 = __commonJS({
     module2.exports = __toCommonJS2(src_exports);
     var import_property_provider = require_dist_cjs24();
     var import_signature_v42 = require_dist_cjs20();
-    var import_util_middleware = require_dist_cjs19();
+    var import_util_middleware3 = require_dist_cjs19();
     var CREDENTIAL_EXPIRE_WINDOW = 3e5;
     var resolveAwsAuthConfig = /* @__PURE__ */ __name((input) => {
       const normalizedCreds = input.credentials ? normalizeCredentialProvider(input.credentials) : input.credentialDefaultProvider(
@@ -22792,9 +22792,9 @@ var require_dist_cjs25 = __commonJS({
       const { signingEscapePath = true, systemClockOffset = input.systemClockOffset || 0, sha256 } = input;
       let signer;
       if (input.signer) {
-        signer = (0, import_util_middleware.normalizeProvider)(input.signer);
+        signer = (0, import_util_middleware3.normalizeProvider)(input.signer);
       } else if (input.regionInfoProvider) {
-        signer = /* @__PURE__ */ __name(() => (0, import_util_middleware.normalizeProvider)(input.region)().then(
+        signer = /* @__PURE__ */ __name(() => (0, import_util_middleware3.normalizeProvider)(input.region)().then(
           async (region) => [
             await input.regionInfoProvider(region, {
               useFipsEndpoint: await input.useFipsEndpoint(),
@@ -22824,7 +22824,7 @@ var require_dist_cjs25 = __commonJS({
             {
               name: "sigv4",
               signingName: input.signingName || input.defaultSigningName,
-              signingRegion: await (0, import_util_middleware.normalizeProvider)(input.region)(),
+              signingRegion: await (0, import_util_middleware3.normalizeProvider)(input.region)(),
               properties: {}
             },
             authScheme
@@ -22869,9 +22869,9 @@ var require_dist_cjs25 = __commonJS({
       const { signingEscapePath = true, systemClockOffset = input.systemClockOffset || 0, sha256 } = input;
       let signer;
       if (input.signer) {
-        signer = (0, import_util_middleware.normalizeProvider)(input.signer);
+        signer = (0, import_util_middleware3.normalizeProvider)(input.signer);
       } else {
-        signer = (0, import_util_middleware.normalizeProvider)(
+        signer = (0, import_util_middleware3.normalizeProvider)(
           new import_signature_v42.SignatureV4({
             credentials: normalizedCreds,
             region: input.region,
@@ -22897,9 +22897,9 @@ var require_dist_cjs25 = __commonJS({
           (credentials2) => credentials2.expiration !== void 0
         );
       }
-      return (0, import_util_middleware.normalizeProvider)(credentials);
+      return (0, import_util_middleware3.normalizeProvider)(credentials);
     }, "normalizeCredentialProvider");
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var getSkewCorrectedDate2 = /* @__PURE__ */ __name((systemClockOffset) => new Date(Date.now() + systemClockOffset), "getSkewCorrectedDate");
     var isClockSkewed2 = /* @__PURE__ */ __name((clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate2(systemClockOffset).getTime() - clockTime) >= 3e5, "isClockSkewed");
     var getUpdatedSystemClockOffset2 = /* @__PURE__ */ __name((clockTime, currentSystemClockOffset) => {
@@ -22911,7 +22911,7 @@ var require_dist_cjs25 = __commonJS({
     }, "getUpdatedSystemClockOffset");
     var awsAuthMiddleware = /* @__PURE__ */ __name((options) => (next, context) => async function(args) {
       var _a, _b, _c, _d, _e, _f, _g;
-      if (!import_protocol_http3.HttpRequest.isInstance(args.request))
+      if (!import_protocol_http5.HttpRequest.isInstance(args.request))
         return next(args);
       let authScheme;
       let signer;
@@ -22979,7 +22979,7 @@ var require_dist_cjs25 = __commonJS({
     }, "awsAuthMiddleware");
     var getDateHeader2 = /* @__PURE__ */ __name((response) => {
       var _a, _b;
-      return import_protocol_http3.HttpResponse.isInstance(response) ? ((_a = response.headers) == null ? void 0 : _a.date) ?? ((_b = response.headers) == null ? void 0 : _b.Date) : void 0;
+      return import_protocol_http5.HttpResponse.isInstance(response) ? ((_a = response.headers) == null ? void 0 : _a.date) ?? ((_b = response.headers) == null ? void 0 : _b.Date) : void 0;
     }, "getDateHeader");
     var awsAuthMiddlewareOptions = {
       name: "awsAuthMiddleware",
@@ -23101,10 +23101,10 @@ var require_dist_cjs26 = __commonJS({
     }, value), "getAttr");
     var isSet = /* @__PURE__ */ __name((value) => value != null, "isSet");
     var not = /* @__PURE__ */ __name((value) => !value, "not");
-    var import_types3 = require_dist_cjs();
+    var import_types32 = require_dist_cjs();
     var DEFAULT_PORTS = {
-      [import_types3.EndpointURLScheme.HTTP]: 80,
-      [import_types3.EndpointURLScheme.HTTPS]: 443
+      [import_types32.EndpointURLScheme.HTTP]: 80,
+      [import_types32.EndpointURLScheme.HTTPS]: 443
     };
     var parseURL = /* @__PURE__ */ __name((value) => {
       const whatwgURL = (() => {
@@ -23133,7 +23133,7 @@ var require_dist_cjs26 = __commonJS({
         return null;
       }
       const scheme = protocol.slice(0, -1);
-      if (!Object.values(import_types3.EndpointURLScheme).includes(scheme)) {
+      if (!Object.values(import_types32.EndpointURLScheme).includes(scheme)) {
         return null;
       }
       const isIp = isIpAddress2(hostname);
@@ -23814,7 +23814,7 @@ var require_dist_cjs28 = __commonJS({
     }
     __name(resolveUserAgentConfig, "resolveUserAgentConfig");
     var import_util_endpoints = require_dist_cjs27();
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var USER_AGENT = "user-agent";
     var X_AMZ_USER_AGENT = "x-amz-user-agent";
     var SPACE = " ";
@@ -23825,7 +23825,7 @@ var require_dist_cjs28 = __commonJS({
     var userAgentMiddleware = /* @__PURE__ */ __name((options) => (next, context) => async (args) => {
       var _a, _b;
       const { request } = args;
-      if (!import_protocol_http3.HttpRequest.isInstance(request))
+      if (!import_protocol_http5.HttpRequest.isInstance(request))
         return next(args);
       const { headers } = request;
       const userAgent = ((_a = context == null ? void 0 : context.userAgent) == null ? void 0 : _a.map(escapeUserAgent)) || [];
@@ -23944,15 +23944,15 @@ var require_dist_cjs29 = __commonJS({
       configFileSelector: (profile) => (0, import_util_config_provider.booleanSelector)(profile, CONFIG_USE_FIPS_ENDPOINT, import_util_config_provider.SelectorType.CONFIG),
       default: false
     };
-    var import_util_middleware = require_dist_cjs19();
+    var import_util_middleware3 = require_dist_cjs19();
     var resolveCustomEndpointsConfig = /* @__PURE__ */ __name((input) => {
       const { endpoint, urlParser } = input;
       return {
         ...input,
         tls: input.tls ?? true,
-        endpoint: (0, import_util_middleware.normalizeProvider)(typeof endpoint === "string" ? urlParser(endpoint) : endpoint),
+        endpoint: (0, import_util_middleware3.normalizeProvider)(typeof endpoint === "string" ? urlParser(endpoint) : endpoint),
         isCustomEndpoint: true,
-        useDualstackEndpoint: (0, import_util_middleware.normalizeProvider)(input.useDualstackEndpoint ?? false)
+        useDualstackEndpoint: (0, import_util_middleware3.normalizeProvider)(input.useDualstackEndpoint ?? false)
       };
     }, "resolveCustomEndpointsConfig");
     var getEndpointFromRegion = /* @__PURE__ */ __name(async (input) => {
@@ -23971,12 +23971,12 @@ var require_dist_cjs29 = __commonJS({
       return input.urlParser(`${tls ? "https:" : "http:"}//${hostname}`);
     }, "getEndpointFromRegion");
     var resolveEndpointsConfig = /* @__PURE__ */ __name((input) => {
-      const useDualstackEndpoint = (0, import_util_middleware.normalizeProvider)(input.useDualstackEndpoint ?? false);
+      const useDualstackEndpoint = (0, import_util_middleware3.normalizeProvider)(input.useDualstackEndpoint ?? false);
       const { endpoint, useFipsEndpoint, urlParser } = input;
       return {
         ...input,
         tls: input.tls ?? true,
-        endpoint: endpoint ? (0, import_util_middleware.normalizeProvider)(typeof endpoint === "string" ? urlParser(endpoint) : endpoint) : () => getEndpointFromRegion({ ...input, useDualstackEndpoint, useFipsEndpoint }),
+        endpoint: endpoint ? (0, import_util_middleware3.normalizeProvider)(typeof endpoint === "string" ? urlParser(endpoint) : endpoint) : () => getEndpointFromRegion({ ...input, useDualstackEndpoint, useFipsEndpoint }),
         isCustomEndpoint: !!endpoint,
         useDualstackEndpoint
       };
@@ -24133,12 +24133,12 @@ var require_dist_cjs31 = __commonJS({
       getContentLengthPlugin: () => getContentLengthPlugin
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var CONTENT_LENGTH_HEADER = "content-length";
     function contentLengthMiddleware(bodyLengthChecker) {
       return (next) => async (args) => {
         const request = args.request;
-        if (import_protocol_http3.HttpRequest.isInstance(request)) {
+        if (import_protocol_http5.HttpRequest.isInstance(request)) {
           const { body, headers } = request;
           if (body && Object.keys(headers).map((str) => str.toLowerCase()).indexOf(CONTENT_LENGTH_HEADER) === -1) {
             try {
@@ -24977,10 +24977,10 @@ var require_dist_cjs34 = __commonJS({
       omitRetryHeadersMiddlewareOptions: () => omitRetryHeadersMiddlewareOptions,
       resolveRetryConfig: () => resolveRetryConfig,
       retryMiddleware: () => retryMiddleware,
-      retryMiddlewareOptions: () => retryMiddlewareOptions
+      retryMiddlewareOptions: () => retryMiddlewareOptions2
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var import_uuid = (init_esm_node2(), __toCommonJS(esm_node_exports2));
     var import_util_retry = require_dist_cjs33();
     var getDefaultRetryQuota = /* @__PURE__ */ __name((initialRetryTokens, options) => {
@@ -25052,12 +25052,12 @@ var require_dist_cjs34 = __commonJS({
         let totalDelay = 0;
         const maxAttempts = await this.getMaxAttempts();
         const { request } = args;
-        if (import_protocol_http3.HttpRequest.isInstance(request)) {
+        if (import_protocol_http5.HttpRequest.isInstance(request)) {
           request.headers[import_util_retry.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
         }
         while (true) {
           try {
-            if (import_protocol_http3.HttpRequest.isInstance(request)) {
+            if (import_protocol_http5.HttpRequest.isInstance(request)) {
               request.headers[import_util_retry.REQUEST_HEADER] = `attempt=${attempts + 1}; max=${maxAttempts}`;
             }
             if (options == null ? void 0 : options.beforeRequest) {
@@ -25099,7 +25099,7 @@ var require_dist_cjs34 = __commonJS({
     __name(_StandardRetryStrategy, "StandardRetryStrategy");
     var StandardRetryStrategy = _StandardRetryStrategy;
     var getDelayFromRetryAfterHeader = /* @__PURE__ */ __name((response) => {
-      if (!import_protocol_http3.HttpResponse.isInstance(response))
+      if (!import_protocol_http5.HttpResponse.isInstance(response))
         return;
       const retryAfterHeaderName = Object.keys(response.headers).find((key) => key.toLowerCase() === "retry-after");
       if (!retryAfterHeaderName)
@@ -25131,7 +25131,7 @@ var require_dist_cjs34 = __commonJS({
     };
     __name(_AdaptiveRetryStrategy, "AdaptiveRetryStrategy");
     var AdaptiveRetryStrategy = _AdaptiveRetryStrategy;
-    var import_util_middleware = require_dist_cjs19();
+    var import_util_middleware3 = require_dist_cjs19();
     var ENV_MAX_ATTEMPTS = "AWS_MAX_ATTEMPTS";
     var CONFIG_MAX_ATTEMPTS = "max_attempts";
     var NODE_MAX_ATTEMPT_CONFIG_OPTIONS = {
@@ -25159,7 +25159,7 @@ var require_dist_cjs34 = __commonJS({
     };
     var resolveRetryConfig = /* @__PURE__ */ __name((input) => {
       const { retryStrategy } = input;
-      const maxAttempts = (0, import_util_middleware.normalizeProvider)(input.maxAttempts ?? import_util_retry.DEFAULT_MAX_ATTEMPTS);
+      const maxAttempts = (0, import_util_middleware3.normalizeProvider)(input.maxAttempts ?? import_util_retry.DEFAULT_MAX_ATTEMPTS);
       return {
         ...input,
         maxAttempts,
@@ -25167,7 +25167,7 @@ var require_dist_cjs34 = __commonJS({
           if (retryStrategy) {
             return retryStrategy;
           }
-          const retryMode = await (0, import_util_middleware.normalizeProvider)(input.retryMode)();
+          const retryMode = await (0, import_util_middleware3.normalizeProvider)(input.retryMode)();
           if (retryMode === import_util_retry.RETRY_MODES.ADAPTIVE) {
             return new import_util_retry.AdaptiveRetryStrategy(maxAttempts);
           }
@@ -25184,7 +25184,7 @@ var require_dist_cjs34 = __commonJS({
     };
     var omitRetryHeadersMiddleware = /* @__PURE__ */ __name(() => (next) => async (args) => {
       const { request } = args;
-      if (import_protocol_http3.HttpRequest.isInstance(request)) {
+      if (import_protocol_http5.HttpRequest.isInstance(request)) {
         delete request.headers[import_util_retry.INVOCATION_ID_HEADER];
         delete request.headers[import_util_retry.REQUEST_HEADER];
       }
@@ -25202,7 +25202,7 @@ var require_dist_cjs34 = __commonJS({
         clientStack.addRelativeTo(omitRetryHeadersMiddleware(), omitRetryHeadersMiddlewareOptions);
       }
     }), "getOmitRetryHeadersPlugin");
-    var import_smithy_client4 = require_dist_cjs18();
+    var import_smithy_client5 = require_dist_cjs18();
     var import_isStreamingPayload = require_isStreamingPayload();
     var retryMiddleware = /* @__PURE__ */ __name((options) => (next, context) => async (args) => {
       var _a;
@@ -25215,7 +25215,7 @@ var require_dist_cjs34 = __commonJS({
         let attempts = 0;
         let totalRetryDelay = 0;
         const { request } = args;
-        const isRequest = import_protocol_http3.HttpRequest.isInstance(request);
+        const isRequest = import_protocol_http5.HttpRequest.isInstance(request);
         if (isRequest) {
           request.headers[import_util_retry.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
         }
@@ -25233,7 +25233,7 @@ var require_dist_cjs34 = __commonJS({
             const retryErrorInfo = getRetryErrorInfo(e);
             lastError = asSdkError(e);
             if (isRequest && (0, import_isStreamingPayload.isStreamingPayload)(request)) {
-              (_a = context.logger instanceof import_smithy_client4.NoOpLogger ? console : context.logger) == null ? void 0 : _a.warn(
+              (_a = context.logger instanceof import_smithy_client5.NoOpLogger ? console : context.logger) == null ? void 0 : _a.warn(
                 "An error was encountered in a non-retryable streaming request."
               );
               throw lastError;
@@ -25282,7 +25282,7 @@ var require_dist_cjs34 = __commonJS({
         return "SERVER_ERROR";
       return "CLIENT_ERROR";
     }, "getRetryErrorType");
-    var retryMiddlewareOptions = {
+    var retryMiddlewareOptions2 = {
       name: "retryMiddleware",
       tags: ["RETRY"],
       step: "finalizeRequest",
@@ -25291,11 +25291,11 @@ var require_dist_cjs34 = __commonJS({
     };
     var getRetryPlugin = /* @__PURE__ */ __name((options) => ({
       applyToStack: (clientStack) => {
-        clientStack.add(retryMiddleware(options), retryMiddlewareOptions);
+        clientStack.add(retryMiddleware(options), retryMiddlewareOptions2);
       }
     }), "getRetryPlugin");
     var getRetryAfterHint = /* @__PURE__ */ __name((response) => {
-      if (!import_protocol_http3.HttpResponse.isInstance(response))
+      if (!import_protocol_http5.HttpResponse.isInstance(response))
         return;
       const retryAfterHeaderName = Object.keys(response.headers).find((key) => key.toLowerCase() === "retry-after");
       if (!retryAfterHeaderName)
@@ -25436,17 +25436,17 @@ var require_dist_cjs35 = __commonJS({
     var getProfileName = /* @__PURE__ */ __name((init) => init.profile || process.env[ENV_PROFILE] || DEFAULT_PROFILE, "getProfileName");
     __reExport(src_exports, require_getSSOTokenFilepath(), module2.exports);
     __reExport(src_exports, require_getSSOTokenFromFile(), module2.exports);
-    var import_types = require_dist_cjs();
+    var import_types5 = require_dist_cjs();
     var getConfigData = /* @__PURE__ */ __name((data) => Object.entries(data).filter(([key]) => {
       const indexOfSeparator = key.indexOf(CONFIG_PREFIX_SEPARATOR);
       if (indexOfSeparator === -1) {
         return false;
       }
-      return Object.values(import_types.IniSectionType).includes(key.substring(0, indexOfSeparator));
+      return Object.values(import_types5.IniSectionType).includes(key.substring(0, indexOfSeparator));
     }).reduce(
       (acc, [key, value]) => {
         const indexOfSeparator = key.indexOf(CONFIG_PREFIX_SEPARATOR);
-        const updatedKey = key.substring(0, indexOfSeparator) === import_types.IniSectionType.PROFILE ? key.substring(indexOfSeparator + 1) : key;
+        const updatedKey = key.substring(0, indexOfSeparator) === import_types5.IniSectionType.PROFILE ? key.substring(indexOfSeparator + 1) : key;
         acc[updatedKey] = value;
         return acc;
       },
@@ -25478,7 +25478,7 @@ var require_dist_cjs35 = __commonJS({
           const matches = prefixKeyRegex.exec(sectionName);
           if (matches) {
             const [, prefix, , name] = matches;
-            if (Object.values(import_types.IniSectionType).includes(prefix)) {
+            if (Object.values(import_types5.IniSectionType).includes(prefix)) {
               currentSection = [prefix, name].join(CONFIG_PREFIX_SEPARATOR);
             }
           } else {
@@ -25527,7 +25527,7 @@ var require_dist_cjs35 = __commonJS({
         credentialsFile: parsedFiles[1]
       };
     }, "loadSharedConfigFiles");
-    var getSsoSessionData = /* @__PURE__ */ __name((data) => Object.entries(data).filter(([key]) => key.startsWith(import_types.IniSectionType.SSO_SESSION + CONFIG_PREFIX_SEPARATOR)).reduce((acc, [key, value]) => ({ ...acc, [key.substring(key.indexOf(CONFIG_PREFIX_SEPARATOR) + 1)]: value }), {}), "getSsoSessionData");
+    var getSsoSessionData = /* @__PURE__ */ __name((data) => Object.entries(data).filter(([key]) => key.startsWith(import_types5.IniSectionType.SSO_SESSION + CONFIG_PREFIX_SEPARATOR)).reduce((acc, [key, value]) => ({ ...acc, [key.substring(key.indexOf(CONFIG_PREFIX_SEPARATOR) + 1)]: value }), {}), "getSsoSessionData");
     var import_slurpFile2 = require_slurpFile();
     var swallowError2 = /* @__PURE__ */ __name(() => ({}), "swallowError");
     var loadSsoSessionData = /* @__PURE__ */ __name(async (init = {}) => (0, import_slurpFile2.slurpFile)(init.configFilepath ?? getConfigFilepath()).then(parseIni).then(getSsoSessionData).catch(swallowError2), "loadSsoSessionData");
@@ -25816,7 +25816,7 @@ var require_dist_cjs39 = __commonJS({
       deserializerMiddlewareOption: () => deserializerMiddlewareOption,
       getSerdePlugin: () => getSerdePlugin,
       serializerMiddleware: () => serializerMiddleware,
-      serializerMiddlewareOption: () => serializerMiddlewareOption
+      serializerMiddlewareOption: () => serializerMiddlewareOption2
     });
     module2.exports = __toCommonJS2(src_exports);
     var deserializerMiddleware = /* @__PURE__ */ __name((options, deserializer) => (next) => async (args) => {
@@ -25861,7 +25861,7 @@ var require_dist_cjs39 = __commonJS({
       tags: ["DESERIALIZER"],
       override: true
     };
-    var serializerMiddlewareOption = {
+    var serializerMiddlewareOption2 = {
       name: "serializerMiddleware",
       step: "serialize",
       tags: ["SERIALIZER"],
@@ -25871,7 +25871,7 @@ var require_dist_cjs39 = __commonJS({
       return {
         applyToStack: (commandStack) => {
           commandStack.add(deserializerMiddleware(config, deserializer), deserializerMiddlewareOption);
-          commandStack.add(serializerMiddleware(config, serializer), serializerMiddlewareOption);
+          commandStack.add(serializerMiddleware(config, serializer), serializerMiddlewareOption2);
         }
       };
     }
@@ -25903,7 +25903,7 @@ var require_dist_cjs40 = __commonJS({
     var src_exports = {};
     __export2(src_exports, {
       endpointMiddleware: () => endpointMiddleware,
-      endpointMiddlewareOptions: () => endpointMiddlewareOptions,
+      endpointMiddlewareOptions: () => endpointMiddlewareOptions2,
       getEndpointFromInstructions: () => getEndpointFromInstructions,
       getEndpointPlugin: () => getEndpointPlugin,
       resolveEndpointConfig: () => resolveEndpointConfig,
@@ -26027,7 +26027,7 @@ var require_dist_cjs40 = __commonJS({
       }
       return endpointParams;
     }, "resolveParams");
-    var import_util_middleware = require_dist_cjs19();
+    var import_util_middleware3 = require_dist_cjs19();
     var endpointMiddleware = /* @__PURE__ */ __name(({
       config,
       instructions
@@ -26050,7 +26050,7 @@ var require_dist_cjs40 = __commonJS({
         if (authScheme) {
           context["signing_region"] = authScheme.signingRegion;
           context["signing_service"] = authScheme.signingName;
-          const smithyContext = (0, import_util_middleware.getSmithyContext)(context);
+          const smithyContext = (0, import_util_middleware3.getSmithyContext)(context);
           const httpAuthOption = (_c = smithyContext == null ? void 0 : smithyContext.selectedHttpAuthScheme) == null ? void 0 : _c.httpAuthOption;
           if (httpAuthOption) {
             httpAuthOption.signingProperties = Object.assign(
@@ -26071,14 +26071,14 @@ var require_dist_cjs40 = __commonJS({
         });
       };
     }, "endpointMiddleware");
-    var import_middleware_serde = require_dist_cjs39();
-    var endpointMiddlewareOptions = {
+    var import_middleware_serde2 = require_dist_cjs39();
+    var endpointMiddlewareOptions2 = {
       step: "serialize",
       tags: ["ENDPOINT_PARAMETERS", "ENDPOINT_V2", "ENDPOINT"],
       name: "endpointV2Middleware",
       override: true,
       relation: "before",
-      toMiddleware: import_middleware_serde.serializerMiddlewareOption.name
+      toMiddleware: import_middleware_serde2.serializerMiddlewareOption.name
     };
     var getEndpointPlugin = /* @__PURE__ */ __name((config, instructions) => ({
       applyToStack: (clientStack) => {
@@ -26087,22 +26087,22 @@ var require_dist_cjs40 = __commonJS({
             config,
             instructions
           }),
-          endpointMiddlewareOptions
+          endpointMiddlewareOptions2
         );
       }
     }), "getEndpointPlugin");
     var resolveEndpointConfig = /* @__PURE__ */ __name((input) => {
       const tls = input.tls ?? true;
       const { endpoint } = input;
-      const customEndpointProvider = endpoint != null ? async () => toEndpointV1(await (0, import_util_middleware.normalizeProvider)(endpoint)()) : void 0;
+      const customEndpointProvider = endpoint != null ? async () => toEndpointV1(await (0, import_util_middleware3.normalizeProvider)(endpoint)()) : void 0;
       const isCustomEndpoint = !!endpoint;
       return {
         ...input,
         endpoint: customEndpointProvider,
         tls,
         isCustomEndpoint,
-        useDualstackEndpoint: (0, import_util_middleware.normalizeProvider)(input.useDualstackEndpoint ?? false),
-        useFipsEndpoint: (0, import_util_middleware.normalizeProvider)(input.useFipsEndpoint ?? false)
+        useDualstackEndpoint: (0, import_util_middleware3.normalizeProvider)(input.useDualstackEndpoint ?? false),
+        useFipsEndpoint: (0, import_util_middleware3.normalizeProvider)(input.useFipsEndpoint ?? false)
       };
     }, "resolveEndpointConfig");
   }
@@ -26245,67 +26245,21 @@ var init_AwsSdkSigV4Signer = __esm({
   }
 });
 
-// ../../node_modules/@smithy/core/dist-cjs/index.js
-var require_dist_cjs41 = __commonJS({
-  "../../node_modules/@smithy/core/dist-cjs/index.js"(exports2, module2) {
-    var __defProp2 = Object.defineProperty;
-    var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-    var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-    var __export2 = (target, all) => {
-      for (var name in all)
-        __defProp2(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps2 = (to, from, except, desc) => {
-      if (from && typeof from === "object" || typeof from === "function") {
-        for (let key of __getOwnPropNames2(from))
-          if (!__hasOwnProp2.call(to, key) && key !== except)
-            __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc2(from, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
-    var src_exports = {};
-    __export2(src_exports, {
-      DefaultIdentityProviderConfig: () => DefaultIdentityProviderConfig,
-      EXPIRATION_MS: () => EXPIRATION_MS,
-      HttpApiKeyAuthSigner: () => HttpApiKeyAuthSigner,
-      HttpBearerAuthSigner: () => HttpBearerAuthSigner,
-      NoAuthSigner: () => NoAuthSigner,
-      RequestBuilder: () => RequestBuilder,
-      createIsIdentityExpiredFunction: () => createIsIdentityExpiredFunction,
-      createPaginator: () => createPaginator,
-      doesIdentityRequireRefresh: () => doesIdentityRequireRefresh2,
-      getHttpAuthSchemeEndpointRuleSetPlugin: () => getHttpAuthSchemeEndpointRuleSetPlugin,
-      getHttpAuthSchemePlugin: () => getHttpAuthSchemePlugin,
-      getHttpSigningPlugin: () => getHttpSigningPlugin,
-      getSmithyContext: () => getSmithyContext3,
-      httpAuthSchemeEndpointRuleSetMiddlewareOptions: () => httpAuthSchemeEndpointRuleSetMiddlewareOptions,
-      httpAuthSchemeMiddleware: () => httpAuthSchemeMiddleware,
-      httpAuthSchemeMiddlewareOptions: () => httpAuthSchemeMiddlewareOptions,
-      httpSigningMiddleware: () => httpSigningMiddleware,
-      httpSigningMiddlewareOptions: () => httpSigningMiddlewareOptions,
-      isIdentityExpired: () => isIdentityExpired2,
-      memoizeIdentityProvider: () => memoizeIdentityProvider2,
-      normalizeProvider: () => normalizeProvider2,
-      requestBuilder: () => requestBuilder
-    });
-    module2.exports = __toCommonJS2(src_exports);
-    var import_util_middleware = require_dist_cjs19();
-    function convertHttpAuthSchemesToMap(httpAuthSchemes) {
-      const map = /* @__PURE__ */ new Map();
-      for (const scheme of httpAuthSchemes) {
-        map.set(scheme.schemeId, scheme);
-      }
-      return map;
-    }
-    __name(convertHttpAuthSchemesToMap, "convertHttpAuthSchemesToMap");
-    var httpAuthSchemeMiddleware = /* @__PURE__ */ __name((config, mwOptions) => (next, context) => async (args) => {
-      var _a;
-      const options = config.httpAuthSchemeProvider(
-        await mwOptions.httpAuthSchemeParametersProvider(config, context, args.input)
-      );
+// ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js
+function convertHttpAuthSchemesToMap(httpAuthSchemes) {
+  const map = /* @__PURE__ */ new Map();
+  for (const scheme of httpAuthSchemes) {
+    map.set(scheme.schemeId, scheme);
+  }
+  return map;
+}
+var import_types, import_util_middleware, httpAuthSchemeMiddleware;
+var init_httpAuthSchemeMiddleware = __esm({
+  "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/httpAuthSchemeMiddleware.js"() {
+    import_types = __toESM(require_dist_cjs());
+    import_util_middleware = __toESM(require_dist_cjs19());
+    httpAuthSchemeMiddleware = (config, mwOptions) => (next, context) => async (args) => {
+      const options = config.httpAuthSchemeProvider(await mwOptions.httpAuthSchemeParametersProvider(config, context, args.input));
       const authSchemes = convertHttpAuthSchemesToMap(config.httpAuthSchemes);
       const smithyContext = (0, import_util_middleware.getSmithyContext)(context);
       const failureReasons = [];
@@ -26320,7 +26274,7 @@ var require_dist_cjs41 = __commonJS({
           failureReasons.push(`HttpAuthScheme \`${option.schemeId}\` did not have an IdentityProvider configured.`);
           continue;
         }
-        const { identityProperties = {}, signingProperties = {} } = ((_a = option.propertiesExtractor) == null ? void 0 : _a.call(option, config, context)) || {};
+        const { identityProperties = {}, signingProperties = {} } = option.propertiesExtractor?.(config, context) || {};
         option.identityProperties = Object.assign(option.identityProperties || {}, identityProperties);
         option.signingProperties = Object.assign(option.signingProperties || {}, signingProperties);
         smithyContext.selectedHttpAuthScheme = {
@@ -26334,9 +26288,17 @@ var require_dist_cjs41 = __commonJS({
         throw new Error(failureReasons.join("\n"));
       }
       return next(args);
-    }, "httpAuthSchemeMiddleware");
-    var import_middleware_endpoint = require_dist_cjs40();
-    var httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
+    };
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js
+var import_middleware_endpoint, httpAuthSchemeEndpointRuleSetMiddlewareOptions, getHttpAuthSchemeEndpointRuleSetPlugin;
+var init_getHttpAuthSchemeEndpointRuleSetPlugin = __esm({
+  "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemeEndpointRuleSetPlugin.js"() {
+    import_middleware_endpoint = __toESM(require_dist_cjs40());
+    init_httpAuthSchemeMiddleware();
+    httpAuthSchemeEndpointRuleSetMiddlewareOptions = {
       step: "serialize",
       tags: ["HTTP_AUTH_SCHEME"],
       name: "httpAuthSchemeMiddleware",
@@ -26344,22 +26306,24 @@ var require_dist_cjs41 = __commonJS({
       relation: "before",
       toMiddleware: import_middleware_endpoint.endpointMiddlewareOptions.name
     };
-    var getHttpAuthSchemeEndpointRuleSetPlugin = /* @__PURE__ */ __name((config, {
-      httpAuthSchemeParametersProvider,
-      identityProviderConfigProvider
-    }) => ({
+    getHttpAuthSchemeEndpointRuleSetPlugin = (config, { httpAuthSchemeParametersProvider, identityProviderConfigProvider }) => ({
       applyToStack: (clientStack) => {
-        clientStack.addRelativeTo(
-          httpAuthSchemeMiddleware(config, {
-            httpAuthSchemeParametersProvider,
-            identityProviderConfigProvider
-          }),
-          httpAuthSchemeEndpointRuleSetMiddlewareOptions
-        );
+        clientStack.addRelativeTo(httpAuthSchemeMiddleware(config, {
+          httpAuthSchemeParametersProvider,
+          identityProviderConfigProvider
+        }), httpAuthSchemeEndpointRuleSetMiddlewareOptions);
       }
-    }), "getHttpAuthSchemeEndpointRuleSetPlugin");
-    var import_middleware_serde = require_dist_cjs39();
-    var httpAuthSchemeMiddlewareOptions = {
+    });
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js
+var import_middleware_serde, httpAuthSchemeMiddlewareOptions, getHttpAuthSchemePlugin;
+var init_getHttpAuthSchemePlugin = __esm({
+  "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/getHttpAuthSchemePlugin.js"() {
+    import_middleware_serde = __toESM(require_dist_cjs39());
+    init_httpAuthSchemeMiddleware();
+    httpAuthSchemeMiddlewareOptions = {
       step: "serialize",
       tags: ["HTTP_AUTH_SCHEME"],
       name: "httpAuthSchemeMiddleware",
@@ -26367,49 +26331,65 @@ var require_dist_cjs41 = __commonJS({
       relation: "before",
       toMiddleware: import_middleware_serde.serializerMiddlewareOption.name
     };
-    var getHttpAuthSchemePlugin = /* @__PURE__ */ __name((config, {
-      httpAuthSchemeParametersProvider,
-      identityProviderConfigProvider
-    }) => ({
+    getHttpAuthSchemePlugin = (config, { httpAuthSchemeParametersProvider, identityProviderConfigProvider }) => ({
       applyToStack: (clientStack) => {
-        clientStack.addRelativeTo(
-          httpAuthSchemeMiddleware(config, {
-            httpAuthSchemeParametersProvider,
-            identityProviderConfigProvider
-          }),
-          httpAuthSchemeMiddlewareOptions
-        );
+        clientStack.addRelativeTo(httpAuthSchemeMiddleware(config, {
+          httpAuthSchemeParametersProvider,
+          identityProviderConfigProvider
+        }), httpAuthSchemeMiddlewareOptions);
       }
-    }), "getHttpAuthSchemePlugin");
-    var import_protocol_http3 = require_dist_cjs2();
-    var defaultErrorHandler = /* @__PURE__ */ __name((signingProperties) => (error2) => {
+    });
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js
+var init_middleware_http_auth_scheme = __esm({
+  "../../node_modules/@smithy/core/dist-es/middleware-http-auth-scheme/index.js"() {
+    init_httpAuthSchemeMiddleware();
+    init_getHttpAuthSchemeEndpointRuleSetPlugin();
+    init_getHttpAuthSchemePlugin();
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
+var import_protocol_http3, import_types2, import_util_middleware2, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
+var init_httpSigningMiddleware = __esm({
+  "../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
+    import_protocol_http3 = __toESM(require_dist_cjs2());
+    import_types2 = __toESM(require_dist_cjs());
+    import_util_middleware2 = __toESM(require_dist_cjs19());
+    defaultErrorHandler = (signingProperties) => (error2) => {
       throw error2;
-    }, "defaultErrorHandler");
-    var defaultSuccessHandler = /* @__PURE__ */ __name((httpResponse, signingProperties) => {
-    }, "defaultSuccessHandler");
-    var httpSigningMiddleware = /* @__PURE__ */ __name((config) => (next, context) => async (args) => {
+    };
+    defaultSuccessHandler = (httpResponse, signingProperties) => {
+    };
+    httpSigningMiddleware = (config) => (next, context) => async (args) => {
       if (!import_protocol_http3.HttpRequest.isInstance(args.request)) {
         return next(args);
       }
-      const smithyContext = (0, import_util_middleware.getSmithyContext)(context);
+      const smithyContext = (0, import_util_middleware2.getSmithyContext)(context);
       const scheme = smithyContext.selectedHttpAuthScheme;
       if (!scheme) {
         throw new Error(`No HttpAuthScheme was selected: unable to sign request`);
       }
-      const {
-        httpAuthOption: { signingProperties = {} },
-        identity,
-        signer
-      } = scheme;
+      const { httpAuthOption: { signingProperties = {} }, identity, signer } = scheme;
       const output = await next({
         ...args,
         request: await signer.sign(args.request, identity, signingProperties)
       }).catch((signer.errorHandler || defaultErrorHandler)(signingProperties));
       (signer.successHandler || defaultSuccessHandler)(output.response, signingProperties);
       return output;
-    }, "httpSigningMiddleware");
-    var import_middleware_retry = require_dist_cjs34();
-    var httpSigningMiddlewareOptions = {
+    };
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js
+var import_middleware_retry, httpSigningMiddlewareOptions, getHttpSigningPlugin;
+var init_getHttpSigningMiddleware = __esm({
+  "../../node_modules/@smithy/core/dist-es/middleware-http-signing/getHttpSigningMiddleware.js"() {
+    import_middleware_retry = __toESM(require_dist_cjs34());
+    init_httpSigningMiddleware();
+    httpSigningMiddlewareOptions = {
       step: "finalizeRequest",
       tags: ["HTTP_SIGNING"],
       name: "httpSigningMiddleware",
@@ -26418,17 +26398,27 @@ var require_dist_cjs41 = __commonJS({
       relation: "after",
       toMiddleware: import_middleware_retry.retryMiddlewareOptions.name
     };
-    var getHttpSigningPlugin = /* @__PURE__ */ __name((config) => ({
+    getHttpSigningPlugin = (config) => ({
       applyToStack: (clientStack) => {
         clientStack.addRelativeTo(httpSigningMiddleware(config), httpSigningMiddlewareOptions);
       }
-    }), "getHttpSigningPlugin");
-    var _DefaultIdentityProviderConfig = class _DefaultIdentityProviderConfig {
-      /**
-       * Creates an IdentityProviderConfig with a record of scheme IDs to identity providers.
-       *
-       * @param config scheme IDs and identity providers to configure
-       */
+    });
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/middleware-http-signing/index.js
+var init_middleware_http_signing = __esm({
+  "../../node_modules/@smithy/core/dist-es/middleware-http-signing/index.js"() {
+    init_httpSigningMiddleware();
+    init_getHttpSigningMiddleware();
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js
+var DefaultIdentityProviderConfig;
+var init_DefaultIdentityProviderConfig = __esm({
+  "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/DefaultIdentityProviderConfig.js"() {
+    DefaultIdentityProviderConfig = class {
       constructor(config) {
         this.authSchemes = /* @__PURE__ */ new Map();
         for (const [key, value] of Object.entries(config)) {
@@ -26441,15 +26431,18 @@ var require_dist_cjs41 = __commonJS({
         return this.authSchemes.get(schemeId);
       }
     };
-    __name(_DefaultIdentityProviderConfig, "DefaultIdentityProviderConfig");
-    var DefaultIdentityProviderConfig = _DefaultIdentityProviderConfig;
-    var import_types = require_dist_cjs();
-    var _HttpApiKeyAuthSigner = class _HttpApiKeyAuthSigner {
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
+var import_types3, HttpApiKeyAuthSigner;
+var init_httpApiKeyAuth = __esm({
+  "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
+    import_types3 = __toESM(require_dist_cjs());
+    HttpApiKeyAuthSigner = class {
       async sign(httpRequest, identity, signingProperties) {
         if (!signingProperties) {
-          throw new Error(
-            "request could not be signed with `apiKey` since the `name` and `in` signer properties are missing"
-          );
+          throw new Error("request could not be signed with `apiKey` since the `name` and `in` signer properties are missing");
         }
         if (!signingProperties.name) {
           throw new Error("request could not be signed with `apiKey` since the `name` signer property is missing");
@@ -26461,21 +26454,24 @@ var require_dist_cjs41 = __commonJS({
           throw new Error("request could not be signed with `apiKey` since the `apiKey` is not defined");
         }
         const clonedRequest = httpRequest.clone();
-        if (signingProperties.in === import_types.HttpApiKeyAuthLocation.QUERY) {
+        if (signingProperties.in === import_types3.HttpApiKeyAuthLocation.QUERY) {
           clonedRequest.query[signingProperties.name] = identity.apiKey;
-        } else if (signingProperties.in === import_types.HttpApiKeyAuthLocation.HEADER) {
+        } else if (signingProperties.in === import_types3.HttpApiKeyAuthLocation.HEADER) {
           clonedRequest.headers[signingProperties.name] = signingProperties.scheme ? `${signingProperties.scheme} ${identity.apiKey}` : identity.apiKey;
         } else {
-          throw new Error(
-            "request can only be signed with `apiKey` locations `query` or `header`, but found: `" + signingProperties.in + "`"
-          );
+          throw new Error("request can only be signed with `apiKey` locations `query` or `header`, but found: `" + signingProperties.in + "`");
         }
         return clonedRequest;
       }
     };
-    __name(_HttpApiKeyAuthSigner, "HttpApiKeyAuthSigner");
-    var HttpApiKeyAuthSigner = _HttpApiKeyAuthSigner;
-    var _HttpBearerAuthSigner = class _HttpBearerAuthSigner {
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
+var HttpBearerAuthSigner;
+var init_httpBearerAuth = __esm({
+  "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
+    HttpBearerAuthSigner = class {
       async sign(httpRequest, identity, signingProperties) {
         const clonedRequest = httpRequest.clone();
         if (!identity.token) {
@@ -26485,20 +26481,39 @@ var require_dist_cjs41 = __commonJS({
         return clonedRequest;
       }
     };
-    __name(_HttpBearerAuthSigner, "HttpBearerAuthSigner");
-    var HttpBearerAuthSigner = _HttpBearerAuthSigner;
-    var _NoAuthSigner = class _NoAuthSigner {
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js
+var NoAuthSigner;
+var init_noAuth = __esm({
+  "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/noAuth.js"() {
+    NoAuthSigner = class {
       async sign(httpRequest, identity, signingProperties) {
         return httpRequest;
       }
     };
-    __name(_NoAuthSigner, "NoAuthSigner");
-    var NoAuthSigner = _NoAuthSigner;
-    var createIsIdentityExpiredFunction = /* @__PURE__ */ __name((expirationMs) => (identity) => doesIdentityRequireRefresh2(identity) && identity.expiration.getTime() - Date.now() < expirationMs, "createIsIdentityExpiredFunction");
-    var EXPIRATION_MS = 3e5;
-    var isIdentityExpired2 = createIsIdentityExpiredFunction(EXPIRATION_MS);
-    var doesIdentityRequireRefresh2 = /* @__PURE__ */ __name((identity) => identity.expiration !== void 0, "doesIdentityRequireRefresh");
-    var memoizeIdentityProvider2 = /* @__PURE__ */ __name((provider, isExpired, requiresRefresh) => {
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js
+var init_httpAuthSchemes = __esm({
+  "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/index.js"() {
+    init_httpApiKeyAuth();
+    init_httpBearerAuth();
+    init_noAuth();
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js
+var createIsIdentityExpiredFunction, EXPIRATION_MS, isIdentityExpired, doesIdentityRequireRefresh, memoizeIdentityProvider;
+var init_memoizeIdentityProvider = __esm({
+  "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/memoizeIdentityProvider.js"() {
+    createIsIdentityExpiredFunction = (expirationMs) => (identity) => doesIdentityRequireRefresh(identity) && identity.expiration.getTime() - Date.now() < expirationMs;
+    EXPIRATION_MS = 3e5;
+    isIdentityExpired = createIsIdentityExpiredFunction(EXPIRATION_MS);
+    doesIdentityRequireRefresh = (identity) => identity.expiration !== void 0;
+    memoizeIdentityProvider = (provider, isExpired, requiresRefresh) => {
       if (provider === void 0) {
         return void 0;
       }
@@ -26507,7 +26522,7 @@ var require_dist_cjs41 = __commonJS({
       let pending;
       let hasResult;
       let isConstant = false;
-      const coalesceProvider = /* @__PURE__ */ __name(async (options) => {
+      const coalesceProvider = async (options) => {
         if (!pending) {
           pending = normalizedProvider(options);
         }
@@ -26519,17 +26534,17 @@ var require_dist_cjs41 = __commonJS({
           pending = void 0;
         }
         return resolved;
-      }, "coalesceProvider");
+      };
       if (isExpired === void 0) {
         return async (options) => {
-          if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
+          if (!hasResult || options?.forceRefresh) {
             resolved = await coalesceProvider(options);
           }
           return resolved;
         };
       }
       return async (options) => {
-        if (!hasResult || (options == null ? void 0 : options.forceRefresh)) {
+        if (!hasResult || options?.forceRefresh) {
           resolved = await coalesceProvider(options);
         }
         if (isConstant) {
@@ -26545,20 +26560,51 @@ var require_dist_cjs41 = __commonJS({
         }
         return resolved;
       };
-    }, "memoizeIdentityProvider");
-    var getSmithyContext3 = /* @__PURE__ */ __name((context) => context[import_types.SMITHY_CONTEXT_KEY] || (context[import_types.SMITHY_CONTEXT_KEY] = {}), "getSmithyContext");
-    var normalizeProvider2 = /* @__PURE__ */ __name((input) => {
+    };
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js
+var init_util_identity_and_auth = __esm({
+  "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/index.js"() {
+    init_DefaultIdentityProviderConfig();
+    init_httpAuthSchemes();
+    init_memoizeIdentityProvider();
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/getSmithyContext.js
+var import_types4, getSmithyContext3;
+var init_getSmithyContext = __esm({
+  "../../node_modules/@smithy/core/dist-es/getSmithyContext.js"() {
+    import_types4 = __toESM(require_dist_cjs());
+    getSmithyContext3 = (context) => context[import_types4.SMITHY_CONTEXT_KEY] || (context[import_types4.SMITHY_CONTEXT_KEY] = {});
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/normalizeProvider.js
+var normalizeProvider;
+var init_normalizeProvider = __esm({
+  "../../node_modules/@smithy/core/dist-es/normalizeProvider.js"() {
+    normalizeProvider = (input) => {
       if (typeof input === "function")
         return input;
       const promisified = Promise.resolve(input);
       return () => promisified;
-    }, "normalizeProvider");
-    var import_smithy_client4 = require_dist_cjs18();
-    function requestBuilder(input, context) {
-      return new RequestBuilder(input, context);
-    }
-    __name(requestBuilder, "requestBuilder");
-    var _RequestBuilder = class _RequestBuilder {
+    };
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/protocols/requestBuilder.js
+function requestBuilder(input, context) {
+  return new RequestBuilder(input, context);
+}
+var import_protocol_http4, import_smithy_client, RequestBuilder;
+var init_requestBuilder = __esm({
+  "../../node_modules/@smithy/core/dist-es/protocols/requestBuilder.js"() {
+    import_protocol_http4 = __toESM(require_dist_cjs2());
+    import_smithy_client = __toESM(require_dist_cjs18());
+    RequestBuilder = class {
       constructor(input, context) {
         this.input = input;
         this.context = context;
@@ -26576,7 +26622,7 @@ var require_dist_cjs41 = __commonJS({
         for (const resolvePath of this.resolvePathStack) {
           resolvePath(this.path);
         }
-        return new import_protocol_http3.HttpRequest({
+        return new import_protocol_http4.HttpRequest({
           protocol,
           hostname: this.hostname || hostname,
           port,
@@ -26587,90 +26633,73 @@ var require_dist_cjs41 = __commonJS({
           headers: this.headers
         });
       }
-      /**
-       * Brevity setter for "hostname".
-       */
       hn(hostname) {
         this.hostname = hostname;
         return this;
       }
-      /**
-       * Brevity initial builder for "basepath".
-       */
       bp(uriLabel) {
         this.resolvePathStack.push((basePath) => {
-          this.path = `${(basePath == null ? void 0 : basePath.endsWith("/")) ? basePath.slice(0, -1) : basePath || ""}` + uriLabel;
+          this.path = `${basePath?.endsWith("/") ? basePath.slice(0, -1) : basePath || ""}` + uriLabel;
         });
         return this;
       }
-      /**
-       * Brevity incremental builder for "path".
-       */
       p(memberName, labelValueProvider, uriLabel, isGreedyLabel) {
         this.resolvePathStack.push((path2) => {
-          this.path = (0, import_smithy_client4.resolvedPath)(path2, this.input, memberName, labelValueProvider, uriLabel, isGreedyLabel);
+          this.path = (0, import_smithy_client.resolvedPath)(path2, this.input, memberName, labelValueProvider, uriLabel, isGreedyLabel);
         });
         return this;
       }
-      /**
-       * Brevity setter for "headers".
-       */
       h(headers) {
         this.headers = headers;
         return this;
       }
-      /**
-       * Brevity setter for "query".
-       */
       q(query) {
         this.query = query;
         return this;
       }
-      /**
-       * Brevity setter for "body".
-       */
       b(body) {
         this.body = body;
         return this;
       }
-      /**
-       * Brevity setter for "method".
-       */
       m(method) {
         this.method = method;
         return this;
       }
     };
-    __name(_RequestBuilder, "RequestBuilder");
-    var RequestBuilder = _RequestBuilder;
-    var makePagedClientRequest = /* @__PURE__ */ __name(async (CommandCtor, client, input, ...args) => {
-      return await client.send(new CommandCtor(input), ...args);
-    }, "makePagedClientRequest");
-    function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenName, pageSizeTokenName) {
-      return /* @__PURE__ */ __name(async function* paginateOperation(config, input, ...additionalArguments) {
-        let token = config.startingToken || void 0;
-        let hasNext = true;
-        let page;
-        while (hasNext) {
-          input[inputTokenName] = token;
-          if (pageSizeTokenName) {
-            input[pageSizeTokenName] = input[pageSizeTokenName] ?? config.pageSize;
-          }
-          if (config.client instanceof ClientCtor) {
-            page = await makePagedClientRequest(CommandCtor, config.client, input, ...additionalArguments);
-          } else {
-            throw new Error(`Invalid client, expected instance of ${ClientCtor.name}`);
-          }
-          yield page;
-          const prevToken = token;
-          token = get(page, outputTokenName);
-          hasNext = !!(token && (!config.stopOnSameToken || token !== prevToken));
-        }
-        return void 0;
-      }, "paginateOperation");
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/pagination/createPaginator.js
+function createPaginator(ClientCtor, CommandCtor, inputTokenName, outputTokenName, pageSizeTokenName) {
+  return async function* paginateOperation(config, input, ...additionalArguments) {
+    let token = config.startingToken || void 0;
+    let hasNext = true;
+    let page;
+    while (hasNext) {
+      input[inputTokenName] = token;
+      if (pageSizeTokenName) {
+        input[pageSizeTokenName] = input[pageSizeTokenName] ?? config.pageSize;
+      }
+      if (config.client instanceof ClientCtor) {
+        page = await makePagedClientRequest(CommandCtor, config.client, input, ...additionalArguments);
+      } else {
+        throw new Error(`Invalid client, expected instance of ${ClientCtor.name}`);
+      }
+      yield page;
+      const prevToken = token;
+      token = get(page, outputTokenName);
+      hasNext = !!(token && (!config.stopOnSameToken || token !== prevToken));
     }
-    __name(createPaginator, "createPaginator");
-    var get = /* @__PURE__ */ __name((fromObject, path2) => {
+    return void 0;
+  };
+}
+var makePagedClientRequest, get;
+var init_createPaginator = __esm({
+  "../../node_modules/@smithy/core/dist-es/pagination/createPaginator.js"() {
+    makePagedClientRequest = async (CommandCtor, client, input, ...args) => {
+      return await client.send(new CommandCtor(input), ...args);
+    };
+    get = (fromObject, path2) => {
       let cursor = fromObject;
       const pathComponents = path2.split(".");
       for (const step of pathComponents) {
@@ -26680,24 +26709,62 @@ var require_dist_cjs41 = __commonJS({
         cursor = cursor[step];
       }
       return cursor;
-    }, "get");
+    };
+  }
+});
+
+// ../../node_modules/@smithy/core/dist-es/index.js
+var dist_es_exports = {};
+__export(dist_es_exports, {
+  DefaultIdentityProviderConfig: () => DefaultIdentityProviderConfig,
+  EXPIRATION_MS: () => EXPIRATION_MS,
+  HttpApiKeyAuthSigner: () => HttpApiKeyAuthSigner,
+  HttpBearerAuthSigner: () => HttpBearerAuthSigner,
+  NoAuthSigner: () => NoAuthSigner,
+  RequestBuilder: () => RequestBuilder,
+  createIsIdentityExpiredFunction: () => createIsIdentityExpiredFunction,
+  createPaginator: () => createPaginator,
+  doesIdentityRequireRefresh: () => doesIdentityRequireRefresh,
+  getHttpAuthSchemeEndpointRuleSetPlugin: () => getHttpAuthSchemeEndpointRuleSetPlugin,
+  getHttpAuthSchemePlugin: () => getHttpAuthSchemePlugin,
+  getHttpSigningPlugin: () => getHttpSigningPlugin,
+  getSmithyContext: () => getSmithyContext3,
+  httpAuthSchemeEndpointRuleSetMiddlewareOptions: () => httpAuthSchemeEndpointRuleSetMiddlewareOptions,
+  httpAuthSchemeMiddleware: () => httpAuthSchemeMiddleware,
+  httpAuthSchemeMiddlewareOptions: () => httpAuthSchemeMiddlewareOptions,
+  httpSigningMiddleware: () => httpSigningMiddleware,
+  httpSigningMiddlewareOptions: () => httpSigningMiddlewareOptions,
+  isIdentityExpired: () => isIdentityExpired,
+  memoizeIdentityProvider: () => memoizeIdentityProvider,
+  normalizeProvider: () => normalizeProvider,
+  requestBuilder: () => requestBuilder
+});
+var init_dist_es = __esm({
+  "../../node_modules/@smithy/core/dist-es/index.js"() {
+    init_middleware_http_auth_scheme();
+    init_middleware_http_signing();
+    init_util_identity_and_auth();
+    init_getSmithyContext();
+    init_normalizeProvider();
+    init_requestBuilder();
+    init_createPaginator();
   }
 });
 
 // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js
-var import_core, import_signature_v4, resolveAwsSdkSigV4Config, resolveAWSSDKSigV4Config;
+var import_signature_v4, resolveAwsSdkSigV4Config, resolveAWSSDKSigV4Config;
 var init_resolveAwsSdkSigV4Config = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.js"() {
-    import_core = __toESM(require_dist_cjs41());
+    init_dist_es();
     import_signature_v4 = __toESM(require_dist_cjs20());
     resolveAwsSdkSigV4Config = (config) => {
       let normalizedCreds;
       if (config.credentials) {
-        normalizedCreds = (0, import_core.memoizeIdentityProvider)(config.credentials, import_core.isIdentityExpired, import_core.doesIdentityRequireRefresh);
+        normalizedCreds = memoizeIdentityProvider(config.credentials, isIdentityExpired, doesIdentityRequireRefresh);
       }
       if (!normalizedCreds) {
         if (config.credentialDefaultProvider) {
-          normalizedCreds = (0, import_core.normalizeProvider)(config.credentialDefaultProvider(Object.assign({}, config, {
+          normalizedCreds = normalizeProvider(config.credentialDefaultProvider(Object.assign({}, config, {
             parentClientConfig: config
           })));
         } else {
@@ -26709,9 +26776,9 @@ var init_resolveAwsSdkSigV4Config = __esm({
       const { signingEscapePath = true, systemClockOffset = config.systemClockOffset || 0, sha256 } = config;
       let signer;
       if (config.signer) {
-        signer = (0, import_core.normalizeProvider)(config.signer);
+        signer = normalizeProvider(config.signer);
       } else if (config.regionInfoProvider) {
-        signer = () => (0, import_core.normalizeProvider)(config.region)().then(async (region) => [
+        signer = () => normalizeProvider(config.region)().then(async (region) => [
           await config.regionInfoProvider(region, {
             useFipsEndpoint: await config.useFipsEndpoint(),
             useDualstackEndpoint: await config.useDualstackEndpoint()
@@ -26737,7 +26804,7 @@ var init_resolveAwsSdkSigV4Config = __esm({
           authScheme = Object.assign({}, {
             name: "sigv4",
             signingName: config.signingName || config.defaultSigningName,
-            signingRegion: await (0, import_core.normalizeProvider)(config.region)(),
+            signingRegion: await normalizeProvider(config.region)(),
             properties: {}
           }, authScheme);
           const signingRegion = authScheme.signingRegion;
@@ -26777,7 +26844,7 @@ var init_aws_sdk = __esm({
 });
 
 // ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js
-var init_httpAuthSchemes = __esm({
+var init_httpAuthSchemes2 = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/index.js"() {
     init_aws_sdk();
   }
@@ -26844,10 +26911,10 @@ var init_coercing_serializers = __esm({
 });
 
 // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js
-var import_smithy_client, awsExpectUnion;
+var import_smithy_client2, awsExpectUnion;
 var init_awsExpectUnion = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/json/awsExpectUnion.js"() {
-    import_smithy_client = __toESM(require_dist_cjs18());
+    import_smithy_client2 = __toESM(require_dist_cjs18());
     awsExpectUnion = (value) => {
       if (value == null) {
         return void 0;
@@ -26855,17 +26922,17 @@ var init_awsExpectUnion = __esm({
       if (typeof value === "object" && "__type" in value) {
         delete value.__type;
       }
-      return (0, import_smithy_client.expectUnion)(value);
+      return (0, import_smithy_client2.expectUnion)(value);
     };
   }
 });
 
 // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/common.js
-var import_smithy_client2, collectBodyString;
+var import_smithy_client3, collectBodyString;
 var init_common = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/common.js"() {
-    import_smithy_client2 = __toESM(require_dist_cjs18());
-    collectBodyString = (streamBody, context) => (0, import_smithy_client2.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
+    import_smithy_client3 = __toESM(require_dist_cjs18());
+    collectBodyString = (streamBody, context) => (0, import_smithy_client3.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body));
   }
 });
 
@@ -28534,10 +28601,10 @@ var require_fxp = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js
-var import_smithy_client3, import_fast_xml_parser, parseXmlBody, parseXmlErrorBody, loadRestXmlErrorCode;
+var import_smithy_client4, import_fast_xml_parser, parseXmlBody, parseXmlErrorBody, loadRestXmlErrorCode;
 var init_parseXmlBody = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/protocols/xml/parseXmlBody.js"() {
-    import_smithy_client3 = __toESM(require_dist_cjs18());
+    import_smithy_client4 = __toESM(require_dist_cjs18());
     import_fast_xml_parser = __toESM(require_fxp());
     init_common();
     parseXmlBody = (streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
@@ -28571,7 +28638,7 @@ var init_parseXmlBody = __esm({
           parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
           delete parsedObjToReturn[textNodeName];
         }
-        return (0, import_smithy_client3.getValueFromTextNode)(parsedObjToReturn);
+        return (0, import_smithy_client4.getValueFromTextNode)(parsedObjToReturn);
       }
       return {};
     });
@@ -28607,8 +28674,8 @@ var init_protocols = __esm({
 });
 
 // ../../node_modules/@aws-sdk/core/dist-es/index.js
-var dist_es_exports = {};
-__export(dist_es_exports, {
+var dist_es_exports2 = {};
+__export(dist_es_exports2, {
   AWSSDKSigV4Signer: () => AWSSDKSigV4Signer,
   AwsSdkSigV4Signer: () => AwsSdkSigV4Signer,
   _toBool: () => _toBool,
@@ -28625,16 +28692,16 @@ __export(dist_es_exports, {
   resolveAWSSDKSigV4Config: () => resolveAWSSDKSigV4Config,
   resolveAwsSdkSigV4Config: () => resolveAwsSdkSigV4Config
 });
-var init_dist_es = __esm({
+var init_dist_es2 = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/index.js"() {
     init_client();
-    init_httpAuthSchemes();
+    init_httpAuthSchemes2();
     init_protocols();
   }
 });
 
 // ../../node_modules/@aws-sdk/xml-builder/dist-cjs/index.js
-var require_dist_cjs42 = __commonJS({
+var require_dist_cjs41 = __commonJS({
   "../../node_modules/@aws-sdk/xml-builder/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -29282,7 +29349,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.588.0",
+      version: "3.592.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29307,10 +29374,10 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "3.0.0",
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sso-oidc": "3.588.0",
-        "@aws-sdk/client-sts": "3.588.0",
-        "@aws-sdk/core": "3.588.0",
-        "@aws-sdk/credential-provider-node": "3.588.0",
+        "@aws-sdk/client-sso-oidc": "3.592.0",
+        "@aws-sdk/client-sts": "3.592.0",
+        "@aws-sdk/core": "3.592.0",
+        "@aws-sdk/credential-provider-node": "3.592.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.587.0",
         "@aws-sdk/middleware-expect-continue": "3.577.0",
         "@aws-sdk/middleware-flexible-checksums": "3.587.0",
@@ -29330,7 +29397,7 @@ var require_package = __commonJS({
         "@aws-sdk/util-user-agent-node": "3.587.0",
         "@aws-sdk/xml-builder": "3.575.0",
         "@smithy/config-resolver": "^3.0.1",
-        "@smithy/core": "^2.1.1",
+        "@smithy/core": "^2.2.0",
         "@smithy/eventstream-serde-browser": "^3.0.0",
         "@smithy/eventstream-serde-config-resolver": "^3.0.0",
         "@smithy/eventstream-serde-node": "^3.0.0",
@@ -29409,7 +29476,7 @@ var require_package = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js
-var require_dist_cjs43 = __commonJS({
+var require_dist_cjs42 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-env/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -29469,7 +29536,7 @@ var require_dist_cjs43 = __commonJS({
 });
 
 // ../../node_modules/@smithy/credential-provider-imds/dist-cjs/index.js
-var require_dist_cjs44 = __commonJS({
+var require_dist_cjs43 = __commonJS({
   "../../node_modules/@smithy/credential-provider-imds/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -30058,7 +30125,7 @@ Set AWS_CONTAINER_CREDENTIALS_FULL_URI or AWS_CONTAINER_CREDENTIALS_RELATIVE_URI
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/index.js
-var require_dist_cjs45 = __commonJS({
+var require_dist_cjs44 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-http/dist-cjs/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -30076,7 +30143,7 @@ var require_httpAuthSchemeProvider = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveHttpAuthSchemeConfig = exports2.defaultSSOHttpAuthSchemeProvider = exports2.defaultSSOHttpAuthSchemeParametersProvider = void 0;
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var util_middleware_1 = require_dist_cjs19();
     var defaultSSOHttpAuthSchemeParametersProvider = async (config, context, input) => {
       return {
@@ -30149,7 +30216,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.588.0",
+      version: "3.592.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -30168,7 +30235,7 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/core": "3.588.0",
+        "@aws-sdk/core": "3.592.0",
         "@aws-sdk/middleware-host-header": "3.577.0",
         "@aws-sdk/middleware-logger": "3.577.0",
         "@aws-sdk/middleware-recursion-detection": "3.577.0",
@@ -30179,7 +30246,7 @@ var require_package2 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.577.0",
         "@aws-sdk/util-user-agent-node": "3.587.0",
         "@smithy/config-resolver": "^3.0.1",
-        "@smithy/core": "^2.1.1",
+        "@smithy/core": "^2.2.0",
         "@smithy/fetch-http-handler": "^3.0.1",
         "@smithy/hash-node": "^3.0.0",
         "@smithy/invalid-dependency": "^3.0.0",
@@ -30248,7 +30315,7 @@ var require_package2 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/util-user-agent-node/dist-cjs/index.js
-var require_dist_cjs46 = __commonJS({
+var require_dist_cjs45 = __commonJS({
   "../../node_modules/@aws-sdk/util-user-agent-node/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -30332,7 +30399,7 @@ var require_dist_cjs46 = __commonJS({
 });
 
 // ../../node_modules/@smithy/hash-node/dist-cjs/index.js
-var require_dist_cjs47 = __commonJS({
+var require_dist_cjs46 = __commonJS({
   "../../node_modules/@smithy/hash-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -30396,7 +30463,7 @@ var require_dist_cjs47 = __commonJS({
 });
 
 // ../../node_modules/@smithy/util-body-length-node/dist-cjs/index.js
-var require_dist_cjs48 = __commonJS({
+var require_dist_cjs47 = __commonJS({
   "../../node_modules/@smithy/util-body-length-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -30505,8 +30572,8 @@ var require_runtimeConfig_shared = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var core_2 = require_dist_cjs41();
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var core_2 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var smithy_client_1 = require_dist_cjs18();
     var url_parser_1 = require_dist_cjs38();
     var util_base64_1 = require_dist_cjs11();
@@ -30546,7 +30613,7 @@ var require_runtimeConfig_shared = __commonJS({
 });
 
 // ../../node_modules/@smithy/util-defaults-mode-node/dist-cjs/index.js
-var require_dist_cjs49 = __commonJS({
+var require_dist_cjs48 = __commonJS({
   "../../node_modules/@smithy/util-defaults-mode-node/dist-cjs/index.js"(exports2, module2) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
@@ -30644,7 +30711,7 @@ var require_dist_cjs49 = __commonJS({
       }
       if (!process.env[ENV_IMDS_DISABLED]) {
         try {
-          const { getInstanceMetadataEndpoint, httpRequest } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
+          const { getInstanceMetadataEndpoint, httpRequest } = await Promise.resolve().then(() => __toESM2(require_dist_cjs43()));
           const endpoint = await getInstanceMetadataEndpoint();
           return (await httpRequest({ ...endpoint, path: IMDS_REGION_PATH })).toString();
         } catch (e) {
@@ -30662,18 +30729,18 @@ var require_runtimeConfig = __commonJS({
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var package_json_1 = tslib_1.__importDefault(require_package2());
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var util_user_agent_node_1 = require_dist_cjs46();
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var util_user_agent_node_1 = require_dist_cjs45();
     var config_resolver_1 = require_dist_cjs29();
-    var hash_node_1 = require_dist_cjs47();
+    var hash_node_1 = require_dist_cjs46();
     var middleware_retry_1 = require_dist_cjs34();
     var node_config_provider_1 = require_dist_cjs36();
     var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs48();
+    var util_body_length_node_1 = require_dist_cjs47();
     var util_retry_1 = require_dist_cjs33();
     var runtimeConfig_shared_1 = require_runtimeConfig_shared();
     var smithy_client_1 = require_dist_cjs18();
-    var util_defaults_mode_node_1 = require_dist_cjs49();
+    var util_defaults_mode_node_1 = require_dist_cjs48();
     var smithy_client_2 = require_dist_cjs18();
     var getRuntimeConfig = (config) => {
       (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
@@ -30706,7 +30773,7 @@ var require_runtimeConfig = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/region-config-resolver/dist-cjs/index.js
-var require_dist_cjs50 = __commonJS({
+var require_dist_cjs49 = __commonJS({
   "../../node_modules/@aws-sdk/region-config-resolver/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -30804,7 +30871,7 @@ var require_dist_cjs50 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sso/dist-cjs/index.js
-var require_dist_cjs51 = __commonJS({
+var require_dist_cjs50 = __commonJS({
   "../../node_modules/@aws-sdk/client-sso/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -30844,7 +30911,7 @@ var require_dist_cjs51 = __commonJS({
       SSOServiceException: () => SSOServiceException,
       TooManyRequestsException: () => TooManyRequestsException,
       UnauthorizedException: () => UnauthorizedException,
-      __Client: () => import_smithy_client4.Client,
+      __Client: () => import_smithy_client5.Client,
       paginateListAccountRoles: () => paginateListAccountRoles,
       paginateListAccounts: () => paginateListAccounts
     });
@@ -30854,10 +30921,10 @@ var require_dist_cjs51 = __commonJS({
     var import_middleware_recursion_detection = require_dist_cjs6();
     var import_middleware_user_agent = require_dist_cjs28();
     var import_config_resolver = require_dist_cjs29();
-    var import_core2 = require_dist_cjs41();
+    var import_core2 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var import_middleware_content_length = require_dist_cjs31();
-    var import_middleware_endpoint = require_dist_cjs40();
-    var import_middleware_retry = require_dist_cjs34();
+    var import_middleware_endpoint2 = require_dist_cjs40();
+    var import_middleware_retry2 = require_dist_cjs34();
     var import_httpAuthSchemeProvider = require_httpAuthSchemeProvider();
     var resolveClientEndpointParameters = /* @__PURE__ */ __name((options) => {
       return {
@@ -30874,9 +30941,9 @@ var require_dist_cjs51 = __commonJS({
       UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
     };
     var import_runtimeConfig = require_runtimeConfig();
-    var import_region_config_resolver = require_dist_cjs50();
-    var import_protocol_http3 = require_dist_cjs2();
-    var import_smithy_client4 = require_dist_cjs18();
+    var import_region_config_resolver = require_dist_cjs49();
+    var import_protocol_http5 = require_dist_cjs2();
+    var import_smithy_client5 = require_dist_cjs18();
     var getHttpAuthExtensionConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
       const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
       let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
@@ -30918,33 +30985,33 @@ var require_dist_cjs51 = __commonJS({
     var resolveRuntimeExtensions = /* @__PURE__ */ __name((runtimeConfig, extensions) => {
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_smithy_client4.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http3.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_smithy_client5.getDefaultExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_protocol_http5.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
         ...asPartial(getHttpAuthExtensionConfiguration(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
       return {
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
-        ...(0, import_smithy_client4.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http3.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
+        ...(0, import_smithy_client5.resolveDefaultRuntimeConfig)(extensionConfiguration),
+        ...(0, import_protocol_http5.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
         ...resolveHttpAuthRuntimeConfig(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
-    var _SSOClient = class _SSOClient extends import_smithy_client4.Client {
+    var _SSOClient = class _SSOClient extends import_smithy_client5.Client {
       constructor(...[configuration2]) {
         const _config_0 = (0, import_runtimeConfig.getRuntimeConfig)(configuration2 || {});
         const _config_1 = resolveClientEndpointParameters(_config_0);
         const _config_2 = (0, import_config_resolver.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, import_middleware_endpoint.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, import_middleware_retry.resolveRetryConfig)(_config_3);
+        const _config_3 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_2);
+        const _config_4 = (0, import_middleware_retry2.resolveRetryConfig)(_config_3);
         const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
         const _config_6 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_5);
         const _config_7 = (0, import_httpAuthSchemeProvider.resolveHttpAuthSchemeConfig)(_config_6);
         const _config_8 = resolveRuntimeExtensions(_config_7, (configuration2 == null ? void 0 : configuration2.extensions) || []);
         super(_config_8);
         this.config = _config_8;
-        this.middlewareStack.use((0, import_middleware_retry.getRetryPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_retry2.getRetryPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
@@ -30977,9 +31044,8 @@ var require_dist_cjs51 = __commonJS({
     };
     __name(_SSOClient, "SSOClient");
     var SSOClient = _SSOClient;
-    var import_middleware_serde = require_dist_cjs39();
-    var import_types = require_dist_cjs();
-    var _SSOServiceException = class _SSOServiceException2 extends import_smithy_client4.ServiceException {
+    var import_middleware_serde2 = require_dist_cjs39();
+    var _SSOServiceException = class _SSOServiceException2 extends import_smithy_client5.ServiceException {
       /**
        * @internal
        */
@@ -31060,12 +31126,12 @@ var require_dist_cjs51 = __commonJS({
     var UnauthorizedException = _UnauthorizedException;
     var GetRoleCredentialsRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.accessToken && { accessToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.accessToken && { accessToken: import_smithy_client5.SENSITIVE_STRING }
     }), "GetRoleCredentialsRequestFilterSensitiveLog");
     var RoleCredentialsFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.secretAccessKey && { secretAccessKey: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.sessionToken && { sessionToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.secretAccessKey && { secretAccessKey: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.sessionToken && { sessionToken: import_smithy_client5.SENSITIVE_STRING }
     }), "RoleCredentialsFilterSensitiveLog");
     var GetRoleCredentialsResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -31073,26 +31139,26 @@ var require_dist_cjs51 = __commonJS({
     }), "GetRoleCredentialsResponseFilterSensitiveLog");
     var ListAccountRolesRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.accessToken && { accessToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.accessToken && { accessToken: import_smithy_client5.SENSITIVE_STRING }
     }), "ListAccountRolesRequestFilterSensitiveLog");
     var ListAccountsRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.accessToken && { accessToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.accessToken && { accessToken: import_smithy_client5.SENSITIVE_STRING }
     }), "ListAccountsRequestFilterSensitiveLog");
     var LogoutRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.accessToken && { accessToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.accessToken && { accessToken: import_smithy_client5.SENSITIVE_STRING }
     }), "LogoutRequestFilterSensitiveLog");
-    var import_core22 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var import_core22 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var se_GetRoleCredentialsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core2.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/federation/credentials");
-      const query = (0, import_smithy_client4.map)({
-        [_rn]: [, (0, import_smithy_client4.expectNonNull)(input[_rN], `roleName`)],
-        [_ai]: [, (0, import_smithy_client4.expectNonNull)(input[_aI], `accountId`)]
+      const query = (0, import_smithy_client5.map)({
+        [_rn]: [, (0, import_smithy_client5.expectNonNull)(input[_rN], `roleName`)],
+        [_ai]: [, (0, import_smithy_client5.expectNonNull)(input[_aI], `accountId`)]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -31100,14 +31166,14 @@ var require_dist_cjs51 = __commonJS({
     }, "se_GetRoleCredentialsCommand");
     var se_ListAccountRolesCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core2.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/assignment/roles");
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_nt]: [, input[_nT]],
         [_mr]: [() => input.maxResults !== void 0, () => input[_mR].toString()],
-        [_ai]: [, (0, import_smithy_client4.expectNonNull)(input[_aI], `accountId`)]
+        [_ai]: [, (0, import_smithy_client5.expectNonNull)(input[_aI], `accountId`)]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -31115,11 +31181,11 @@ var require_dist_cjs51 = __commonJS({
     }, "se_ListAccountRolesCommand");
     var se_ListAccountsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core2.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/assignment/accounts");
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_nt]: [, input[_nT]],
         [_mr]: [() => input.maxResults !== void 0, () => input[_mR].toString()]
       });
@@ -31129,7 +31195,7 @@ var require_dist_cjs51 = __commonJS({
     }, "se_ListAccountsCommand");
     var se_LogoutCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core2.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/logout");
@@ -31141,12 +31207,12 @@ var require_dist_cjs51 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
-      const doc = (0, import_smithy_client4.take)(data, {
-        roleCredentials: import_smithy_client4._json
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
+      const doc = (0, import_smithy_client5.take)(data, {
+        roleCredentials: import_smithy_client5._json
       });
       Object.assign(contents, doc);
       return contents;
@@ -31155,13 +31221,13 @@ var require_dist_cjs51 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
-      const doc = (0, import_smithy_client4.take)(data, {
-        nextToken: import_smithy_client4.expectString,
-        roleList: import_smithy_client4._json
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
+      const doc = (0, import_smithy_client5.take)(data, {
+        nextToken: import_smithy_client5.expectString,
+        roleList: import_smithy_client5._json
       });
       Object.assign(contents, doc);
       return contents;
@@ -31170,13 +31236,13 @@ var require_dist_cjs51 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
-      const doc = (0, import_smithy_client4.take)(data, {
-        accountList: import_smithy_client4._json,
-        nextToken: import_smithy_client4.expectString
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
+      const doc = (0, import_smithy_client5.take)(data, {
+        accountList: import_smithy_client5._json,
+        nextToken: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       return contents;
@@ -31185,10 +31251,10 @@ var require_dist_cjs51 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_LogoutCommand");
     var de_CommandError = /* @__PURE__ */ __name(async (output, context) => {
@@ -31219,58 +31285,58 @@ var require_dist_cjs51 = __commonJS({
           });
       }
     }, "de_CommandError");
-    var throwDefaultError = (0, import_smithy_client4.withBaseException)(SSOServiceException);
+    var throwDefaultError = (0, import_smithy_client5.withBaseException)(SSOServiceException);
     var de_InvalidRequestExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        message: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        message: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidRequestException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidRequestExceptionRes");
     var de_ResourceNotFoundExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        message: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        message: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new ResourceNotFoundException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_ResourceNotFoundExceptionRes");
     var de_TooManyRequestsExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        message: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        message: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new TooManyRequestsException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_TooManyRequestsExceptionRes");
     var de_UnauthorizedExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        message: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        message: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new UnauthorizedException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_UnauthorizedExceptionRes");
     var deserializeMetadata = /* @__PURE__ */ __name((output) => ({
       httpStatusCode: output.statusCode,
@@ -31289,45 +31355,45 @@ var require_dist_cjs51 = __commonJS({
     var _rN = "roleName";
     var _rn = "role_name";
     var _xasbt = "x-amz-sso_bearer_token";
-    var _GetRoleCredentialsCommand = class _GetRoleCredentialsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetRoleCredentialsCommand = class _GetRoleCredentialsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("SWBPortalService", "GetRoleCredentials", {}).n("SSOClient", "GetRoleCredentialsCommand").f(GetRoleCredentialsRequestFilterSensitiveLog, GetRoleCredentialsResponseFilterSensitiveLog).ser(se_GetRoleCredentialsCommand).de(de_GetRoleCredentialsCommand).build() {
     };
     __name(_GetRoleCredentialsCommand, "GetRoleCredentialsCommand");
     var GetRoleCredentialsCommand = _GetRoleCredentialsCommand;
-    var _ListAccountRolesCommand = class _ListAccountRolesCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListAccountRolesCommand = class _ListAccountRolesCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("SWBPortalService", "ListAccountRoles", {}).n("SSOClient", "ListAccountRolesCommand").f(ListAccountRolesRequestFilterSensitiveLog, void 0).ser(se_ListAccountRolesCommand).de(de_ListAccountRolesCommand).build() {
     };
     __name(_ListAccountRolesCommand, "ListAccountRolesCommand");
     var ListAccountRolesCommand = _ListAccountRolesCommand;
-    var _ListAccountsCommand = class _ListAccountsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListAccountsCommand = class _ListAccountsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("SWBPortalService", "ListAccounts", {}).n("SSOClient", "ListAccountsCommand").f(ListAccountsRequestFilterSensitiveLog, void 0).ser(se_ListAccountsCommand).de(de_ListAccountsCommand).build() {
     };
     __name(_ListAccountsCommand, "ListAccountsCommand");
     var ListAccountsCommand = _ListAccountsCommand;
-    var _LogoutCommand = class _LogoutCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _LogoutCommand = class _LogoutCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("SWBPortalService", "Logout", {}).n("SSOClient", "LogoutCommand").f(LogoutRequestFilterSensitiveLog, void 0).ser(se_LogoutCommand).de(de_LogoutCommand).build() {
     };
@@ -31343,7 +31409,7 @@ var require_dist_cjs51 = __commonJS({
     };
     __name(_SSO, "SSO");
     var SSO = _SSO;
-    (0, import_smithy_client4.createAggregatedClient)(commands, SSO);
+    (0, import_smithy_client5.createAggregatedClient)(commands, SSO);
     var paginateListAccountRoles = (0, import_core2.createPaginator)(SSOClient, ListAccountRolesCommand, "nextToken", "nextToken", "maxResults");
     var paginateListAccounts = (0, import_core2.createPaginator)(SSOClient, ListAccountsCommand, "nextToken", "nextToken", "maxResults");
   }
@@ -31355,7 +31421,7 @@ var require_httpAuthSchemeProvider2 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveHttpAuthSchemeConfig = exports2.defaultSSOOIDCHttpAuthSchemeProvider = exports2.defaultSSOOIDCHttpAuthSchemeParametersProvider = void 0;
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var util_middleware_1 = require_dist_cjs19();
     var defaultSSOOIDCHttpAuthSchemeParametersProvider = async (config, context, input) => {
       return {
@@ -31424,7 +31490,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.588.0",
+      version: "3.592.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -31443,9 +31509,9 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sts": "3.588.0",
-        "@aws-sdk/core": "3.588.0",
-        "@aws-sdk/credential-provider-node": "3.588.0",
+        "@aws-sdk/client-sts": "3.592.0",
+        "@aws-sdk/core": "3.592.0",
+        "@aws-sdk/credential-provider-node": "3.592.0",
         "@aws-sdk/middleware-host-header": "3.577.0",
         "@aws-sdk/middleware-logger": "3.577.0",
         "@aws-sdk/middleware-recursion-detection": "3.577.0",
@@ -31456,7 +31522,7 @@ var require_package3 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.577.0",
         "@aws-sdk/util-user-agent-node": "3.587.0",
         "@smithy/config-resolver": "^3.0.1",
-        "@smithy/core": "^2.1.1",
+        "@smithy/core": "^2.2.0",
         "@smithy/fetch-http-handler": "^3.0.1",
         "@smithy/hash-node": "^3.0.0",
         "@smithy/invalid-dependency": "^3.0.0",
@@ -31585,8 +31651,8 @@ var require_runtimeConfig_shared2 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var core_2 = require_dist_cjs41();
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var core_2 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var smithy_client_1 = require_dist_cjs18();
     var url_parser_1 = require_dist_cjs38();
     var util_base64_1 = require_dist_cjs11();
@@ -31633,19 +31699,19 @@ var require_runtimeConfig2 = __commonJS({
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var package_json_1 = tslib_1.__importDefault(require_package3());
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var credential_provider_node_1 = require_dist_cjs59();
-    var util_user_agent_node_1 = require_dist_cjs46();
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var credential_provider_node_1 = require_dist_cjs58();
+    var util_user_agent_node_1 = require_dist_cjs45();
     var config_resolver_1 = require_dist_cjs29();
-    var hash_node_1 = require_dist_cjs47();
+    var hash_node_1 = require_dist_cjs46();
     var middleware_retry_1 = require_dist_cjs34();
     var node_config_provider_1 = require_dist_cjs36();
     var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs48();
+    var util_body_length_node_1 = require_dist_cjs47();
     var util_retry_1 = require_dist_cjs33();
     var runtimeConfig_shared_1 = require_runtimeConfig_shared2();
     var smithy_client_1 = require_dist_cjs18();
-    var util_defaults_mode_node_1 = require_dist_cjs49();
+    var util_defaults_mode_node_1 = require_dist_cjs48();
     var smithy_client_2 = require_dist_cjs18();
     var getRuntimeConfig = (config) => {
       (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
@@ -31679,7 +31745,7 @@ var require_runtimeConfig2 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/index.js
-var require_dist_cjs52 = __commonJS({
+var require_dist_cjs51 = __commonJS({
   "../../node_modules/@aws-sdk/client-sso-oidc/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -31729,7 +31795,7 @@ var require_dist_cjs52 = __commonJS({
       StartDeviceAuthorizationRequestFilterSensitiveLog: () => StartDeviceAuthorizationRequestFilterSensitiveLog,
       UnauthorizedClientException: () => UnauthorizedClientException,
       UnsupportedGrantTypeException: () => UnsupportedGrantTypeException,
-      __Client: () => import_smithy_client4.Client
+      __Client: () => import_smithy_client5.Client
     });
     module2.exports = __toCommonJS2(src_exports);
     var import_middleware_host_header = require_dist_cjs4();
@@ -31737,10 +31803,10 @@ var require_dist_cjs52 = __commonJS({
     var import_middleware_recursion_detection = require_dist_cjs6();
     var import_middleware_user_agent = require_dist_cjs28();
     var import_config_resolver = require_dist_cjs29();
-    var import_core2 = require_dist_cjs41();
+    var import_core2 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var import_middleware_content_length = require_dist_cjs31();
-    var import_middleware_endpoint = require_dist_cjs40();
-    var import_middleware_retry = require_dist_cjs34();
+    var import_middleware_endpoint2 = require_dist_cjs40();
+    var import_middleware_retry2 = require_dist_cjs34();
     var import_httpAuthSchemeProvider = require_httpAuthSchemeProvider2();
     var resolveClientEndpointParameters = /* @__PURE__ */ __name((options) => {
       return {
@@ -31757,9 +31823,9 @@ var require_dist_cjs52 = __commonJS({
       UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
     };
     var import_runtimeConfig = require_runtimeConfig2();
-    var import_region_config_resolver = require_dist_cjs50();
-    var import_protocol_http3 = require_dist_cjs2();
-    var import_smithy_client4 = require_dist_cjs18();
+    var import_region_config_resolver = require_dist_cjs49();
+    var import_protocol_http5 = require_dist_cjs2();
+    var import_smithy_client5 = require_dist_cjs18();
     var getHttpAuthExtensionConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
       const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
       let _httpAuthSchemeProvider = runtimeConfig.httpAuthSchemeProvider;
@@ -31801,33 +31867,33 @@ var require_dist_cjs52 = __commonJS({
     var resolveRuntimeExtensions = /* @__PURE__ */ __name((runtimeConfig, extensions) => {
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_smithy_client4.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http3.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_smithy_client5.getDefaultExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_protocol_http5.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
         ...asPartial(getHttpAuthExtensionConfiguration(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
       return {
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
-        ...(0, import_smithy_client4.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http3.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
+        ...(0, import_smithy_client5.resolveDefaultRuntimeConfig)(extensionConfiguration),
+        ...(0, import_protocol_http5.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
         ...resolveHttpAuthRuntimeConfig(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
-    var _SSOOIDCClient = class _SSOOIDCClient extends import_smithy_client4.Client {
+    var _SSOOIDCClient = class _SSOOIDCClient extends import_smithy_client5.Client {
       constructor(...[configuration2]) {
         const _config_0 = (0, import_runtimeConfig.getRuntimeConfig)(configuration2 || {});
         const _config_1 = resolveClientEndpointParameters(_config_0);
         const _config_2 = (0, import_config_resolver.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, import_middleware_endpoint.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, import_middleware_retry.resolveRetryConfig)(_config_3);
+        const _config_3 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_2);
+        const _config_4 = (0, import_middleware_retry2.resolveRetryConfig)(_config_3);
         const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
         const _config_6 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_5);
         const _config_7 = (0, import_httpAuthSchemeProvider.resolveHttpAuthSchemeConfig)(_config_6);
         const _config_8 = resolveRuntimeExtensions(_config_7, (configuration2 == null ? void 0 : configuration2.extensions) || []);
         super(_config_8);
         this.config = _config_8;
-        this.middlewareStack.use((0, import_middleware_retry.getRetryPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_retry2.getRetryPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
@@ -31860,9 +31926,8 @@ var require_dist_cjs52 = __commonJS({
     };
     __name(_SSOOIDCClient, "SSOOIDCClient");
     var SSOOIDCClient = _SSOOIDCClient;
-    var import_middleware_serde = require_dist_cjs39();
-    var import_types = require_dist_cjs();
-    var _SSOOIDCServiceException = class _SSOOIDCServiceException2 extends import_smithy_client4.ServiceException {
+    var import_middleware_serde2 = require_dist_cjs39();
+    var _SSOOIDCServiceException = class _SSOOIDCServiceException2 extends import_smithy_client5.ServiceException {
       /**
        * @internal
        */
@@ -32143,38 +32208,38 @@ var require_dist_cjs52 = __commonJS({
     var InvalidRedirectUriException = _InvalidRedirectUriException;
     var CreateTokenRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.clientSecret && { clientSecret: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.refreshToken && { refreshToken: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.codeVerifier && { codeVerifier: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.clientSecret && { clientSecret: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.refreshToken && { refreshToken: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.codeVerifier && { codeVerifier: import_smithy_client5.SENSITIVE_STRING }
     }), "CreateTokenRequestFilterSensitiveLog");
     var CreateTokenResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.accessToken && { accessToken: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.refreshToken && { refreshToken: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.idToken && { idToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.accessToken && { accessToken: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.refreshToken && { refreshToken: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.idToken && { idToken: import_smithy_client5.SENSITIVE_STRING }
     }), "CreateTokenResponseFilterSensitiveLog");
     var CreateTokenWithIAMRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.refreshToken && { refreshToken: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.assertion && { assertion: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.subjectToken && { subjectToken: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.codeVerifier && { codeVerifier: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.refreshToken && { refreshToken: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.assertion && { assertion: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.subjectToken && { subjectToken: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.codeVerifier && { codeVerifier: import_smithy_client5.SENSITIVE_STRING }
     }), "CreateTokenWithIAMRequestFilterSensitiveLog");
     var CreateTokenWithIAMResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.accessToken && { accessToken: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.refreshToken && { refreshToken: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.idToken && { idToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.accessToken && { accessToken: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.refreshToken && { refreshToken: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.idToken && { idToken: import_smithy_client5.SENSITIVE_STRING }
     }), "CreateTokenWithIAMResponseFilterSensitiveLog");
     var RegisterClientResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.clientSecret && { clientSecret: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.clientSecret && { clientSecret: import_smithy_client5.SENSITIVE_STRING }
     }), "RegisterClientResponseFilterSensitiveLog");
     var StartDeviceAuthorizationRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.clientSecret && { clientSecret: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.clientSecret && { clientSecret: import_smithy_client5.SENSITIVE_STRING }
     }), "StartDeviceAuthorizationRequestFilterSensitiveLog");
-    var import_core22 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var import_core22 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var se_CreateTokenCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core2.requestBuilder)(input, context);
       const headers = {
@@ -32183,7 +32248,7 @@ var require_dist_cjs52 = __commonJS({
       b.bp("/token");
       let body;
       body = JSON.stringify(
-        (0, import_smithy_client4.take)(input, {
+        (0, import_smithy_client5.take)(input, {
           clientId: [],
           clientSecret: [],
           code: [],
@@ -32192,7 +32257,7 @@ var require_dist_cjs52 = __commonJS({
           grantType: [],
           redirectUri: [],
           refreshToken: [],
-          scope: (_) => (0, import_smithy_client4._json)(_)
+          scope: (_) => (0, import_smithy_client5._json)(_)
         })
       );
       b.m("POST").h(headers).b(body);
@@ -32204,12 +32269,12 @@ var require_dist_cjs52 = __commonJS({
         "content-type": "application/json"
       };
       b.bp("/token");
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ai]: [, "t"]
       });
       let body;
       body = JSON.stringify(
-        (0, import_smithy_client4.take)(input, {
+        (0, import_smithy_client5.take)(input, {
           assertion: [],
           clientId: [],
           code: [],
@@ -32218,7 +32283,7 @@ var require_dist_cjs52 = __commonJS({
           redirectUri: [],
           refreshToken: [],
           requestedTokenType: [],
-          scope: (_) => (0, import_smithy_client4._json)(_),
+          scope: (_) => (0, import_smithy_client5._json)(_),
           subjectToken: [],
           subjectTokenType: []
         })
@@ -32234,14 +32299,14 @@ var require_dist_cjs52 = __commonJS({
       b.bp("/client/register");
       let body;
       body = JSON.stringify(
-        (0, import_smithy_client4.take)(input, {
+        (0, import_smithy_client5.take)(input, {
           clientName: [],
           clientType: [],
           entitledApplicationArn: [],
-          grantTypes: (_) => (0, import_smithy_client4._json)(_),
+          grantTypes: (_) => (0, import_smithy_client5._json)(_),
           issuerUrl: [],
-          redirectUris: (_) => (0, import_smithy_client4._json)(_),
-          scopes: (_) => (0, import_smithy_client4._json)(_)
+          redirectUris: (_) => (0, import_smithy_client5._json)(_),
+          scopes: (_) => (0, import_smithy_client5._json)(_)
         })
       );
       b.m("POST").h(headers).b(body);
@@ -32255,7 +32320,7 @@ var require_dist_cjs52 = __commonJS({
       b.bp("/device_authorization");
       let body;
       body = JSON.stringify(
-        (0, import_smithy_client4.take)(input, {
+        (0, import_smithy_client5.take)(input, {
           clientId: [],
           clientSecret: [],
           startUrl: []
@@ -32268,16 +32333,16 @@ var require_dist_cjs52 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
-      const doc = (0, import_smithy_client4.take)(data, {
-        accessToken: import_smithy_client4.expectString,
-        expiresIn: import_smithy_client4.expectInt32,
-        idToken: import_smithy_client4.expectString,
-        refreshToken: import_smithy_client4.expectString,
-        tokenType: import_smithy_client4.expectString
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
+      const doc = (0, import_smithy_client5.take)(data, {
+        accessToken: import_smithy_client5.expectString,
+        expiresIn: import_smithy_client5.expectInt32,
+        idToken: import_smithy_client5.expectString,
+        refreshToken: import_smithy_client5.expectString,
+        tokenType: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       return contents;
@@ -32286,18 +32351,18 @@ var require_dist_cjs52 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
-      const doc = (0, import_smithy_client4.take)(data, {
-        accessToken: import_smithy_client4.expectString,
-        expiresIn: import_smithy_client4.expectInt32,
-        idToken: import_smithy_client4.expectString,
-        issuedTokenType: import_smithy_client4.expectString,
-        refreshToken: import_smithy_client4.expectString,
-        scope: import_smithy_client4._json,
-        tokenType: import_smithy_client4.expectString
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
+      const doc = (0, import_smithy_client5.take)(data, {
+        accessToken: import_smithy_client5.expectString,
+        expiresIn: import_smithy_client5.expectInt32,
+        idToken: import_smithy_client5.expectString,
+        issuedTokenType: import_smithy_client5.expectString,
+        refreshToken: import_smithy_client5.expectString,
+        scope: import_smithy_client5._json,
+        tokenType: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       return contents;
@@ -32306,17 +32371,17 @@ var require_dist_cjs52 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
-      const doc = (0, import_smithy_client4.take)(data, {
-        authorizationEndpoint: import_smithy_client4.expectString,
-        clientId: import_smithy_client4.expectString,
-        clientIdIssuedAt: import_smithy_client4.expectLong,
-        clientSecret: import_smithy_client4.expectString,
-        clientSecretExpiresAt: import_smithy_client4.expectLong,
-        tokenEndpoint: import_smithy_client4.expectString
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
+      const doc = (0, import_smithy_client5.take)(data, {
+        authorizationEndpoint: import_smithy_client5.expectString,
+        clientId: import_smithy_client5.expectString,
+        clientIdIssuedAt: import_smithy_client5.expectLong,
+        clientSecret: import_smithy_client5.expectString,
+        clientSecretExpiresAt: import_smithy_client5.expectLong,
+        tokenEndpoint: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       return contents;
@@ -32325,17 +32390,17 @@ var require_dist_cjs52 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
-      const doc = (0, import_smithy_client4.take)(data, {
-        deviceCode: import_smithy_client4.expectString,
-        expiresIn: import_smithy_client4.expectInt32,
-        interval: import_smithy_client4.expectInt32,
-        userCode: import_smithy_client4.expectString,
-        verificationUri: import_smithy_client4.expectString,
-        verificationUriComplete: import_smithy_client4.expectString
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core22.parseJsonBody)(output.body, context)), "body");
+      const doc = (0, import_smithy_client5.take)(data, {
+        deviceCode: import_smithy_client5.expectString,
+        expiresIn: import_smithy_client5.expectInt32,
+        interval: import_smithy_client5.expectInt32,
+        userCode: import_smithy_client5.expectString,
+        verificationUri: import_smithy_client5.expectString,
+        verificationUriComplete: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       return contents;
@@ -32398,204 +32463,204 @@ var require_dist_cjs52 = __commonJS({
           });
       }
     }, "de_CommandError");
-    var throwDefaultError = (0, import_smithy_client4.withBaseException)(SSOOIDCServiceException);
+    var throwDefaultError = (0, import_smithy_client5.withBaseException)(SSOOIDCServiceException);
     var de_AccessDeniedExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new AccessDeniedException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_AccessDeniedExceptionRes");
     var de_AuthorizationPendingExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new AuthorizationPendingException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_AuthorizationPendingExceptionRes");
     var de_ExpiredTokenExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new ExpiredTokenException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_ExpiredTokenExceptionRes");
     var de_InternalServerExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InternalServerException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InternalServerExceptionRes");
     var de_InvalidClientExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidClientException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidClientExceptionRes");
     var de_InvalidClientMetadataExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidClientMetadataException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidClientMetadataExceptionRes");
     var de_InvalidGrantExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidGrantException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidGrantExceptionRes");
     var de_InvalidRedirectUriExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidRedirectUriException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidRedirectUriExceptionRes");
     var de_InvalidRequestExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidRequestException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidRequestExceptionRes");
     var de_InvalidRequestRegionExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        endpoint: import_smithy_client4.expectString,
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString,
-        region: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        endpoint: import_smithy_client5.expectString,
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString,
+        region: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidRequestRegionException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidRequestRegionExceptionRes");
     var de_InvalidScopeExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new InvalidScopeException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidScopeExceptionRes");
     var de_SlowDownExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new SlowDownException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_SlowDownExceptionRes");
     var de_UnauthorizedClientExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new UnauthorizedClientException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_UnauthorizedClientExceptionRes");
     var de_UnsupportedGrantTypeExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
-      const doc = (0, import_smithy_client4.take)(data, {
-        error: import_smithy_client4.expectString,
-        error_description: import_smithy_client4.expectString
+      const doc = (0, import_smithy_client5.take)(data, {
+        error: import_smithy_client5.expectString,
+        error_description: import_smithy_client5.expectString
       });
       Object.assign(contents, doc);
       const exception = new UnsupportedGrantTypeException({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_UnsupportedGrantTypeExceptionRes");
     var deserializeMetadata = /* @__PURE__ */ __name((output) => ({
       httpStatusCode: output.statusCode,
@@ -32604,45 +32669,45 @@ var require_dist_cjs52 = __commonJS({
       cfId: output.headers["x-amz-cf-id"]
     }), "deserializeMetadata");
     var _ai = "aws_iam";
-    var _CreateTokenCommand = class _CreateTokenCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _CreateTokenCommand = class _CreateTokenCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSSOOIDCService", "CreateToken", {}).n("SSOOIDCClient", "CreateTokenCommand").f(CreateTokenRequestFilterSensitiveLog, CreateTokenResponseFilterSensitiveLog).ser(se_CreateTokenCommand).de(de_CreateTokenCommand).build() {
     };
     __name(_CreateTokenCommand, "CreateTokenCommand");
     var CreateTokenCommand = _CreateTokenCommand;
-    var _CreateTokenWithIAMCommand = class _CreateTokenWithIAMCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _CreateTokenWithIAMCommand = class _CreateTokenWithIAMCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSSOOIDCService", "CreateTokenWithIAM", {}).n("SSOOIDCClient", "CreateTokenWithIAMCommand").f(CreateTokenWithIAMRequestFilterSensitiveLog, CreateTokenWithIAMResponseFilterSensitiveLog).ser(se_CreateTokenWithIAMCommand).de(de_CreateTokenWithIAMCommand).build() {
     };
     __name(_CreateTokenWithIAMCommand, "CreateTokenWithIAMCommand");
     var CreateTokenWithIAMCommand = _CreateTokenWithIAMCommand;
-    var _RegisterClientCommand = class _RegisterClientCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _RegisterClientCommand = class _RegisterClientCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSSOOIDCService", "RegisterClient", {}).n("SSOOIDCClient", "RegisterClientCommand").f(void 0, RegisterClientResponseFilterSensitiveLog).ser(se_RegisterClientCommand).de(de_RegisterClientCommand).build() {
     };
     __name(_RegisterClientCommand, "RegisterClientCommand");
     var RegisterClientCommand = _RegisterClientCommand;
-    var _StartDeviceAuthorizationCommand = class _StartDeviceAuthorizationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _StartDeviceAuthorizationCommand = class _StartDeviceAuthorizationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSSOOIDCService", "StartDeviceAuthorization", {}).n("SSOOIDCClient", "StartDeviceAuthorizationCommand").f(StartDeviceAuthorizationRequestFilterSensitiveLog, void 0).ser(se_StartDeviceAuthorizationCommand).de(de_StartDeviceAuthorizationCommand).build() {
     };
@@ -32658,12 +32723,12 @@ var require_dist_cjs52 = __commonJS({
     };
     __name(_SSOOIDC, "SSOOIDC");
     var SSOOIDC = _SSOOIDC;
-    (0, import_smithy_client4.createAggregatedClient)(commands, SSOOIDC);
+    (0, import_smithy_client5.createAggregatedClient)(commands, SSOOIDC);
   }
 });
 
 // ../../node_modules/@aws-sdk/token-providers/dist-cjs/index.js
-var require_dist_cjs53 = __commonJS({
+var require_dist_cjs52 = __commonJS({
   "../../node_modules/@aws-sdk/token-providers/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __create2 = Object.create;
@@ -32705,7 +32770,7 @@ var require_dist_cjs53 = __commonJS({
     var REFRESH_MESSAGE = `To refresh this SSO session run 'aws sso login' with the corresponding profile.`;
     var ssoOidcClientsHash = {};
     var getSsoOidcClient = /* @__PURE__ */ __name(async (ssoRegion) => {
-      const { SSOOIDCClient } = await Promise.resolve().then(() => __toESM2(require_dist_cjs52()));
+      const { SSOOIDCClient } = await Promise.resolve().then(() => __toESM2(require_dist_cjs51()));
       if (ssoOidcClientsHash[ssoRegion]) {
         return ssoOidcClientsHash[ssoRegion];
       }
@@ -32714,7 +32779,7 @@ var require_dist_cjs53 = __commonJS({
       return ssoOidcClient;
     }, "getSsoOidcClient");
     var getNewSsoOidcToken = /* @__PURE__ */ __name(async (ssoToken, ssoRegion) => {
-      const { CreateTokenCommand } = await Promise.resolve().then(() => __toESM2(require_dist_cjs52()));
+      const { CreateTokenCommand } = await Promise.resolve().then(() => __toESM2(require_dist_cjs51()));
       const ssoOidcClient = await getSsoOidcClient(ssoRegion);
       return ssoOidcClient.send(
         new CreateTokenCommand({
@@ -32843,7 +32908,7 @@ var require_dist_cjs53 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-sso/dist-cjs/index.js
-var require_dist_cjs54 = __commonJS({
+var require_dist_cjs53 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-sso/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -32876,7 +32941,7 @@ var require_dist_cjs54 = __commonJS({
     var init_loadSso = __esm2({
       "src/loadSso.ts"() {
         "use strict";
-        import_client_sso = require_dist_cjs51();
+        import_client_sso = require_dist_cjs50();
       }
     });
     var src_exports = {};
@@ -32887,7 +32952,7 @@ var require_dist_cjs54 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     var isSsoProfile = /* @__PURE__ */ __name((arg) => arg && (typeof arg.sso_start_url === "string" || typeof arg.sso_account_id === "string" || typeof arg.sso_session === "string" || typeof arg.sso_region === "string" || typeof arg.sso_role_name === "string"), "isSsoProfile");
-    var import_token_providers = require_dist_cjs53();
+    var import_token_providers = require_dist_cjs52();
     var import_property_provider = require_dist_cjs24();
     var import_shared_ini_file_loader = require_dist_cjs35();
     var SHOULD_FAIL_CREDENTIAL_CHAIN = false;
@@ -33054,7 +33119,7 @@ var require_httpAuthSchemeProvider3 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveHttpAuthSchemeConfig = exports2.resolveStsAuthConfig = exports2.defaultSTSHttpAuthSchemeProvider = exports2.defaultSTSHttpAuthSchemeParametersProvider = void 0;
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var util_middleware_1 = require_dist_cjs19();
     var STSClient_1 = require_STSClient();
     var defaultSTSHttpAuthSchemeParametersProvider = async (config, context, input) => {
@@ -33152,7 +33217,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.588.0",
+      version: "3.592.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -33173,9 +33238,9 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "3.0.0",
         "@aws-crypto/sha256-js": "3.0.0",
-        "@aws-sdk/client-sso-oidc": "3.588.0",
-        "@aws-sdk/core": "3.588.0",
-        "@aws-sdk/credential-provider-node": "3.588.0",
+        "@aws-sdk/client-sso-oidc": "3.592.0",
+        "@aws-sdk/core": "3.592.0",
+        "@aws-sdk/credential-provider-node": "3.592.0",
         "@aws-sdk/middleware-host-header": "3.577.0",
         "@aws-sdk/middleware-logger": "3.577.0",
         "@aws-sdk/middleware-recursion-detection": "3.577.0",
@@ -33186,7 +33251,7 @@ var require_package4 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.577.0",
         "@aws-sdk/util-user-agent-node": "3.587.0",
         "@smithy/config-resolver": "^3.0.1",
-        "@smithy/core": "^2.1.1",
+        "@smithy/core": "^2.2.0",
         "@smithy/fetch-http-handler": "^3.0.1",
         "@smithy/hash-node": "^3.0.0",
         "@smithy/invalid-dependency": "^3.0.0",
@@ -33327,8 +33392,8 @@ var require_runtimeConfig_shared3 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var core_2 = require_dist_cjs41();
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var core_2 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var smithy_client_1 = require_dist_cjs18();
     var url_parser_1 = require_dist_cjs38();
     var util_base64_1 = require_dist_cjs11();
@@ -33375,20 +33440,20 @@ var require_runtimeConfig3 = __commonJS({
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var package_json_1 = tslib_1.__importDefault(require_package4());
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var credential_provider_node_1 = require_dist_cjs59();
-    var util_user_agent_node_1 = require_dist_cjs46();
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var credential_provider_node_1 = require_dist_cjs58();
+    var util_user_agent_node_1 = require_dist_cjs45();
     var config_resolver_1 = require_dist_cjs29();
-    var core_2 = require_dist_cjs41();
-    var hash_node_1 = require_dist_cjs47();
+    var core_2 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var hash_node_1 = require_dist_cjs46();
     var middleware_retry_1 = require_dist_cjs34();
     var node_config_provider_1 = require_dist_cjs36();
     var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs48();
+    var util_body_length_node_1 = require_dist_cjs47();
     var util_retry_1 = require_dist_cjs33();
     var runtimeConfig_shared_1 = require_runtimeConfig_shared3();
     var smithy_client_1 = require_dist_cjs18();
-    var util_defaults_mode_node_1 = require_dist_cjs49();
+    var util_defaults_mode_node_1 = require_dist_cjs48();
     var smithy_client_2 = require_dist_cjs18();
     var getRuntimeConfig = (config) => {
       (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
@@ -33487,7 +33552,7 @@ var require_runtimeExtensions = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.resolveRuntimeExtensions = void 0;
-    var region_config_resolver_1 = require_dist_cjs50();
+    var region_config_resolver_1 = require_dist_cjs49();
     var protocol_http_1 = require_dist_cjs2();
     var smithy_client_1 = require_dist_cjs18();
     var httpAuthExtensionConfiguration_1 = require_httpAuthExtensionConfiguration();
@@ -33523,7 +33588,7 @@ var require_STSClient = __commonJS({
     var middleware_recursion_detection_1 = require_dist_cjs6();
     var middleware_user_agent_1 = require_dist_cjs28();
     var config_resolver_1 = require_dist_cjs29();
-    var core_1 = require_dist_cjs41();
+    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var middleware_content_length_1 = require_dist_cjs31();
     var middleware_endpoint_1 = require_dist_cjs40();
     var middleware_retry_1 = require_dist_cjs34();
@@ -33577,7 +33642,7 @@ var require_STSClient = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-sts/dist-cjs/index.js
-var require_dist_cjs55 = __commonJS({
+var require_dist_cjs54 = __commonJS({
   "../../node_modules/@aws-sdk/client-sts/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -33626,7 +33691,6 @@ var require_dist_cjs55 = __commonJS({
       MalformedPolicyDocumentException: () => MalformedPolicyDocumentException,
       PackedPolicyTooLargeException: () => PackedPolicyTooLargeException,
       RegionDisabledException: () => RegionDisabledException,
-      RuntimeExtension: () => import_runtimeExtensions.RuntimeExtension,
       STS: () => STS,
       STSServiceException: () => STSServiceException,
       decorateDefaultCredentialProvider: () => decorateDefaultCredentialProvider,
@@ -33635,12 +33699,11 @@ var require_dist_cjs55 = __commonJS({
     });
     module2.exports = __toCommonJS2(src_exports);
     __reExport(src_exports, require_STSClient(), module2.exports);
-    var import_middleware_endpoint = require_dist_cjs40();
-    var import_middleware_serde = require_dist_cjs39();
-    var import_types = require_dist_cjs();
+    var import_middleware_endpoint2 = require_dist_cjs40();
+    var import_middleware_serde2 = require_dist_cjs39();
     var import_EndpointParameters = require_EndpointParameters();
-    var import_smithy_client4 = require_dist_cjs18();
-    var _STSServiceException = class _STSServiceException2 extends import_smithy_client4.ServiceException {
+    var import_smithy_client5 = require_dist_cjs18();
+    var _STSServiceException = class _STSServiceException2 extends import_smithy_client5.ServiceException {
       /**
        * @internal
        */
@@ -33789,7 +33852,7 @@ var require_dist_cjs55 = __commonJS({
     var InvalidAuthorizationMessageException = _InvalidAuthorizationMessageException;
     var CredentialsFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SecretAccessKey && { SecretAccessKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SecretAccessKey && { SecretAccessKey: import_smithy_client5.SENSITIVE_STRING }
     }), "CredentialsFilterSensitiveLog");
     var AssumeRoleResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -33797,7 +33860,7 @@ var require_dist_cjs55 = __commonJS({
     }), "AssumeRoleResponseFilterSensitiveLog");
     var AssumeRoleWithSAMLRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SAMLAssertion && { SAMLAssertion: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SAMLAssertion && { SAMLAssertion: import_smithy_client5.SENSITIVE_STRING }
     }), "AssumeRoleWithSAMLRequestFilterSensitiveLog");
     var AssumeRoleWithSAMLResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -33805,7 +33868,7 @@ var require_dist_cjs55 = __commonJS({
     }), "AssumeRoleWithSAMLResponseFilterSensitiveLog");
     var AssumeRoleWithWebIdentityRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.WebIdentityToken && { WebIdentityToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.WebIdentityToken && { WebIdentityToken: import_smithy_client5.SENSITIVE_STRING }
     }), "AssumeRoleWithWebIdentityRequestFilterSensitiveLog");
     var AssumeRoleWithWebIdentityResponseFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -33819,8 +33882,8 @@ var require_dist_cjs55 = __commonJS({
       ...obj,
       ...obj.Credentials && { Credentials: CredentialsFilterSensitiveLog(obj.Credentials) }
     }), "GetSessionTokenResponseFilterSensitiveLog");
-    var import_core2 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_core2 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var import_protocol_http5 = require_dist_cjs2();
     var se_AssumeRoleCommand = /* @__PURE__ */ __name(async (input, context) => {
       const headers = SHARED_HEADERS;
       let body;
@@ -34052,7 +34115,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_ExpiredTokenExceptionRes");
     var de_IDPCommunicationErrorExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const body = parsedOutput.body;
@@ -34061,7 +34124,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_IDPCommunicationErrorExceptionRes");
     var de_IDPRejectedClaimExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const body = parsedOutput.body;
@@ -34070,7 +34133,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_IDPRejectedClaimExceptionRes");
     var de_InvalidAuthorizationMessageExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const body = parsedOutput.body;
@@ -34079,7 +34142,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_InvalidAuthorizationMessageExceptionRes");
     var de_InvalidIdentityTokenExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const body = parsedOutput.body;
@@ -34088,7 +34151,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_InvalidIdentityTokenExceptionRes");
     var de_MalformedPolicyDocumentExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const body = parsedOutput.body;
@@ -34097,7 +34160,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_MalformedPolicyDocumentExceptionRes");
     var de_PackedPolicyTooLargeExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const body = parsedOutput.body;
@@ -34106,7 +34169,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_PackedPolicyTooLargeExceptionRes");
     var de_RegionDisabledExceptionRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
       const body = parsedOutput.body;
@@ -34115,7 +34178,7 @@ var require_dist_cjs55 = __commonJS({
         $metadata: deserializeMetadata(parsedOutput),
         ...deserialized
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, body);
     }, "de_RegionDisabledExceptionRes");
     var se_AssumeRoleRequest = /* @__PURE__ */ __name((input, context) => {
       var _a2, _b, _c, _d;
@@ -34401,10 +34464,10 @@ var require_dist_cjs55 = __commonJS({
     var de_AssumedRoleUser = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ARI] != null) {
-        contents[_ARI] = (0, import_smithy_client4.expectString)(output[_ARI]);
+        contents[_ARI] = (0, import_smithy_client5.expectString)(output[_ARI]);
       }
       if (output[_Ar] != null) {
-        contents[_Ar] = (0, import_smithy_client4.expectString)(output[_Ar]);
+        contents[_Ar] = (0, import_smithy_client5.expectString)(output[_Ar]);
       }
       return contents;
     }, "de_AssumedRoleUser");
@@ -34417,10 +34480,10 @@ var require_dist_cjs55 = __commonJS({
         contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
       }
       if (output[_PPS] != null) {
-        contents[_PPS] = (0, import_smithy_client4.strictParseInt32)(output[_PPS]);
+        contents[_PPS] = (0, import_smithy_client5.strictParseInt32)(output[_PPS]);
       }
       if (output[_SI] != null) {
-        contents[_SI] = (0, import_smithy_client4.expectString)(output[_SI]);
+        contents[_SI] = (0, import_smithy_client5.expectString)(output[_SI]);
       }
       return contents;
     }, "de_AssumeRoleResponse");
@@ -34433,25 +34496,25 @@ var require_dist_cjs55 = __commonJS({
         contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
       }
       if (output[_PPS] != null) {
-        contents[_PPS] = (0, import_smithy_client4.strictParseInt32)(output[_PPS]);
+        contents[_PPS] = (0, import_smithy_client5.strictParseInt32)(output[_PPS]);
       }
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       if (output[_ST] != null) {
-        contents[_ST] = (0, import_smithy_client4.expectString)(output[_ST]);
+        contents[_ST] = (0, import_smithy_client5.expectString)(output[_ST]);
       }
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output[_Au] != null) {
-        contents[_Au] = (0, import_smithy_client4.expectString)(output[_Au]);
+        contents[_Au] = (0, import_smithy_client5.expectString)(output[_Au]);
       }
       if (output[_NQ] != null) {
-        contents[_NQ] = (0, import_smithy_client4.expectString)(output[_NQ]);
+        contents[_NQ] = (0, import_smithy_client5.expectString)(output[_NQ]);
       }
       if (output[_SI] != null) {
-        contents[_SI] = (0, import_smithy_client4.expectString)(output[_SI]);
+        contents[_SI] = (0, import_smithy_client5.expectString)(output[_SI]);
       }
       return contents;
     }, "de_AssumeRoleWithSAMLResponse");
@@ -34461,82 +34524,82 @@ var require_dist_cjs55 = __commonJS({
         contents[_C] = de_Credentials(output[_C], context);
       }
       if (output[_SFWIT] != null) {
-        contents[_SFWIT] = (0, import_smithy_client4.expectString)(output[_SFWIT]);
+        contents[_SFWIT] = (0, import_smithy_client5.expectString)(output[_SFWIT]);
       }
       if (output[_ARU] != null) {
         contents[_ARU] = de_AssumedRoleUser(output[_ARU], context);
       }
       if (output[_PPS] != null) {
-        contents[_PPS] = (0, import_smithy_client4.strictParseInt32)(output[_PPS]);
+        contents[_PPS] = (0, import_smithy_client5.strictParseInt32)(output[_PPS]);
       }
       if (output[_Pr] != null) {
-        contents[_Pr] = (0, import_smithy_client4.expectString)(output[_Pr]);
+        contents[_Pr] = (0, import_smithy_client5.expectString)(output[_Pr]);
       }
       if (output[_Au] != null) {
-        contents[_Au] = (0, import_smithy_client4.expectString)(output[_Au]);
+        contents[_Au] = (0, import_smithy_client5.expectString)(output[_Au]);
       }
       if (output[_SI] != null) {
-        contents[_SI] = (0, import_smithy_client4.expectString)(output[_SI]);
+        contents[_SI] = (0, import_smithy_client5.expectString)(output[_SI]);
       }
       return contents;
     }, "de_AssumeRoleWithWebIdentityResponse");
     var de_Credentials = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_AKI] != null) {
-        contents[_AKI] = (0, import_smithy_client4.expectString)(output[_AKI]);
+        contents[_AKI] = (0, import_smithy_client5.expectString)(output[_AKI]);
       }
       if (output[_SAK] != null) {
-        contents[_SAK] = (0, import_smithy_client4.expectString)(output[_SAK]);
+        contents[_SAK] = (0, import_smithy_client5.expectString)(output[_SAK]);
       }
       if (output[_STe] != null) {
-        contents[_STe] = (0, import_smithy_client4.expectString)(output[_STe]);
+        contents[_STe] = (0, import_smithy_client5.expectString)(output[_STe]);
       }
       if (output[_E] != null) {
-        contents[_E] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_E]));
+        contents[_E] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_E]));
       }
       return contents;
     }, "de_Credentials");
     var de_DecodeAuthorizationMessageResponse = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_DM] != null) {
-        contents[_DM] = (0, import_smithy_client4.expectString)(output[_DM]);
+        contents[_DM] = (0, import_smithy_client5.expectString)(output[_DM]);
       }
       return contents;
     }, "de_DecodeAuthorizationMessageResponse");
     var de_ExpiredTokenException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_ExpiredTokenException");
     var de_FederatedUser = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_FUI] != null) {
-        contents[_FUI] = (0, import_smithy_client4.expectString)(output[_FUI]);
+        contents[_FUI] = (0, import_smithy_client5.expectString)(output[_FUI]);
       }
       if (output[_Ar] != null) {
-        contents[_Ar] = (0, import_smithy_client4.expectString)(output[_Ar]);
+        contents[_Ar] = (0, import_smithy_client5.expectString)(output[_Ar]);
       }
       return contents;
     }, "de_FederatedUser");
     var de_GetAccessKeyInfoResponse = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Ac] != null) {
-        contents[_Ac] = (0, import_smithy_client4.expectString)(output[_Ac]);
+        contents[_Ac] = (0, import_smithy_client5.expectString)(output[_Ac]);
       }
       return contents;
     }, "de_GetAccessKeyInfoResponse");
     var de_GetCallerIdentityResponse = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_UI] != null) {
-        contents[_UI] = (0, import_smithy_client4.expectString)(output[_UI]);
+        contents[_UI] = (0, import_smithy_client5.expectString)(output[_UI]);
       }
       if (output[_Ac] != null) {
-        contents[_Ac] = (0, import_smithy_client4.expectString)(output[_Ac]);
+        contents[_Ac] = (0, import_smithy_client5.expectString)(output[_Ac]);
       }
       if (output[_Ar] != null) {
-        contents[_Ar] = (0, import_smithy_client4.expectString)(output[_Ar]);
+        contents[_Ar] = (0, import_smithy_client5.expectString)(output[_Ar]);
       }
       return contents;
     }, "de_GetCallerIdentityResponse");
@@ -34549,7 +34612,7 @@ var require_dist_cjs55 = __commonJS({
         contents[_FU] = de_FederatedUser(output[_FU], context);
       }
       if (output[_PPS] != null) {
-        contents[_PPS] = (0, import_smithy_client4.strictParseInt32)(output[_PPS]);
+        contents[_PPS] = (0, import_smithy_client5.strictParseInt32)(output[_PPS]);
       }
       return contents;
     }, "de_GetFederationTokenResponse");
@@ -34563,49 +34626,49 @@ var require_dist_cjs55 = __commonJS({
     var de_IDPCommunicationErrorException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_IDPCommunicationErrorException");
     var de_IDPRejectedClaimException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_IDPRejectedClaimException");
     var de_InvalidAuthorizationMessageException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_InvalidAuthorizationMessageException");
     var de_InvalidIdentityTokenException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_InvalidIdentityTokenException");
     var de_MalformedPolicyDocumentException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_MalformedPolicyDocumentException");
     var de_PackedPolicyTooLargeException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_PackedPolicyTooLargeException");
     var de_RegionDisabledException = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_m] != null) {
-        contents[_m] = (0, import_smithy_client4.expectString)(output[_m]);
+        contents[_m] = (0, import_smithy_client5.expectString)(output[_m]);
       }
       return contents;
     }, "de_RegionDisabledException");
@@ -34615,7 +34678,7 @@ var require_dist_cjs55 = __commonJS({
       extendedRequestId: output.headers["x-amz-id-2"],
       cfId: output.headers["x-amz-cf-id"]
     }), "deserializeMetadata");
-    var throwDefaultError = (0, import_smithy_client4.withBaseException)(STSServiceException);
+    var throwDefaultError = (0, import_smithy_client5.withBaseException)(STSServiceException);
     var buildHttpRpcRequest = /* @__PURE__ */ __name(async (context, headers, path2, resolvedHostname, body) => {
       const { hostname, protocol = "https", port, path: basePath } = await context.endpoint();
       const contents = {
@@ -34632,7 +34695,7 @@ var require_dist_cjs55 = __commonJS({
       if (body !== void 0) {
         contents.body = body;
       }
-      return new import_protocol_http3.HttpRequest(contents);
+      return new import_protocol_http5.HttpRequest(contents);
     }, "buildHttpRpcRequest");
     var SHARED_HEADERS = {
       "content-type": "application/x-www-form-urlencoded"
@@ -34693,7 +34756,7 @@ var require_dist_cjs55 = __commonJS({
     var _WIT = "WebIdentityToken";
     var _a = "arn";
     var _m = "message";
-    var buildFormUrlencodedString = /* @__PURE__ */ __name((formEntries) => Object.entries(formEntries).map(([key, value]) => (0, import_smithy_client4.extendedEncodeURIComponent)(key) + "=" + (0, import_smithy_client4.extendedEncodeURIComponent)(value)).join("&"), "buildFormUrlencodedString");
+    var buildFormUrlencodedString = /* @__PURE__ */ __name((formEntries) => Object.entries(formEntries).map(([key, value]) => (0, import_smithy_client5.extendedEncodeURIComponent)(key) + "=" + (0, import_smithy_client5.extendedEncodeURIComponent)(value)).join("&"), "buildFormUrlencodedString");
     var loadQueryErrorCode = /* @__PURE__ */ __name((output, data) => {
       var _a2;
       if (((_a2 = data.Error) == null ? void 0 : _a2.Code) !== void 0) {
@@ -34703,96 +34766,96 @@ var require_dist_cjs55 = __commonJS({
         return "NotFound";
       }
     }, "loadQueryErrorCode");
-    var _AssumeRoleCommand = class _AssumeRoleCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _AssumeRoleCommand = class _AssumeRoleCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "AssumeRole", {}).n("STSClient", "AssumeRoleCommand").f(void 0, AssumeRoleResponseFilterSensitiveLog).ser(se_AssumeRoleCommand).de(de_AssumeRoleCommand).build() {
     };
     __name(_AssumeRoleCommand, "AssumeRoleCommand");
     var AssumeRoleCommand = _AssumeRoleCommand;
     var import_EndpointParameters2 = require_EndpointParameters();
-    var _AssumeRoleWithSAMLCommand = class _AssumeRoleWithSAMLCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _AssumeRoleWithSAMLCommand = class _AssumeRoleWithSAMLCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters2.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "AssumeRoleWithSAML", {}).n("STSClient", "AssumeRoleWithSAMLCommand").f(AssumeRoleWithSAMLRequestFilterSensitiveLog, AssumeRoleWithSAMLResponseFilterSensitiveLog).ser(se_AssumeRoleWithSAMLCommand).de(de_AssumeRoleWithSAMLCommand).build() {
     };
     __name(_AssumeRoleWithSAMLCommand, "AssumeRoleWithSAMLCommand");
     var AssumeRoleWithSAMLCommand = _AssumeRoleWithSAMLCommand;
     var import_EndpointParameters3 = require_EndpointParameters();
-    var _AssumeRoleWithWebIdentityCommand = class _AssumeRoleWithWebIdentityCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _AssumeRoleWithWebIdentityCommand = class _AssumeRoleWithWebIdentityCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters3.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "AssumeRoleWithWebIdentity", {}).n("STSClient", "AssumeRoleWithWebIdentityCommand").f(AssumeRoleWithWebIdentityRequestFilterSensitiveLog, AssumeRoleWithWebIdentityResponseFilterSensitiveLog).ser(se_AssumeRoleWithWebIdentityCommand).de(de_AssumeRoleWithWebIdentityCommand).build() {
     };
     __name(_AssumeRoleWithWebIdentityCommand, "AssumeRoleWithWebIdentityCommand");
     var AssumeRoleWithWebIdentityCommand = _AssumeRoleWithWebIdentityCommand;
     var import_EndpointParameters4 = require_EndpointParameters();
-    var _DecodeAuthorizationMessageCommand = class _DecodeAuthorizationMessageCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DecodeAuthorizationMessageCommand = class _DecodeAuthorizationMessageCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters4.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "DecodeAuthorizationMessage", {}).n("STSClient", "DecodeAuthorizationMessageCommand").f(void 0, void 0).ser(se_DecodeAuthorizationMessageCommand).de(de_DecodeAuthorizationMessageCommand).build() {
     };
     __name(_DecodeAuthorizationMessageCommand, "DecodeAuthorizationMessageCommand");
     var DecodeAuthorizationMessageCommand = _DecodeAuthorizationMessageCommand;
     var import_EndpointParameters5 = require_EndpointParameters();
-    var _GetAccessKeyInfoCommand = class _GetAccessKeyInfoCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetAccessKeyInfoCommand = class _GetAccessKeyInfoCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters5.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "GetAccessKeyInfo", {}).n("STSClient", "GetAccessKeyInfoCommand").f(void 0, void 0).ser(se_GetAccessKeyInfoCommand).de(de_GetAccessKeyInfoCommand).build() {
     };
     __name(_GetAccessKeyInfoCommand, "GetAccessKeyInfoCommand");
     var GetAccessKeyInfoCommand = _GetAccessKeyInfoCommand;
     var import_EndpointParameters6 = require_EndpointParameters();
-    var _GetCallerIdentityCommand = class _GetCallerIdentityCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetCallerIdentityCommand = class _GetCallerIdentityCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters6.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "GetCallerIdentity", {}).n("STSClient", "GetCallerIdentityCommand").f(void 0, void 0).ser(se_GetCallerIdentityCommand).de(de_GetCallerIdentityCommand).build() {
     };
     __name(_GetCallerIdentityCommand, "GetCallerIdentityCommand");
     var GetCallerIdentityCommand = _GetCallerIdentityCommand;
     var import_EndpointParameters7 = require_EndpointParameters();
-    var _GetFederationTokenCommand = class _GetFederationTokenCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetFederationTokenCommand = class _GetFederationTokenCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters7.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "GetFederationToken", {}).n("STSClient", "GetFederationTokenCommand").f(void 0, GetFederationTokenResponseFilterSensitiveLog).ser(se_GetFederationTokenCommand).de(de_GetFederationTokenCommand).build() {
     };
     __name(_GetFederationTokenCommand, "GetFederationTokenCommand");
     var GetFederationTokenCommand = _GetFederationTokenCommand;
     var import_EndpointParameters8 = require_EndpointParameters();
-    var _GetSessionTokenCommand = class _GetSessionTokenCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetSessionTokenCommand = class _GetSessionTokenCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...import_EndpointParameters8.commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AWSSecurityTokenServiceV20110615", "GetSessionToken", {}).n("STSClient", "GetSessionTokenCommand").f(void 0, GetSessionTokenResponseFilterSensitiveLog).ser(se_GetSessionTokenCommand).de(de_GetSessionTokenCommand).build() {
     };
@@ -34813,9 +34876,8 @@ var require_dist_cjs55 = __commonJS({
     };
     __name(_STS, "STS");
     var STS = _STS;
-    (0, import_smithy_client4.createAggregatedClient)(commands, STS);
+    (0, import_smithy_client5.createAggregatedClient)(commands, STS);
     var import_EndpointParameters9 = require_EndpointParameters();
-    var import_runtimeExtensions = require_runtimeExtensions();
     var ASSUME_ROLE_DEFAULT_REGION = "us-east-1";
     var resolveRegion = /* @__PURE__ */ __name(async (_region, _parentRegion, credentialProviderLogger) => {
       var _a2;
@@ -34933,7 +34995,7 @@ var require_dist_cjs55 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-process/dist-cjs/index.js
-var require_dist_cjs56 = __commonJS({
+var require_dist_cjs55 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-process/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -35059,7 +35121,7 @@ var require_fromWebToken = __commonJS({
       const { roleArn, roleSessionName, webIdentityToken, providerId, policyArns, policy, durationSeconds } = init;
       let { roleAssumerWithWebIdentity } = init;
       if (!roleAssumerWithWebIdentity) {
-        const { getDefaultRoleAssumerWithWebIdentity } = await Promise.resolve().then(() => __importStar4(require_dist_cjs55()));
+        const { getDefaultRoleAssumerWithWebIdentity } = await Promise.resolve().then(() => __importStar4(require_dist_cjs54()));
         roleAssumerWithWebIdentity = getDefaultRoleAssumerWithWebIdentity({
           ...init.clientConfig,
           credentialProviderLogger: init.logger,
@@ -35114,7 +35176,7 @@ var require_fromTokenFile = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/index.js
-var require_dist_cjs57 = __commonJS({
+var require_dist_cjs56 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-web-identity/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -35139,7 +35201,7 @@ var require_dist_cjs57 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-ini/dist-cjs/index.js
-var require_dist_cjs58 = __commonJS({
+var require_dist_cjs57 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-ini/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __create2 = Object.create;
@@ -35180,19 +35242,19 @@ var require_dist_cjs58 = __commonJS({
     var resolveCredentialSource = /* @__PURE__ */ __name((credentialSource, profileName, logger) => {
       const sourceProvidersMap = {
         EcsContainer: async (options) => {
-          const { fromHttp } = await Promise.resolve().then(() => __toESM2(require_dist_cjs45()));
-          const { fromContainerMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
+          const { fromHttp } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
+          const { fromContainerMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs43()));
           logger == null ? void 0 : logger.debug("@aws-sdk/credential-provider-ini - credential_source is EcsContainer");
           return (0, import_property_provider.chain)(fromHttp(options ?? {}), fromContainerMetadata(options));
         },
         Ec2InstanceMetadata: async (options) => {
           logger == null ? void 0 : logger.debug("@aws-sdk/credential-provider-ini - credential_source is Ec2InstanceMetadata");
-          const { fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
+          const { fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs43()));
           return fromInstanceMetadata(options);
         },
         Environment: async (options) => {
           logger == null ? void 0 : logger.debug("@aws-sdk/credential-provider-ini - credential_source is Environment");
-          const { fromEnv } = await Promise.resolve().then(() => __toESM2(require_dist_cjs43()));
+          const { fromEnv } = await Promise.resolve().then(() => __toESM2(require_dist_cjs42()));
           return fromEnv(options);
         }
       };
@@ -35229,7 +35291,7 @@ var require_dist_cjs58 = __commonJS({
       (_a = options.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-ini - resolveAssumeRoleCredentials (STS)");
       const data = profiles[profileName];
       if (!options.roleAssumer) {
-        const { getDefaultRoleAssumer } = await Promise.resolve().then(() => __toESM2(require_dist_cjs55()));
+        const { getDefaultRoleAssumer } = await Promise.resolve().then(() => __toESM2(require_dist_cjs54()));
         options.roleAssumer = getDefaultRoleAssumer(
           {
             ...options.clientConfig,
@@ -35288,14 +35350,14 @@ var require_dist_cjs58 = __commonJS({
       return options.roleAssumer(sourceCreds, params);
     }, "resolveAssumeRoleCredentials");
     var isProcessProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.credential_process === "string", "isProcessProfile");
-    var resolveProcessCredentials = /* @__PURE__ */ __name(async (options, profile) => Promise.resolve().then(() => __toESM2(require_dist_cjs56())).then(
+    var resolveProcessCredentials = /* @__PURE__ */ __name(async (options, profile) => Promise.resolve().then(() => __toESM2(require_dist_cjs55())).then(
       ({ fromProcess }) => fromProcess({
         ...options,
         profile
       })()
     ), "resolveProcessCredentials");
     var resolveSsoCredentials = /* @__PURE__ */ __name(async (profile, options = {}) => {
-      const { fromSSO } = await Promise.resolve().then(() => __toESM2(require_dist_cjs54()));
+      const { fromSSO } = await Promise.resolve().then(() => __toESM2(require_dist_cjs53()));
       return fromSSO({
         profile,
         logger: options.logger
@@ -35314,7 +35376,7 @@ var require_dist_cjs58 = __commonJS({
       });
     }, "resolveStaticCredentials");
     var isWebIdentityProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.web_identity_token_file === "string" && typeof arg.role_arn === "string" && ["undefined", "string"].indexOf(typeof arg.role_session_name) > -1, "isWebIdentityProfile");
-    var resolveWebIdentityCredentials = /* @__PURE__ */ __name(async (profile, options) => Promise.resolve().then(() => __toESM2(require_dist_cjs57())).then(
+    var resolveWebIdentityCredentials = /* @__PURE__ */ __name(async (profile, options) => Promise.resolve().then(() => __toESM2(require_dist_cjs56())).then(
       ({ fromTokenFile: fromTokenFile2 }) => fromTokenFile2({
         webIdentityTokenFile: profile.web_identity_token_file,
         roleArn: profile.role_arn,
@@ -35359,7 +35421,7 @@ var require_dist_cjs58 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/credential-provider-node/dist-cjs/index.js
-var require_dist_cjs59 = __commonJS({
+var require_dist_cjs58 = __commonJS({
   "../../node_modules/@aws-sdk/credential-provider-node/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __create2 = Object.create;
@@ -35397,16 +35459,16 @@ var require_dist_cjs59 = __commonJS({
       defaultProvider: () => defaultProvider
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_credential_provider_env = require_dist_cjs43();
+    var import_credential_provider_env = require_dist_cjs42();
     var import_shared_ini_file_loader = require_dist_cjs35();
     var import_property_provider = require_dist_cjs24();
     var ENV_IMDS_DISABLED = "AWS_EC2_METADATA_DISABLED";
     var remoteProvider = /* @__PURE__ */ __name(async (init) => {
       var _a, _b;
-      const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
+      const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await Promise.resolve().then(() => __toESM2(require_dist_cjs43()));
       if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
         (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node - remoteProvider::fromHttp/fromContainerMetadata");
-        const { fromHttp } = await Promise.resolve().then(() => __toESM2(require_dist_cjs45()));
+        const { fromHttp } = await Promise.resolve().then(() => __toESM2(require_dist_cjs44()));
         return (0, import_property_provider.chain)(fromHttp(init), fromContainerMetadata(init));
       }
       if (process.env[ENV_IMDS_DISABLED]) {
@@ -35436,25 +35498,25 @@ var require_dist_cjs59 = __commonJS({
               { logger: init.logger }
             );
           }
-          const { fromSSO } = await Promise.resolve().then(() => __toESM2(require_dist_cjs54()));
+          const { fromSSO } = await Promise.resolve().then(() => __toESM2(require_dist_cjs53()));
           return fromSSO(init)();
         },
         async () => {
           var _a;
           (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node - defaultProvider::fromIni");
-          const { fromIni } = await Promise.resolve().then(() => __toESM2(require_dist_cjs58()));
+          const { fromIni } = await Promise.resolve().then(() => __toESM2(require_dist_cjs57()));
           return fromIni(init)();
         },
         async () => {
           var _a;
           (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node - defaultProvider::fromProcess");
-          const { fromProcess } = await Promise.resolve().then(() => __toESM2(require_dist_cjs56()));
+          const { fromProcess } = await Promise.resolve().then(() => __toESM2(require_dist_cjs55()));
           return fromProcess(init)();
         },
         async () => {
           var _a;
           (_a = init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-node - defaultProvider::fromTokenFile");
-          const { fromTokenFile: fromTokenFile2 } = await Promise.resolve().then(() => __toESM2(require_dist_cjs57()));
+          const { fromTokenFile: fromTokenFile2 } = await Promise.resolve().then(() => __toESM2(require_dist_cjs56()));
           return fromTokenFile2(init)();
         },
         async () => {
@@ -35478,7 +35540,7 @@ var require_dist_cjs59 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/middleware-bucket-endpoint/dist-cjs/index.js
-var require_dist_cjs60 = __commonJS({
+var require_dist_cjs59 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-bucket-endpoint/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -35539,7 +35601,7 @@ var require_dist_cjs60 = __commonJS({
       default: false
     };
     var import_util_arn_parser = require_dist_cjs22();
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var DOMAIN_PATTERN = /^[a-z0-9][a-z0-9\.\-]{1,61}[a-z0-9]$/;
     var IP_ADDRESS_PATTERN = /(\d+\.){3}\d+/;
     var DOTS_PATTERN = /\.\./;
@@ -35844,7 +35906,7 @@ var require_dist_cjs60 = __commonJS({
       const { Bucket: bucketName } = args.input;
       let replaceBucketInPath = options.bucketEndpoint;
       const request = args.request;
-      if (import_protocol_http3.HttpRequest.isInstance(request)) {
+      if (import_protocol_http5.HttpRequest.isInstance(request)) {
         if (options.bucketEndpoint) {
           request.hostname = bucketName;
         } else if ((0, import_util_arn_parser.validate)(bucketName)) {
@@ -36334,7 +36396,7 @@ var require_whatwgEncodingApi = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/util-utf8-browser/dist-cjs/index.js
-var require_dist_cjs61 = __commonJS({
+var require_dist_cjs60 = __commonJS({
   "../../node_modules/@aws-sdk/util-utf8-browser/dist-cjs/index.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
@@ -36354,7 +36416,7 @@ var require_convertToBuffer = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.convertToBuffer = void 0;
-    var util_utf8_browser_1 = require_dist_cjs61();
+    var util_utf8_browser_1 = require_dist_cjs60();
     var fromUtf8 = typeof Buffer !== "undefined" && Buffer.from ? function(input) {
       return Buffer.from(input, "utf8");
     } : util_utf8_browser_1.fromUtf8;
@@ -36801,7 +36863,7 @@ var require_build2 = __commonJS({
 });
 
 // ../../node_modules/@smithy/eventstream-codec/dist-cjs/index.js
-var require_dist_cjs62 = __commonJS({
+var require_dist_cjs61 = __commonJS({
   "../../node_modules/@smithy/eventstream-codec/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -37259,7 +37321,7 @@ var require_dist_cjs62 = __commonJS({
 });
 
 // ../../node_modules/@smithy/eventstream-serde-universal/dist-cjs/index.js
-var require_dist_cjs63 = __commonJS({
+var require_dist_cjs62 = __commonJS({
   "../../node_modules/@smithy/eventstream-serde-universal/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -37285,7 +37347,7 @@ var require_dist_cjs63 = __commonJS({
       eventStreamSerdeProvider: () => eventStreamSerdeProvider
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_eventstream_codec = require_dist_cjs62();
+    var import_eventstream_codec = require_dist_cjs61();
     function getChunkedStream(source) {
       let currentMessageTotalLength = 0;
       let currentMessagePendingLength = 0;
@@ -37428,7 +37490,7 @@ var require_dist_cjs63 = __commonJS({
 });
 
 // ../../node_modules/@smithy/eventstream-serde-node/dist-cjs/index.js
-var require_dist_cjs64 = __commonJS({
+var require_dist_cjs63 = __commonJS({
   "../../node_modules/@smithy/eventstream-serde-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -37454,7 +37516,7 @@ var require_dist_cjs64 = __commonJS({
       eventStreamSerdeProvider: () => eventStreamSerdeProvider
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_eventstream_serde_universal = require_dist_cjs63();
+    var import_eventstream_serde_universal = require_dist_cjs62();
     var import_stream = require("stream");
     async function* readabletoIterable(readStream) {
       let streamEnded = false;
@@ -37505,7 +37567,7 @@ var require_dist_cjs64 = __commonJS({
 });
 
 // ../../node_modules/@smithy/hash-stream-node/dist-cjs/index.js
-var require_dist_cjs65 = __commonJS({
+var require_dist_cjs64 = __commonJS({
   "../../node_modules/@smithy/hash-stream-node/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -37594,7 +37656,7 @@ var require_dist_cjs65 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/signature-v4-multi-region/dist-cjs/index.js
-var require_dist_cjs66 = __commonJS({
+var require_dist_cjs65 = __commonJS({
   "../../node_modules/@aws-sdk/signature-v4-multi-region/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -37872,7 +37934,7 @@ var require_ruleset4 = __commonJS({
     var cb = [{ [ch]: x, [ci]: [aZ, false] }];
     var cc = [{ [ch]: x, [ci]: [aT, false] }];
     var cd = [{ [ch]: x, [ci]: [{ [cj]: "Region" }, true] }];
-    var _data = { version: "1.0", parameters: { Bucket: S, Region: S, UseFIPS: T, UseDualStack: T, Endpoint: S, ForcePathStyle: T, Accelerate: T, UseGlobalEndpoint: T, UseObjectLambdaEndpoint: U, Key: S, Prefix: S, DisableAccessPoints: U, DisableMultiRegionAccessPoints: T, UseArnRegion: U, UseS3ExpressControlEndpoint: U, DisableS3ExpressSessionAuth: U }, rules: [{ [cg]: [{ [ch]: c, [ci]: bw }], rules: [{ [cg]: [V, W], error: "Accelerate cannot be used with FIPS", [cf]: e }, { [cg]: [X, Y], error: "Cannot set dual-stack in combination with a custom endpoint.", [cf]: e }, { [cg]: [Y, W], error: "A custom endpoint cannot be combined with FIPS", [cf]: e }, { [cg]: [Y, V], error: "A custom endpoint cannot be combined with S3 Accelerate", [cf]: e }, { [cg]: [W, Z, aa], error: "Partition does not support FIPS", [cf]: e }, { [cg]: [ab, { [ch]: j, [ci]: [ac, 0, 6, b], [ck]: k }, { [ch]: g, [ci]: [{ [cj]: k }, "--x-s3"] }], rules: [{ [cg]: bz, error: "S3Express does not support Dual-stack.", [cf]: e }, { [cg]: bA, error: "S3Express does not support S3 Accelerate.", [cf]: e }, { [cg]: bB, rules: [{ [cg]: bC, rules: [{ [cg]: bD, rules: [{ [cg]: bE, rules: [{ endpoint: { [cl]: m, [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ endpoint: { [cl]: q, [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }, ak], [cf]: o }, { [cg]: bD, rules: [{ [cg]: bE, rules: [{ endpoint: { [cl]: m, [cm]: al, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ endpoint: { [cl]: q, [cm]: al, [cs]: ai }, [cf]: n }], [cf]: o }, ak], [cf]: o }, { [cg]: [am, an], rules: [{ [cg]: [ag, ao], rules: [{ [cg]: bG, endpoint: { [cl]: "https://s3express-control-fips.{Region}.amazonaws.com/{uri_encoded_bucket}", [cm]: ah, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3express-control.{Region}.amazonaws.com/{uri_encoded_bucket}", [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ [cg]: bC, rules: [{ [cg]: bH, rules: bI, [cf]: o }, { [cg]: bJ, rules: bI, [cf]: o }, ap], [cf]: o }, { [cg]: bH, rules: bK, [cf]: o }, { [cg]: bJ, rules: bK, [cf]: o }, ap], [cf]: o }, ak], [cf]: o }, { [cg]: [aq, am, an], rules: [{ [cg]: bB, endpoint: { [cl]: s, [cm]: ah, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://s3express-control-fips.{Region}.amazonaws.com", [cm]: ah, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3express-control.{Region}.amazonaws.com", [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }, { [cg]: [ab, { [ch]: j, [ci]: [ac, 49, 50, b], [ck]: t }, { [ch]: j, [ci]: [ac, 8, 12, b], [ck]: u }, { [ch]: j, [ci]: [ac, 0, 7, b], [ck]: v }, { [ch]: j, [ci]: [ac, 32, 49, b], [ck]: w }, { [ch]: f, [ci]: bw, [ck]: "regionPartition" }, { [ch]: g, [ci]: [{ [cj]: v }, "--op-s3"] }], rules: [{ [cg]: bM, rules: [{ [cg]: [{ [ch]: g, [ci]: [ar, "e"] }], rules: [{ [cg]: bN, rules: [as, { [cg]: bB, endpoint: { [cl]: "https://{Bucket}.ec2.{url#authority}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { endpoint: { [cl]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { [cg]: [{ [ch]: g, [ci]: [ar, "o"] }], rules: [{ [cg]: bN, rules: [as, { [cg]: bB, endpoint: { [cl]: "https://{Bucket}.op-{outpostId}.{url#authority}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { endpoint: { [cl]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { error: 'Unrecognized hardware type: "Expected hardware type o or e but got {hardwareType}"', [cf]: e }], [cf]: o }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [cf]: e }], [cf]: o }, { [cg]: bL, rules: [{ [cg]: [Y, { [ch]: r, [ci]: [{ [ch]: c, [ci]: [{ [ch]: l, [ci]: bx }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [cf]: e }, { [cg]: [au, aj], rules: [{ [cg]: bP, rules: [{ [cg]: bQ, rules: [{ [cg]: [V, aa], error: "S3 Accelerate cannot be used in this region", [cf]: e }, { [cg]: [X, W, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, W, aw, ao, az, aA], rules: [{ endpoint: aB, [cf]: n }], [cf]: o }, { [cg]: [X, W, aw, ao, az, aD], endpoint: aB, [cf]: n }, { [cg]: [aE, W, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, W, aw, ao, az, aA], rules: [{ endpoint: aF, [cf]: n }], [cf]: o }, { [cg]: [aE, W, aw, ao, az, aD], endpoint: aF, [cf]: n }, { [cg]: [X, aG, V, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, aG, V, ao, az, aA], rules: [{ endpoint: aH, [cf]: n }], [cf]: o }, { [cg]: [X, aG, V, ao, az, aD], endpoint: aH, [cf]: n }, { [cg]: [X, aG, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, aG, aw, ao, az, aA], rules: [{ endpoint: aI, [cf]: n }], [cf]: o }, { [cg]: [X, aG, aw, ao, az, aD], endpoint: aI, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, ae, ax], endpoint: { [cl]: B, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, aJ, ax], endpoint: { [cl]: q, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, ae, az, aA], rules: [{ [cg]: bR, endpoint: aK, [cf]: n }, { endpoint: aK, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, aw, Y, ad, aJ, az, aA], rules: [{ [cg]: bR, endpoint: aL, [cf]: n }, aM], [cf]: o }, { [cg]: [aE, aG, aw, Y, ad, ae, az, aD], endpoint: aK, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, aJ, az, aD], endpoint: aL, [cf]: n }, { [cg]: [aE, aG, V, ao, ax], endpoint: { [cl]: C, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, V, ao, az, aA], rules: [{ [cg]: bR, endpoint: aN, [cf]: n }, { endpoint: aN, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, V, ao, az, aD], endpoint: aN, [cf]: n }, { [cg]: [aE, aG, aw, ao, ax], endpoint: { [cl]: D, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, ao, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: D, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: aO, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, aw, ao, az, aD], endpoint: aO, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [Y, ad, { [ch]: g, [ci]: [{ [ch]: h, [ci]: [af, "scheme"] }, "http"] }, { [ch]: p, [ci]: [ac, b] }, au, aG, aE, aw], rules: [{ [cg]: bP, rules: [{ [cg]: bQ, rules: [aM], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [au, { [ch]: E, [ci]: by, [ck]: F }], rules: [{ [cg]: [{ [ch]: h, [ci]: [aQ, "resourceId[0]"], [ck]: G }, { [ch]: r, [ci]: [{ [ch]: g, [ci]: [aR, H] }] }], rules: [{ [cg]: [{ [ch]: g, [ci]: [aS, I] }], rules: [{ [cg]: bS, rules: [{ [cg]: bT, rules: [aU, aV, { [cg]: bV, rules: [aW, { [cg]: bW, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: bZ, rules: [{ [cg]: ca, rules: [{ [cg]: [{ [ch]: g, [ci]: [aZ, H] }], error: "Invalid ARN: Missing account id", [cf]: e }, { [cg]: cb, rules: [{ [cg]: cc, rules: [{ [cg]: bB, endpoint: { [cl]: L, [cm]: ba, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: ba, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: ba, [cs]: ai }, [cf]: n }], [cf]: o }, bb], [cf]: o }, bc], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, bf], [cf]: o }, { error: "Invalid ARN: bucket ARN is missing a region", [cf]: e }], [cf]: o }, bg], [cf]: o }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [cf]: e }], [cf]: o }, { [cg]: bS, rules: [{ [cg]: bT, rules: [{ [cg]: bV, rules: [{ [cg]: bS, rules: [{ [cg]: bV, rules: [aW, { [cg]: bW, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: [{ [ch]: g, [ci]: [aY, "{partitionResult#name}"] }], rules: [{ [cg]: ca, rules: [{ [cg]: [{ [ch]: g, [ci]: [aS, A] }], rules: [{ [cg]: cb, rules: [{ [cg]: cc, rules: [{ [cg]: bA, error: "Access Points do not support S3 Accelerate", [cf]: e }, { [cg]: [W, X], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [W, aE], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, X], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, Y, ad], endpoint: { [cl]: L, [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }], [cf]: o }, bb], [cf]: o }, bc], [cf]: o }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [cf]: e }], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, bf], [cf]: o }], [cf]: o }], [cf]: o }, { [cg]: [{ [ch]: x, [ci]: [aT, b] }], rules: [{ [cg]: bz, error: "S3 MRAP does not support dual-stack", [cf]: e }, { [cg]: bG, error: "S3 MRAP does not support FIPS", [cf]: e }, { [cg]: bA, error: "S3 MRAP does not support S3 Accelerate", [cf]: e }, { [cg]: [{ [ch]: d, [ci]: [{ [cj]: "DisableMultiRegionAccessPoints" }, b] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [cf]: e }, { [cg]: [{ [ch]: f, [ci]: bw, [ck]: M }], rules: [{ [cg]: [{ [ch]: g, [ci]: [{ [ch]: h, [ci]: [{ [cj]: M }, i] }, { [ch]: h, [ci]: [aQ, "partition"] }] }], rules: [{ endpoint: { [cl]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [cm]: { [co]: [{ [cp]: b, name: y, [cq]: A, [ct]: bO }] }, [cs]: ai }, [cf]: n }], [cf]: o }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [cf]: e }], [cf]: o }], [cf]: o }, { error: "Invalid Access Point Name", [cf]: e }], [cf]: o }, bg], [cf]: o }, { [cg]: [{ [ch]: g, [ci]: [aS, z] }], rules: [{ [cg]: bz, error: "S3 Outposts does not support Dual-stack", [cf]: e }, { [cg]: bG, error: "S3 Outposts does not support FIPS", [cf]: e }, { [cg]: bA, error: "S3 Outposts does not support S3 Accelerate", [cf]: e }, { [cg]: [{ [ch]: c, [ci]: [{ [ch]: h, [ci]: [aQ, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [cf]: e }, { [cg]: [{ [ch]: h, [ci]: bU, [ck]: w }], rules: [{ [cg]: bM, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: bZ, rules: [{ [cg]: ca, rules: [{ [cg]: cb, rules: [{ [cg]: [{ [ch]: h, [ci]: bX, [ck]: N }], rules: [{ [cg]: [{ [ch]: h, [ci]: [aQ, "resourceId[3]"], [ck]: K }], rules: [{ [cg]: [{ [ch]: g, [ci]: [{ [cj]: N }, J] }], rules: [{ [cg]: bB, endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [cm]: bi, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bi, [cs]: ai }, [cf]: n }], [cf]: o }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [cf]: e }], [cf]: o }, { error: "Invalid ARN: expected an access point name", [cf]: e }], [cf]: o }, { error: "Invalid ARN: Expected a 4-component resource", [cf]: e }], [cf]: o }, bc], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [cf]: e }], [cf]: o }, { error: "Invalid ARN: The Outpost Id was not set", [cf]: e }], [cf]: o }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [cf]: e }], [cf]: o }, { error: "Invalid ARN: No ARN type specified", [cf]: e }], [cf]: o }, { [cg]: [{ [ch]: j, [ci]: [ac, 0, 4, a], [ck]: O }, { [ch]: g, [ci]: [{ [cj]: O }, "arn:"] }, { [ch]: r, [ci]: [{ [ch]: c, [ci]: [bj] }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [cf]: e }, { [cg]: [{ [ch]: d, [ci]: [av, b] }, bj], error: "Path-style addressing cannot be used with ARN buckets", [cf]: e }, { [cg]: bE, rules: [{ [cg]: bP, rules: [{ [cg]: [aw], rules: [{ [cg]: [X, ao, W, ax], endpoint: { [cl]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, ao, W, az, aA], rules: [{ endpoint: bk, [cf]: n }], [cf]: o }, { [cg]: [X, ao, W, az, aD], endpoint: bk, [cf]: n }, { [cg]: [aE, ao, W, ax], endpoint: { [cl]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, ao, W, az, aA], rules: [{ endpoint: bl, [cf]: n }], [cf]: o }, { [cg]: [aE, ao, W, az, aD], endpoint: bl, [cf]: n }, { [cg]: [X, ao, aG, ax], endpoint: { [cl]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, ao, aG, az, aA], rules: [{ endpoint: bm, [cf]: n }], [cf]: o }, { [cg]: [X, ao, aG, az, aD], endpoint: bm, [cf]: n }, { [cg]: [aE, Y, ad, aG, ax], endpoint: { [cl]: P, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, Y, ad, aG, az, aA], rules: [{ [cg]: bR, endpoint: bn, [cf]: n }, { endpoint: bn, [cf]: n }], [cf]: o }, { [cg]: [aE, Y, ad, aG, az, aD], endpoint: bn, [cf]: n }, { [cg]: [aE, ao, aG, ax], endpoint: { [cl]: Q, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, ao, aG, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: Q, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: bo, [cf]: n }], [cf]: o }, { [cg]: [aE, ao, aG, az, aD], endpoint: bo, [cf]: n }], [cf]: o }, { error: "Path-style addressing cannot be used with S3 Accelerate", [cf]: e }], [cf]: o }], [cf]: o }], [cf]: o }, { [cg]: [{ [ch]: c, [ci]: [bp] }, { [ch]: d, [ci]: [bp, b] }], rules: [{ [cg]: bP, rules: [{ [cg]: cd, rules: [aU, aV, { [cg]: bB, endpoint: { [cl]: s, [cm]: bq, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [cm]: bq, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [cm]: bq, [cs]: ai }, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [aq], rules: [{ [cg]: bP, rules: [{ [cg]: cd, rules: [{ [cg]: [W, X, ao, ax], endpoint: { [cl]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [W, X, ao, az, aA], rules: [{ endpoint: br, [cf]: n }], [cf]: o }, { [cg]: [W, X, ao, az, aD], endpoint: br, [cf]: n }, { [cg]: [W, aE, ao, ax], endpoint: { [cl]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [W, aE, ao, az, aA], rules: [{ endpoint: bs, [cf]: n }], [cf]: o }, { [cg]: [W, aE, ao, az, aD], endpoint: bs, [cf]: n }, { [cg]: [aG, X, ao, ax], endpoint: { [cl]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, X, ao, az, aA], rules: [{ endpoint: bt, [cf]: n }], [cf]: o }, { [cg]: [aG, X, ao, az, aD], endpoint: bt, [cf]: n }, { [cg]: [aG, aE, Y, ad, ax], endpoint: { [cl]: s, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, Y, ad, az, aA], rules: [{ [cg]: bR, endpoint: bu, [cf]: n }, { endpoint: bu, [cf]: n }], [cf]: o }, { [cg]: [aG, aE, Y, ad, az, aD], endpoint: bu, [cf]: n }, { [cg]: [aG, aE, ao, ax], endpoint: { [cl]: R, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, ao, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: R, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: bv, [cf]: n }], [cf]: o }, { [cg]: [aG, aE, ao, az, aD], endpoint: bv, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }], [cf]: o }, { error: "A region must be set when sending requests to S3.", [cf]: e }] };
+    var _data = { version: "1.0", parameters: { Bucket: S, Region: S, UseFIPS: T, UseDualStack: T, Endpoint: S, ForcePathStyle: T, Accelerate: T, UseGlobalEndpoint: T, UseObjectLambdaEndpoint: U, Key: S, Prefix: S, CopySource: S, DisableAccessPoints: U, DisableMultiRegionAccessPoints: T, UseArnRegion: U, UseS3ExpressControlEndpoint: U, DisableS3ExpressSessionAuth: U }, rules: [{ [cg]: [{ [ch]: c, [ci]: bw }], rules: [{ [cg]: [V, W], error: "Accelerate cannot be used with FIPS", [cf]: e }, { [cg]: [X, Y], error: "Cannot set dual-stack in combination with a custom endpoint.", [cf]: e }, { [cg]: [Y, W], error: "A custom endpoint cannot be combined with FIPS", [cf]: e }, { [cg]: [Y, V], error: "A custom endpoint cannot be combined with S3 Accelerate", [cf]: e }, { [cg]: [W, Z, aa], error: "Partition does not support FIPS", [cf]: e }, { [cg]: [ab, { [ch]: j, [ci]: [ac, 0, 6, b], [ck]: k }, { [ch]: g, [ci]: [{ [cj]: k }, "--x-s3"] }], rules: [{ [cg]: bz, error: "S3Express does not support Dual-stack.", [cf]: e }, { [cg]: bA, error: "S3Express does not support S3 Accelerate.", [cf]: e }, { [cg]: bB, rules: [{ [cg]: bC, rules: [{ [cg]: bD, rules: [{ [cg]: bE, rules: [{ endpoint: { [cl]: m, [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ endpoint: { [cl]: q, [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }, ak], [cf]: o }, { [cg]: bD, rules: [{ [cg]: bE, rules: [{ endpoint: { [cl]: m, [cm]: al, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ endpoint: { [cl]: q, [cm]: al, [cs]: ai }, [cf]: n }], [cf]: o }, ak], [cf]: o }, { [cg]: [am, an], rules: [{ [cg]: [ag, ao], rules: [{ [cg]: bG, endpoint: { [cl]: "https://s3express-control-fips.{Region}.amazonaws.com/{uri_encoded_bucket}", [cm]: ah, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3express-control.{Region}.amazonaws.com/{uri_encoded_bucket}", [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ [cg]: bC, rules: [{ [cg]: bH, rules: bI, [cf]: o }, { [cg]: bJ, rules: bI, [cf]: o }, ap], [cf]: o }, { [cg]: bH, rules: bK, [cf]: o }, { [cg]: bJ, rules: bK, [cf]: o }, ap], [cf]: o }, ak], [cf]: o }, { [cg]: [aq, am, an], rules: [{ [cg]: bB, endpoint: { [cl]: s, [cm]: ah, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://s3express-control-fips.{Region}.amazonaws.com", [cm]: ah, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3express-control.{Region}.amazonaws.com", [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }, { [cg]: [ab, { [ch]: j, [ci]: [ac, 49, 50, b], [ck]: t }, { [ch]: j, [ci]: [ac, 8, 12, b], [ck]: u }, { [ch]: j, [ci]: [ac, 0, 7, b], [ck]: v }, { [ch]: j, [ci]: [ac, 32, 49, b], [ck]: w }, { [ch]: f, [ci]: bw, [ck]: "regionPartition" }, { [ch]: g, [ci]: [{ [cj]: v }, "--op-s3"] }], rules: [{ [cg]: bM, rules: [{ [cg]: [{ [ch]: g, [ci]: [ar, "e"] }], rules: [{ [cg]: bN, rules: [as, { [cg]: bB, endpoint: { [cl]: "https://{Bucket}.ec2.{url#authority}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { endpoint: { [cl]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { [cg]: [{ [ch]: g, [ci]: [ar, "o"] }], rules: [{ [cg]: bN, rules: [as, { [cg]: bB, endpoint: { [cl]: "https://{Bucket}.op-{outpostId}.{url#authority}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { endpoint: { [cl]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { error: 'Unrecognized hardware type: "Expected hardware type o or e but got {hardwareType}"', [cf]: e }], [cf]: o }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [cf]: e }], [cf]: o }, { [cg]: bL, rules: [{ [cg]: [Y, { [ch]: r, [ci]: [{ [ch]: c, [ci]: [{ [ch]: l, [ci]: bx }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [cf]: e }, { [cg]: [au, aj], rules: [{ [cg]: bP, rules: [{ [cg]: bQ, rules: [{ [cg]: [V, aa], error: "S3 Accelerate cannot be used in this region", [cf]: e }, { [cg]: [X, W, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, W, aw, ao, az, aA], rules: [{ endpoint: aB, [cf]: n }], [cf]: o }, { [cg]: [X, W, aw, ao, az, aD], endpoint: aB, [cf]: n }, { [cg]: [aE, W, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, W, aw, ao, az, aA], rules: [{ endpoint: aF, [cf]: n }], [cf]: o }, { [cg]: [aE, W, aw, ao, az, aD], endpoint: aF, [cf]: n }, { [cg]: [X, aG, V, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, aG, V, ao, az, aA], rules: [{ endpoint: aH, [cf]: n }], [cf]: o }, { [cg]: [X, aG, V, ao, az, aD], endpoint: aH, [cf]: n }, { [cg]: [X, aG, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, aG, aw, ao, az, aA], rules: [{ endpoint: aI, [cf]: n }], [cf]: o }, { [cg]: [X, aG, aw, ao, az, aD], endpoint: aI, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, ae, ax], endpoint: { [cl]: B, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, aJ, ax], endpoint: { [cl]: q, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, ae, az, aA], rules: [{ [cg]: bR, endpoint: aK, [cf]: n }, { endpoint: aK, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, aw, Y, ad, aJ, az, aA], rules: [{ [cg]: bR, endpoint: aL, [cf]: n }, aM], [cf]: o }, { [cg]: [aE, aG, aw, Y, ad, ae, az, aD], endpoint: aK, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, aJ, az, aD], endpoint: aL, [cf]: n }, { [cg]: [aE, aG, V, ao, ax], endpoint: { [cl]: C, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, V, ao, az, aA], rules: [{ [cg]: bR, endpoint: aN, [cf]: n }, { endpoint: aN, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, V, ao, az, aD], endpoint: aN, [cf]: n }, { [cg]: [aE, aG, aw, ao, ax], endpoint: { [cl]: D, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, ao, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: D, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: aO, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, aw, ao, az, aD], endpoint: aO, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [Y, ad, { [ch]: g, [ci]: [{ [ch]: h, [ci]: [af, "scheme"] }, "http"] }, { [ch]: p, [ci]: [ac, b] }, au, aG, aE, aw], rules: [{ [cg]: bP, rules: [{ [cg]: bQ, rules: [aM], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [au, { [ch]: E, [ci]: by, [ck]: F }], rules: [{ [cg]: [{ [ch]: h, [ci]: [aQ, "resourceId[0]"], [ck]: G }, { [ch]: r, [ci]: [{ [ch]: g, [ci]: [aR, H] }] }], rules: [{ [cg]: [{ [ch]: g, [ci]: [aS, I] }], rules: [{ [cg]: bS, rules: [{ [cg]: bT, rules: [aU, aV, { [cg]: bV, rules: [aW, { [cg]: bW, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: bZ, rules: [{ [cg]: ca, rules: [{ [cg]: [{ [ch]: g, [ci]: [aZ, H] }], error: "Invalid ARN: Missing account id", [cf]: e }, { [cg]: cb, rules: [{ [cg]: cc, rules: [{ [cg]: bB, endpoint: { [cl]: L, [cm]: ba, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: ba, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: ba, [cs]: ai }, [cf]: n }], [cf]: o }, bb], [cf]: o }, bc], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, bf], [cf]: o }, { error: "Invalid ARN: bucket ARN is missing a region", [cf]: e }], [cf]: o }, bg], [cf]: o }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [cf]: e }], [cf]: o }, { [cg]: bS, rules: [{ [cg]: bT, rules: [{ [cg]: bV, rules: [{ [cg]: bS, rules: [{ [cg]: bV, rules: [aW, { [cg]: bW, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: [{ [ch]: g, [ci]: [aY, "{partitionResult#name}"] }], rules: [{ [cg]: ca, rules: [{ [cg]: [{ [ch]: g, [ci]: [aS, A] }], rules: [{ [cg]: cb, rules: [{ [cg]: cc, rules: [{ [cg]: bA, error: "Access Points do not support S3 Accelerate", [cf]: e }, { [cg]: [W, X], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [W, aE], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, X], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, Y, ad], endpoint: { [cl]: L, [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }], [cf]: o }, bb], [cf]: o }, bc], [cf]: o }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [cf]: e }], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, bf], [cf]: o }], [cf]: o }], [cf]: o }, { [cg]: [{ [ch]: x, [ci]: [aT, b] }], rules: [{ [cg]: bz, error: "S3 MRAP does not support dual-stack", [cf]: e }, { [cg]: bG, error: "S3 MRAP does not support FIPS", [cf]: e }, { [cg]: bA, error: "S3 MRAP does not support S3 Accelerate", [cf]: e }, { [cg]: [{ [ch]: d, [ci]: [{ [cj]: "DisableMultiRegionAccessPoints" }, b] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [cf]: e }, { [cg]: [{ [ch]: f, [ci]: bw, [ck]: M }], rules: [{ [cg]: [{ [ch]: g, [ci]: [{ [ch]: h, [ci]: [{ [cj]: M }, i] }, { [ch]: h, [ci]: [aQ, "partition"] }] }], rules: [{ endpoint: { [cl]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [cm]: { [co]: [{ [cp]: b, name: y, [cq]: A, [ct]: bO }] }, [cs]: ai }, [cf]: n }], [cf]: o }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [cf]: e }], [cf]: o }], [cf]: o }, { error: "Invalid Access Point Name", [cf]: e }], [cf]: o }, bg], [cf]: o }, { [cg]: [{ [ch]: g, [ci]: [aS, z] }], rules: [{ [cg]: bz, error: "S3 Outposts does not support Dual-stack", [cf]: e }, { [cg]: bG, error: "S3 Outposts does not support FIPS", [cf]: e }, { [cg]: bA, error: "S3 Outposts does not support S3 Accelerate", [cf]: e }, { [cg]: [{ [ch]: c, [ci]: [{ [ch]: h, [ci]: [aQ, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [cf]: e }, { [cg]: [{ [ch]: h, [ci]: bU, [ck]: w }], rules: [{ [cg]: bM, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: bZ, rules: [{ [cg]: ca, rules: [{ [cg]: cb, rules: [{ [cg]: [{ [ch]: h, [ci]: bX, [ck]: N }], rules: [{ [cg]: [{ [ch]: h, [ci]: [aQ, "resourceId[3]"], [ck]: K }], rules: [{ [cg]: [{ [ch]: g, [ci]: [{ [cj]: N }, J] }], rules: [{ [cg]: bB, endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [cm]: bi, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bi, [cs]: ai }, [cf]: n }], [cf]: o }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [cf]: e }], [cf]: o }, { error: "Invalid ARN: expected an access point name", [cf]: e }], [cf]: o }, { error: "Invalid ARN: Expected a 4-component resource", [cf]: e }], [cf]: o }, bc], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [cf]: e }], [cf]: o }, { error: "Invalid ARN: The Outpost Id was not set", [cf]: e }], [cf]: o }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [cf]: e }], [cf]: o }, { error: "Invalid ARN: No ARN type specified", [cf]: e }], [cf]: o }, { [cg]: [{ [ch]: j, [ci]: [ac, 0, 4, a], [ck]: O }, { [ch]: g, [ci]: [{ [cj]: O }, "arn:"] }, { [ch]: r, [ci]: [{ [ch]: c, [ci]: [bj] }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [cf]: e }, { [cg]: [{ [ch]: d, [ci]: [av, b] }, bj], error: "Path-style addressing cannot be used with ARN buckets", [cf]: e }, { [cg]: bE, rules: [{ [cg]: bP, rules: [{ [cg]: [aw], rules: [{ [cg]: [X, ao, W, ax], endpoint: { [cl]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, ao, W, az, aA], rules: [{ endpoint: bk, [cf]: n }], [cf]: o }, { [cg]: [X, ao, W, az, aD], endpoint: bk, [cf]: n }, { [cg]: [aE, ao, W, ax], endpoint: { [cl]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, ao, W, az, aA], rules: [{ endpoint: bl, [cf]: n }], [cf]: o }, { [cg]: [aE, ao, W, az, aD], endpoint: bl, [cf]: n }, { [cg]: [X, ao, aG, ax], endpoint: { [cl]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, ao, aG, az, aA], rules: [{ endpoint: bm, [cf]: n }], [cf]: o }, { [cg]: [X, ao, aG, az, aD], endpoint: bm, [cf]: n }, { [cg]: [aE, Y, ad, aG, ax], endpoint: { [cl]: P, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, Y, ad, aG, az, aA], rules: [{ [cg]: bR, endpoint: bn, [cf]: n }, { endpoint: bn, [cf]: n }], [cf]: o }, { [cg]: [aE, Y, ad, aG, az, aD], endpoint: bn, [cf]: n }, { [cg]: [aE, ao, aG, ax], endpoint: { [cl]: Q, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, ao, aG, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: Q, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: bo, [cf]: n }], [cf]: o }, { [cg]: [aE, ao, aG, az, aD], endpoint: bo, [cf]: n }], [cf]: o }, { error: "Path-style addressing cannot be used with S3 Accelerate", [cf]: e }], [cf]: o }], [cf]: o }], [cf]: o }, { [cg]: [{ [ch]: c, [ci]: [bp] }, { [ch]: d, [ci]: [bp, b] }], rules: [{ [cg]: bP, rules: [{ [cg]: cd, rules: [aU, aV, { [cg]: bB, endpoint: { [cl]: s, [cm]: bq, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [cm]: bq, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [cm]: bq, [cs]: ai }, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [aq], rules: [{ [cg]: bP, rules: [{ [cg]: cd, rules: [{ [cg]: [W, X, ao, ax], endpoint: { [cl]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [W, X, ao, az, aA], rules: [{ endpoint: br, [cf]: n }], [cf]: o }, { [cg]: [W, X, ao, az, aD], endpoint: br, [cf]: n }, { [cg]: [W, aE, ao, ax], endpoint: { [cl]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [W, aE, ao, az, aA], rules: [{ endpoint: bs, [cf]: n }], [cf]: o }, { [cg]: [W, aE, ao, az, aD], endpoint: bs, [cf]: n }, { [cg]: [aG, X, ao, ax], endpoint: { [cl]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, X, ao, az, aA], rules: [{ endpoint: bt, [cf]: n }], [cf]: o }, { [cg]: [aG, X, ao, az, aD], endpoint: bt, [cf]: n }, { [cg]: [aG, aE, Y, ad, ax], endpoint: { [cl]: s, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, Y, ad, az, aA], rules: [{ [cg]: bR, endpoint: bu, [cf]: n }, { endpoint: bu, [cf]: n }], [cf]: o }, { [cg]: [aG, aE, Y, ad, az, aD], endpoint: bu, [cf]: n }, { [cg]: [aG, aE, ao, ax], endpoint: { [cl]: R, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, ao, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: R, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: bv, [cf]: n }], [cf]: o }, { [cg]: [aG, aE, ao, az, aD], endpoint: bv, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }], [cf]: o }, { error: "A region must be set when sending requests to S3.", [cf]: e }] };
     exports2.ruleSet = _data;
   }
 });
@@ -37903,7 +37965,7 @@ var require_runtimeConfig_shared4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.getRuntimeConfig = void 0;
-    var signature_v4_multi_region_1 = require_dist_cjs66();
+    var signature_v4_multi_region_1 = require_dist_cjs65();
     var smithy_client_1 = require_dist_cjs18();
     var url_parser_1 = require_dist_cjs38();
     var util_base64_1 = require_dist_cjs11();
@@ -37942,23 +38004,23 @@ var require_runtimeConfig4 = __commonJS({
     exports2.getRuntimeConfig = void 0;
     var tslib_1 = (init_tslib_es6(), __toCommonJS(tslib_es6_exports));
     var package_json_1 = tslib_1.__importDefault(require_package());
-    var core_1 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var credential_provider_node_1 = require_dist_cjs59();
-    var middleware_bucket_endpoint_1 = require_dist_cjs60();
+    var core_1 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var credential_provider_node_1 = require_dist_cjs58();
+    var middleware_bucket_endpoint_1 = require_dist_cjs59();
     var middleware_sdk_s3_1 = require_dist_cjs23();
-    var util_user_agent_node_1 = require_dist_cjs46();
+    var util_user_agent_node_1 = require_dist_cjs45();
     var config_resolver_1 = require_dist_cjs29();
-    var eventstream_serde_node_1 = require_dist_cjs64();
-    var hash_node_1 = require_dist_cjs47();
-    var hash_stream_node_1 = require_dist_cjs65();
+    var eventstream_serde_node_1 = require_dist_cjs63();
+    var hash_node_1 = require_dist_cjs46();
+    var hash_stream_node_1 = require_dist_cjs64();
     var middleware_retry_1 = require_dist_cjs34();
     var node_config_provider_1 = require_dist_cjs36();
     var node_http_handler_1 = require_dist_cjs14();
-    var util_body_length_node_1 = require_dist_cjs48();
+    var util_body_length_node_1 = require_dist_cjs47();
     var util_retry_1 = require_dist_cjs33();
     var runtimeConfig_shared_1 = require_runtimeConfig_shared4();
     var smithy_client_1 = require_dist_cjs18();
-    var util_defaults_mode_node_1 = require_dist_cjs49();
+    var util_defaults_mode_node_1 = require_dist_cjs48();
     var smithy_client_2 = require_dist_cjs18();
     var getRuntimeConfig = (config) => {
       (0, smithy_client_2.emitWarningIfUnsupportedVersion)(process.version);
@@ -37998,7 +38060,7 @@ var require_runtimeConfig4 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/middleware-ssec/dist-cjs/index.js
-var require_dist_cjs67 = __commonJS({
+var require_dist_cjs66 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-ssec/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -38094,7 +38156,7 @@ var require_dist_cjs67 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/middleware-location-constraint/dist-cjs/index.js
-var require_dist_cjs68 = __commonJS({
+var require_dist_cjs67 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-location-constraint/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -38844,7 +38906,7 @@ var require_create_read_stream_on_buffer = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-cjs/index.js
-var require_dist_cjs69 = __commonJS({
+var require_dist_cjs68 = __commonJS({
   "../../node_modules/@aws-sdk/middleware-flexible-checksums/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -38891,7 +38953,7 @@ var require_dist_cjs69 = __commonJS({
     })(ChecksumLocation || {});
     var DEFAULT_CHECKSUM_ALGORITHM = "MD5";
     var S3_EXPRESS_DEFAULT_CHECKSUM_ALGORITHM = "CRC32";
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_protocol_http5 = require_dist_cjs2();
     var CLIENT_SUPPORTED_ALGORITHMS = [
       "CRC32",
       "CRC32C",
@@ -38968,7 +39030,7 @@ var require_dist_cjs69 = __commonJS({
       override: true
     };
     var flexibleChecksumsMiddleware = /* @__PURE__ */ __name((config, middlewareConfig) => (next, context) => async (args) => {
-      if (!import_protocol_http3.HttpRequest.isInstance(args.request)) {
+      if (!import_protocol_http5.HttpRequest.isInstance(args.request)) {
         return next(args);
       }
       const { request } = args;
@@ -39079,7 +39141,7 @@ var require_dist_cjs69 = __commonJS({
       override: true
     };
     var flexibleChecksumsResponseMiddleware = /* @__PURE__ */ __name((config, middlewareConfig) => (next, context) => async (args) => {
-      if (!import_protocol_http3.HttpRequest.isInstance(args.request)) {
+      if (!import_protocol_http5.HttpRequest.isInstance(args.request)) {
         return next(args);
       }
       const input = args.input;
@@ -39125,7 +39187,7 @@ var require_dist_cjs69 = __commonJS({
 });
 
 // ../../node_modules/@smithy/util-waiter/dist-cjs/index.js
-var require_dist_cjs70 = __commonJS({
+var require_dist_cjs69 = __commonJS({
   "../../node_modules/@smithy/util-waiter/dist-cjs/index.js"(exports2, module2) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -39274,7 +39336,7 @@ var require_dist_cjs70 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/client-s3/dist-cjs/index.js
-var require_dist_cjs71 = __commonJS({
+var require_dist_cjs70 = __commonJS({
   "../../node_modules/@aws-sdk/client-s3/dist-cjs/index.js"(exports2, module2) {
     "use strict";
     var __defProp2 = Object.defineProperty;
@@ -39516,7 +39578,7 @@ var require_dist_cjs71 = __commonJS({
       UploadPartRequestFilterSensitiveLog: () => UploadPartRequestFilterSensitiveLog,
       WriteGetObjectResponseCommand: () => WriteGetObjectResponseCommand,
       WriteGetObjectResponseRequestFilterSensitiveLog: () => WriteGetObjectResponseRequestFilterSensitiveLog,
-      __Client: () => import_smithy_client4.Client,
+      __Client: () => import_smithy_client5.Client,
       paginateListDirectoryBuckets: () => paginateListDirectoryBuckets,
       paginateListObjectsV2: () => paginateListObjectsV2,
       paginateListParts: () => paginateListParts,
@@ -39540,10 +39602,9 @@ var require_dist_cjs71 = __commonJS({
     var import_config_resolver = require_dist_cjs29();
     var import_eventstream_serde_config_resolver = require_dist_cjs30();
     var import_middleware_content_length = require_dist_cjs31();
-    var import_middleware_retry = require_dist_cjs34();
-    var import_middleware_endpoint = require_dist_cjs40();
-    var import_middleware_serde = require_dist_cjs39();
-    var import_types = require_dist_cjs();
+    var import_middleware_retry2 = require_dist_cjs34();
+    var import_middleware_endpoint2 = require_dist_cjs40();
+    var import_middleware_serde2 = require_dist_cjs39();
     var resolveClientEndpointParameters = /* @__PURE__ */ __name((options) => {
       return {
         ...options,
@@ -39568,8 +39629,8 @@ var require_dist_cjs71 = __commonJS({
       Region: { type: "builtInParams", name: "region" },
       UseDualStack: { type: "builtInParams", name: "useDualstackEndpoint" }
     };
-    var import_smithy_client4 = require_dist_cjs18();
-    var _S3ServiceException = class _S3ServiceException2 extends import_smithy_client4.ServiceException {
+    var import_smithy_client5 = require_dist_cjs18();
+    var _S3ServiceException = class _S3ServiceException2 extends import_smithy_client5.ServiceException {
       /**
        * @internal
        */
@@ -40094,39 +40155,39 @@ var require_dist_cjs71 = __commonJS({
     };
     var CompleteMultipartUploadOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "CompleteMultipartUploadOutputFilterSensitiveLog");
     var CompleteMultipartUploadRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "CompleteMultipartUploadRequestFilterSensitiveLog");
     var CopyObjectOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client5.SENSITIVE_STRING }
     }), "CopyObjectOutputFilterSensitiveLog");
     var CopyObjectRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.CopySourceSSECustomerKey && { CopySourceSSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.CopySourceSSECustomerKey && { CopySourceSSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "CopyObjectRequestFilterSensitiveLog");
     var CreateMultipartUploadOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client5.SENSITIVE_STRING }
     }), "CreateMultipartUploadOutputFilterSensitiveLog");
     var CreateMultipartUploadRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client5.SENSITIVE_STRING }
     }), "CreateMultipartUploadRequestFilterSensitiveLog");
     var SessionCredentialsFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SecretAccessKey && { SecretAccessKey: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SessionToken && { SessionToken: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SecretAccessKey && { SecretAccessKey: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SessionToken && { SessionToken: import_smithy_client5.SENSITIVE_STRING }
     }), "SessionCredentialsFilterSensitiveLog");
     var CreateSessionOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -40134,7 +40195,7 @@ var require_dist_cjs71 = __commonJS({
     }), "CreateSessionOutputFilterSensitiveLog");
     var ServerSideEncryptionByDefaultFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.KMSMasterKeyID && { KMSMasterKeyID: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.KMSMasterKeyID && { KMSMasterKeyID: import_smithy_client5.SENSITIVE_STRING }
     }), "ServerSideEncryptionByDefaultFilterSensitiveLog");
     var ServerSideEncryptionRuleFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -40158,7 +40219,7 @@ var require_dist_cjs71 = __commonJS({
     }), "GetBucketEncryptionOutputFilterSensitiveLog");
     var SSEKMSFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.KeyId && { KeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.KeyId && { KeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "SSEKMSFilterSensitiveLog");
     var InventoryEncryptionFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -40186,26 +40247,26 @@ var require_dist_cjs71 = __commonJS({
     }), "GetBucketInventoryConfigurationOutputFilterSensitiveLog");
     var GetObjectOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "GetObjectOutputFilterSensitiveLog");
     var GetObjectRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "GetObjectRequestFilterSensitiveLog");
     var GetObjectAttributesRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "GetObjectAttributesRequestFilterSensitiveLog");
     var GetObjectTorrentOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj
     }), "GetObjectTorrentOutputFilterSensitiveLog");
     var HeadObjectOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "HeadObjectOutputFilterSensitiveLog");
     var HeadObjectRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "HeadObjectRequestFilterSensitiveLog");
     var ListBucketInventoryConfigurationsOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -40217,7 +40278,7 @@ var require_dist_cjs71 = __commonJS({
     }), "ListBucketInventoryConfigurationsOutputFilterSensitiveLog");
     var ListPartsRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "ListPartsRequestFilterSensitiveLog");
     var PutBucketEncryptionRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -40233,10 +40294,10 @@ var require_dist_cjs71 = __commonJS({
         InventoryConfiguration: InventoryConfigurationFilterSensitiveLog(obj.InventoryConfiguration)
       }
     }), "PutBucketInventoryConfigurationRequestFilterSensitiveLog");
-    var import_core2 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var import_xml_builder = require_dist_cjs42();
-    var import_core22 = require_dist_cjs41();
-    var import_protocol_http3 = require_dist_cjs2();
+    var import_core2 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
+    var import_xml_builder = require_dist_cjs41();
+    var import_core22 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var import_protocol_http5 = require_dist_cjs2();
     var MFADelete = {
       Disabled: "Disabled",
       Enabled: "Enabled"
@@ -40305,18 +40366,18 @@ var require_dist_cjs71 = __commonJS({
     })(SelectObjectContentEventStream || (SelectObjectContentEventStream = {}));
     var PutObjectOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client5.SENSITIVE_STRING }
     }), "PutObjectOutputFilterSensitiveLog");
     var PutObjectRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.SSEKMSEncryptionContext && { SSEKMSEncryptionContext: import_smithy_client5.SENSITIVE_STRING }
     }), "PutObjectRequestFilterSensitiveLog");
     var EncryptionFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.KMSKeyId && { KMSKeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.KMSKeyId && { KMSKeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "EncryptionFilterSensitiveLog");
     var S3LocationFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
@@ -40354,41 +40415,41 @@ var require_dist_cjs71 = __commonJS({
     }), "SelectObjectContentOutputFilterSensitiveLog");
     var SelectObjectContentRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "SelectObjectContentRequestFilterSensitiveLog");
     var UploadPartOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "UploadPartOutputFilterSensitiveLog");
     var UploadPartRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "UploadPartRequestFilterSensitiveLog");
     var UploadPartCopyOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "UploadPartCopyOutputFilterSensitiveLog");
     var UploadPartCopyRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING },
-      ...obj.CopySourceSSECustomerKey && { CopySourceSSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client5.SENSITIVE_STRING },
+      ...obj.CopySourceSSECustomerKey && { CopySourceSSECustomerKey: import_smithy_client5.SENSITIVE_STRING }
     }), "UploadPartCopyRequestFilterSensitiveLog");
     var WriteGetObjectResponseRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
-      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING }
+      ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client5.SENSITIVE_STRING }
     }), "WriteGetObjectResponseRequestFilterSensitiveLog");
     var se_AbortMultipartUploadCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "AbortMultipartUpload"],
-        [_uI]: [, (0, import_smithy_client4.expectNonNull)(input[_UI], `UploadId`)]
+        [_uI]: [, (0, import_smithy_client5.expectNonNull)(input[_UI], `UploadId`)]
       });
       let body;
       b.m("DELETE").h(headers).q(query).b(body);
@@ -40396,7 +40457,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_AbortMultipartUploadCommand");
     var se_CompleteMultipartUploadCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xacc]: input[_CCRC],
         [_xacc_]: input[_CCRCC],
@@ -40411,8 +40472,8 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
-        [_uI]: [, (0, import_smithy_client4.expectNonNull)(input[_UI], `UploadId`)]
+      const query = (0, import_smithy_client5.map)({
+        [_uI]: [, (0, import_smithy_client5.expectNonNull)(input[_UI], `UploadId`)]
       });
       let body;
       let contents;
@@ -40428,7 +40489,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CompleteMultipartUploadCommand");
     var se_CopyObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaa]: input[_ACL],
         [_cc]: input[_CC],
         [_xaca]: input[_CA],
@@ -40438,10 +40499,10 @@ var require_dist_cjs71 = __commonJS({
         [_ct]: input[_CT],
         [_xacs__]: input[_CS],
         [_xacsim]: input[_CSIM],
-        [_xacsims]: [() => isSerializableHeaderValue(input[_CSIMS]), () => (0, import_smithy_client4.dateToUtcString)(input[_CSIMS]).toString()],
+        [_xacsims]: [() => isSerializableHeaderValue(input[_CSIMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIMS]).toString()],
         [_xacsinm]: input[_CSINM],
-        [_xacsius]: [() => isSerializableHeaderValue(input[_CSIUS]), () => (0, import_smithy_client4.dateToUtcString)(input[_CSIUS]).toString()],
-        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client4.dateToUtcString)(input[_E]).toString()],
+        [_xacsius]: [() => isSerializableHeaderValue(input[_CSIUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIUS]).toString()],
+        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_xagfc]: input[_GFC],
         [_xagr]: input[_GR],
         [_xagra]: input[_GRACP],
@@ -40463,7 +40524,7 @@ var require_dist_cjs71 = __commonJS({
         [_xarp]: input[_RP],
         [_xat]: input[_T],
         [_xaolm]: input[_OLM],
-        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client4.serializeDateTime)(input[_OLRUD]).toString()],
+        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
         [_xaollh]: input[_OLLHS],
         [_xaebo]: input[_EBO],
         [_xasebo]: input[_ESBO],
@@ -40475,7 +40536,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "CopyObject"]
       });
       let body;
@@ -40484,7 +40545,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CopyObjectCommand");
     var se_CreateBucketCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaa]: input[_ACL],
         [_xagfc]: input[_GFC],
@@ -40510,14 +40571,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CreateBucketCommand");
     var se_CreateMultipartUploadCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaa]: input[_ACL],
         [_cc]: input[_CC],
         [_cd]: input[_CD],
         [_ce]: input[_CE],
         [_cl]: input[_CL],
         [_ct]: input[_CT],
-        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client4.dateToUtcString)(input[_E]).toString()],
+        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_xagfc]: input[_GFC],
         [_xagr]: input[_GR],
         [_xagra]: input[_GRACP],
@@ -40534,7 +40595,7 @@ var require_dist_cjs71 = __commonJS({
         [_xarp]: input[_RP],
         [_xat]: input[_T],
         [_xaolm]: input[_OLM],
-        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client4.serializeDateTime)(input[_OLRUD]).toString()],
+        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
         [_xaollh]: input[_OLLHS],
         [_xaebo]: input[_EBO],
         [_xaca]: input[_CA],
@@ -40546,7 +40607,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_u]: [, ""]
       });
       let body;
@@ -40555,12 +40616,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CreateMultipartUploadCommand");
     var se_CreateSessionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xacsm]: input[_SM]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_s]: [, ""]
       });
       let body;
@@ -40569,7 +40630,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CreateSessionCommand");
     var se_DeleteBucketCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40580,14 +40641,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketCommand");
     var se_DeleteBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_a]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("DELETE").h(headers).q(query).b(body);
@@ -40595,12 +40656,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketAnalyticsConfigurationCommand");
     var se_DeleteBucketCorsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_c]: [, ""]
       });
       let body;
@@ -40609,12 +40670,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketCorsCommand");
     var se_DeleteBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_en]: [, ""]
       });
       let body;
@@ -40626,9 +40687,9 @@ var require_dist_cjs71 = __commonJS({
       const headers = {};
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_it]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("DELETE").h(headers).q(query).b(body);
@@ -40636,14 +40697,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketIntelligentTieringConfigurationCommand");
     var se_DeleteBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_in]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("DELETE").h(headers).q(query).b(body);
@@ -40651,12 +40712,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketInventoryConfigurationCommand");
     var se_DeleteBucketLifecycleCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_l]: [, ""]
       });
       let body;
@@ -40665,14 +40726,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketLifecycleCommand");
     var se_DeleteBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_m]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("DELETE").h(headers).q(query).b(body);
@@ -40680,12 +40741,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketMetricsConfigurationCommand");
     var se_DeleteBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_oC]: [, ""]
       });
       let body;
@@ -40694,12 +40755,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketOwnershipControlsCommand");
     var se_DeleteBucketPolicyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_p]: [, ""]
       });
       let body;
@@ -40708,12 +40769,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketPolicyCommand");
     var se_DeleteBucketReplicationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_r]: [, ""]
       });
       let body;
@@ -40722,12 +40783,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketReplicationCommand");
     var se_DeleteBucketTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_t]: [, ""]
       });
       let body;
@@ -40736,12 +40797,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketTaggingCommand");
     var se_DeleteBucketWebsiteCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_w]: [, ""]
       });
       let body;
@@ -40750,7 +40811,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketWebsiteCommand");
     var se_DeleteObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xam]: input[_MFA],
         [_xarp]: input[_RP],
         [_xabgr]: [() => isSerializableHeaderValue(input[_BGR]), () => input[_BGR].toString()],
@@ -40759,7 +40820,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "DeleteObject"],
         [_vI]: [, input[_VI]]
       });
@@ -40769,7 +40830,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteObjectCommand");
     var se_DeleteObjectsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xam]: input[_MFA],
         [_xarp]: input[_RP],
@@ -40779,7 +40840,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_d]: [, ""]
       });
       let body;
@@ -40795,13 +40856,13 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteObjectsCommand");
     var se_DeleteObjectTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_t]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -40811,12 +40872,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteObjectTaggingCommand");
     var se_DeletePublicAccessBlockCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_pAB]: [, ""]
       });
       let body;
@@ -40825,13 +40886,13 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeletePublicAccessBlockCommand");
     var se_GetBucketAccelerateConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ac]: [, ""]
       });
       let body;
@@ -40840,12 +40901,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketAccelerateConfigurationCommand");
     var se_GetBucketAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_acl]: [, ""]
       });
       let body;
@@ -40854,15 +40915,15 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketAclCommand");
     var se_GetBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_a]: [, ""],
         [_xi]: [, "GetBucketAnalyticsConfiguration"],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -40870,12 +40931,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketAnalyticsConfigurationCommand");
     var se_GetBucketCorsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_c]: [, ""]
       });
       let body;
@@ -40884,12 +40945,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketCorsCommand");
     var se_GetBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_en]: [, ""]
       });
       let body;
@@ -40901,10 +40962,10 @@ var require_dist_cjs71 = __commonJS({
       const headers = {};
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_it]: [, ""],
         [_xi]: [, "GetBucketIntelligentTieringConfiguration"],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -40912,15 +40973,15 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketIntelligentTieringConfigurationCommand");
     var se_GetBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_in]: [, ""],
         [_xi]: [, "GetBucketInventoryConfiguration"],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -40928,12 +40989,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketInventoryConfigurationCommand");
     var se_GetBucketLifecycleConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_l]: [, ""]
       });
       let body;
@@ -40942,12 +41003,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketLifecycleConfigurationCommand");
     var se_GetBucketLocationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_lo]: [, ""]
       });
       let body;
@@ -40956,12 +41017,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketLocationCommand");
     var se_GetBucketLoggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_log]: [, ""]
       });
       let body;
@@ -40970,15 +41031,15 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketLoggingCommand");
     var se_GetBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_m]: [, ""],
         [_xi]: [, "GetBucketMetricsConfiguration"],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -40986,12 +41047,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketMetricsConfigurationCommand");
     var se_GetBucketNotificationConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_n]: [, ""]
       });
       let body;
@@ -41000,12 +41061,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketNotificationConfigurationCommand");
     var se_GetBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_oC]: [, ""]
       });
       let body;
@@ -41014,12 +41075,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketOwnershipControlsCommand");
     var se_GetBucketPolicyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_p]: [, ""]
       });
       let body;
@@ -41028,12 +41089,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketPolicyCommand");
     var se_GetBucketPolicyStatusCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_pS]: [, ""]
       });
       let body;
@@ -41042,12 +41103,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketPolicyStatusCommand");
     var se_GetBucketReplicationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_r]: [, ""]
       });
       let body;
@@ -41056,12 +41117,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketReplicationCommand");
     var se_GetBucketRequestPaymentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_rP]: [, ""]
       });
       let body;
@@ -41070,12 +41131,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketRequestPaymentCommand");
     var se_GetBucketTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_t]: [, ""]
       });
       let body;
@@ -41084,12 +41145,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketTaggingCommand");
     var se_GetBucketVersioningCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_v]: [, ""]
       });
       let body;
@@ -41098,12 +41159,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketVersioningCommand");
     var se_GetBucketWebsiteCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_w]: [, ""]
       });
       let body;
@@ -41112,11 +41173,11 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketWebsiteCommand");
     var se_GetObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_im]: input[_IM],
-        [_ims]: [() => isSerializableHeaderValue(input[_IMS]), () => (0, import_smithy_client4.dateToUtcString)(input[_IMS]).toString()],
+        [_ims]: [() => isSerializableHeaderValue(input[_IMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IMS]).toString()],
         [_inm]: input[_INM],
-        [_ius]: [() => isSerializableHeaderValue(input[_IUS]), () => (0, import_smithy_client4.dateToUtcString)(input[_IUS]).toString()],
+        [_ius]: [() => isSerializableHeaderValue(input[_IUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IUS]).toString()],
         [_ra]: input[_R],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -41128,14 +41189,14 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "GetObject"],
         [_rcc]: [, input[_RCC]],
         [_rcd]: [, input[_RCD]],
         [_rce]: [, input[_RCE]],
         [_rcl]: [, input[_RCL]],
         [_rct]: [, input[_RCT]],
-        [_re]: [() => input.ResponseExpires !== void 0, () => (0, import_smithy_client4.dateToUtcString)(input[_RE]).toString()],
+        [_re]: [() => input.ResponseExpires !== void 0, () => (0, import_smithy_client5.dateToUtcString)(input[_RE]).toString()],
         [_vI]: [, input[_VI]],
         [_pN]: [() => input.PartNumber !== void 0, () => input[_PN].toString()]
       });
@@ -41145,14 +41206,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectCommand");
     var se_GetObjectAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_acl]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -41162,7 +41223,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectAclCommand");
     var se_GetObjectAttributesCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xamp]: [() => isSerializableHeaderValue(input[_MP]), () => input[_MP].toString()],
         [_xapnm]: input[_PNM],
         [_xasseca]: input[_SSECA],
@@ -41178,7 +41239,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_at]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -41188,14 +41249,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectAttributesCommand");
     var se_GetObjectLegalHoldCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_lh]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -41205,12 +41266,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectLegalHoldCommand");
     var se_GetObjectLockConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ol]: [, ""]
       });
       let body;
@@ -41219,14 +41280,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectLockConfigurationCommand");
     var se_GetObjectRetentionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ret]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -41236,14 +41297,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectRetentionCommand");
     var se_GetObjectTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_t]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -41253,14 +41314,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectTaggingCommand");
     var se_GetObjectTorrentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_to]: [, ""]
       });
       let body;
@@ -41269,12 +41330,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectTorrentCommand");
     var se_GetPublicAccessBlockCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_pAB]: [, ""]
       });
       let body;
@@ -41283,7 +41344,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetPublicAccessBlockCommand");
     var se_HeadBucketCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41294,11 +41355,11 @@ var require_dist_cjs71 = __commonJS({
     }, "se_HeadBucketCommand");
     var se_HeadObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_im]: input[_IM],
-        [_ims]: [() => isSerializableHeaderValue(input[_IMS]), () => (0, import_smithy_client4.dateToUtcString)(input[_IMS]).toString()],
+        [_ims]: [() => isSerializableHeaderValue(input[_IMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IMS]).toString()],
         [_inm]: input[_INM],
-        [_ius]: [() => isSerializableHeaderValue(input[_IUS]), () => (0, import_smithy_client4.dateToUtcString)(input[_IUS]).toString()],
+        [_ius]: [() => isSerializableHeaderValue(input[_IUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IUS]).toString()],
         [_ra]: input[_R],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -41310,7 +41371,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_vI]: [, input[_VI]],
         [_pN]: [() => input.PartNumber !== void 0, () => input[_PN].toString()]
       });
@@ -41320,12 +41381,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_HeadObjectCommand");
     var se_ListBucketAnalyticsConfigurationsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_a]: [, ""],
         [_xi]: [, "ListBucketAnalyticsConfigurations"],
         [_ct_]: [, input[_CTo]]
@@ -41339,7 +41400,7 @@ var require_dist_cjs71 = __commonJS({
       const headers = {};
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_it]: [, ""],
         [_xi]: [, "ListBucketIntelligentTieringConfigurations"],
         [_ct_]: [, input[_CTo]]
@@ -41350,12 +41411,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListBucketIntelligentTieringConfigurationsCommand");
     var se_ListBucketInventoryConfigurationsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_in]: [, ""],
         [_xi]: [, "ListBucketInventoryConfigurations"],
         [_ct_]: [, input[_CTo]]
@@ -41366,12 +41427,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListBucketInventoryConfigurationsCommand");
     var se_ListBucketMetricsConfigurationsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_m]: [, ""],
         [_xi]: [, "ListBucketMetricsConfigurations"],
         [_ct_]: [, input[_CTo]]
@@ -41386,7 +41447,7 @@ var require_dist_cjs71 = __commonJS({
         "content-type": "application/xml"
       };
       b.bp("/");
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "ListBuckets"]
       });
       let body;
@@ -41398,7 +41459,7 @@ var require_dist_cjs71 = __commonJS({
       const b = (0, import_core22.requestBuilder)(input, context);
       const headers = {};
       b.bp("/");
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "ListDirectoryBuckets"],
         [_ct_]: [, input[_CTo]],
         [_mdb]: [() => input.MaxDirectoryBuckets !== void 0, () => input[_MDB].toString()]
@@ -41409,13 +41470,13 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListDirectoryBucketsCommand");
     var se_ListMultipartUploadsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_u]: [, ""],
         [_de]: [, input[_D]],
         [_et]: [, input[_ET]],
@@ -41430,7 +41491,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListMultipartUploadsCommand");
     var se_ListObjectsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
         [_xaooa]: [
@@ -41440,7 +41501,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_de]: [, input[_D]],
         [_et]: [, input[_ET]],
         [_ma]: [, input[_M]],
@@ -41453,7 +41514,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListObjectsCommand");
     var se_ListObjectsV2Command = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
         [_xaooa]: [
@@ -41463,7 +41524,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_lt]: [, "2"],
         [_de]: [, input[_D]],
         [_et]: [, input[_ET]],
@@ -41479,7 +41540,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListObjectsV2Command");
     var se_ListObjectVersionsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP],
         [_xaooa]: [
@@ -41489,7 +41550,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ver]: [, ""],
         [_de]: [, input[_D]],
         [_et]: [, input[_ET]],
@@ -41504,7 +41565,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListObjectVersionsCommand");
     var se_ListPartsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
         [_xasseca]: input[_SSECA],
@@ -41514,11 +41575,11 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "ListParts"],
         [_mp]: [() => input.MaxParts !== void 0, () => input[_MP].toString()],
         [_pnm]: [, input[_PNM]],
-        [_uI]: [, (0, import_smithy_client4.expectNonNull)(input[_UI], `UploadId`)]
+        [_uI]: [, (0, import_smithy_client5.expectNonNull)(input[_UI], `UploadId`)]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -41526,14 +41587,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListPartsCommand");
     var se_PutBucketAccelerateConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO],
         [_xasca]: input[_CA]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ac]: [, ""]
       });
       let body;
@@ -41549,7 +41610,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketAccelerateConfigurationCommand");
     var se_PutBucketAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaa]: input[_ACL],
         [_cm]: input[_CMD],
@@ -41563,7 +41624,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_acl]: [, ""]
       });
       let body;
@@ -41579,15 +41640,15 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketAclCommand");
     var se_PutBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_a]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       let contents;
@@ -41602,7 +41663,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketAnalyticsConfigurationCommand");
     var se_PutBucketCorsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41610,7 +41671,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_c]: [, ""]
       });
       let body;
@@ -41626,7 +41687,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketCorsCommand");
     var se_PutBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41634,7 +41695,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_en]: [, ""]
       });
       let body;
@@ -41655,9 +41716,9 @@ var require_dist_cjs71 = __commonJS({
       };
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_it]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       let contents;
@@ -41672,15 +41733,15 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketIntelligentTieringConfigurationCommand");
     var se_PutBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_in]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       let contents;
@@ -41695,14 +41756,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketInventoryConfigurationCommand");
     var se_PutBucketLifecycleConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xasca]: input[_CA],
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_l]: [, ""]
       });
       let body;
@@ -41719,7 +41780,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketLifecycleConfigurationCommand");
     var se_PutBucketLoggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41727,7 +41788,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_log]: [, ""]
       });
       let body;
@@ -41743,15 +41804,15 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketLoggingCommand");
     var se_PutBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_m]: [, ""],
-        [_i]: [, (0, import_smithy_client4.expectNonNull)(input[_I], `Id`)]
+        [_i]: [, (0, import_smithy_client5.expectNonNull)(input[_I], `Id`)]
       });
       let body;
       let contents;
@@ -41766,14 +41827,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketMetricsConfigurationCommand");
     var se_PutBucketNotificationConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO],
         [_xasdv]: [() => isSerializableHeaderValue(input[_SDV]), () => input[_SDV].toString()]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_n]: [, ""]
       });
       let body;
@@ -41789,14 +41850,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketNotificationConfigurationCommand");
     var se_PutBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_oC]: [, ""]
       });
       let body;
@@ -41812,7 +41873,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketOwnershipControlsCommand");
     var se_PutBucketPolicyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "text/plain",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41821,7 +41882,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_p]: [, ""]
       });
       let body;
@@ -41835,7 +41896,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketPolicyCommand");
     var se_PutBucketReplicationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41844,7 +41905,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_r]: [, ""]
       });
       let body;
@@ -41860,7 +41921,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketReplicationCommand");
     var se_PutBucketRequestPaymentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41868,7 +41929,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_rP]: [, ""]
       });
       let body;
@@ -41884,7 +41945,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketRequestPaymentCommand");
     var se_PutBucketTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41892,7 +41953,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_t]: [, ""]
       });
       let body;
@@ -41908,7 +41969,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketTaggingCommand");
     var se_PutBucketVersioningCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41917,7 +41978,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_v]: [, ""]
       });
       let body;
@@ -41933,7 +41994,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketVersioningCommand");
     var se_PutBucketWebsiteCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41941,7 +42002,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_w]: [, ""]
       });
       let body;
@@ -41957,7 +42018,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketWebsiteCommand");
     var se_PutObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_ct]: input[_CT] || "application/octet-stream",
         [_xaa]: input[_ACL],
         [_cc]: input[_CC],
@@ -41971,7 +42032,7 @@ var require_dist_cjs71 = __commonJS({
         [_xacc_]: input[_CCRCC],
         [_xacs]: input[_CSHA],
         [_xacs_]: input[_CSHAh],
-        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client4.dateToUtcString)(input[_E]).toString()],
+        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_xagfc]: input[_GFC],
         [_xagr]: input[_GR],
         [_xagra]: input[_GRACP],
@@ -41988,7 +42049,7 @@ var require_dist_cjs71 = __commonJS({
         [_xarp]: input[_RP],
         [_xat]: input[_T],
         [_xaolm]: input[_OLM],
-        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client4.serializeDateTime)(input[_OLRUD]).toString()],
+        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
         [_xaollh]: input[_OLLHS],
         [_xaebo]: input[_EBO],
         ...input.Metadata !== void 0 && Object.keys(input.Metadata).reduce((acc, suffix) => {
@@ -41999,7 +42060,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "PutObject"]
       });
       let body;
@@ -42013,7 +42074,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectCommand");
     var se_PutObjectAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaa]: input[_ACL],
         [_cm]: input[_CMD],
@@ -42029,7 +42090,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_acl]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -42046,7 +42107,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectAclCommand");
     var se_PutObjectLegalHoldCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
         [_cm]: input[_CMD],
@@ -42056,7 +42117,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_lh]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -42074,7 +42135,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectLegalHoldCommand");
     var se_PutObjectLockConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
         [_xabolt]: input[_To],
@@ -42084,7 +42145,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ol]: [, ""]
       });
       let body;
@@ -42100,7 +42161,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectLockConfigurationCommand");
     var se_PutObjectRetentionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
         [_xabgr]: [() => isSerializableHeaderValue(input[_BGR]), () => input[_BGR].toString()],
@@ -42111,7 +42172,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_ret]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -42129,7 +42190,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectRetentionCommand");
     var se_PutObjectTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42139,7 +42200,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_t]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -42156,7 +42217,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectTaggingCommand");
     var se_PutPublicAccessBlockCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42164,7 +42225,7 @@ var require_dist_cjs71 = __commonJS({
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_pAB]: [, ""]
       });
       let body;
@@ -42180,7 +42241,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutPublicAccessBlockCommand");
     var se_RestoreObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
         [_xasca]: input[_CA],
@@ -42189,7 +42250,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_res]: [, ""],
         [_vI]: [, input[_VI]]
       });
@@ -42206,7 +42267,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_RestoreObjectCommand");
     var se_SelectObjectContentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -42216,7 +42277,7 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_se]: [, ""],
         [_st]: [, "2"]
       });
@@ -42244,7 +42305,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_SelectObjectContentCommand");
     var se_UploadPartCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "content-type": "application/octet-stream",
         [_cl_]: [() => isSerializableHeaderValue(input[_CLo]), () => input[_CLo].toString()],
         [_cm]: input[_CMD],
@@ -42262,10 +42323,10 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "UploadPart"],
-        [_pN]: [(0, import_smithy_client4.expectNonNull)(input.PartNumber, `PartNumber`) != null, () => input[_PN].toString()],
-        [_uI]: [, (0, import_smithy_client4.expectNonNull)(input[_UI], `UploadId`)]
+        [_pN]: [(0, import_smithy_client5.expectNonNull)(input.PartNumber, `PartNumber`) != null, () => input[_PN].toString()],
+        [_uI]: [, (0, import_smithy_client5.expectNonNull)(input[_UI], `UploadId`)]
       });
       let body;
       let contents;
@@ -42278,12 +42339,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_UploadPartCommand");
     var se_UploadPartCopyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         [_xacs__]: input[_CS],
         [_xacsim]: input[_CSIM],
-        [_xacsims]: [() => isSerializableHeaderValue(input[_CSIMS]), () => (0, import_smithy_client4.dateToUtcString)(input[_CSIMS]).toString()],
+        [_xacsims]: [() => isSerializableHeaderValue(input[_CSIMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIMS]).toString()],
         [_xacsinm]: input[_CSINM],
-        [_xacsius]: [() => isSerializableHeaderValue(input[_CSIUS]), () => (0, import_smithy_client4.dateToUtcString)(input[_CSIUS]).toString()],
+        [_xacsius]: [() => isSerializableHeaderValue(input[_CSIUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIUS]).toString()],
         [_xacsr]: input[_CSR],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -42298,10 +42359,10 @@ var require_dist_cjs71 = __commonJS({
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
       b.p("Key", () => input.Key, "{Key+}", true);
-      const query = (0, import_smithy_client4.map)({
+      const query = (0, import_smithy_client5.map)({
         [_xi]: [, "UploadPartCopy"],
-        [_pN]: [(0, import_smithy_client4.expectNonNull)(input.PartNumber, `PartNumber`) != null, () => input[_PN].toString()],
-        [_uI]: [, (0, import_smithy_client4.expectNonNull)(input[_UI], `UploadId`)]
+        [_pN]: [(0, import_smithy_client5.expectNonNull)(input.PartNumber, `PartNumber`) != null, () => input[_PN].toString()],
+        [_uI]: [, (0, import_smithy_client5.expectNonNull)(input[_UI], `UploadId`)]
       });
       let body;
       b.m("PUT").h(headers).q(query).b(body);
@@ -42309,7 +42370,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_UploadPartCopyCommand");
     var se_WriteGetObjectResponseCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client4.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
         "x-amz-content-sha256": "UNSIGNED-PAYLOAD",
         "content-type": "application/octet-stream",
         [_xarr]: input[_RR],
@@ -42331,15 +42392,15 @@ var require_dist_cjs71 = __commonJS({
         [_xafhxacs_]: input[_CSHAh],
         [_xafhxadm]: [() => isSerializableHeaderValue(input[_DM]), () => input[_DM].toString()],
         [_xafhe]: input[_ETa],
-        [_xafhe_]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client4.dateToUtcString)(input[_E]).toString()],
+        [_xafhe_]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_xafhxae]: input[_Exp],
-        [_xafhlm]: [() => isSerializableHeaderValue(input[_LM]), () => (0, import_smithy_client4.dateToUtcString)(input[_LM]).toString()],
+        [_xafhlm]: [() => isSerializableHeaderValue(input[_LM]), () => (0, import_smithy_client5.dateToUtcString)(input[_LM]).toString()],
         [_xafhxamm]: [() => isSerializableHeaderValue(input[_MM]), () => input[_MM].toString()],
         [_xafhxaolm]: input[_OLM],
         [_xafhxaollh]: input[_OLLHS],
         [_xafhxaolrud]: [
           () => isSerializableHeaderValue(input[_OLRUD]),
-          () => (0, import_smithy_client4.serializeDateTime)(input[_OLRUD]).toString()
+          () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()
         ],
         [_xafhxampc]: [() => isSerializableHeaderValue(input[_PC]), () => input[_PC].toString()],
         [_xafhxars]: input[_RS],
@@ -42372,7 +42433,7 @@ var require_dist_cjs71 = __commonJS({
           throw new Error("Empty value provided for input host prefix: RequestRoute.");
         }
         resolvedHostname = resolvedHostname.replace("{RequestRoute}", input.RequestRoute);
-        if (!(0, import_protocol_http3.isValidHostname)(resolvedHostname)) {
+        if (!(0, import_protocol_http5.isValidHostname)(resolvedHostname)) {
           throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
         }
       }
@@ -42384,50 +42445,50 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_AbortMultipartUploadCommand");
     var de_CompleteMultipartUploadCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_Exp]: [, output.headers[_xae]],
         [_SSE]: [, output.headers[_xasse]],
         [_VI]: [, output.headers[_xavi]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_B] != null) {
-        contents[_B] = (0, import_smithy_client4.expectString)(data[_B]);
+        contents[_B] = (0, import_smithy_client5.expectString)(data[_B]);
       }
       if (data[_CCRC] != null) {
-        contents[_CCRC] = (0, import_smithy_client4.expectString)(data[_CCRC]);
+        contents[_CCRC] = (0, import_smithy_client5.expectString)(data[_CCRC]);
       }
       if (data[_CCRCC] != null) {
-        contents[_CCRCC] = (0, import_smithy_client4.expectString)(data[_CCRCC]);
+        contents[_CCRCC] = (0, import_smithy_client5.expectString)(data[_CCRCC]);
       }
       if (data[_CSHA] != null) {
-        contents[_CSHA] = (0, import_smithy_client4.expectString)(data[_CSHA]);
+        contents[_CSHA] = (0, import_smithy_client5.expectString)(data[_CSHA]);
       }
       if (data[_CSHAh] != null) {
-        contents[_CSHAh] = (0, import_smithy_client4.expectString)(data[_CSHAh]);
+        contents[_CSHAh] = (0, import_smithy_client5.expectString)(data[_CSHAh]);
       }
       if (data[_ETa] != null) {
-        contents[_ETa] = (0, import_smithy_client4.expectString)(data[_ETa]);
+        contents[_ETa] = (0, import_smithy_client5.expectString)(data[_ETa]);
       }
       if (data[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(data[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(data[_K]);
       }
       if (data[_L] != null) {
-        contents[_L] = (0, import_smithy_client4.expectString)(data[_L]);
+        contents[_L] = (0, import_smithy_client5.expectString)(data[_L]);
       }
       return contents;
     }, "de_CompleteMultipartUploadCommand");
@@ -42435,7 +42496,7 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_Exp]: [, output.headers[_xae]],
         [_CSVI]: [, output.headers[_xacsvi]],
@@ -42445,10 +42506,10 @@ var require_dist_cjs71 = __commonJS({
         [_SSECKMD]: [, output.headers[_xasseckm]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
         [_SSEKMSEC]: [, output.headers[_xassec]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.CopyObjectResult = de_CopyObjectResult(data, context);
       return contents;
     }, "de_CopyObjectCommand");
@@ -42456,22 +42517,22 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_L]: [, output.headers[_lo]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_CreateBucketCommand");
     var de_CreateMultipartUploadCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_AD]: [
           () => void 0 !== output.headers[_xaad],
-          () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc7231DateTime)(output.headers[_xaad]))
+          () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc7231DateTime)(output.headers[_xaad]))
         ],
         [_ARI]: [, output.headers[_xaari]],
         [_SSE]: [, output.headers[_xasse]],
@@ -42479,19 +42540,19 @@ var require_dist_cjs71 = __commonJS({
         [_SSECKMD]: [, output.headers[_xasseckm]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
         [_SSEKMSEC]: [, output.headers[_xassec]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_RC]: [, output.headers[_xarc]],
         [_CA]: [, output.headers[_xaca]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_B] != null) {
-        contents[_B] = (0, import_smithy_client4.expectString)(data[_B]);
+        contents[_B] = (0, import_smithy_client5.expectString)(data[_B]);
       }
       if (data[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(data[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(data[_K]);
       }
       if (data[_UI] != null) {
-        contents[_UI] = (0, import_smithy_client4.expectString)(data[_UI]);
+        contents[_UI] = (0, import_smithy_client5.expectString)(data[_UI]);
       }
       return contents;
     }, "de_CreateMultipartUploadCommand");
@@ -42499,10 +42560,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_C] != null) {
         contents[_C] = de_SessionCredentials(data[_C], context);
       }
@@ -42512,163 +42573,163 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketCommand");
     var de_DeleteBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketAnalyticsConfigurationCommand");
     var de_DeleteBucketCorsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketCorsCommand");
     var de_DeleteBucketEncryptionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketEncryptionCommand");
     var de_DeleteBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketIntelligentTieringConfigurationCommand");
     var de_DeleteBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketInventoryConfigurationCommand");
     var de_DeleteBucketLifecycleCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketLifecycleCommand");
     var de_DeleteBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketMetricsConfigurationCommand");
     var de_DeleteBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketOwnershipControlsCommand");
     var de_DeleteBucketPolicyCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketPolicyCommand");
     var de_DeleteBucketReplicationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketReplicationCommand");
     var de_DeleteBucketTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketTaggingCommand");
     var de_DeleteBucketWebsiteCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketWebsiteCommand");
     var de_DeleteObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
-        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xadm])],
+        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xadm])],
         [_VI]: [, output.headers[_xavi]],
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteObjectCommand");
     var de_DeleteObjectsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.Deleted === "") {
         contents[_De] = [];
       } else if (data[_De] != null) {
-        contents[_De] = de_DeletedObjects((0, import_smithy_client4.getArrayIfSingleItem)(data[_De]), context);
+        contents[_De] = de_DeletedObjects((0, import_smithy_client5.getArrayIfSingleItem)(data[_De]), context);
       }
       if (data.Error === "") {
         contents[_Err] = [];
       } else if (data[_Er] != null) {
-        contents[_Err] = de_Errors((0, import_smithy_client4.getArrayIfSingleItem)(data[_Er]), context);
+        contents[_Err] = de_Errors((0, import_smithy_client5.getArrayIfSingleItem)(data[_Er]), context);
       }
       return contents;
     }, "de_DeleteObjectsCommand");
@@ -42676,34 +42737,34 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_VI]: [, output.headers[_xavi]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteObjectTaggingCommand");
     var de_DeletePublicAccessBlockCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_DeletePublicAccessBlockCommand");
     var de_GetBucketAccelerateConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(data[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(data[_S]);
       }
       return contents;
     }, "de_GetBucketAccelerateConfigurationCommand");
@@ -42711,14 +42772,14 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.AccessControlList === "") {
         contents[_Gr] = [];
       } else if (data[_ACLc] != null && data[_ACLc][_G] != null) {
-        contents[_Gr] = de_Grants((0, import_smithy_client4.getArrayIfSingleItem)(data[_ACLc][_G]), context);
+        contents[_Gr] = de_Grants((0, import_smithy_client5.getArrayIfSingleItem)(data[_ACLc][_G]), context);
       }
       if (data[_O] != null) {
         contents[_O] = de_Owner(data[_O], context);
@@ -42729,10 +42790,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.AnalyticsConfiguration = de_AnalyticsConfiguration(data, context);
       return contents;
     }, "de_GetBucketAnalyticsConfigurationCommand");
@@ -42740,14 +42801,14 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.CORSRule === "") {
         contents[_CORSRu] = [];
       } else if (data[_CORSR] != null) {
-        contents[_CORSRu] = de_CORSRules((0, import_smithy_client4.getArrayIfSingleItem)(data[_CORSR]), context);
+        contents[_CORSRu] = de_CORSRules((0, import_smithy_client5.getArrayIfSingleItem)(data[_CORSR]), context);
       }
       return contents;
     }, "de_GetBucketCorsCommand");
@@ -42755,10 +42816,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.ServerSideEncryptionConfiguration = de_ServerSideEncryptionConfiguration(data, context);
       return contents;
     }, "de_GetBucketEncryptionCommand");
@@ -42766,10 +42827,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.IntelligentTieringConfiguration = de_IntelligentTieringConfiguration(data, context);
       return contents;
     }, "de_GetBucketIntelligentTieringConfigurationCommand");
@@ -42777,10 +42838,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.InventoryConfiguration = de_InventoryConfiguration(data, context);
       return contents;
     }, "de_GetBucketInventoryConfigurationCommand");
@@ -42788,14 +42849,14 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.Rule === "") {
         contents[_Rul] = [];
       } else if (data[_Ru] != null) {
-        contents[_Rul] = de_LifecycleRules((0, import_smithy_client4.getArrayIfSingleItem)(data[_Ru]), context);
+        contents[_Rul] = de_LifecycleRules((0, import_smithy_client5.getArrayIfSingleItem)(data[_Ru]), context);
       }
       return contents;
     }, "de_GetBucketLifecycleConfigurationCommand");
@@ -42803,12 +42864,12 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_LC] != null) {
-        contents[_LC] = (0, import_smithy_client4.expectString)(data[_LC]);
+        contents[_LC] = (0, import_smithy_client5.expectString)(data[_LC]);
       }
       return contents;
     }, "de_GetBucketLocationCommand");
@@ -42816,10 +42877,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_LE] != null) {
         contents[_LE] = de_LoggingEnabled(data[_LE], context);
       }
@@ -42829,10 +42890,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.MetricsConfiguration = de_MetricsConfiguration(data, context);
       return contents;
     }, "de_GetBucketMetricsConfigurationCommand");
@@ -42840,27 +42901,27 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_EBC] != null) {
         contents[_EBC] = de_EventBridgeConfiguration(data[_EBC], context);
       }
       if (data.CloudFunctionConfiguration === "") {
         contents[_LFC] = [];
       } else if (data[_CFC] != null) {
-        contents[_LFC] = de_LambdaFunctionConfigurationList((0, import_smithy_client4.getArrayIfSingleItem)(data[_CFC]), context);
+        contents[_LFC] = de_LambdaFunctionConfigurationList((0, import_smithy_client5.getArrayIfSingleItem)(data[_CFC]), context);
       }
       if (data.QueueConfiguration === "") {
         contents[_QCu] = [];
       } else if (data[_QC] != null) {
-        contents[_QCu] = de_QueueConfigurationList((0, import_smithy_client4.getArrayIfSingleItem)(data[_QC]), context);
+        contents[_QCu] = de_QueueConfigurationList((0, import_smithy_client5.getArrayIfSingleItem)(data[_QC]), context);
       }
       if (data.TopicConfiguration === "") {
         contents[_TCop] = [];
       } else if (data[_TCo] != null) {
-        contents[_TCop] = de_TopicConfigurationList((0, import_smithy_client4.getArrayIfSingleItem)(data[_TCo]), context);
+        contents[_TCop] = de_TopicConfigurationList((0, import_smithy_client5.getArrayIfSingleItem)(data[_TCo]), context);
       }
       return contents;
     }, "de_GetBucketNotificationConfigurationCommand");
@@ -42868,10 +42929,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.OwnershipControls = de_OwnershipControls(data, context);
       return contents;
     }, "de_GetBucketOwnershipControlsCommand");
@@ -42879,21 +42940,21 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
       const data = await collectBodyString2(output.body, context);
-      contents.Policy = (0, import_smithy_client4.expectString)(data);
+      contents.Policy = (0, import_smithy_client5.expectString)(data);
       return contents;
     }, "de_GetBucketPolicyCommand");
     var de_GetBucketPolicyStatusCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.PolicyStatus = de_PolicyStatus(data, context);
       return contents;
     }, "de_GetBucketPolicyStatusCommand");
@@ -42901,10 +42962,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.ReplicationConfiguration = de_ReplicationConfiguration(data, context);
       return contents;
     }, "de_GetBucketReplicationCommand");
@@ -42912,12 +42973,12 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_Pa] != null) {
-        contents[_Pa] = (0, import_smithy_client4.expectString)(data[_Pa]);
+        contents[_Pa] = (0, import_smithy_client5.expectString)(data[_Pa]);
       }
       return contents;
     }, "de_GetBucketRequestPaymentCommand");
@@ -42925,14 +42986,14 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.TagSet === "") {
         contents[_TS] = [];
       } else if (data[_TS] != null && data[_TS][_Ta] != null) {
-        contents[_TS] = de_TagSet((0, import_smithy_client4.getArrayIfSingleItem)(data[_TS][_Ta]), context);
+        contents[_TS] = de_TagSet((0, import_smithy_client5.getArrayIfSingleItem)(data[_TS][_Ta]), context);
       }
       return contents;
     }, "de_GetBucketTaggingCommand");
@@ -42940,15 +43001,15 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_MDf] != null) {
-        contents[_MFAD] = (0, import_smithy_client4.expectString)(data[_MDf]);
+        contents[_MFAD] = (0, import_smithy_client5.expectString)(data[_MDf]);
       }
       if (data[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(data[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(data[_S]);
       }
       return contents;
     }, "de_GetBucketVersioningCommand");
@@ -42956,10 +43017,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_ED] != null) {
         contents[_ED] = de_ErrorDocument(data[_ED], context);
       }
@@ -42972,7 +43033,7 @@ var require_dist_cjs71 = __commonJS({
       if (data.RoutingRules === "") {
         contents[_RRo] = [];
       } else if (data[_RRo] != null && data[_RRo][_RRou] != null) {
-        contents[_RRo] = de_RoutingRules((0, import_smithy_client4.getArrayIfSingleItem)(data[_RRo][_RRou]), context);
+        contents[_RRo] = de_RoutingRules((0, import_smithy_client5.getArrayIfSingleItem)(data[_RRo][_RRou]), context);
       }
       return contents;
     }, "de_GetBucketWebsiteCommand");
@@ -42980,20 +43041,20 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
-        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xadm])],
+        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xadm])],
         [_AR]: [, output.headers[_ar]],
         [_Exp]: [, output.headers[_xae]],
         [_Re]: [, output.headers[_xar]],
-        [_LM]: [() => void 0 !== output.headers[_lm], () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc7231DateTime)(output.headers[_lm]))],
-        [_CLo]: [() => void 0 !== output.headers[_cl_], () => (0, import_smithy_client4.strictParseLong)(output.headers[_cl_])],
+        [_LM]: [() => void 0 !== output.headers[_lm], () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc7231DateTime)(output.headers[_lm]))],
+        [_CLo]: [() => void 0 !== output.headers[_cl_], () => (0, import_smithy_client5.strictParseLong)(output.headers[_cl_])],
         [_ETa]: [, output.headers[_eta]],
         [_CCRC]: [, output.headers[_xacc]],
         [_CCRCC]: [, output.headers[_xacc_]],
         [_CSHA]: [, output.headers[_xacs]],
         [_CSHAh]: [, output.headers[_xacs_]],
-        [_MM]: [() => void 0 !== output.headers[_xamm], () => (0, import_smithy_client4.strictParseInt32)(output.headers[_xamm])],
+        [_MM]: [() => void 0 !== output.headers[_xamm], () => (0, import_smithy_client5.strictParseInt32)(output.headers[_xamm])],
         [_VI]: [, output.headers[_xavi]],
         [_CC]: [, output.headers[_cc]],
         [_CD]: [, output.headers[_cd]],
@@ -43001,23 +43062,23 @@ var require_dist_cjs71 = __commonJS({
         [_CL]: [, output.headers[_cl]],
         [_CR]: [, output.headers[_cr]],
         [_CT]: [, output.headers[_ct]],
-        [_E]: [() => void 0 !== output.headers[_e], () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc7231DateTime)(output.headers[_e]))],
+        [_E]: [() => void 0 !== output.headers[_e], () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc7231DateTime)(output.headers[_e]))],
         [_ES]: [, output.headers[_ex]],
         [_WRL]: [, output.headers[_xawrl]],
         [_SSE]: [, output.headers[_xasse]],
         [_SSECA]: [, output.headers[_xasseca]],
         [_SSECKMD]: [, output.headers[_xasseckm]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_SC]: [, output.headers[_xasc]],
         [_RC]: [, output.headers[_xarc]],
         [_RS]: [, output.headers[_xars]],
-        [_PC]: [() => void 0 !== output.headers[_xampc], () => (0, import_smithy_client4.strictParseInt32)(output.headers[_xampc])],
-        [_TC]: [() => void 0 !== output.headers[_xatc], () => (0, import_smithy_client4.strictParseInt32)(output.headers[_xatc])],
+        [_PC]: [() => void 0 !== output.headers[_xampc], () => (0, import_smithy_client5.strictParseInt32)(output.headers[_xampc])],
+        [_TC]: [() => void 0 !== output.headers[_xatc], () => (0, import_smithy_client5.strictParseInt32)(output.headers[_xatc])],
         [_OLM]: [, output.headers[_xaolm]],
         [_OLRUD]: [
           () => void 0 !== output.headers[_xaolrud],
-          () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output.headers[_xaolrud]))
+          () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output.headers[_xaolrud]))
         ],
         [_OLLHS]: [, output.headers[_xaollh]],
         Metadata: [
@@ -43037,15 +43098,15 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.AccessControlList === "") {
         contents[_Gr] = [];
       } else if (data[_ACLc] != null && data[_ACLc][_G] != null) {
-        contents[_Gr] = de_Grants((0, import_smithy_client4.getArrayIfSingleItem)(data[_ACLc][_G]), context);
+        contents[_Gr] = de_Grants((0, import_smithy_client5.getArrayIfSingleItem)(data[_ACLc][_G]), context);
       }
       if (data[_O] != null) {
         contents[_O] = de_Owner(data[_O], context);
@@ -43056,28 +43117,28 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
-        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xadm])],
-        [_LM]: [() => void 0 !== output.headers[_lm], () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc7231DateTime)(output.headers[_lm]))],
+        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xadm])],
+        [_LM]: [() => void 0 !== output.headers[_lm], () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc7231DateTime)(output.headers[_lm]))],
         [_VI]: [, output.headers[_xavi]],
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_Ch] != null) {
         contents[_Ch] = de_Checksum(data[_Ch], context);
       }
       if (data[_ETa] != null) {
-        contents[_ETa] = (0, import_smithy_client4.expectString)(data[_ETa]);
+        contents[_ETa] = (0, import_smithy_client5.expectString)(data[_ETa]);
       }
       if (data[_OP] != null) {
         contents[_OP] = de_GetObjectAttributesParts(data[_OP], context);
       }
       if (data[_OSb] != null) {
-        contents[_OSb] = (0, import_smithy_client4.strictParseLong)(data[_OSb]);
+        contents[_OSb] = (0, import_smithy_client5.strictParseLong)(data[_OSb]);
       }
       if (data[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(data[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(data[_SC]);
       }
       return contents;
     }, "de_GetObjectAttributesCommand");
@@ -43085,10 +43146,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.LegalHold = de_ObjectLockLegalHold(data, context);
       return contents;
     }, "de_GetObjectLegalHoldCommand");
@@ -43096,10 +43157,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.ObjectLockConfiguration = de_ObjectLockConfiguration(data, context);
       return contents;
     }, "de_GetObjectLockConfigurationCommand");
@@ -43107,10 +43168,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.Retention = de_ObjectLockRetention(data, context);
       return contents;
     }, "de_GetObjectRetentionCommand");
@@ -43118,15 +43179,15 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_VI]: [, output.headers[_xavi]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.TagSet === "") {
         contents[_TS] = [];
       } else if (data[_TS] != null && data[_TS][_Ta] != null) {
-        contents[_TS] = de_TagSet((0, import_smithy_client4.getArrayIfSingleItem)(data[_TS][_Ta]), context);
+        contents[_TS] = de_TagSet((0, import_smithy_client5.getArrayIfSingleItem)(data[_TS][_Ta]), context);
       }
       return contents;
     }, "de_GetObjectTaggingCommand");
@@ -43134,7 +43195,7 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
@@ -43147,10 +43208,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.PublicAccessBlockConfiguration = de_PublicAccessBlockConfiguration(data, context);
       return contents;
     }, "de_GetPublicAccessBlockCommand");
@@ -43158,57 +43219,57 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_BLT]: [, output.headers[_xablt]],
         [_BLN]: [, output.headers[_xabln]],
         [_BR]: [, output.headers[_xabr]],
-        [_APA]: [() => void 0 !== output.headers[_xaapa], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xaapa])]
+        [_APA]: [() => void 0 !== output.headers[_xaapa], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xaapa])]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_HeadBucketCommand");
     var de_HeadObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
-        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xadm])],
+        [_DM]: [() => void 0 !== output.headers[_xadm], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xadm])],
         [_AR]: [, output.headers[_ar]],
         [_Exp]: [, output.headers[_xae]],
         [_Re]: [, output.headers[_xar]],
         [_AS]: [, output.headers[_xaas]],
-        [_LM]: [() => void 0 !== output.headers[_lm], () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc7231DateTime)(output.headers[_lm]))],
-        [_CLo]: [() => void 0 !== output.headers[_cl_], () => (0, import_smithy_client4.strictParseLong)(output.headers[_cl_])],
+        [_LM]: [() => void 0 !== output.headers[_lm], () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc7231DateTime)(output.headers[_lm]))],
+        [_CLo]: [() => void 0 !== output.headers[_cl_], () => (0, import_smithy_client5.strictParseLong)(output.headers[_cl_])],
         [_CCRC]: [, output.headers[_xacc]],
         [_CCRCC]: [, output.headers[_xacc_]],
         [_CSHA]: [, output.headers[_xacs]],
         [_CSHAh]: [, output.headers[_xacs_]],
         [_ETa]: [, output.headers[_eta]],
-        [_MM]: [() => void 0 !== output.headers[_xamm], () => (0, import_smithy_client4.strictParseInt32)(output.headers[_xamm])],
+        [_MM]: [() => void 0 !== output.headers[_xamm], () => (0, import_smithy_client5.strictParseInt32)(output.headers[_xamm])],
         [_VI]: [, output.headers[_xavi]],
         [_CC]: [, output.headers[_cc]],
         [_CD]: [, output.headers[_cd]],
         [_CE]: [, output.headers[_ce]],
         [_CL]: [, output.headers[_cl]],
         [_CT]: [, output.headers[_ct]],
-        [_E]: [() => void 0 !== output.headers[_e], () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc7231DateTime)(output.headers[_e]))],
+        [_E]: [() => void 0 !== output.headers[_e], () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc7231DateTime)(output.headers[_e]))],
         [_ES]: [, output.headers[_ex]],
         [_WRL]: [, output.headers[_xawrl]],
         [_SSE]: [, output.headers[_xasse]],
         [_SSECA]: [, output.headers[_xasseca]],
         [_SSECKMD]: [, output.headers[_xasseckm]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_SC]: [, output.headers[_xasc]],
         [_RC]: [, output.headers[_xarc]],
         [_RS]: [, output.headers[_xars]],
-        [_PC]: [() => void 0 !== output.headers[_xampc], () => (0, import_smithy_client4.strictParseInt32)(output.headers[_xampc])],
+        [_PC]: [() => void 0 !== output.headers[_xampc], () => (0, import_smithy_client5.strictParseInt32)(output.headers[_xampc])],
         [_OLM]: [, output.headers[_xaolm]],
         [_OLRUD]: [
           () => void 0 !== output.headers[_xaolrud],
-          () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output.headers[_xaolrud]))
+          () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output.headers[_xaolrud]))
         ],
         [_OLLHS]: [, output.headers[_xaollh]],
         Metadata: [
@@ -43219,30 +43280,30 @@ var require_dist_cjs71 = __commonJS({
           }, {})
         ]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_HeadObjectCommand");
     var de_ListBucketAnalyticsConfigurationsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.AnalyticsConfiguration === "") {
         contents[_ACLn] = [];
       } else if (data[_AC] != null) {
-        contents[_ACLn] = de_AnalyticsConfigurationList((0, import_smithy_client4.getArrayIfSingleItem)(data[_AC]), context);
+        contents[_ACLn] = de_AnalyticsConfigurationList((0, import_smithy_client5.getArrayIfSingleItem)(data[_AC]), context);
       }
       if (data[_CTo] != null) {
-        contents[_CTo] = (0, import_smithy_client4.expectString)(data[_CTo]);
+        contents[_CTo] = (0, import_smithy_client5.expectString)(data[_CTo]);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_NCT] != null) {
-        contents[_NCT] = (0, import_smithy_client4.expectString)(data[_NCT]);
+        contents[_NCT] = (0, import_smithy_client5.expectString)(data[_NCT]);
       }
       return contents;
     }, "de_ListBucketAnalyticsConfigurationsCommand");
@@ -43250,23 +43311,23 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_CTo] != null) {
-        contents[_CTo] = (0, import_smithy_client4.expectString)(data[_CTo]);
+        contents[_CTo] = (0, import_smithy_client5.expectString)(data[_CTo]);
       }
       if (data.IntelligentTieringConfiguration === "") {
         contents[_ITCL] = [];
       } else if (data[_ITC] != null) {
-        contents[_ITCL] = de_IntelligentTieringConfigurationList((0, import_smithy_client4.getArrayIfSingleItem)(data[_ITC]), context);
+        contents[_ITCL] = de_IntelligentTieringConfigurationList((0, import_smithy_client5.getArrayIfSingleItem)(data[_ITC]), context);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_NCT] != null) {
-        contents[_NCT] = (0, import_smithy_client4.expectString)(data[_NCT]);
+        contents[_NCT] = (0, import_smithy_client5.expectString)(data[_NCT]);
       }
       return contents;
     }, "de_ListBucketIntelligentTieringConfigurationsCommand");
@@ -43274,23 +43335,23 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_CTo] != null) {
-        contents[_CTo] = (0, import_smithy_client4.expectString)(data[_CTo]);
+        contents[_CTo] = (0, import_smithy_client5.expectString)(data[_CTo]);
       }
       if (data.InventoryConfiguration === "") {
         contents[_ICL] = [];
       } else if (data[_IC] != null) {
-        contents[_ICL] = de_InventoryConfigurationList((0, import_smithy_client4.getArrayIfSingleItem)(data[_IC]), context);
+        contents[_ICL] = de_InventoryConfigurationList((0, import_smithy_client5.getArrayIfSingleItem)(data[_IC]), context);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_NCT] != null) {
-        contents[_NCT] = (0, import_smithy_client4.expectString)(data[_NCT]);
+        contents[_NCT] = (0, import_smithy_client5.expectString)(data[_NCT]);
       }
       return contents;
     }, "de_ListBucketInventoryConfigurationsCommand");
@@ -43298,23 +43359,23 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_CTo] != null) {
-        contents[_CTo] = (0, import_smithy_client4.expectString)(data[_CTo]);
+        contents[_CTo] = (0, import_smithy_client5.expectString)(data[_CTo]);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data.MetricsConfiguration === "") {
         contents[_MCL] = [];
       } else if (data[_MC] != null) {
-        contents[_MCL] = de_MetricsConfigurationList((0, import_smithy_client4.getArrayIfSingleItem)(data[_MC]), context);
+        contents[_MCL] = de_MetricsConfigurationList((0, import_smithy_client5.getArrayIfSingleItem)(data[_MC]), context);
       }
       if (data[_NCT] != null) {
-        contents[_NCT] = (0, import_smithy_client4.expectString)(data[_NCT]);
+        contents[_NCT] = (0, import_smithy_client5.expectString)(data[_NCT]);
       }
       return contents;
     }, "de_ListBucketMetricsConfigurationsCommand");
@@ -43322,14 +43383,14 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.Buckets === "") {
         contents[_Bu] = [];
       } else if (data[_Bu] != null && data[_Bu][_B] != null) {
-        contents[_Bu] = de_Buckets((0, import_smithy_client4.getArrayIfSingleItem)(data[_Bu][_B]), context);
+        contents[_Bu] = de_Buckets((0, import_smithy_client5.getArrayIfSingleItem)(data[_Bu][_B]), context);
       }
       if (data[_O] != null) {
         contents[_O] = de_Owner(data[_O], context);
@@ -43340,17 +43401,17 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.Buckets === "") {
         contents[_Bu] = [];
       } else if (data[_Bu] != null && data[_Bu][_B] != null) {
-        contents[_Bu] = de_Buckets((0, import_smithy_client4.getArrayIfSingleItem)(data[_Bu][_B]), context);
+        contents[_Bu] = de_Buckets((0, import_smithy_client5.getArrayIfSingleItem)(data[_Bu][_B]), context);
       }
       if (data[_CTo] != null) {
-        contents[_CTo] = (0, import_smithy_client4.expectString)(data[_CTo]);
+        contents[_CTo] = (0, import_smithy_client5.expectString)(data[_CTo]);
       }
       return contents;
     }, "de_ListDirectoryBucketsCommand");
@@ -43358,50 +43419,50 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_B] != null) {
-        contents[_B] = (0, import_smithy_client4.expectString)(data[_B]);
+        contents[_B] = (0, import_smithy_client5.expectString)(data[_B]);
       }
       if (data.CommonPrefixes === "") {
         contents[_CP] = [];
       } else if (data[_CP] != null) {
-        contents[_CP] = de_CommonPrefixList((0, import_smithy_client4.getArrayIfSingleItem)(data[_CP]), context);
+        contents[_CP] = de_CommonPrefixList((0, import_smithy_client5.getArrayIfSingleItem)(data[_CP]), context);
       }
       if (data[_D] != null) {
-        contents[_D] = (0, import_smithy_client4.expectString)(data[_D]);
+        contents[_D] = (0, import_smithy_client5.expectString)(data[_D]);
       }
       if (data[_ET] != null) {
-        contents[_ET] = (0, import_smithy_client4.expectString)(data[_ET]);
+        contents[_ET] = (0, import_smithy_client5.expectString)(data[_ET]);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_KM] != null) {
-        contents[_KM] = (0, import_smithy_client4.expectString)(data[_KM]);
+        contents[_KM] = (0, import_smithy_client5.expectString)(data[_KM]);
       }
       if (data[_MU] != null) {
-        contents[_MU] = (0, import_smithy_client4.strictParseInt32)(data[_MU]);
+        contents[_MU] = (0, import_smithy_client5.strictParseInt32)(data[_MU]);
       }
       if (data[_NKM] != null) {
-        contents[_NKM] = (0, import_smithy_client4.expectString)(data[_NKM]);
+        contents[_NKM] = (0, import_smithy_client5.expectString)(data[_NKM]);
       }
       if (data[_NUIM] != null) {
-        contents[_NUIM] = (0, import_smithy_client4.expectString)(data[_NUIM]);
+        contents[_NUIM] = (0, import_smithy_client5.expectString)(data[_NUIM]);
       }
       if (data[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(data[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(data[_P]);
       }
       if (data[_UIM] != null) {
-        contents[_UIM] = (0, import_smithy_client4.expectString)(data[_UIM]);
+        contents[_UIM] = (0, import_smithy_client5.expectString)(data[_UIM]);
       }
       if (data.Upload === "") {
         contents[_Up] = [];
       } else if (data[_U] != null) {
-        contents[_Up] = de_MultipartUploadList((0, import_smithy_client4.getArrayIfSingleItem)(data[_U]), context);
+        contents[_Up] = de_MultipartUploadList((0, import_smithy_client5.getArrayIfSingleItem)(data[_U]), context);
       }
       return contents;
     }, "de_ListMultipartUploadsCommand");
@@ -43409,44 +43470,44 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.CommonPrefixes === "") {
         contents[_CP] = [];
       } else if (data[_CP] != null) {
-        contents[_CP] = de_CommonPrefixList((0, import_smithy_client4.getArrayIfSingleItem)(data[_CP]), context);
+        contents[_CP] = de_CommonPrefixList((0, import_smithy_client5.getArrayIfSingleItem)(data[_CP]), context);
       }
       if (data.Contents === "") {
         contents[_Co] = [];
       } else if (data[_Co] != null) {
-        contents[_Co] = de_ObjectList((0, import_smithy_client4.getArrayIfSingleItem)(data[_Co]), context);
+        contents[_Co] = de_ObjectList((0, import_smithy_client5.getArrayIfSingleItem)(data[_Co]), context);
       }
       if (data[_D] != null) {
-        contents[_D] = (0, import_smithy_client4.expectString)(data[_D]);
+        contents[_D] = (0, import_smithy_client5.expectString)(data[_D]);
       }
       if (data[_ET] != null) {
-        contents[_ET] = (0, import_smithy_client4.expectString)(data[_ET]);
+        contents[_ET] = (0, import_smithy_client5.expectString)(data[_ET]);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_M] != null) {
-        contents[_M] = (0, import_smithy_client4.expectString)(data[_M]);
+        contents[_M] = (0, import_smithy_client5.expectString)(data[_M]);
       }
       if (data[_MK] != null) {
-        contents[_MK] = (0, import_smithy_client4.strictParseInt32)(data[_MK]);
+        contents[_MK] = (0, import_smithy_client5.strictParseInt32)(data[_MK]);
       }
       if (data[_N] != null) {
-        contents[_N] = (0, import_smithy_client4.expectString)(data[_N]);
+        contents[_N] = (0, import_smithy_client5.expectString)(data[_N]);
       }
       if (data[_NM] != null) {
-        contents[_NM] = (0, import_smithy_client4.expectString)(data[_NM]);
+        contents[_NM] = (0, import_smithy_client5.expectString)(data[_NM]);
       }
       if (data[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(data[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(data[_P]);
       }
       return contents;
     }, "de_ListObjectsCommand");
@@ -43454,50 +43515,50 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.CommonPrefixes === "") {
         contents[_CP] = [];
       } else if (data[_CP] != null) {
-        contents[_CP] = de_CommonPrefixList((0, import_smithy_client4.getArrayIfSingleItem)(data[_CP]), context);
+        contents[_CP] = de_CommonPrefixList((0, import_smithy_client5.getArrayIfSingleItem)(data[_CP]), context);
       }
       if (data.Contents === "") {
         contents[_Co] = [];
       } else if (data[_Co] != null) {
-        contents[_Co] = de_ObjectList((0, import_smithy_client4.getArrayIfSingleItem)(data[_Co]), context);
+        contents[_Co] = de_ObjectList((0, import_smithy_client5.getArrayIfSingleItem)(data[_Co]), context);
       }
       if (data[_CTo] != null) {
-        contents[_CTo] = (0, import_smithy_client4.expectString)(data[_CTo]);
+        contents[_CTo] = (0, import_smithy_client5.expectString)(data[_CTo]);
       }
       if (data[_D] != null) {
-        contents[_D] = (0, import_smithy_client4.expectString)(data[_D]);
+        contents[_D] = (0, import_smithy_client5.expectString)(data[_D]);
       }
       if (data[_ET] != null) {
-        contents[_ET] = (0, import_smithy_client4.expectString)(data[_ET]);
+        contents[_ET] = (0, import_smithy_client5.expectString)(data[_ET]);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_KC] != null) {
-        contents[_KC] = (0, import_smithy_client4.strictParseInt32)(data[_KC]);
+        contents[_KC] = (0, import_smithy_client5.strictParseInt32)(data[_KC]);
       }
       if (data[_MK] != null) {
-        contents[_MK] = (0, import_smithy_client4.strictParseInt32)(data[_MK]);
+        contents[_MK] = (0, import_smithy_client5.strictParseInt32)(data[_MK]);
       }
       if (data[_N] != null) {
-        contents[_N] = (0, import_smithy_client4.expectString)(data[_N]);
+        contents[_N] = (0, import_smithy_client5.expectString)(data[_N]);
       }
       if (data[_NCT] != null) {
-        contents[_NCT] = (0, import_smithy_client4.expectString)(data[_NCT]);
+        contents[_NCT] = (0, import_smithy_client5.expectString)(data[_NCT]);
       }
       if (data[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(data[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(data[_P]);
       }
       if (data[_SA] != null) {
-        contents[_SA] = (0, import_smithy_client4.expectString)(data[_SA]);
+        contents[_SA] = (0, import_smithy_client5.expectString)(data[_SA]);
       }
       return contents;
     }, "de_ListObjectsV2Command");
@@ -43505,55 +43566,55 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data.CommonPrefixes === "") {
         contents[_CP] = [];
       } else if (data[_CP] != null) {
-        contents[_CP] = de_CommonPrefixList((0, import_smithy_client4.getArrayIfSingleItem)(data[_CP]), context);
+        contents[_CP] = de_CommonPrefixList((0, import_smithy_client5.getArrayIfSingleItem)(data[_CP]), context);
       }
       if (data.DeleteMarker === "") {
         contents[_DMe] = [];
       } else if (data[_DM] != null) {
-        contents[_DMe] = de_DeleteMarkers((0, import_smithy_client4.getArrayIfSingleItem)(data[_DM]), context);
+        contents[_DMe] = de_DeleteMarkers((0, import_smithy_client5.getArrayIfSingleItem)(data[_DM]), context);
       }
       if (data[_D] != null) {
-        contents[_D] = (0, import_smithy_client4.expectString)(data[_D]);
+        contents[_D] = (0, import_smithy_client5.expectString)(data[_D]);
       }
       if (data[_ET] != null) {
-        contents[_ET] = (0, import_smithy_client4.expectString)(data[_ET]);
+        contents[_ET] = (0, import_smithy_client5.expectString)(data[_ET]);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_KM] != null) {
-        contents[_KM] = (0, import_smithy_client4.expectString)(data[_KM]);
+        contents[_KM] = (0, import_smithy_client5.expectString)(data[_KM]);
       }
       if (data[_MK] != null) {
-        contents[_MK] = (0, import_smithy_client4.strictParseInt32)(data[_MK]);
+        contents[_MK] = (0, import_smithy_client5.strictParseInt32)(data[_MK]);
       }
       if (data[_N] != null) {
-        contents[_N] = (0, import_smithy_client4.expectString)(data[_N]);
+        contents[_N] = (0, import_smithy_client5.expectString)(data[_N]);
       }
       if (data[_NKM] != null) {
-        contents[_NKM] = (0, import_smithy_client4.expectString)(data[_NKM]);
+        contents[_NKM] = (0, import_smithy_client5.expectString)(data[_NKM]);
       }
       if (data[_NVIM] != null) {
-        contents[_NVIM] = (0, import_smithy_client4.expectString)(data[_NVIM]);
+        contents[_NVIM] = (0, import_smithy_client5.expectString)(data[_NVIM]);
       }
       if (data[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(data[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(data[_P]);
       }
       if (data[_VIM] != null) {
-        contents[_VIM] = (0, import_smithy_client4.expectString)(data[_VIM]);
+        contents[_VIM] = (0, import_smithy_client5.expectString)(data[_VIM]);
       }
       if (data.Version === "") {
         contents[_Ve] = [];
       } else if (data[_V] != null) {
-        contents[_Ve] = de_ObjectVersionList((0, import_smithy_client4.getArrayIfSingleItem)(data[_V]), context);
+        contents[_Ve] = de_ObjectVersionList((0, import_smithy_client5.getArrayIfSingleItem)(data[_V]), context);
       }
       return contents;
     }, "de_ListObjectVersionsCommand");
@@ -43561,53 +43622,53 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_AD]: [
           () => void 0 !== output.headers[_xaad],
-          () => (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc7231DateTime)(output.headers[_xaad]))
+          () => (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc7231DateTime)(output.headers[_xaad]))
         ],
         [_ARI]: [, output.headers[_xaari]],
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
+      const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context)), "body");
       if (data[_B] != null) {
-        contents[_B] = (0, import_smithy_client4.expectString)(data[_B]);
+        contents[_B] = (0, import_smithy_client5.expectString)(data[_B]);
       }
       if (data[_CA] != null) {
-        contents[_CA] = (0, import_smithy_client4.expectString)(data[_CA]);
+        contents[_CA] = (0, import_smithy_client5.expectString)(data[_CA]);
       }
       if (data[_In] != null) {
         contents[_In] = de_Initiator(data[_In], context);
       }
       if (data[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(data[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(data[_IT]);
       }
       if (data[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(data[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(data[_K]);
       }
       if (data[_MP] != null) {
-        contents[_MP] = (0, import_smithy_client4.strictParseInt32)(data[_MP]);
+        contents[_MP] = (0, import_smithy_client5.strictParseInt32)(data[_MP]);
       }
       if (data[_NPNM] != null) {
-        contents[_NPNM] = (0, import_smithy_client4.expectString)(data[_NPNM]);
+        contents[_NPNM] = (0, import_smithy_client5.expectString)(data[_NPNM]);
       }
       if (data[_O] != null) {
         contents[_O] = de_Owner(data[_O], context);
       }
       if (data[_PNM] != null) {
-        contents[_PNM] = (0, import_smithy_client4.expectString)(data[_PNM]);
+        contents[_PNM] = (0, import_smithy_client5.expectString)(data[_PNM]);
       }
       if (data.Part === "") {
         contents[_Part] = [];
       } else if (data[_Par] != null) {
-        contents[_Part] = de_Parts((0, import_smithy_client4.getArrayIfSingleItem)(data[_Par]), context);
+        contents[_Part] = de_Parts((0, import_smithy_client5.getArrayIfSingleItem)(data[_Par]), context);
       }
       if (data[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(data[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(data[_SC]);
       }
       if (data[_UI] != null) {
-        contents[_UI] = (0, import_smithy_client4.expectString)(data[_UI]);
+        contents[_UI] = (0, import_smithy_client5.expectString)(data[_UI]);
       }
       return contents;
     }, "de_ListPartsCommand");
@@ -43615,187 +43676,187 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketAccelerateConfigurationCommand");
     var de_PutBucketAclCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketAclCommand");
     var de_PutBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketAnalyticsConfigurationCommand");
     var de_PutBucketCorsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketCorsCommand");
     var de_PutBucketEncryptionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketEncryptionCommand");
     var de_PutBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketIntelligentTieringConfigurationCommand");
     var de_PutBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketInventoryConfigurationCommand");
     var de_PutBucketLifecycleConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketLifecycleConfigurationCommand");
     var de_PutBucketLoggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketLoggingCommand");
     var de_PutBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketMetricsConfigurationCommand");
     var de_PutBucketNotificationConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketNotificationConfigurationCommand");
     var de_PutBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketOwnershipControlsCommand");
     var de_PutBucketPolicyCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketPolicyCommand");
     var de_PutBucketReplicationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketReplicationCommand");
     var de_PutBucketRequestPaymentCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketRequestPaymentCommand");
     var de_PutBucketTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketTaggingCommand");
     var de_PutBucketVersioningCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketVersioningCommand");
     var de_PutBucketWebsiteCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutBucketWebsiteCommand");
     var de_PutObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_Exp]: [, output.headers[_xae]],
         [_ETa]: [, output.headers[_eta]],
@@ -43809,94 +43870,94 @@ var require_dist_cjs71 = __commonJS({
         [_SSECKMD]: [, output.headers[_xasseckm]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
         [_SSEKMSEC]: [, output.headers[_xassec]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectCommand");
     var de_PutObjectAclCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectAclCommand");
     var de_PutObjectLegalHoldCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectLegalHoldCommand");
     var de_PutObjectLockConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectLockConfigurationCommand");
     var de_PutObjectRetentionCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectRetentionCommand");
     var de_PutObjectTaggingCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_VI]: [, output.headers[_xavi]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutObjectTaggingCommand");
     var de_PutPublicAccessBlockCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_PutPublicAccessBlockCommand");
     var de_RestoreObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_RC]: [, output.headers[_xarc]],
         [_ROP]: [, output.headers[_xarop]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_RestoreObjectCommand");
     var de_SelectObjectContentCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
       const data = output.body;
@@ -43907,7 +43968,7 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_SSE]: [, output.headers[_xasse]],
         [_ETa]: [, output.headers[_eta]],
@@ -43918,27 +43979,27 @@ var require_dist_cjs71 = __commonJS({
         [_SSECA]: [, output.headers[_xasseca]],
         [_SSECKMD]: [, output.headers[_xasseckm]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_RC]: [, output.headers[_xarc]]
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_UploadPartCommand");
     var de_UploadPartCopyCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output),
         [_CSVI]: [, output.headers[_xacsvi]],
         [_SSE]: [, output.headers[_xasse]],
         [_SSECA]: [, output.headers[_xasseca]],
         [_SSECKMD]: [, output.headers[_xasseckm]],
         [_SSEKMSKI]: [, output.headers[_xasseakki]],
-        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client4.parseBoolean)(output.headers[_xassebke])],
+        [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client5.parseBoolean)(output.headers[_xassebke])],
         [_RC]: [, output.headers[_xarc]]
       });
-      const data = (0, import_smithy_client4.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
+      const data = (0, import_smithy_client5.expectObject)(await (0, import_core2.parseXmlBody)(output.body, context));
       contents.CopyPartResult = de_CopyPartResult(data, context);
       return contents;
     }, "de_UploadPartCopyCommand");
@@ -43946,10 +44007,10 @@ var require_dist_cjs71 = __commonJS({
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
       }
-      const contents = (0, import_smithy_client4.map)({
+      const contents = (0, import_smithy_client5.map)({
         $metadata: deserializeMetadata(output)
       });
-      await (0, import_smithy_client4.collectBody)(output.body, context);
+      await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
     }, "de_WriteGetObjectResponseCommand");
     var de_CommandError = /* @__PURE__ */ __name(async (output, context) => {
@@ -43995,93 +44056,93 @@ var require_dist_cjs71 = __commonJS({
           });
       }
     }, "de_CommandError");
-    var throwDefaultError = (0, import_smithy_client4.withBaseException)(S3ServiceException);
+    var throwDefaultError = (0, import_smithy_client5.withBaseException)(S3ServiceException);
     var de_BucketAlreadyExistsRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new BucketAlreadyExists({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_BucketAlreadyExistsRes");
     var de_BucketAlreadyOwnedByYouRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new BucketAlreadyOwnedByYou({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_BucketAlreadyOwnedByYouRes");
     var de_InvalidObjectStateRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       if (data[_AT] != null) {
-        contents[_AT] = (0, import_smithy_client4.expectString)(data[_AT]);
+        contents[_AT] = (0, import_smithy_client5.expectString)(data[_AT]);
       }
       if (data[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(data[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(data[_SC]);
       }
       const exception = new InvalidObjectState({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_InvalidObjectStateRes");
     var de_NoSuchBucketRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new NoSuchBucket({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_NoSuchBucketRes");
     var de_NoSuchKeyRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new NoSuchKey({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_NoSuchKeyRes");
     var de_NoSuchUploadRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new NoSuchUpload({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_NoSuchUploadRes");
     var de_NotFoundRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new NotFound({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_NotFoundRes");
     var de_ObjectAlreadyInActiveTierErrorRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new ObjectAlreadyInActiveTierError({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_ObjectAlreadyInActiveTierErrorRes");
     var de_ObjectNotInActiveTierErrorRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
-      const contents = (0, import_smithy_client4.map)({});
+      const contents = (0, import_smithy_client5.map)({});
       const data = parsedOutput.body;
       const exception = new ObjectNotInActiveTierError({
         $metadata: deserializeMetadata(parsedOutput),
         ...contents
       });
-      return (0, import_smithy_client4.decorateServiceException)(exception, parsedOutput.body);
+      return (0, import_smithy_client5.decorateServiceException)(exception, parsedOutput.body);
     }, "de_ObjectNotInActiveTierErrorRes");
     var de_SelectObjectContentEventStream = /* @__PURE__ */ __name((output, context) => {
       return context.eventStreamMarshaller.deserialize(output, async (event) => {
@@ -44664,7 +44725,7 @@ var require_dist_cjs71 = __commonJS({
     var se_LifecycleExpiration = /* @__PURE__ */ __name((input, context) => {
       const bn = new import_xml_builder.XmlNode(_LEi);
       if (input[_Dat] != null) {
-        bn.c(import_xml_builder.XmlNode.of(_Dat, (0, import_smithy_client4.serializeDateTime)(input[_Dat]).toString()).n(_Dat));
+        bn.c(import_xml_builder.XmlNode.of(_Dat, (0, import_smithy_client5.serializeDateTime)(input[_Dat]).toString()).n(_Dat));
       }
       if (input[_Da] != null) {
         bn.c(import_xml_builder.XmlNode.of(_Da, String(input[_Da])).n(_Da));
@@ -44934,7 +44995,7 @@ var require_dist_cjs71 = __commonJS({
         bn.c(import_xml_builder.XmlNode.of(_OLRM, input[_Mo]).n(_Mo));
       }
       if (input[_RUD] != null) {
-        bn.c(import_xml_builder.XmlNode.of(_Dat, (0, import_smithy_client4.serializeDateTime)(input[_RUD]).toString()).n(_RUD));
+        bn.c(import_xml_builder.XmlNode.of(_Dat, (0, import_smithy_client5.serializeDateTime)(input[_RUD]).toString()).n(_RUD));
       }
       return bn;
     }, "se_ObjectLockRetention");
@@ -45402,7 +45463,7 @@ var require_dist_cjs71 = __commonJS({
     var se_Transition = /* @__PURE__ */ __name((input, context) => {
       const bn = new import_xml_builder.XmlNode(_Tra);
       if (input[_Dat] != null) {
-        bn.c(import_xml_builder.XmlNode.of(_Dat, (0, import_smithy_client4.serializeDateTime)(input[_Dat]).toString()).n(_Dat));
+        bn.c(import_xml_builder.XmlNode.of(_Dat, (0, import_smithy_client5.serializeDateTime)(input[_Dat]).toString()).n(_Dat));
       }
       if (input[_Da] != null) {
         bn.c(import_xml_builder.XmlNode.of(_Da, String(input[_Da])).n(_Da));
@@ -45451,52 +45512,52 @@ var require_dist_cjs71 = __commonJS({
     var de_AbortIncompleteMultipartUpload = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_DAI] != null) {
-        contents[_DAI] = (0, import_smithy_client4.strictParseInt32)(output[_DAI]);
+        contents[_DAI] = (0, import_smithy_client5.strictParseInt32)(output[_DAI]);
       }
       return contents;
     }, "de_AbortIncompleteMultipartUpload");
     var de_AccessControlTranslation = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_O] != null) {
-        contents[_O] = (0, import_smithy_client4.expectString)(output[_O]);
+        contents[_O] = (0, import_smithy_client5.expectString)(output[_O]);
       }
       return contents;
     }, "de_AccessControlTranslation");
     var de_AllowedHeaders = /* @__PURE__ */ __name((output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
-        return (0, import_smithy_client4.expectString)(entry);
+        return (0, import_smithy_client5.expectString)(entry);
       });
     }, "de_AllowedHeaders");
     var de_AllowedMethods = /* @__PURE__ */ __name((output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
-        return (0, import_smithy_client4.expectString)(entry);
+        return (0, import_smithy_client5.expectString)(entry);
       });
     }, "de_AllowedMethods");
     var de_AllowedOrigins = /* @__PURE__ */ __name((output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
-        return (0, import_smithy_client4.expectString)(entry);
+        return (0, import_smithy_client5.expectString)(entry);
       });
     }, "de_AllowedOrigins");
     var de_AnalyticsAndOperator = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output.Tag === "") {
         contents[_Tag] = [];
       } else if (output[_Ta] != null) {
-        contents[_Tag] = de_TagSet((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ta]), context);
+        contents[_Tag] = de_TagSet((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ta]), context);
       }
       return contents;
     }, "de_AnalyticsAndOperator");
     var de_AnalyticsConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output.Filter === "") {
       } else if (output[_F] != null) {
-        contents[_F] = de_AnalyticsFilter((0, import_smithy_client4.expectUnion)(output[_F]), context);
+        contents[_F] = de_AnalyticsFilter((0, import_smithy_client5.expectUnion)(output[_F]), context);
       }
       if (output[_SCA] != null) {
         contents[_SCA] = de_StorageClassAnalysis(output[_SCA], context);
@@ -45518,7 +45579,7 @@ var require_dist_cjs71 = __commonJS({
     var de_AnalyticsFilter = /* @__PURE__ */ __name((output, context) => {
       if (output[_P] != null) {
         return {
-          Prefix: (0, import_smithy_client4.expectString)(output[_P])
+          Prefix: (0, import_smithy_client5.expectString)(output[_P])
         };
       }
       if (output[_Ta] != null) {
@@ -45536,26 +45597,26 @@ var require_dist_cjs71 = __commonJS({
     var de_AnalyticsS3BucketDestination = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Fo] != null) {
-        contents[_Fo] = (0, import_smithy_client4.expectString)(output[_Fo]);
+        contents[_Fo] = (0, import_smithy_client5.expectString)(output[_Fo]);
       }
       if (output[_BAI] != null) {
-        contents[_BAI] = (0, import_smithy_client4.expectString)(output[_BAI]);
+        contents[_BAI] = (0, import_smithy_client5.expectString)(output[_BAI]);
       }
       if (output[_B] != null) {
-        contents[_B] = (0, import_smithy_client4.expectString)(output[_B]);
+        contents[_B] = (0, import_smithy_client5.expectString)(output[_B]);
       }
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       return contents;
     }, "de_AnalyticsS3BucketDestination");
     var de_Bucket = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_N] != null) {
-        contents[_N] = (0, import_smithy_client4.expectString)(output[_N]);
+        contents[_N] = (0, import_smithy_client5.expectString)(output[_N]);
       }
       if (output[_CDr] != null) {
-        contents[_CDr] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_CDr]));
+        contents[_CDr] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_CDr]));
       }
       return contents;
     }, "de_Bucket");
@@ -45567,28 +45628,28 @@ var require_dist_cjs71 = __commonJS({
     var de_Checksum = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_CCRC] != null) {
-        contents[_CCRC] = (0, import_smithy_client4.expectString)(output[_CCRC]);
+        contents[_CCRC] = (0, import_smithy_client5.expectString)(output[_CCRC]);
       }
       if (output[_CCRCC] != null) {
-        contents[_CCRCC] = (0, import_smithy_client4.expectString)(output[_CCRCC]);
+        contents[_CCRCC] = (0, import_smithy_client5.expectString)(output[_CCRCC]);
       }
       if (output[_CSHA] != null) {
-        contents[_CSHA] = (0, import_smithy_client4.expectString)(output[_CSHA]);
+        contents[_CSHA] = (0, import_smithy_client5.expectString)(output[_CSHA]);
       }
       if (output[_CSHAh] != null) {
-        contents[_CSHAh] = (0, import_smithy_client4.expectString)(output[_CSHAh]);
+        contents[_CSHAh] = (0, import_smithy_client5.expectString)(output[_CSHAh]);
       }
       return contents;
     }, "de_Checksum");
     var de_ChecksumAlgorithmList = /* @__PURE__ */ __name((output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
-        return (0, import_smithy_client4.expectString)(entry);
+        return (0, import_smithy_client5.expectString)(entry);
       });
     }, "de_ChecksumAlgorithmList");
     var de_CommonPrefix = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       return contents;
     }, "de_CommonPrefix");
@@ -45600,10 +45661,10 @@ var require_dist_cjs71 = __commonJS({
     var de_Condition = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_HECRE] != null) {
-        contents[_HECRE] = (0, import_smithy_client4.expectString)(output[_HECRE]);
+        contents[_HECRE] = (0, import_smithy_client5.expectString)(output[_HECRE]);
       }
       if (output[_KPE] != null) {
-        contents[_KPE] = (0, import_smithy_client4.expectString)(output[_KPE]);
+        contents[_KPE] = (0, import_smithy_client5.expectString)(output[_KPE]);
       }
       return contents;
     }, "de_Condition");
@@ -45614,74 +45675,74 @@ var require_dist_cjs71 = __commonJS({
     var de_CopyObjectResult = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ETa] != null) {
-        contents[_ETa] = (0, import_smithy_client4.expectString)(output[_ETa]);
+        contents[_ETa] = (0, import_smithy_client5.expectString)(output[_ETa]);
       }
       if (output[_LM] != null) {
-        contents[_LM] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_LM]));
+        contents[_LM] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_LM]));
       }
       if (output[_CCRC] != null) {
-        contents[_CCRC] = (0, import_smithy_client4.expectString)(output[_CCRC]);
+        contents[_CCRC] = (0, import_smithy_client5.expectString)(output[_CCRC]);
       }
       if (output[_CCRCC] != null) {
-        contents[_CCRCC] = (0, import_smithy_client4.expectString)(output[_CCRCC]);
+        contents[_CCRCC] = (0, import_smithy_client5.expectString)(output[_CCRCC]);
       }
       if (output[_CSHA] != null) {
-        contents[_CSHA] = (0, import_smithy_client4.expectString)(output[_CSHA]);
+        contents[_CSHA] = (0, import_smithy_client5.expectString)(output[_CSHA]);
       }
       if (output[_CSHAh] != null) {
-        contents[_CSHAh] = (0, import_smithy_client4.expectString)(output[_CSHAh]);
+        contents[_CSHAh] = (0, import_smithy_client5.expectString)(output[_CSHAh]);
       }
       return contents;
     }, "de_CopyObjectResult");
     var de_CopyPartResult = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ETa] != null) {
-        contents[_ETa] = (0, import_smithy_client4.expectString)(output[_ETa]);
+        contents[_ETa] = (0, import_smithy_client5.expectString)(output[_ETa]);
       }
       if (output[_LM] != null) {
-        contents[_LM] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_LM]));
+        contents[_LM] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_LM]));
       }
       if (output[_CCRC] != null) {
-        contents[_CCRC] = (0, import_smithy_client4.expectString)(output[_CCRC]);
+        contents[_CCRC] = (0, import_smithy_client5.expectString)(output[_CCRC]);
       }
       if (output[_CCRCC] != null) {
-        contents[_CCRCC] = (0, import_smithy_client4.expectString)(output[_CCRCC]);
+        contents[_CCRCC] = (0, import_smithy_client5.expectString)(output[_CCRCC]);
       }
       if (output[_CSHA] != null) {
-        contents[_CSHA] = (0, import_smithy_client4.expectString)(output[_CSHA]);
+        contents[_CSHA] = (0, import_smithy_client5.expectString)(output[_CSHA]);
       }
       if (output[_CSHAh] != null) {
-        contents[_CSHAh] = (0, import_smithy_client4.expectString)(output[_CSHAh]);
+        contents[_CSHAh] = (0, import_smithy_client5.expectString)(output[_CSHAh]);
       }
       return contents;
     }, "de_CopyPartResult");
     var de_CORSRule = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ID_] != null) {
-        contents[_ID_] = (0, import_smithy_client4.expectString)(output[_ID_]);
+        contents[_ID_] = (0, import_smithy_client5.expectString)(output[_ID_]);
       }
       if (output.AllowedHeader === "") {
         contents[_AHl] = [];
       } else if (output[_AH] != null) {
-        contents[_AHl] = de_AllowedHeaders((0, import_smithy_client4.getArrayIfSingleItem)(output[_AH]), context);
+        contents[_AHl] = de_AllowedHeaders((0, import_smithy_client5.getArrayIfSingleItem)(output[_AH]), context);
       }
       if (output.AllowedMethod === "") {
         contents[_AMl] = [];
       } else if (output[_AM] != null) {
-        contents[_AMl] = de_AllowedMethods((0, import_smithy_client4.getArrayIfSingleItem)(output[_AM]), context);
+        contents[_AMl] = de_AllowedMethods((0, import_smithy_client5.getArrayIfSingleItem)(output[_AM]), context);
       }
       if (output.AllowedOrigin === "") {
         contents[_AOl] = [];
       } else if (output[_AO] != null) {
-        contents[_AOl] = de_AllowedOrigins((0, import_smithy_client4.getArrayIfSingleItem)(output[_AO]), context);
+        contents[_AOl] = de_AllowedOrigins((0, import_smithy_client5.getArrayIfSingleItem)(output[_AO]), context);
       }
       if (output.ExposeHeader === "") {
         contents[_EH] = [];
       } else if (output[_EHx] != null) {
-        contents[_EH] = de_ExposeHeaders((0, import_smithy_client4.getArrayIfSingleItem)(output[_EHx]), context);
+        contents[_EH] = de_ExposeHeaders((0, import_smithy_client5.getArrayIfSingleItem)(output[_EHx]), context);
       }
       if (output[_MAS] != null) {
-        contents[_MAS] = (0, import_smithy_client4.strictParseInt32)(output[_MAS]);
+        contents[_MAS] = (0, import_smithy_client5.strictParseInt32)(output[_MAS]);
       }
       return contents;
     }, "de_CORSRule");
@@ -45693,29 +45754,29 @@ var require_dist_cjs71 = __commonJS({
     var de_DefaultRetention = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Mo] != null) {
-        contents[_Mo] = (0, import_smithy_client4.expectString)(output[_Mo]);
+        contents[_Mo] = (0, import_smithy_client5.expectString)(output[_Mo]);
       }
       if (output[_Da] != null) {
-        contents[_Da] = (0, import_smithy_client4.strictParseInt32)(output[_Da]);
+        contents[_Da] = (0, import_smithy_client5.strictParseInt32)(output[_Da]);
       }
       if (output[_Y] != null) {
-        contents[_Y] = (0, import_smithy_client4.strictParseInt32)(output[_Y]);
+        contents[_Y] = (0, import_smithy_client5.strictParseInt32)(output[_Y]);
       }
       return contents;
     }, "de_DefaultRetention");
     var de_DeletedObject = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       if (output[_VI] != null) {
-        contents[_VI] = (0, import_smithy_client4.expectString)(output[_VI]);
+        contents[_VI] = (0, import_smithy_client5.expectString)(output[_VI]);
       }
       if (output[_DM] != null) {
-        contents[_DM] = (0, import_smithy_client4.parseBoolean)(output[_DM]);
+        contents[_DM] = (0, import_smithy_client5.parseBoolean)(output[_DM]);
       }
       if (output[_DMVI] != null) {
-        contents[_DMVI] = (0, import_smithy_client4.expectString)(output[_DMVI]);
+        contents[_DMVI] = (0, import_smithy_client5.expectString)(output[_DMVI]);
       }
       return contents;
     }, "de_DeletedObject");
@@ -45730,23 +45791,23 @@ var require_dist_cjs71 = __commonJS({
         contents[_O] = de_Owner(output[_O], context);
       }
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       if (output[_VI] != null) {
-        contents[_VI] = (0, import_smithy_client4.expectString)(output[_VI]);
+        contents[_VI] = (0, import_smithy_client5.expectString)(output[_VI]);
       }
       if (output[_IL] != null) {
-        contents[_IL] = (0, import_smithy_client4.parseBoolean)(output[_IL]);
+        contents[_IL] = (0, import_smithy_client5.parseBoolean)(output[_IL]);
       }
       if (output[_LM] != null) {
-        contents[_LM] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_LM]));
+        contents[_LM] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_LM]));
       }
       return contents;
     }, "de_DeleteMarkerEntry");
     var de_DeleteMarkerReplication = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       return contents;
     }, "de_DeleteMarkerReplication");
@@ -45758,13 +45819,13 @@ var require_dist_cjs71 = __commonJS({
     var de_Destination = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_B] != null) {
-        contents[_B] = (0, import_smithy_client4.expectString)(output[_B]);
+        contents[_B] = (0, import_smithy_client5.expectString)(output[_B]);
       }
       if (output[_Ac] != null) {
-        contents[_Ac] = (0, import_smithy_client4.expectString)(output[_Ac]);
+        contents[_Ac] = (0, import_smithy_client5.expectString)(output[_Ac]);
       }
       if (output[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(output[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(output[_SC]);
       }
       if (output[_ACT] != null) {
         contents[_ACT] = de_AccessControlTranslation(output[_ACT], context);
@@ -45783,7 +45844,7 @@ var require_dist_cjs71 = __commonJS({
     var de_EncryptionConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_RKKID] != null) {
-        contents[_RKKID] = (0, import_smithy_client4.expectString)(output[_RKKID]);
+        contents[_RKKID] = (0, import_smithy_client5.expectString)(output[_RKKID]);
       }
       return contents;
     }, "de_EncryptionConfiguration");
@@ -45794,23 +45855,23 @@ var require_dist_cjs71 = __commonJS({
     var de__Error = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       if (output[_VI] != null) {
-        contents[_VI] = (0, import_smithy_client4.expectString)(output[_VI]);
+        contents[_VI] = (0, import_smithy_client5.expectString)(output[_VI]);
       }
       if (output[_Cod] != null) {
-        contents[_Cod] = (0, import_smithy_client4.expectString)(output[_Cod]);
+        contents[_Cod] = (0, import_smithy_client5.expectString)(output[_Cod]);
       }
       if (output[_Mes] != null) {
-        contents[_Mes] = (0, import_smithy_client4.expectString)(output[_Mes]);
+        contents[_Mes] = (0, import_smithy_client5.expectString)(output[_Mes]);
       }
       return contents;
     }, "de__Error");
     var de_ErrorDocument = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       return contents;
     }, "de_ErrorDocument");
@@ -45825,28 +45886,28 @@ var require_dist_cjs71 = __commonJS({
     }, "de_EventBridgeConfiguration");
     var de_EventList = /* @__PURE__ */ __name((output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
-        return (0, import_smithy_client4.expectString)(entry);
+        return (0, import_smithy_client5.expectString)(entry);
       });
     }, "de_EventList");
     var de_ExistingObjectReplication = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       return contents;
     }, "de_ExistingObjectReplication");
     var de_ExposeHeaders = /* @__PURE__ */ __name((output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
-        return (0, import_smithy_client4.expectString)(entry);
+        return (0, import_smithy_client5.expectString)(entry);
       });
     }, "de_ExposeHeaders");
     var de_FilterRule = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_N] != null) {
-        contents[_N] = (0, import_smithy_client4.expectString)(output[_N]);
+        contents[_N] = (0, import_smithy_client5.expectString)(output[_N]);
       }
       if (output[_Va] != null) {
-        contents[_Va] = (0, import_smithy_client4.expectString)(output[_Va]);
+        contents[_Va] = (0, import_smithy_client5.expectString)(output[_Va]);
       }
       return contents;
     }, "de_FilterRule");
@@ -45858,24 +45919,24 @@ var require_dist_cjs71 = __commonJS({
     var de_GetObjectAttributesParts = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_PC] != null) {
-        contents[_TPC] = (0, import_smithy_client4.strictParseInt32)(output[_PC]);
+        contents[_TPC] = (0, import_smithy_client5.strictParseInt32)(output[_PC]);
       }
       if (output[_PNM] != null) {
-        contents[_PNM] = (0, import_smithy_client4.expectString)(output[_PNM]);
+        contents[_PNM] = (0, import_smithy_client5.expectString)(output[_PNM]);
       }
       if (output[_NPNM] != null) {
-        contents[_NPNM] = (0, import_smithy_client4.expectString)(output[_NPNM]);
+        contents[_NPNM] = (0, import_smithy_client5.expectString)(output[_NPNM]);
       }
       if (output[_MP] != null) {
-        contents[_MP] = (0, import_smithy_client4.strictParseInt32)(output[_MP]);
+        contents[_MP] = (0, import_smithy_client5.strictParseInt32)(output[_MP]);
       }
       if (output[_IT] != null) {
-        contents[_IT] = (0, import_smithy_client4.parseBoolean)(output[_IT]);
+        contents[_IT] = (0, import_smithy_client5.parseBoolean)(output[_IT]);
       }
       if (output.Part === "") {
         contents[_Part] = [];
       } else if (output[_Par] != null) {
-        contents[_Part] = de_PartsList((0, import_smithy_client4.getArrayIfSingleItem)(output[_Par]), context);
+        contents[_Part] = de_PartsList((0, import_smithy_client5.getArrayIfSingleItem)(output[_Par]), context);
       }
       return contents;
     }, "de_GetObjectAttributesParts");
@@ -45885,26 +45946,26 @@ var require_dist_cjs71 = __commonJS({
         contents[_Gra] = de_Grantee(output[_Gra], context);
       }
       if (output[_Pe] != null) {
-        contents[_Pe] = (0, import_smithy_client4.expectString)(output[_Pe]);
+        contents[_Pe] = (0, import_smithy_client5.expectString)(output[_Pe]);
       }
       return contents;
     }, "de_Grant");
     var de_Grantee = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_DN] != null) {
-        contents[_DN] = (0, import_smithy_client4.expectString)(output[_DN]);
+        contents[_DN] = (0, import_smithy_client5.expectString)(output[_DN]);
       }
       if (output[_EA] != null) {
-        contents[_EA] = (0, import_smithy_client4.expectString)(output[_EA]);
+        contents[_EA] = (0, import_smithy_client5.expectString)(output[_EA]);
       }
       if (output[_ID_] != null) {
-        contents[_ID_] = (0, import_smithy_client4.expectString)(output[_ID_]);
+        contents[_ID_] = (0, import_smithy_client5.expectString)(output[_ID_]);
       }
       if (output[_URI] != null) {
-        contents[_URI] = (0, import_smithy_client4.expectString)(output[_URI]);
+        contents[_URI] = (0, import_smithy_client5.expectString)(output[_URI]);
       }
       if (output[_x] != null) {
-        contents[_Ty] = (0, import_smithy_client4.expectString)(output[_x]);
+        contents[_Ty] = (0, import_smithy_client5.expectString)(output[_x]);
       }
       return contents;
     }, "de_Grantee");
@@ -45916,47 +45977,47 @@ var require_dist_cjs71 = __commonJS({
     var de_IndexDocument = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Su] != null) {
-        contents[_Su] = (0, import_smithy_client4.expectString)(output[_Su]);
+        contents[_Su] = (0, import_smithy_client5.expectString)(output[_Su]);
       }
       return contents;
     }, "de_IndexDocument");
     var de_Initiator = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ID_] != null) {
-        contents[_ID_] = (0, import_smithy_client4.expectString)(output[_ID_]);
+        contents[_ID_] = (0, import_smithy_client5.expectString)(output[_ID_]);
       }
       if (output[_DN] != null) {
-        contents[_DN] = (0, import_smithy_client4.expectString)(output[_DN]);
+        contents[_DN] = (0, import_smithy_client5.expectString)(output[_DN]);
       }
       return contents;
     }, "de_Initiator");
     var de_IntelligentTieringAndOperator = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output.Tag === "") {
         contents[_Tag] = [];
       } else if (output[_Ta] != null) {
-        contents[_Tag] = de_TagSet((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ta]), context);
+        contents[_Tag] = de_TagSet((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ta]), context);
       }
       return contents;
     }, "de_IntelligentTieringAndOperator");
     var de_IntelligentTieringConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output[_F] != null) {
         contents[_F] = de_IntelligentTieringFilter(output[_F], context);
       }
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       if (output.Tiering === "") {
         contents[_Tie] = [];
       } else if (output[_Tier] != null) {
-        contents[_Tie] = de_TieringList((0, import_smithy_client4.getArrayIfSingleItem)(output[_Tier]), context);
+        contents[_Tie] = de_TieringList((0, import_smithy_client5.getArrayIfSingleItem)(output[_Tier]), context);
       }
       return contents;
     }, "de_IntelligentTieringConfiguration");
@@ -45968,7 +46029,7 @@ var require_dist_cjs71 = __commonJS({
     var de_IntelligentTieringFilter = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output[_Ta] != null) {
         contents[_Ta] = de_Tag(output[_Ta], context);
@@ -45984,21 +46045,21 @@ var require_dist_cjs71 = __commonJS({
         contents[_Des] = de_InventoryDestination(output[_Des], context);
       }
       if (output[_IE] != null) {
-        contents[_IE] = (0, import_smithy_client4.parseBoolean)(output[_IE]);
+        contents[_IE] = (0, import_smithy_client5.parseBoolean)(output[_IE]);
       }
       if (output[_F] != null) {
         contents[_F] = de_InventoryFilter(output[_F], context);
       }
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output[_IOV] != null) {
-        contents[_IOV] = (0, import_smithy_client4.expectString)(output[_IOV]);
+        contents[_IOV] = (0, import_smithy_client5.expectString)(output[_IOV]);
       }
       if (output.OptionalFields === "") {
         contents[_OF] = [];
       } else if (output[_OF] != null && output[_OF][_Fi] != null) {
-        contents[_OF] = de_InventoryOptionalFields((0, import_smithy_client4.getArrayIfSingleItem)(output[_OF][_Fi]), context);
+        contents[_OF] = de_InventoryOptionalFields((0, import_smithy_client5.getArrayIfSingleItem)(output[_OF][_Fi]), context);
       }
       if (output[_Sc] != null) {
         contents[_Sc] = de_InventorySchedule(output[_Sc], context);
@@ -46030,28 +46091,28 @@ var require_dist_cjs71 = __commonJS({
     var de_InventoryFilter = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       return contents;
     }, "de_InventoryFilter");
     var de_InventoryOptionalFields = /* @__PURE__ */ __name((output, context) => {
       return (output || []).filter((e) => e != null).map((entry) => {
-        return (0, import_smithy_client4.expectString)(entry);
+        return (0, import_smithy_client5.expectString)(entry);
       });
     }, "de_InventoryOptionalFields");
     var de_InventoryS3BucketDestination = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_AIc] != null) {
-        contents[_AIc] = (0, import_smithy_client4.expectString)(output[_AIc]);
+        contents[_AIc] = (0, import_smithy_client5.expectString)(output[_AIc]);
       }
       if (output[_B] != null) {
-        contents[_B] = (0, import_smithy_client4.expectString)(output[_B]);
+        contents[_B] = (0, import_smithy_client5.expectString)(output[_B]);
       }
       if (output[_Fo] != null) {
-        contents[_Fo] = (0, import_smithy_client4.expectString)(output[_Fo]);
+        contents[_Fo] = (0, import_smithy_client5.expectString)(output[_Fo]);
       }
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output[_En] != null) {
         contents[_En] = de_InventoryEncryption(output[_En], context);
@@ -46061,22 +46122,22 @@ var require_dist_cjs71 = __commonJS({
     var de_InventorySchedule = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Fr] != null) {
-        contents[_Fr] = (0, import_smithy_client4.expectString)(output[_Fr]);
+        contents[_Fr] = (0, import_smithy_client5.expectString)(output[_Fr]);
       }
       return contents;
     }, "de_InventorySchedule");
     var de_LambdaFunctionConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output[_CF] != null) {
-        contents[_LFA] = (0, import_smithy_client4.expectString)(output[_CF]);
+        contents[_LFA] = (0, import_smithy_client5.expectString)(output[_CF]);
       }
       if (output.Event === "") {
         contents[_Eve] = [];
       } else if (output[_Ev] != null) {
-        contents[_Eve] = de_EventList((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ev]), context);
+        contents[_Eve] = de_EventList((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ev]), context);
       }
       if (output[_F] != null) {
         contents[_F] = de_NotificationConfigurationFilter(output[_F], context);
@@ -46091,13 +46152,13 @@ var require_dist_cjs71 = __commonJS({
     var de_LifecycleExpiration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Dat] != null) {
-        contents[_Dat] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_Dat]));
+        contents[_Dat] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_Dat]));
       }
       if (output[_Da] != null) {
-        contents[_Da] = (0, import_smithy_client4.strictParseInt32)(output[_Da]);
+        contents[_Da] = (0, import_smithy_client5.strictParseInt32)(output[_Da]);
       }
       if (output[_EODM] != null) {
-        contents[_EODM] = (0, import_smithy_client4.parseBoolean)(output[_EODM]);
+        contents[_EODM] = (0, import_smithy_client5.parseBoolean)(output[_EODM]);
       }
       return contents;
     }, "de_LifecycleExpiration");
@@ -46107,27 +46168,27 @@ var require_dist_cjs71 = __commonJS({
         contents[_Exp] = de_LifecycleExpiration(output[_Exp], context);
       }
       if (output[_ID_] != null) {
-        contents[_ID_] = (0, import_smithy_client4.expectString)(output[_ID_]);
+        contents[_ID_] = (0, import_smithy_client5.expectString)(output[_ID_]);
       }
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output.Filter === "") {
       } else if (output[_F] != null) {
-        contents[_F] = de_LifecycleRuleFilter((0, import_smithy_client4.expectUnion)(output[_F]), context);
+        contents[_F] = de_LifecycleRuleFilter((0, import_smithy_client5.expectUnion)(output[_F]), context);
       }
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       if (output.Transition === "") {
         contents[_Tr] = [];
       } else if (output[_Tra] != null) {
-        contents[_Tr] = de_TransitionList((0, import_smithy_client4.getArrayIfSingleItem)(output[_Tra]), context);
+        contents[_Tr] = de_TransitionList((0, import_smithy_client5.getArrayIfSingleItem)(output[_Tra]), context);
       }
       if (output.NoncurrentVersionTransition === "") {
         contents[_NVT] = [];
       } else if (output[_NVTo] != null) {
-        contents[_NVT] = de_NoncurrentVersionTransitionList((0, import_smithy_client4.getArrayIfSingleItem)(output[_NVTo]), context);
+        contents[_NVT] = de_NoncurrentVersionTransitionList((0, import_smithy_client5.getArrayIfSingleItem)(output[_NVTo]), context);
       }
       if (output[_NVE] != null) {
         contents[_NVE] = de_NoncurrentVersionExpiration(output[_NVE], context);
@@ -46140,25 +46201,25 @@ var require_dist_cjs71 = __commonJS({
     var de_LifecycleRuleAndOperator = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output.Tag === "") {
         contents[_Tag] = [];
       } else if (output[_Ta] != null) {
-        contents[_Tag] = de_TagSet((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ta]), context);
+        contents[_Tag] = de_TagSet((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ta]), context);
       }
       if (output[_OSGT] != null) {
-        contents[_OSGT] = (0, import_smithy_client4.strictParseLong)(output[_OSGT]);
+        contents[_OSGT] = (0, import_smithy_client5.strictParseLong)(output[_OSGT]);
       }
       if (output[_OSLT] != null) {
-        contents[_OSLT] = (0, import_smithy_client4.strictParseLong)(output[_OSLT]);
+        contents[_OSLT] = (0, import_smithy_client5.strictParseLong)(output[_OSLT]);
       }
       return contents;
     }, "de_LifecycleRuleAndOperator");
     var de_LifecycleRuleFilter = /* @__PURE__ */ __name((output, context) => {
       if (output[_P] != null) {
         return {
-          Prefix: (0, import_smithy_client4.expectString)(output[_P])
+          Prefix: (0, import_smithy_client5.expectString)(output[_P])
         };
       }
       if (output[_Ta] != null) {
@@ -46168,12 +46229,12 @@ var require_dist_cjs71 = __commonJS({
       }
       if (output[_OSGT] != null) {
         return {
-          ObjectSizeGreaterThan: (0, import_smithy_client4.strictParseLong)(output[_OSGT])
+          ObjectSizeGreaterThan: (0, import_smithy_client5.strictParseLong)(output[_OSGT])
         };
       }
       if (output[_OSLT] != null) {
         return {
-          ObjectSizeLessThan: (0, import_smithy_client4.strictParseLong)(output[_OSLT])
+          ObjectSizeLessThan: (0, import_smithy_client5.strictParseLong)(output[_OSLT])
         };
       }
       if (output[_A] != null) {
@@ -46191,15 +46252,15 @@ var require_dist_cjs71 = __commonJS({
     var de_LoggingEnabled = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_TB] != null) {
-        contents[_TB] = (0, import_smithy_client4.expectString)(output[_TB]);
+        contents[_TB] = (0, import_smithy_client5.expectString)(output[_TB]);
       }
       if (output.TargetGrants === "") {
         contents[_TG] = [];
       } else if (output[_TG] != null && output[_TG][_G] != null) {
-        contents[_TG] = de_TargetGrants((0, import_smithy_client4.getArrayIfSingleItem)(output[_TG][_G]), context);
+        contents[_TG] = de_TargetGrants((0, import_smithy_client5.getArrayIfSingleItem)(output[_TG][_G]), context);
       }
       if (output[_TP] != null) {
-        contents[_TP] = (0, import_smithy_client4.expectString)(output[_TP]);
+        contents[_TP] = (0, import_smithy_client5.expectString)(output[_TP]);
       }
       if (output[_TOKF] != null) {
         contents[_TOKF] = de_TargetObjectKeyFormat(output[_TOKF], context);
@@ -46209,7 +46270,7 @@ var require_dist_cjs71 = __commonJS({
     var de_Metrics = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       if (output[_ETv] != null) {
         contents[_ETv] = de_ReplicationTimeValue(output[_ETv], context);
@@ -46219,26 +46280,26 @@ var require_dist_cjs71 = __commonJS({
     var de_MetricsAndOperator = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output.Tag === "") {
         contents[_Tag] = [];
       } else if (output[_Ta] != null) {
-        contents[_Tag] = de_TagSet((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ta]), context);
+        contents[_Tag] = de_TagSet((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ta]), context);
       }
       if (output[_APAc] != null) {
-        contents[_APAc] = (0, import_smithy_client4.expectString)(output[_APAc]);
+        contents[_APAc] = (0, import_smithy_client5.expectString)(output[_APAc]);
       }
       return contents;
     }, "de_MetricsAndOperator");
     var de_MetricsConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output.Filter === "") {
       } else if (output[_F] != null) {
-        contents[_F] = de_MetricsFilter((0, import_smithy_client4.expectUnion)(output[_F]), context);
+        contents[_F] = de_MetricsFilter((0, import_smithy_client5.expectUnion)(output[_F]), context);
       }
       return contents;
     }, "de_MetricsConfiguration");
@@ -46250,7 +46311,7 @@ var require_dist_cjs71 = __commonJS({
     var de_MetricsFilter = /* @__PURE__ */ __name((output, context) => {
       if (output[_P] != null) {
         return {
-          Prefix: (0, import_smithy_client4.expectString)(output[_P])
+          Prefix: (0, import_smithy_client5.expectString)(output[_P])
         };
       }
       if (output[_Ta] != null) {
@@ -46260,7 +46321,7 @@ var require_dist_cjs71 = __commonJS({
       }
       if (output[_APAc] != null) {
         return {
-          AccessPointArn: (0, import_smithy_client4.expectString)(output[_APAc])
+          AccessPointArn: (0, import_smithy_client5.expectString)(output[_APAc])
         };
       }
       if (output[_A] != null) {
@@ -46273,16 +46334,16 @@ var require_dist_cjs71 = __commonJS({
     var de_MultipartUpload = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_UI] != null) {
-        contents[_UI] = (0, import_smithy_client4.expectString)(output[_UI]);
+        contents[_UI] = (0, import_smithy_client5.expectString)(output[_UI]);
       }
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       if (output[_Ini] != null) {
-        contents[_Ini] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_Ini]));
+        contents[_Ini] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_Ini]));
       }
       if (output[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(output[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(output[_SC]);
       }
       if (output[_O] != null) {
         contents[_O] = de_Owner(output[_O], context);
@@ -46291,7 +46352,7 @@ var require_dist_cjs71 = __commonJS({
         contents[_In] = de_Initiator(output[_In], context);
       }
       if (output[_CA] != null) {
-        contents[_CA] = (0, import_smithy_client4.expectString)(output[_CA]);
+        contents[_CA] = (0, import_smithy_client5.expectString)(output[_CA]);
       }
       return contents;
     }, "de_MultipartUpload");
@@ -46303,23 +46364,23 @@ var require_dist_cjs71 = __commonJS({
     var de_NoncurrentVersionExpiration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ND] != null) {
-        contents[_ND] = (0, import_smithy_client4.strictParseInt32)(output[_ND]);
+        contents[_ND] = (0, import_smithy_client5.strictParseInt32)(output[_ND]);
       }
       if (output[_NNV] != null) {
-        contents[_NNV] = (0, import_smithy_client4.strictParseInt32)(output[_NNV]);
+        contents[_NNV] = (0, import_smithy_client5.strictParseInt32)(output[_NNV]);
       }
       return contents;
     }, "de_NoncurrentVersionExpiration");
     var de_NoncurrentVersionTransition = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ND] != null) {
-        contents[_ND] = (0, import_smithy_client4.strictParseInt32)(output[_ND]);
+        contents[_ND] = (0, import_smithy_client5.strictParseInt32)(output[_ND]);
       }
       if (output[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(output[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(output[_SC]);
       }
       if (output[_NNV] != null) {
-        contents[_NNV] = (0, import_smithy_client4.strictParseInt32)(output[_NNV]);
+        contents[_NNV] = (0, import_smithy_client5.strictParseInt32)(output[_NNV]);
       }
       return contents;
     }, "de_NoncurrentVersionTransition");
@@ -46338,24 +46399,24 @@ var require_dist_cjs71 = __commonJS({
     var de__Object = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       if (output[_LM] != null) {
-        contents[_LM] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_LM]));
+        contents[_LM] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_LM]));
       }
       if (output[_ETa] != null) {
-        contents[_ETa] = (0, import_smithy_client4.expectString)(output[_ETa]);
+        contents[_ETa] = (0, import_smithy_client5.expectString)(output[_ETa]);
       }
       if (output.ChecksumAlgorithm === "") {
         contents[_CA] = [];
       } else if (output[_CA] != null) {
-        contents[_CA] = de_ChecksumAlgorithmList((0, import_smithy_client4.getArrayIfSingleItem)(output[_CA]), context);
+        contents[_CA] = de_ChecksumAlgorithmList((0, import_smithy_client5.getArrayIfSingleItem)(output[_CA]), context);
       }
       if (output[_Si] != null) {
-        contents[_Si] = (0, import_smithy_client4.strictParseLong)(output[_Si]);
+        contents[_Si] = (0, import_smithy_client5.strictParseLong)(output[_Si]);
       }
       if (output[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(output[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(output[_SC]);
       }
       if (output[_O] != null) {
         contents[_O] = de_Owner(output[_O], context);
@@ -46373,7 +46434,7 @@ var require_dist_cjs71 = __commonJS({
     var de_ObjectLockConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_OLE] != null) {
-        contents[_OLE] = (0, import_smithy_client4.expectString)(output[_OLE]);
+        contents[_OLE] = (0, import_smithy_client5.expectString)(output[_OLE]);
       }
       if (output[_Ru] != null) {
         contents[_Ru] = de_ObjectLockRule(output[_Ru], context);
@@ -46383,17 +46444,17 @@ var require_dist_cjs71 = __commonJS({
     var de_ObjectLockLegalHold = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       return contents;
     }, "de_ObjectLockLegalHold");
     var de_ObjectLockRetention = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Mo] != null) {
-        contents[_Mo] = (0, import_smithy_client4.expectString)(output[_Mo]);
+        contents[_Mo] = (0, import_smithy_client5.expectString)(output[_Mo]);
       }
       if (output[_RUD] != null) {
-        contents[_RUD] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_RUD]));
+        contents[_RUD] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_RUD]));
       }
       return contents;
     }, "de_ObjectLockRetention");
@@ -46407,52 +46468,52 @@ var require_dist_cjs71 = __commonJS({
     var de_ObjectPart = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_PN] != null) {
-        contents[_PN] = (0, import_smithy_client4.strictParseInt32)(output[_PN]);
+        contents[_PN] = (0, import_smithy_client5.strictParseInt32)(output[_PN]);
       }
       if (output[_Si] != null) {
-        contents[_Si] = (0, import_smithy_client4.strictParseLong)(output[_Si]);
+        contents[_Si] = (0, import_smithy_client5.strictParseLong)(output[_Si]);
       }
       if (output[_CCRC] != null) {
-        contents[_CCRC] = (0, import_smithy_client4.expectString)(output[_CCRC]);
+        contents[_CCRC] = (0, import_smithy_client5.expectString)(output[_CCRC]);
       }
       if (output[_CCRCC] != null) {
-        contents[_CCRCC] = (0, import_smithy_client4.expectString)(output[_CCRCC]);
+        contents[_CCRCC] = (0, import_smithy_client5.expectString)(output[_CCRCC]);
       }
       if (output[_CSHA] != null) {
-        contents[_CSHA] = (0, import_smithy_client4.expectString)(output[_CSHA]);
+        contents[_CSHA] = (0, import_smithy_client5.expectString)(output[_CSHA]);
       }
       if (output[_CSHAh] != null) {
-        contents[_CSHAh] = (0, import_smithy_client4.expectString)(output[_CSHAh]);
+        contents[_CSHAh] = (0, import_smithy_client5.expectString)(output[_CSHAh]);
       }
       return contents;
     }, "de_ObjectPart");
     var de_ObjectVersion = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ETa] != null) {
-        contents[_ETa] = (0, import_smithy_client4.expectString)(output[_ETa]);
+        contents[_ETa] = (0, import_smithy_client5.expectString)(output[_ETa]);
       }
       if (output.ChecksumAlgorithm === "") {
         contents[_CA] = [];
       } else if (output[_CA] != null) {
-        contents[_CA] = de_ChecksumAlgorithmList((0, import_smithy_client4.getArrayIfSingleItem)(output[_CA]), context);
+        contents[_CA] = de_ChecksumAlgorithmList((0, import_smithy_client5.getArrayIfSingleItem)(output[_CA]), context);
       }
       if (output[_Si] != null) {
-        contents[_Si] = (0, import_smithy_client4.strictParseLong)(output[_Si]);
+        contents[_Si] = (0, import_smithy_client5.strictParseLong)(output[_Si]);
       }
       if (output[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(output[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(output[_SC]);
       }
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       if (output[_VI] != null) {
-        contents[_VI] = (0, import_smithy_client4.expectString)(output[_VI]);
+        contents[_VI] = (0, import_smithy_client5.expectString)(output[_VI]);
       }
       if (output[_IL] != null) {
-        contents[_IL] = (0, import_smithy_client4.parseBoolean)(output[_IL]);
+        contents[_IL] = (0, import_smithy_client5.parseBoolean)(output[_IL]);
       }
       if (output[_LM] != null) {
-        contents[_LM] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_LM]));
+        contents[_LM] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_LM]));
       }
       if (output[_O] != null) {
         contents[_O] = de_Owner(output[_O], context);
@@ -46470,10 +46531,10 @@ var require_dist_cjs71 = __commonJS({
     var de_Owner = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_DN] != null) {
-        contents[_DN] = (0, import_smithy_client4.expectString)(output[_DN]);
+        contents[_DN] = (0, import_smithy_client5.expectString)(output[_DN]);
       }
       if (output[_ID_] != null) {
-        contents[_ID_] = (0, import_smithy_client4.expectString)(output[_ID_]);
+        contents[_ID_] = (0, import_smithy_client5.expectString)(output[_ID_]);
       }
       return contents;
     }, "de_Owner");
@@ -46482,14 +46543,14 @@ var require_dist_cjs71 = __commonJS({
       if (output.Rule === "") {
         contents[_Rul] = [];
       } else if (output[_Ru] != null) {
-        contents[_Rul] = de_OwnershipControlsRules((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ru]), context);
+        contents[_Rul] = de_OwnershipControlsRules((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ru]), context);
       }
       return contents;
     }, "de_OwnershipControls");
     var de_OwnershipControlsRule = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_OO] != null) {
-        contents[_OO] = (0, import_smithy_client4.expectString)(output[_OO]);
+        contents[_OO] = (0, import_smithy_client5.expectString)(output[_OO]);
       }
       return contents;
     }, "de_OwnershipControlsRule");
@@ -46501,35 +46562,35 @@ var require_dist_cjs71 = __commonJS({
     var de_Part = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_PN] != null) {
-        contents[_PN] = (0, import_smithy_client4.strictParseInt32)(output[_PN]);
+        contents[_PN] = (0, import_smithy_client5.strictParseInt32)(output[_PN]);
       }
       if (output[_LM] != null) {
-        contents[_LM] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_LM]));
+        contents[_LM] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_LM]));
       }
       if (output[_ETa] != null) {
-        contents[_ETa] = (0, import_smithy_client4.expectString)(output[_ETa]);
+        contents[_ETa] = (0, import_smithy_client5.expectString)(output[_ETa]);
       }
       if (output[_Si] != null) {
-        contents[_Si] = (0, import_smithy_client4.strictParseLong)(output[_Si]);
+        contents[_Si] = (0, import_smithy_client5.strictParseLong)(output[_Si]);
       }
       if (output[_CCRC] != null) {
-        contents[_CCRC] = (0, import_smithy_client4.expectString)(output[_CCRC]);
+        contents[_CCRC] = (0, import_smithy_client5.expectString)(output[_CCRC]);
       }
       if (output[_CCRCC] != null) {
-        contents[_CCRCC] = (0, import_smithy_client4.expectString)(output[_CCRCC]);
+        contents[_CCRCC] = (0, import_smithy_client5.expectString)(output[_CCRCC]);
       }
       if (output[_CSHA] != null) {
-        contents[_CSHA] = (0, import_smithy_client4.expectString)(output[_CSHA]);
+        contents[_CSHA] = (0, import_smithy_client5.expectString)(output[_CSHA]);
       }
       if (output[_CSHAh] != null) {
-        contents[_CSHAh] = (0, import_smithy_client4.expectString)(output[_CSHAh]);
+        contents[_CSHAh] = (0, import_smithy_client5.expectString)(output[_CSHAh]);
       }
       return contents;
     }, "de_Part");
     var de_PartitionedPrefix = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_PDS] != null) {
-        contents[_PDS] = (0, import_smithy_client4.expectString)(output[_PDS]);
+        contents[_PDS] = (0, import_smithy_client5.expectString)(output[_PDS]);
       }
       return contents;
     }, "de_PartitionedPrefix");
@@ -46546,51 +46607,51 @@ var require_dist_cjs71 = __commonJS({
     var de_PolicyStatus = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_IP] != null) {
-        contents[_IP] = (0, import_smithy_client4.parseBoolean)(output[_IP]);
+        contents[_IP] = (0, import_smithy_client5.parseBoolean)(output[_IP]);
       }
       return contents;
     }, "de_PolicyStatus");
     var de_Progress = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_BS] != null) {
-        contents[_BS] = (0, import_smithy_client4.strictParseLong)(output[_BS]);
+        contents[_BS] = (0, import_smithy_client5.strictParseLong)(output[_BS]);
       }
       if (output[_BP] != null) {
-        contents[_BP] = (0, import_smithy_client4.strictParseLong)(output[_BP]);
+        contents[_BP] = (0, import_smithy_client5.strictParseLong)(output[_BP]);
       }
       if (output[_BRy] != null) {
-        contents[_BRy] = (0, import_smithy_client4.strictParseLong)(output[_BRy]);
+        contents[_BRy] = (0, import_smithy_client5.strictParseLong)(output[_BRy]);
       }
       return contents;
     }, "de_Progress");
     var de_PublicAccessBlockConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_BPA] != null) {
-        contents[_BPA] = (0, import_smithy_client4.parseBoolean)(output[_BPA]);
+        contents[_BPA] = (0, import_smithy_client5.parseBoolean)(output[_BPA]);
       }
       if (output[_IPA] != null) {
-        contents[_IPA] = (0, import_smithy_client4.parseBoolean)(output[_IPA]);
+        contents[_IPA] = (0, import_smithy_client5.parseBoolean)(output[_IPA]);
       }
       if (output[_BPP] != null) {
-        contents[_BPP] = (0, import_smithy_client4.parseBoolean)(output[_BPP]);
+        contents[_BPP] = (0, import_smithy_client5.parseBoolean)(output[_BPP]);
       }
       if (output[_RPB] != null) {
-        contents[_RPB] = (0, import_smithy_client4.parseBoolean)(output[_RPB]);
+        contents[_RPB] = (0, import_smithy_client5.parseBoolean)(output[_RPB]);
       }
       return contents;
     }, "de_PublicAccessBlockConfiguration");
     var de_QueueConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output[_Qu] != null) {
-        contents[_QA] = (0, import_smithy_client4.expectString)(output[_Qu]);
+        contents[_QA] = (0, import_smithy_client5.expectString)(output[_Qu]);
       }
       if (output.Event === "") {
         contents[_Eve] = [];
       } else if (output[_Ev] != null) {
-        contents[_Eve] = de_EventList((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ev]), context);
+        contents[_Eve] = de_EventList((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ev]), context);
       }
       if (output[_F] != null) {
         contents[_F] = de_NotificationConfigurationFilter(output[_F], context);
@@ -46605,68 +46666,68 @@ var require_dist_cjs71 = __commonJS({
     var de_Redirect = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_HN] != null) {
-        contents[_HN] = (0, import_smithy_client4.expectString)(output[_HN]);
+        contents[_HN] = (0, import_smithy_client5.expectString)(output[_HN]);
       }
       if (output[_HRC] != null) {
-        contents[_HRC] = (0, import_smithy_client4.expectString)(output[_HRC]);
+        contents[_HRC] = (0, import_smithy_client5.expectString)(output[_HRC]);
       }
       if (output[_Pr] != null) {
-        contents[_Pr] = (0, import_smithy_client4.expectString)(output[_Pr]);
+        contents[_Pr] = (0, import_smithy_client5.expectString)(output[_Pr]);
       }
       if (output[_RKPW] != null) {
-        contents[_RKPW] = (0, import_smithy_client4.expectString)(output[_RKPW]);
+        contents[_RKPW] = (0, import_smithy_client5.expectString)(output[_RKPW]);
       }
       if (output[_RKW] != null) {
-        contents[_RKW] = (0, import_smithy_client4.expectString)(output[_RKW]);
+        contents[_RKW] = (0, import_smithy_client5.expectString)(output[_RKW]);
       }
       return contents;
     }, "de_Redirect");
     var de_RedirectAllRequestsTo = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_HN] != null) {
-        contents[_HN] = (0, import_smithy_client4.expectString)(output[_HN]);
+        contents[_HN] = (0, import_smithy_client5.expectString)(output[_HN]);
       }
       if (output[_Pr] != null) {
-        contents[_Pr] = (0, import_smithy_client4.expectString)(output[_Pr]);
+        contents[_Pr] = (0, import_smithy_client5.expectString)(output[_Pr]);
       }
       return contents;
     }, "de_RedirectAllRequestsTo");
     var de_ReplicaModifications = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       return contents;
     }, "de_ReplicaModifications");
     var de_ReplicationConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Ro] != null) {
-        contents[_Ro] = (0, import_smithy_client4.expectString)(output[_Ro]);
+        contents[_Ro] = (0, import_smithy_client5.expectString)(output[_Ro]);
       }
       if (output.Rule === "") {
         contents[_Rul] = [];
       } else if (output[_Ru] != null) {
-        contents[_Rul] = de_ReplicationRules((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ru]), context);
+        contents[_Rul] = de_ReplicationRules((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ru]), context);
       }
       return contents;
     }, "de_ReplicationConfiguration");
     var de_ReplicationRule = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_ID_] != null) {
-        contents[_ID_] = (0, import_smithy_client4.expectString)(output[_ID_]);
+        contents[_ID_] = (0, import_smithy_client5.expectString)(output[_ID_]);
       }
       if (output[_Pri] != null) {
-        contents[_Pri] = (0, import_smithy_client4.strictParseInt32)(output[_Pri]);
+        contents[_Pri] = (0, import_smithy_client5.strictParseInt32)(output[_Pri]);
       }
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output.Filter === "") {
       } else if (output[_F] != null) {
-        contents[_F] = de_ReplicationRuleFilter((0, import_smithy_client4.expectUnion)(output[_F]), context);
+        contents[_F] = de_ReplicationRuleFilter((0, import_smithy_client5.expectUnion)(output[_F]), context);
       }
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       if (output[_SSC] != null) {
         contents[_SSC] = de_SourceSelectionCriteria(output[_SSC], context);
@@ -46685,19 +46746,19 @@ var require_dist_cjs71 = __commonJS({
     var de_ReplicationRuleAndOperator = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_P] != null) {
-        contents[_P] = (0, import_smithy_client4.expectString)(output[_P]);
+        contents[_P] = (0, import_smithy_client5.expectString)(output[_P]);
       }
       if (output.Tag === "") {
         contents[_Tag] = [];
       } else if (output[_Ta] != null) {
-        contents[_Tag] = de_TagSet((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ta]), context);
+        contents[_Tag] = de_TagSet((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ta]), context);
       }
       return contents;
     }, "de_ReplicationRuleAndOperator");
     var de_ReplicationRuleFilter = /* @__PURE__ */ __name((output, context) => {
       if (output[_P] != null) {
         return {
-          Prefix: (0, import_smithy_client4.expectString)(output[_P])
+          Prefix: (0, import_smithy_client5.expectString)(output[_P])
         };
       }
       if (output[_Ta] != null) {
@@ -46720,7 +46781,7 @@ var require_dist_cjs71 = __commonJS({
     var de_ReplicationTime = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       if (output[_Tim] != null) {
         contents[_Tim] = de_ReplicationTimeValue(output[_Tim], context);
@@ -46730,17 +46791,17 @@ var require_dist_cjs71 = __commonJS({
     var de_ReplicationTimeValue = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Mi] != null) {
-        contents[_Mi] = (0, import_smithy_client4.strictParseInt32)(output[_Mi]);
+        contents[_Mi] = (0, import_smithy_client5.strictParseInt32)(output[_Mi]);
       }
       return contents;
     }, "de_ReplicationTimeValue");
     var de_RestoreStatus = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_IRIP] != null) {
-        contents[_IRIP] = (0, import_smithy_client4.parseBoolean)(output[_IRIP]);
+        contents[_IRIP] = (0, import_smithy_client5.parseBoolean)(output[_IRIP]);
       }
       if (output[_RED] != null) {
-        contents[_RED] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_RED]));
+        contents[_RED] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_RED]));
       }
       return contents;
     }, "de_RestoreStatus");
@@ -46764,17 +46825,17 @@ var require_dist_cjs71 = __commonJS({
       if (output.FilterRule === "") {
         contents[_FRi] = [];
       } else if (output[_FR] != null) {
-        contents[_FRi] = de_FilterRuleList((0, import_smithy_client4.getArrayIfSingleItem)(output[_FR]), context);
+        contents[_FRi] = de_FilterRuleList((0, import_smithy_client5.getArrayIfSingleItem)(output[_FR]), context);
       }
       return contents;
     }, "de_S3KeyFilter");
     var de_ServerSideEncryptionByDefault = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_SSEA] != null) {
-        contents[_SSEA] = (0, import_smithy_client4.expectString)(output[_SSEA]);
+        contents[_SSEA] = (0, import_smithy_client5.expectString)(output[_SSEA]);
       }
       if (output[_KMSMKID] != null) {
-        contents[_KMSMKID] = (0, import_smithy_client4.expectString)(output[_KMSMKID]);
+        contents[_KMSMKID] = (0, import_smithy_client5.expectString)(output[_KMSMKID]);
       }
       return contents;
     }, "de_ServerSideEncryptionByDefault");
@@ -46783,7 +46844,7 @@ var require_dist_cjs71 = __commonJS({
       if (output.Rule === "") {
         contents[_Rul] = [];
       } else if (output[_Ru] != null) {
-        contents[_Rul] = de_ServerSideEncryptionRules((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ru]), context);
+        contents[_Rul] = de_ServerSideEncryptionRules((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ru]), context);
       }
       return contents;
     }, "de_ServerSideEncryptionConfiguration");
@@ -46793,7 +46854,7 @@ var require_dist_cjs71 = __commonJS({
         contents[_ASSEBD] = de_ServerSideEncryptionByDefault(output[_ASSEBD], context);
       }
       if (output[_BKE] != null) {
-        contents[_BKE] = (0, import_smithy_client4.parseBoolean)(output[_BKE]);
+        contents[_BKE] = (0, import_smithy_client5.parseBoolean)(output[_BKE]);
       }
       return contents;
     }, "de_ServerSideEncryptionRule");
@@ -46805,16 +46866,16 @@ var require_dist_cjs71 = __commonJS({
     var de_SessionCredentials = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_AKI] != null) {
-        contents[_AKI] = (0, import_smithy_client4.expectString)(output[_AKI]);
+        contents[_AKI] = (0, import_smithy_client5.expectString)(output[_AKI]);
       }
       if (output[_SAK] != null) {
-        contents[_SAK] = (0, import_smithy_client4.expectString)(output[_SAK]);
+        contents[_SAK] = (0, import_smithy_client5.expectString)(output[_SAK]);
       }
       if (output[_ST] != null) {
-        contents[_ST] = (0, import_smithy_client4.expectString)(output[_ST]);
+        contents[_ST] = (0, import_smithy_client5.expectString)(output[_ST]);
       }
       if (output[_Exp] != null) {
-        contents[_Exp] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_Exp]));
+        contents[_Exp] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_Exp]));
       }
       return contents;
     }, "de_SessionCredentials");
@@ -46835,14 +46896,14 @@ var require_dist_cjs71 = __commonJS({
     var de_SSEKMS = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_KI] != null) {
-        contents[_KI] = (0, import_smithy_client4.expectString)(output[_KI]);
+        contents[_KI] = (0, import_smithy_client5.expectString)(output[_KI]);
       }
       return contents;
     }, "de_SSEKMS");
     var de_SseKmsEncryptedObjects = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
-        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+        contents[_S] = (0, import_smithy_client5.expectString)(output[_S]);
       }
       return contents;
     }, "de_SseKmsEncryptedObjects");
@@ -46853,13 +46914,13 @@ var require_dist_cjs71 = __commonJS({
     var de_Stats = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_BS] != null) {
-        contents[_BS] = (0, import_smithy_client4.strictParseLong)(output[_BS]);
+        contents[_BS] = (0, import_smithy_client5.strictParseLong)(output[_BS]);
       }
       if (output[_BP] != null) {
-        contents[_BP] = (0, import_smithy_client4.strictParseLong)(output[_BP]);
+        contents[_BP] = (0, import_smithy_client5.strictParseLong)(output[_BP]);
       }
       if (output[_BRy] != null) {
-        contents[_BRy] = (0, import_smithy_client4.strictParseLong)(output[_BRy]);
+        contents[_BRy] = (0, import_smithy_client5.strictParseLong)(output[_BRy]);
       }
       return contents;
     }, "de_Stats");
@@ -46873,7 +46934,7 @@ var require_dist_cjs71 = __commonJS({
     var de_StorageClassAnalysisDataExport = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_OSV] != null) {
-        contents[_OSV] = (0, import_smithy_client4.expectString)(output[_OSV]);
+        contents[_OSV] = (0, import_smithy_client5.expectString)(output[_OSV]);
       }
       if (output[_Des] != null) {
         contents[_Des] = de_AnalyticsExportDestination(output[_Des], context);
@@ -46883,10 +46944,10 @@ var require_dist_cjs71 = __commonJS({
     var de_Tag = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_K] != null) {
-        contents[_K] = (0, import_smithy_client4.expectString)(output[_K]);
+        contents[_K] = (0, import_smithy_client5.expectString)(output[_K]);
       }
       if (output[_Va] != null) {
-        contents[_Va] = (0, import_smithy_client4.expectString)(output[_Va]);
+        contents[_Va] = (0, import_smithy_client5.expectString)(output[_Va]);
       }
       return contents;
     }, "de_Tag");
@@ -46901,7 +46962,7 @@ var require_dist_cjs71 = __commonJS({
         contents[_Gra] = de_Grantee(output[_Gra], context);
       }
       if (output[_Pe] != null) {
-        contents[_Pe] = (0, import_smithy_client4.expectString)(output[_Pe]);
+        contents[_Pe] = (0, import_smithy_client5.expectString)(output[_Pe]);
       }
       return contents;
     }, "de_TargetGrant");
@@ -46923,10 +46984,10 @@ var require_dist_cjs71 = __commonJS({
     var de_Tiering = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Da] != null) {
-        contents[_Da] = (0, import_smithy_client4.strictParseInt32)(output[_Da]);
+        contents[_Da] = (0, import_smithy_client5.strictParseInt32)(output[_Da]);
       }
       if (output[_AT] != null) {
-        contents[_AT] = (0, import_smithy_client4.expectString)(output[_AT]);
+        contents[_AT] = (0, import_smithy_client5.expectString)(output[_AT]);
       }
       return contents;
     }, "de_Tiering");
@@ -46938,15 +46999,15 @@ var require_dist_cjs71 = __commonJS({
     var de_TopicConfiguration = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_I] != null) {
-        contents[_I] = (0, import_smithy_client4.expectString)(output[_I]);
+        contents[_I] = (0, import_smithy_client5.expectString)(output[_I]);
       }
       if (output[_Top] != null) {
-        contents[_TA] = (0, import_smithy_client4.expectString)(output[_Top]);
+        contents[_TA] = (0, import_smithy_client5.expectString)(output[_Top]);
       }
       if (output.Event === "") {
         contents[_Eve] = [];
       } else if (output[_Ev] != null) {
-        contents[_Eve] = de_EventList((0, import_smithy_client4.getArrayIfSingleItem)(output[_Ev]), context);
+        contents[_Eve] = de_EventList((0, import_smithy_client5.getArrayIfSingleItem)(output[_Ev]), context);
       }
       if (output[_F] != null) {
         contents[_F] = de_NotificationConfigurationFilter(output[_F], context);
@@ -46961,13 +47022,13 @@ var require_dist_cjs71 = __commonJS({
     var de_Transition = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_Dat] != null) {
-        contents[_Dat] = (0, import_smithy_client4.expectNonNull)((0, import_smithy_client4.parseRfc3339DateTimeWithOffset)(output[_Dat]));
+        contents[_Dat] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_Dat]));
       }
       if (output[_Da] != null) {
-        contents[_Da] = (0, import_smithy_client4.strictParseInt32)(output[_Da]);
+        contents[_Da] = (0, import_smithy_client5.strictParseInt32)(output[_Da]);
       }
       if (output[_SC] != null) {
-        contents[_SC] = (0, import_smithy_client4.expectString)(output[_SC]);
+        contents[_SC] = (0, import_smithy_client5.expectString)(output[_SC]);
       }
       return contents;
     }, "de_Transition");
@@ -46982,7 +47043,7 @@ var require_dist_cjs71 = __commonJS({
       extendedRequestId: output.headers["x-amz-id-2"],
       cfId: output.headers["x-amz-cf-id"]
     }), "deserializeMetadata");
-    var collectBodyString2 = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client4.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
+    var collectBodyString2 = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client5.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
     var isSerializableHeaderValue = /* @__PURE__ */ __name((value) => value !== void 0 && value !== null && value !== "" && (!Object.getOwnPropertyNames(value).includes("length") || value.length != 0) && (!Object.getOwnPropertyNames(value).includes("size") || value.size != 0), "isSerializableHeaderValue");
     var _A = "And";
     var _AAO = "AnalyticsAndOperator";
@@ -47629,43 +47690,43 @@ var require_dist_cjs71 = __commonJS({
     var _xavi = "x-amz-version-id";
     var _xawrl = "x-amz-website-redirect-location";
     var _xi = "x-id";
-    var _CreateSessionCommand = class _CreateSessionCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _CreateSessionCommand = class _CreateSessionCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       DisableS3ExpressSessionAuth: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "CreateSession", {}).n("S3Client", "CreateSessionCommand").f(void 0, CreateSessionOutputFilterSensitiveLog).ser(se_CreateSessionCommand).de(de_CreateSessionCommand).build() {
     };
     __name(_CreateSessionCommand, "CreateSessionCommand");
     var CreateSessionCommand = _CreateSessionCommand;
     var import_runtimeConfig = require_runtimeConfig4();
-    var import_region_config_resolver = require_dist_cjs50();
+    var import_region_config_resolver = require_dist_cjs49();
     var asPartial = /* @__PURE__ */ __name((t) => t, "asPartial");
     var resolveRuntimeExtensions = /* @__PURE__ */ __name((runtimeConfig, extensions) => {
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_smithy_client4.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http3.getHttpHandlerExtensionConfiguration)(runtimeConfig))
+        ...asPartial((0, import_smithy_client5.getDefaultExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_protocol_http5.getHttpHandlerExtensionConfiguration)(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
       return {
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
-        ...(0, import_smithy_client4.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http3.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
+        ...(0, import_smithy_client5.resolveDefaultRuntimeConfig)(extensionConfiguration),
+        ...(0, import_protocol_http5.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
-    var _S3Client = class _S3Client extends import_smithy_client4.Client {
+    var _S3Client = class _S3Client extends import_smithy_client5.Client {
       constructor(...[configuration2]) {
         const _config_0 = (0, import_runtimeConfig.getRuntimeConfig)(configuration2 || {});
         const _config_1 = resolveClientEndpointParameters(_config_0);
         const _config_2 = (0, import_config_resolver.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, import_middleware_endpoint.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, import_middleware_retry.resolveRetryConfig)(_config_3);
+        const _config_3 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_2);
+        const _config_4 = (0, import_middleware_retry2.resolveRetryConfig)(_config_3);
         const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
         const _config_6 = (0, import_middleware_signing.resolveAwsAuthConfig)(_config_5);
         const _config_7 = (0, import_middleware_sdk_s3.resolveS3Config)(_config_6, { session: [() => this, CreateSessionCommand] });
@@ -47674,7 +47735,7 @@ var require_dist_cjs71 = __commonJS({
         const _config_10 = resolveRuntimeExtensions(_config_9, (configuration2 == null ? void 0 : configuration2.extensions) || []);
         super(_config_10);
         this.config = _config_10;
-        this.middlewareStack.use((0, import_middleware_retry.getRetryPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_retry2.getRetryPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
@@ -47697,29 +47758,29 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_S3Client, "S3Client");
     var S3Client = _S3Client;
-    var _AbortMultipartUploadCommand = class _AbortMultipartUploadCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _AbortMultipartUploadCommand = class _AbortMultipartUploadCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "AbortMultipartUpload", {}).n("S3Client", "AbortMultipartUploadCommand").f(void 0, void 0).ser(se_AbortMultipartUploadCommand).de(de_AbortMultipartUploadCommand).build() {
     };
     __name(_AbortMultipartUploadCommand, "AbortMultipartUploadCommand");
     var AbortMultipartUploadCommand = _AbortMultipartUploadCommand;
     var import_middleware_sdk_s32 = require_dist_cjs23();
-    var import_middleware_ssec = require_dist_cjs67();
-    var _CompleteMultipartUploadCommand = class _CompleteMultipartUploadCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var import_middleware_ssec = require_dist_cjs66();
+    var _CompleteMultipartUploadCommand = class _CompleteMultipartUploadCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s32.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
@@ -47728,14 +47789,16 @@ var require_dist_cjs71 = __commonJS({
     __name(_CompleteMultipartUploadCommand, "CompleteMultipartUploadCommand");
     var CompleteMultipartUploadCommand = _CompleteMultipartUploadCommand;
     var import_middleware_sdk_s33 = require_dist_cjs23();
-    var _CopyObjectCommand = class _CopyObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _CopyObjectCommand = class _CopyObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       DisableS3ExpressSessionAuth: { type: "staticContextParams", value: true },
-      Bucket: { type: "contextParams", name: "Bucket" }
+      Bucket: { type: "contextParams", name: "Bucket" },
+      Key: { type: "contextParams", name: "Key" },
+      CopySource: { type: "contextParams", name: "CopySource" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s33.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
@@ -47743,226 +47806,226 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_CopyObjectCommand, "CopyObjectCommand");
     var CopyObjectCommand = _CopyObjectCommand;
-    var import_middleware_location_constraint = require_dist_cjs68();
-    var _CreateBucketCommand = class _CreateBucketCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var import_middleware_location_constraint = require_dist_cjs67();
+    var _CreateBucketCommand = class _CreateBucketCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       DisableAccessPoints: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_location_constraint.getLocationConstraintPlugin)(config)
       ];
     }).s("AmazonS3", "CreateBucket", {}).n("S3Client", "CreateBucketCommand").f(void 0, void 0).ser(se_CreateBucketCommand).de(de_CreateBucketCommand).build() {
     };
     __name(_CreateBucketCommand, "CreateBucketCommand");
     var CreateBucketCommand = _CreateBucketCommand;
-    var _CreateMultipartUploadCommand = class _CreateMultipartUploadCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _CreateMultipartUploadCommand = class _CreateMultipartUploadCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "CreateMultipartUpload", {}).n("S3Client", "CreateMultipartUploadCommand").f(CreateMultipartUploadRequestFilterSensitiveLog, CreateMultipartUploadOutputFilterSensitiveLog).ser(se_CreateMultipartUploadCommand).de(de_CreateMultipartUploadCommand).build() {
     };
     __name(_CreateMultipartUploadCommand, "CreateMultipartUploadCommand");
     var CreateMultipartUploadCommand = _CreateMultipartUploadCommand;
-    var _DeleteBucketAnalyticsConfigurationCommand = class _DeleteBucketAnalyticsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketAnalyticsConfigurationCommand = class _DeleteBucketAnalyticsConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketAnalyticsConfiguration", {}).n("S3Client", "DeleteBucketAnalyticsConfigurationCommand").f(void 0, void 0).ser(se_DeleteBucketAnalyticsConfigurationCommand).de(de_DeleteBucketAnalyticsConfigurationCommand).build() {
     };
     __name(_DeleteBucketAnalyticsConfigurationCommand, "DeleteBucketAnalyticsConfigurationCommand");
     var DeleteBucketAnalyticsConfigurationCommand = _DeleteBucketAnalyticsConfigurationCommand;
-    var _DeleteBucketCommand = class _DeleteBucketCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketCommand = class _DeleteBucketCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucket", {}).n("S3Client", "DeleteBucketCommand").f(void 0, void 0).ser(se_DeleteBucketCommand).de(de_DeleteBucketCommand).build() {
     };
     __name(_DeleteBucketCommand, "DeleteBucketCommand");
     var DeleteBucketCommand = _DeleteBucketCommand;
-    var _DeleteBucketCorsCommand = class _DeleteBucketCorsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketCorsCommand = class _DeleteBucketCorsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketCors", {}).n("S3Client", "DeleteBucketCorsCommand").f(void 0, void 0).ser(se_DeleteBucketCorsCommand).de(de_DeleteBucketCorsCommand).build() {
     };
     __name(_DeleteBucketCorsCommand, "DeleteBucketCorsCommand");
     var DeleteBucketCorsCommand = _DeleteBucketCorsCommand;
-    var _DeleteBucketEncryptionCommand = class _DeleteBucketEncryptionCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketEncryptionCommand = class _DeleteBucketEncryptionCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketEncryption", {}).n("S3Client", "DeleteBucketEncryptionCommand").f(void 0, void 0).ser(se_DeleteBucketEncryptionCommand).de(de_DeleteBucketEncryptionCommand).build() {
     };
     __name(_DeleteBucketEncryptionCommand, "DeleteBucketEncryptionCommand");
     var DeleteBucketEncryptionCommand = _DeleteBucketEncryptionCommand;
-    var _DeleteBucketIntelligentTieringConfigurationCommand = class _DeleteBucketIntelligentTieringConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketIntelligentTieringConfigurationCommand = class _DeleteBucketIntelligentTieringConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketIntelligentTieringConfiguration", {}).n("S3Client", "DeleteBucketIntelligentTieringConfigurationCommand").f(void 0, void 0).ser(se_DeleteBucketIntelligentTieringConfigurationCommand).de(de_DeleteBucketIntelligentTieringConfigurationCommand).build() {
     };
     __name(_DeleteBucketIntelligentTieringConfigurationCommand, "DeleteBucketIntelligentTieringConfigurationCommand");
     var DeleteBucketIntelligentTieringConfigurationCommand = _DeleteBucketIntelligentTieringConfigurationCommand;
-    var _DeleteBucketInventoryConfigurationCommand = class _DeleteBucketInventoryConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketInventoryConfigurationCommand = class _DeleteBucketInventoryConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketInventoryConfiguration", {}).n("S3Client", "DeleteBucketInventoryConfigurationCommand").f(void 0, void 0).ser(se_DeleteBucketInventoryConfigurationCommand).de(de_DeleteBucketInventoryConfigurationCommand).build() {
     };
     __name(_DeleteBucketInventoryConfigurationCommand, "DeleteBucketInventoryConfigurationCommand");
     var DeleteBucketInventoryConfigurationCommand = _DeleteBucketInventoryConfigurationCommand;
-    var _DeleteBucketLifecycleCommand = class _DeleteBucketLifecycleCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketLifecycleCommand = class _DeleteBucketLifecycleCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketLifecycle", {}).n("S3Client", "DeleteBucketLifecycleCommand").f(void 0, void 0).ser(se_DeleteBucketLifecycleCommand).de(de_DeleteBucketLifecycleCommand).build() {
     };
     __name(_DeleteBucketLifecycleCommand, "DeleteBucketLifecycleCommand");
     var DeleteBucketLifecycleCommand = _DeleteBucketLifecycleCommand;
-    var _DeleteBucketMetricsConfigurationCommand = class _DeleteBucketMetricsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketMetricsConfigurationCommand = class _DeleteBucketMetricsConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketMetricsConfiguration", {}).n("S3Client", "DeleteBucketMetricsConfigurationCommand").f(void 0, void 0).ser(se_DeleteBucketMetricsConfigurationCommand).de(de_DeleteBucketMetricsConfigurationCommand).build() {
     };
     __name(_DeleteBucketMetricsConfigurationCommand, "DeleteBucketMetricsConfigurationCommand");
     var DeleteBucketMetricsConfigurationCommand = _DeleteBucketMetricsConfigurationCommand;
-    var _DeleteBucketOwnershipControlsCommand = class _DeleteBucketOwnershipControlsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketOwnershipControlsCommand = class _DeleteBucketOwnershipControlsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketOwnershipControls", {}).n("S3Client", "DeleteBucketOwnershipControlsCommand").f(void 0, void 0).ser(se_DeleteBucketOwnershipControlsCommand).de(de_DeleteBucketOwnershipControlsCommand).build() {
     };
     __name(_DeleteBucketOwnershipControlsCommand, "DeleteBucketOwnershipControlsCommand");
     var DeleteBucketOwnershipControlsCommand = _DeleteBucketOwnershipControlsCommand;
-    var _DeleteBucketPolicyCommand = class _DeleteBucketPolicyCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketPolicyCommand = class _DeleteBucketPolicyCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketPolicy", {}).n("S3Client", "DeleteBucketPolicyCommand").f(void 0, void 0).ser(se_DeleteBucketPolicyCommand).de(de_DeleteBucketPolicyCommand).build() {
     };
     __name(_DeleteBucketPolicyCommand, "DeleteBucketPolicyCommand");
     var DeleteBucketPolicyCommand = _DeleteBucketPolicyCommand;
-    var _DeleteBucketReplicationCommand = class _DeleteBucketReplicationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketReplicationCommand = class _DeleteBucketReplicationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketReplication", {}).n("S3Client", "DeleteBucketReplicationCommand").f(void 0, void 0).ser(se_DeleteBucketReplicationCommand).de(de_DeleteBucketReplicationCommand).build() {
     };
     __name(_DeleteBucketReplicationCommand, "DeleteBucketReplicationCommand");
     var DeleteBucketReplicationCommand = _DeleteBucketReplicationCommand;
-    var _DeleteBucketTaggingCommand = class _DeleteBucketTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketTaggingCommand = class _DeleteBucketTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketTagging", {}).n("S3Client", "DeleteBucketTaggingCommand").f(void 0, void 0).ser(se_DeleteBucketTaggingCommand).de(de_DeleteBucketTaggingCommand).build() {
     };
     __name(_DeleteBucketTaggingCommand, "DeleteBucketTaggingCommand");
     var DeleteBucketTaggingCommand = _DeleteBucketTaggingCommand;
-    var _DeleteBucketWebsiteCommand = class _DeleteBucketWebsiteCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteBucketWebsiteCommand = class _DeleteBucketWebsiteCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteBucketWebsite", {}).n("S3Client", "DeleteBucketWebsiteCommand").f(void 0, void 0).ser(se_DeleteBucketWebsiteCommand).de(de_DeleteBucketWebsiteCommand).build() {
     };
     __name(_DeleteBucketWebsiteCommand, "DeleteBucketWebsiteCommand");
     var DeleteBucketWebsiteCommand = _DeleteBucketWebsiteCommand;
-    var _DeleteObjectCommand = class _DeleteObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteObjectCommand = class _DeleteObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteObject", {}).n("S3Client", "DeleteObjectCommand").f(void 0, void 0).ser(se_DeleteObjectCommand).de(de_DeleteObjectCommand).build() {
     };
     __name(_DeleteObjectCommand, "DeleteObjectCommand");
     var DeleteObjectCommand = _DeleteObjectCommand;
-    var import_middleware_flexible_checksums = require_dist_cjs69();
-    var _DeleteObjectsCommand = class _DeleteObjectsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var import_middleware_flexible_checksums = require_dist_cjs68();
+    var _DeleteObjectsCommand = class _DeleteObjectsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -47973,311 +48036,311 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_DeleteObjectsCommand, "DeleteObjectsCommand");
     var DeleteObjectsCommand = _DeleteObjectsCommand;
-    var _DeleteObjectTaggingCommand = class _DeleteObjectTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeleteObjectTaggingCommand = class _DeleteObjectTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeleteObjectTagging", {}).n("S3Client", "DeleteObjectTaggingCommand").f(void 0, void 0).ser(se_DeleteObjectTaggingCommand).de(de_DeleteObjectTaggingCommand).build() {
     };
     __name(_DeleteObjectTaggingCommand, "DeleteObjectTaggingCommand");
     var DeleteObjectTaggingCommand = _DeleteObjectTaggingCommand;
-    var _DeletePublicAccessBlockCommand = class _DeletePublicAccessBlockCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _DeletePublicAccessBlockCommand = class _DeletePublicAccessBlockCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "DeletePublicAccessBlock", {}).n("S3Client", "DeletePublicAccessBlockCommand").f(void 0, void 0).ser(se_DeletePublicAccessBlockCommand).de(de_DeletePublicAccessBlockCommand).build() {
     };
     __name(_DeletePublicAccessBlockCommand, "DeletePublicAccessBlockCommand");
     var DeletePublicAccessBlockCommand = _DeletePublicAccessBlockCommand;
-    var _GetBucketAccelerateConfigurationCommand = class _GetBucketAccelerateConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketAccelerateConfigurationCommand = class _GetBucketAccelerateConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketAccelerateConfiguration", {}).n("S3Client", "GetBucketAccelerateConfigurationCommand").f(void 0, void 0).ser(se_GetBucketAccelerateConfigurationCommand).de(de_GetBucketAccelerateConfigurationCommand).build() {
     };
     __name(_GetBucketAccelerateConfigurationCommand, "GetBucketAccelerateConfigurationCommand");
     var GetBucketAccelerateConfigurationCommand = _GetBucketAccelerateConfigurationCommand;
-    var _GetBucketAclCommand = class _GetBucketAclCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketAclCommand = class _GetBucketAclCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketAcl", {}).n("S3Client", "GetBucketAclCommand").f(void 0, void 0).ser(se_GetBucketAclCommand).de(de_GetBucketAclCommand).build() {
     };
     __name(_GetBucketAclCommand, "GetBucketAclCommand");
     var GetBucketAclCommand = _GetBucketAclCommand;
-    var _GetBucketAnalyticsConfigurationCommand = class _GetBucketAnalyticsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketAnalyticsConfigurationCommand = class _GetBucketAnalyticsConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketAnalyticsConfiguration", {}).n("S3Client", "GetBucketAnalyticsConfigurationCommand").f(void 0, void 0).ser(se_GetBucketAnalyticsConfigurationCommand).de(de_GetBucketAnalyticsConfigurationCommand).build() {
     };
     __name(_GetBucketAnalyticsConfigurationCommand, "GetBucketAnalyticsConfigurationCommand");
     var GetBucketAnalyticsConfigurationCommand = _GetBucketAnalyticsConfigurationCommand;
-    var _GetBucketCorsCommand = class _GetBucketCorsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketCorsCommand = class _GetBucketCorsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketCors", {}).n("S3Client", "GetBucketCorsCommand").f(void 0, void 0).ser(se_GetBucketCorsCommand).de(de_GetBucketCorsCommand).build() {
     };
     __name(_GetBucketCorsCommand, "GetBucketCorsCommand");
     var GetBucketCorsCommand = _GetBucketCorsCommand;
-    var _GetBucketEncryptionCommand = class _GetBucketEncryptionCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketEncryptionCommand = class _GetBucketEncryptionCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketEncryption", {}).n("S3Client", "GetBucketEncryptionCommand").f(void 0, GetBucketEncryptionOutputFilterSensitiveLog).ser(se_GetBucketEncryptionCommand).de(de_GetBucketEncryptionCommand).build() {
     };
     __name(_GetBucketEncryptionCommand, "GetBucketEncryptionCommand");
     var GetBucketEncryptionCommand = _GetBucketEncryptionCommand;
-    var _GetBucketIntelligentTieringConfigurationCommand = class _GetBucketIntelligentTieringConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketIntelligentTieringConfigurationCommand = class _GetBucketIntelligentTieringConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketIntelligentTieringConfiguration", {}).n("S3Client", "GetBucketIntelligentTieringConfigurationCommand").f(void 0, void 0).ser(se_GetBucketIntelligentTieringConfigurationCommand).de(de_GetBucketIntelligentTieringConfigurationCommand).build() {
     };
     __name(_GetBucketIntelligentTieringConfigurationCommand, "GetBucketIntelligentTieringConfigurationCommand");
     var GetBucketIntelligentTieringConfigurationCommand = _GetBucketIntelligentTieringConfigurationCommand;
-    var _GetBucketInventoryConfigurationCommand = class _GetBucketInventoryConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketInventoryConfigurationCommand = class _GetBucketInventoryConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketInventoryConfiguration", {}).n("S3Client", "GetBucketInventoryConfigurationCommand").f(void 0, GetBucketInventoryConfigurationOutputFilterSensitiveLog).ser(se_GetBucketInventoryConfigurationCommand).de(de_GetBucketInventoryConfigurationCommand).build() {
     };
     __name(_GetBucketInventoryConfigurationCommand, "GetBucketInventoryConfigurationCommand");
     var GetBucketInventoryConfigurationCommand = _GetBucketInventoryConfigurationCommand;
-    var _GetBucketLifecycleConfigurationCommand = class _GetBucketLifecycleConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketLifecycleConfigurationCommand = class _GetBucketLifecycleConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketLifecycleConfiguration", {}).n("S3Client", "GetBucketLifecycleConfigurationCommand").f(void 0, void 0).ser(se_GetBucketLifecycleConfigurationCommand).de(de_GetBucketLifecycleConfigurationCommand).build() {
     };
     __name(_GetBucketLifecycleConfigurationCommand, "GetBucketLifecycleConfigurationCommand");
     var GetBucketLifecycleConfigurationCommand = _GetBucketLifecycleConfigurationCommand;
-    var _GetBucketLocationCommand = class _GetBucketLocationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketLocationCommand = class _GetBucketLocationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketLocation", {}).n("S3Client", "GetBucketLocationCommand").f(void 0, void 0).ser(se_GetBucketLocationCommand).de(de_GetBucketLocationCommand).build() {
     };
     __name(_GetBucketLocationCommand, "GetBucketLocationCommand");
     var GetBucketLocationCommand = _GetBucketLocationCommand;
-    var _GetBucketLoggingCommand = class _GetBucketLoggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketLoggingCommand = class _GetBucketLoggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketLogging", {}).n("S3Client", "GetBucketLoggingCommand").f(void 0, void 0).ser(se_GetBucketLoggingCommand).de(de_GetBucketLoggingCommand).build() {
     };
     __name(_GetBucketLoggingCommand, "GetBucketLoggingCommand");
     var GetBucketLoggingCommand = _GetBucketLoggingCommand;
-    var _GetBucketMetricsConfigurationCommand = class _GetBucketMetricsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketMetricsConfigurationCommand = class _GetBucketMetricsConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketMetricsConfiguration", {}).n("S3Client", "GetBucketMetricsConfigurationCommand").f(void 0, void 0).ser(se_GetBucketMetricsConfigurationCommand).de(de_GetBucketMetricsConfigurationCommand).build() {
     };
     __name(_GetBucketMetricsConfigurationCommand, "GetBucketMetricsConfigurationCommand");
     var GetBucketMetricsConfigurationCommand = _GetBucketMetricsConfigurationCommand;
-    var _GetBucketNotificationConfigurationCommand = class _GetBucketNotificationConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketNotificationConfigurationCommand = class _GetBucketNotificationConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketNotificationConfiguration", {}).n("S3Client", "GetBucketNotificationConfigurationCommand").f(void 0, void 0).ser(se_GetBucketNotificationConfigurationCommand).de(de_GetBucketNotificationConfigurationCommand).build() {
     };
     __name(_GetBucketNotificationConfigurationCommand, "GetBucketNotificationConfigurationCommand");
     var GetBucketNotificationConfigurationCommand = _GetBucketNotificationConfigurationCommand;
-    var _GetBucketOwnershipControlsCommand = class _GetBucketOwnershipControlsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketOwnershipControlsCommand = class _GetBucketOwnershipControlsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketOwnershipControls", {}).n("S3Client", "GetBucketOwnershipControlsCommand").f(void 0, void 0).ser(se_GetBucketOwnershipControlsCommand).de(de_GetBucketOwnershipControlsCommand).build() {
     };
     __name(_GetBucketOwnershipControlsCommand, "GetBucketOwnershipControlsCommand");
     var GetBucketOwnershipControlsCommand = _GetBucketOwnershipControlsCommand;
-    var _GetBucketPolicyCommand = class _GetBucketPolicyCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketPolicyCommand = class _GetBucketPolicyCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketPolicy", {}).n("S3Client", "GetBucketPolicyCommand").f(void 0, void 0).ser(se_GetBucketPolicyCommand).de(de_GetBucketPolicyCommand).build() {
     };
     __name(_GetBucketPolicyCommand, "GetBucketPolicyCommand");
     var GetBucketPolicyCommand = _GetBucketPolicyCommand;
-    var _GetBucketPolicyStatusCommand = class _GetBucketPolicyStatusCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketPolicyStatusCommand = class _GetBucketPolicyStatusCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketPolicyStatus", {}).n("S3Client", "GetBucketPolicyStatusCommand").f(void 0, void 0).ser(se_GetBucketPolicyStatusCommand).de(de_GetBucketPolicyStatusCommand).build() {
     };
     __name(_GetBucketPolicyStatusCommand, "GetBucketPolicyStatusCommand");
     var GetBucketPolicyStatusCommand = _GetBucketPolicyStatusCommand;
-    var _GetBucketReplicationCommand = class _GetBucketReplicationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketReplicationCommand = class _GetBucketReplicationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketReplication", {}).n("S3Client", "GetBucketReplicationCommand").f(void 0, void 0).ser(se_GetBucketReplicationCommand).de(de_GetBucketReplicationCommand).build() {
     };
     __name(_GetBucketReplicationCommand, "GetBucketReplicationCommand");
     var GetBucketReplicationCommand = _GetBucketReplicationCommand;
-    var _GetBucketRequestPaymentCommand = class _GetBucketRequestPaymentCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketRequestPaymentCommand = class _GetBucketRequestPaymentCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketRequestPayment", {}).n("S3Client", "GetBucketRequestPaymentCommand").f(void 0, void 0).ser(se_GetBucketRequestPaymentCommand).de(de_GetBucketRequestPaymentCommand).build() {
     };
     __name(_GetBucketRequestPaymentCommand, "GetBucketRequestPaymentCommand");
     var GetBucketRequestPaymentCommand = _GetBucketRequestPaymentCommand;
-    var _GetBucketTaggingCommand = class _GetBucketTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketTaggingCommand = class _GetBucketTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketTagging", {}).n("S3Client", "GetBucketTaggingCommand").f(void 0, void 0).ser(se_GetBucketTaggingCommand).de(de_GetBucketTaggingCommand).build() {
     };
     __name(_GetBucketTaggingCommand, "GetBucketTaggingCommand");
     var GetBucketTaggingCommand = _GetBucketTaggingCommand;
-    var _GetBucketVersioningCommand = class _GetBucketVersioningCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketVersioningCommand = class _GetBucketVersioningCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketVersioning", {}).n("S3Client", "GetBucketVersioningCommand").f(void 0, void 0).ser(se_GetBucketVersioningCommand).de(de_GetBucketVersioningCommand).build() {
     };
     __name(_GetBucketVersioningCommand, "GetBucketVersioningCommand");
     var GetBucketVersioningCommand = _GetBucketVersioningCommand;
-    var _GetBucketWebsiteCommand = class _GetBucketWebsiteCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketWebsiteCommand = class _GetBucketWebsiteCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetBucketWebsite", {}).n("S3Client", "GetBucketWebsiteCommand").f(void 0, void 0).ser(se_GetBucketWebsiteCommand).de(de_GetBucketWebsiteCommand).build() {
     };
     __name(_GetBucketWebsiteCommand, "GetBucketWebsiteCommand");
     var GetBucketWebsiteCommand = _GetBucketWebsiteCommand;
-    var _GetObjectAclCommand = class _GetObjectAclCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectAclCommand = class _GetObjectAclCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetObjectAcl", {}).n("S3Client", "GetObjectAclCommand").f(void 0, void 0).ser(se_GetObjectAclCommand).de(de_GetObjectAclCommand).build() {
     };
     __name(_GetObjectAclCommand, "GetObjectAclCommand");
     var GetObjectAclCommand = _GetObjectAclCommand;
-    var _GetObjectAttributesCommand = class _GetObjectAttributesCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectAttributesCommand = class _GetObjectAttributesCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "GetObjectAttributes", {}).n("S3Client", "GetObjectAttributesCommand").f(GetObjectAttributesRequestFilterSensitiveLog, void 0).ser(se_GetObjectAttributesCommand).de(de_GetObjectAttributesCommand).build() {
@@ -48285,14 +48348,14 @@ var require_dist_cjs71 = __commonJS({
     __name(_GetObjectAttributesCommand, "GetObjectAttributesCommand");
     var GetObjectAttributesCommand = _GetObjectAttributesCommand;
     var import_middleware_sdk_s34 = require_dist_cjs23();
-    var _GetObjectCommand = class _GetObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectCommand = class _GetObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_ssec.getSsecPlugin)(config),
         (0, import_middleware_sdk_s34.getS3ExpiresMiddlewarePlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
@@ -48306,100 +48369,100 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_GetObjectCommand, "GetObjectCommand");
     var GetObjectCommand = _GetObjectCommand;
-    var _GetObjectLegalHoldCommand = class _GetObjectLegalHoldCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectLegalHoldCommand = class _GetObjectLegalHoldCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetObjectLegalHold", {}).n("S3Client", "GetObjectLegalHoldCommand").f(void 0, void 0).ser(se_GetObjectLegalHoldCommand).de(de_GetObjectLegalHoldCommand).build() {
     };
     __name(_GetObjectLegalHoldCommand, "GetObjectLegalHoldCommand");
     var GetObjectLegalHoldCommand = _GetObjectLegalHoldCommand;
-    var _GetObjectLockConfigurationCommand = class _GetObjectLockConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectLockConfigurationCommand = class _GetObjectLockConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetObjectLockConfiguration", {}).n("S3Client", "GetObjectLockConfigurationCommand").f(void 0, void 0).ser(se_GetObjectLockConfigurationCommand).de(de_GetObjectLockConfigurationCommand).build() {
     };
     __name(_GetObjectLockConfigurationCommand, "GetObjectLockConfigurationCommand");
     var GetObjectLockConfigurationCommand = _GetObjectLockConfigurationCommand;
-    var _GetObjectRetentionCommand = class _GetObjectRetentionCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectRetentionCommand = class _GetObjectRetentionCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetObjectRetention", {}).n("S3Client", "GetObjectRetentionCommand").f(void 0, void 0).ser(se_GetObjectRetentionCommand).de(de_GetObjectRetentionCommand).build() {
     };
     __name(_GetObjectRetentionCommand, "GetObjectRetentionCommand");
     var GetObjectRetentionCommand = _GetObjectRetentionCommand;
-    var _GetObjectTaggingCommand = class _GetObjectTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectTaggingCommand = class _GetObjectTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetObjectTagging", {}).n("S3Client", "GetObjectTaggingCommand").f(void 0, void 0).ser(se_GetObjectTaggingCommand).de(de_GetObjectTaggingCommand).build() {
     };
     __name(_GetObjectTaggingCommand, "GetObjectTaggingCommand");
     var GetObjectTaggingCommand = _GetObjectTaggingCommand;
-    var _GetObjectTorrentCommand = class _GetObjectTorrentCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectTorrentCommand = class _GetObjectTorrentCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetObjectTorrent", {}).n("S3Client", "GetObjectTorrentCommand").f(void 0, GetObjectTorrentOutputFilterSensitiveLog).ser(se_GetObjectTorrentCommand).de(de_GetObjectTorrentCommand).build() {
     };
     __name(_GetObjectTorrentCommand, "GetObjectTorrentCommand");
     var GetObjectTorrentCommand = _GetObjectTorrentCommand;
-    var _GetPublicAccessBlockCommand = class _GetPublicAccessBlockCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetPublicAccessBlockCommand = class _GetPublicAccessBlockCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "GetPublicAccessBlock", {}).n("S3Client", "GetPublicAccessBlockCommand").f(void 0, void 0).ser(se_GetPublicAccessBlockCommand).de(de_GetPublicAccessBlockCommand).build() {
     };
     __name(_GetPublicAccessBlockCommand, "GetPublicAccessBlockCommand");
     var GetPublicAccessBlockCommand = _GetPublicAccessBlockCommand;
-    var _HeadBucketCommand = class _HeadBucketCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _HeadBucketCommand = class _HeadBucketCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "HeadBucket", {}).n("S3Client", "HeadBucketCommand").f(void 0, void 0).ser(se_HeadBucketCommand).de(de_HeadBucketCommand).build() {
     };
     __name(_HeadBucketCommand, "HeadBucketCommand");
     var HeadBucketCommand = _HeadBucketCommand;
     var import_middleware_sdk_s35 = require_dist_cjs23();
-    var _HeadObjectCommand = class _HeadObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _HeadObjectCommand = class _HeadObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_ssec.getSsecPlugin)(config),
         (0, import_middleware_sdk_s35.getS3ExpiresMiddlewarePlugin)(config)
       ];
@@ -48407,154 +48470,154 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_HeadObjectCommand, "HeadObjectCommand");
     var HeadObjectCommand = _HeadObjectCommand;
-    var _ListBucketAnalyticsConfigurationsCommand = class _ListBucketAnalyticsConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketAnalyticsConfigurationsCommand = class _ListBucketAnalyticsConfigurationsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListBucketAnalyticsConfigurations", {}).n("S3Client", "ListBucketAnalyticsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketAnalyticsConfigurationsCommand).de(de_ListBucketAnalyticsConfigurationsCommand).build() {
     };
     __name(_ListBucketAnalyticsConfigurationsCommand, "ListBucketAnalyticsConfigurationsCommand");
     var ListBucketAnalyticsConfigurationsCommand = _ListBucketAnalyticsConfigurationsCommand;
-    var _ListBucketIntelligentTieringConfigurationsCommand = class _ListBucketIntelligentTieringConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketIntelligentTieringConfigurationsCommand = class _ListBucketIntelligentTieringConfigurationsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListBucketIntelligentTieringConfigurations", {}).n("S3Client", "ListBucketIntelligentTieringConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketIntelligentTieringConfigurationsCommand).de(de_ListBucketIntelligentTieringConfigurationsCommand).build() {
     };
     __name(_ListBucketIntelligentTieringConfigurationsCommand, "ListBucketIntelligentTieringConfigurationsCommand");
     var ListBucketIntelligentTieringConfigurationsCommand = _ListBucketIntelligentTieringConfigurationsCommand;
-    var _ListBucketInventoryConfigurationsCommand = class _ListBucketInventoryConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketInventoryConfigurationsCommand = class _ListBucketInventoryConfigurationsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListBucketInventoryConfigurations", {}).n("S3Client", "ListBucketInventoryConfigurationsCommand").f(void 0, ListBucketInventoryConfigurationsOutputFilterSensitiveLog).ser(se_ListBucketInventoryConfigurationsCommand).de(de_ListBucketInventoryConfigurationsCommand).build() {
     };
     __name(_ListBucketInventoryConfigurationsCommand, "ListBucketInventoryConfigurationsCommand");
     var ListBucketInventoryConfigurationsCommand = _ListBucketInventoryConfigurationsCommand;
-    var _ListBucketMetricsConfigurationsCommand = class _ListBucketMetricsConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketMetricsConfigurationsCommand = class _ListBucketMetricsConfigurationsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListBucketMetricsConfigurations", {}).n("S3Client", "ListBucketMetricsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketMetricsConfigurationsCommand).de(de_ListBucketMetricsConfigurationsCommand).build() {
     };
     __name(_ListBucketMetricsConfigurationsCommand, "ListBucketMetricsConfigurationsCommand");
     var ListBucketMetricsConfigurationsCommand = _ListBucketMetricsConfigurationsCommand;
-    var _ListBucketsCommand = class _ListBucketsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketsCommand = class _ListBucketsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListBuckets", {}).n("S3Client", "ListBucketsCommand").f(void 0, void 0).ser(se_ListBucketsCommand).de(de_ListBucketsCommand).build() {
     };
     __name(_ListBucketsCommand, "ListBucketsCommand");
     var ListBucketsCommand = _ListBucketsCommand;
-    var _ListDirectoryBucketsCommand = class _ListDirectoryBucketsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListDirectoryBucketsCommand = class _ListDirectoryBucketsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListDirectoryBuckets", {}).n("S3Client", "ListDirectoryBucketsCommand").f(void 0, void 0).ser(se_ListDirectoryBucketsCommand).de(de_ListDirectoryBucketsCommand).build() {
     };
     __name(_ListDirectoryBucketsCommand, "ListDirectoryBucketsCommand");
     var ListDirectoryBucketsCommand = _ListDirectoryBucketsCommand;
-    var _ListMultipartUploadsCommand = class _ListMultipartUploadsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListMultipartUploadsCommand = class _ListMultipartUploadsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Prefix: { type: "contextParams", name: "Prefix" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListMultipartUploads", {}).n("S3Client", "ListMultipartUploadsCommand").f(void 0, void 0).ser(se_ListMultipartUploadsCommand).de(de_ListMultipartUploadsCommand).build() {
     };
     __name(_ListMultipartUploadsCommand, "ListMultipartUploadsCommand");
     var ListMultipartUploadsCommand = _ListMultipartUploadsCommand;
-    var _ListObjectsCommand = class _ListObjectsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListObjectsCommand = class _ListObjectsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Prefix: { type: "contextParams", name: "Prefix" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListObjects", {}).n("S3Client", "ListObjectsCommand").f(void 0, void 0).ser(se_ListObjectsCommand).de(de_ListObjectsCommand).build() {
     };
     __name(_ListObjectsCommand, "ListObjectsCommand");
     var ListObjectsCommand = _ListObjectsCommand;
-    var _ListObjectsV2Command = class _ListObjectsV2Command extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListObjectsV2Command = class _ListObjectsV2Command extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Prefix: { type: "contextParams", name: "Prefix" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListObjectsV2", {}).n("S3Client", "ListObjectsV2Command").f(void 0, void 0).ser(se_ListObjectsV2Command).de(de_ListObjectsV2Command).build() {
     };
     __name(_ListObjectsV2Command, "ListObjectsV2Command");
     var ListObjectsV2Command = _ListObjectsV2Command;
-    var _ListObjectVersionsCommand = class _ListObjectVersionsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListObjectVersionsCommand = class _ListObjectVersionsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Prefix: { type: "contextParams", name: "Prefix" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "ListObjectVersions", {}).n("S3Client", "ListObjectVersionsCommand").f(void 0, void 0).ser(se_ListObjectVersionsCommand).de(de_ListObjectVersionsCommand).build() {
     };
     __name(_ListObjectVersionsCommand, "ListObjectVersionsCommand");
     var ListObjectVersionsCommand = _ListObjectVersionsCommand;
-    var _ListPartsCommand = class _ListPartsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListPartsCommand = class _ListPartsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "ListParts", {}).n("S3Client", "ListPartsCommand").f(ListPartsRequestFilterSensitiveLog, void 0).ser(se_ListPartsCommand).de(de_ListPartsCommand).build() {
     };
     __name(_ListPartsCommand, "ListPartsCommand");
     var ListPartsCommand = _ListPartsCommand;
-    var _PutBucketAccelerateConfigurationCommand = class _PutBucketAccelerateConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketAccelerateConfigurationCommand = class _PutBucketAccelerateConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48565,14 +48628,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketAccelerateConfigurationCommand, "PutBucketAccelerateConfigurationCommand");
     var PutBucketAccelerateConfigurationCommand = _PutBucketAccelerateConfigurationCommand;
-    var _PutBucketAclCommand = class _PutBucketAclCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketAclCommand = class _PutBucketAclCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48583,27 +48646,27 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketAclCommand, "PutBucketAclCommand");
     var PutBucketAclCommand = _PutBucketAclCommand;
-    var _PutBucketAnalyticsConfigurationCommand = class _PutBucketAnalyticsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketAnalyticsConfigurationCommand = class _PutBucketAnalyticsConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "PutBucketAnalyticsConfiguration", {}).n("S3Client", "PutBucketAnalyticsConfigurationCommand").f(void 0, void 0).ser(se_PutBucketAnalyticsConfigurationCommand).de(de_PutBucketAnalyticsConfigurationCommand).build() {
     };
     __name(_PutBucketAnalyticsConfigurationCommand, "PutBucketAnalyticsConfigurationCommand");
     var PutBucketAnalyticsConfigurationCommand = _PutBucketAnalyticsConfigurationCommand;
-    var _PutBucketCorsCommand = class _PutBucketCorsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketCorsCommand = class _PutBucketCorsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48614,14 +48677,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketCorsCommand, "PutBucketCorsCommand");
     var PutBucketCorsCommand = _PutBucketCorsCommand;
-    var _PutBucketEncryptionCommand = class _PutBucketEncryptionCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketEncryptionCommand = class _PutBucketEncryptionCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48632,40 +48695,40 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketEncryptionCommand, "PutBucketEncryptionCommand");
     var PutBucketEncryptionCommand = _PutBucketEncryptionCommand;
-    var _PutBucketIntelligentTieringConfigurationCommand = class _PutBucketIntelligentTieringConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketIntelligentTieringConfigurationCommand = class _PutBucketIntelligentTieringConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "PutBucketIntelligentTieringConfiguration", {}).n("S3Client", "PutBucketIntelligentTieringConfigurationCommand").f(void 0, void 0).ser(se_PutBucketIntelligentTieringConfigurationCommand).de(de_PutBucketIntelligentTieringConfigurationCommand).build() {
     };
     __name(_PutBucketIntelligentTieringConfigurationCommand, "PutBucketIntelligentTieringConfigurationCommand");
     var PutBucketIntelligentTieringConfigurationCommand = _PutBucketIntelligentTieringConfigurationCommand;
-    var _PutBucketInventoryConfigurationCommand = class _PutBucketInventoryConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketInventoryConfigurationCommand = class _PutBucketInventoryConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "PutBucketInventoryConfiguration", {}).n("S3Client", "PutBucketInventoryConfigurationCommand").f(PutBucketInventoryConfigurationRequestFilterSensitiveLog, void 0).ser(se_PutBucketInventoryConfigurationCommand).de(de_PutBucketInventoryConfigurationCommand).build() {
     };
     __name(_PutBucketInventoryConfigurationCommand, "PutBucketInventoryConfigurationCommand");
     var PutBucketInventoryConfigurationCommand = _PutBucketInventoryConfigurationCommand;
-    var _PutBucketLifecycleConfigurationCommand = class _PutBucketLifecycleConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketLifecycleConfigurationCommand = class _PutBucketLifecycleConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48676,14 +48739,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketLifecycleConfigurationCommand, "PutBucketLifecycleConfigurationCommand");
     var PutBucketLifecycleConfigurationCommand = _PutBucketLifecycleConfigurationCommand;
-    var _PutBucketLoggingCommand = class _PutBucketLoggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketLoggingCommand = class _PutBucketLoggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48694,54 +48757,54 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketLoggingCommand, "PutBucketLoggingCommand");
     var PutBucketLoggingCommand = _PutBucketLoggingCommand;
-    var _PutBucketMetricsConfigurationCommand = class _PutBucketMetricsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketMetricsConfigurationCommand = class _PutBucketMetricsConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "PutBucketMetricsConfiguration", {}).n("S3Client", "PutBucketMetricsConfigurationCommand").f(void 0, void 0).ser(se_PutBucketMetricsConfigurationCommand).de(de_PutBucketMetricsConfigurationCommand).build() {
     };
     __name(_PutBucketMetricsConfigurationCommand, "PutBucketMetricsConfigurationCommand");
     var PutBucketMetricsConfigurationCommand = _PutBucketMetricsConfigurationCommand;
-    var _PutBucketNotificationConfigurationCommand = class _PutBucketNotificationConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketNotificationConfigurationCommand = class _PutBucketNotificationConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "PutBucketNotificationConfiguration", {}).n("S3Client", "PutBucketNotificationConfigurationCommand").f(void 0, void 0).ser(se_PutBucketNotificationConfigurationCommand).de(de_PutBucketNotificationConfigurationCommand).build() {
     };
     __name(_PutBucketNotificationConfigurationCommand, "PutBucketNotificationConfigurationCommand");
     var PutBucketNotificationConfigurationCommand = _PutBucketNotificationConfigurationCommand;
-    var _PutBucketOwnershipControlsCommand = class _PutBucketOwnershipControlsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketOwnershipControlsCommand = class _PutBucketOwnershipControlsCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, { input: this.input, requestChecksumRequired: true })
       ];
     }).s("AmazonS3", "PutBucketOwnershipControls", {}).n("S3Client", "PutBucketOwnershipControlsCommand").f(void 0, void 0).ser(se_PutBucketOwnershipControlsCommand).de(de_PutBucketOwnershipControlsCommand).build() {
     };
     __name(_PutBucketOwnershipControlsCommand, "PutBucketOwnershipControlsCommand");
     var PutBucketOwnershipControlsCommand = _PutBucketOwnershipControlsCommand;
-    var _PutBucketPolicyCommand = class _PutBucketPolicyCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketPolicyCommand = class _PutBucketPolicyCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48752,14 +48815,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketPolicyCommand, "PutBucketPolicyCommand");
     var PutBucketPolicyCommand = _PutBucketPolicyCommand;
-    var _PutBucketReplicationCommand = class _PutBucketReplicationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketReplicationCommand = class _PutBucketReplicationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48770,14 +48833,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketReplicationCommand, "PutBucketReplicationCommand");
     var PutBucketReplicationCommand = _PutBucketReplicationCommand;
-    var _PutBucketRequestPaymentCommand = class _PutBucketRequestPaymentCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketRequestPaymentCommand = class _PutBucketRequestPaymentCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48788,14 +48851,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketRequestPaymentCommand, "PutBucketRequestPaymentCommand");
     var PutBucketRequestPaymentCommand = _PutBucketRequestPaymentCommand;
-    var _PutBucketTaggingCommand = class _PutBucketTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketTaggingCommand = class _PutBucketTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48806,14 +48869,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketTaggingCommand, "PutBucketTaggingCommand");
     var PutBucketTaggingCommand = _PutBucketTaggingCommand;
-    var _PutBucketVersioningCommand = class _PutBucketVersioningCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketVersioningCommand = class _PutBucketVersioningCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48824,14 +48887,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketVersioningCommand, "PutBucketVersioningCommand");
     var PutBucketVersioningCommand = _PutBucketVersioningCommand;
-    var _PutBucketWebsiteCommand = class _PutBucketWebsiteCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutBucketWebsiteCommand = class _PutBucketWebsiteCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48842,14 +48905,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketWebsiteCommand, "PutBucketWebsiteCommand");
     var PutBucketWebsiteCommand = _PutBucketWebsiteCommand;
-    var _PutObjectAclCommand = class _PutObjectAclCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutObjectAclCommand = class _PutObjectAclCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48861,14 +48924,14 @@ var require_dist_cjs71 = __commonJS({
     __name(_PutObjectAclCommand, "PutObjectAclCommand");
     var PutObjectAclCommand = _PutObjectAclCommand;
     var import_middleware_sdk_s36 = require_dist_cjs23();
-    var _PutObjectCommand = class _PutObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutObjectCommand = class _PutObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s36.getCheckContentLengthHeaderPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
@@ -48881,13 +48944,13 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutObjectCommand, "PutObjectCommand");
     var PutObjectCommand = _PutObjectCommand;
-    var _PutObjectLegalHoldCommand = class _PutObjectLegalHoldCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutObjectLegalHoldCommand = class _PutObjectLegalHoldCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48898,13 +48961,13 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutObjectLegalHoldCommand, "PutObjectLegalHoldCommand");
     var PutObjectLegalHoldCommand = _PutObjectLegalHoldCommand;
-    var _PutObjectLockConfigurationCommand = class _PutObjectLockConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutObjectLockConfigurationCommand = class _PutObjectLockConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48915,13 +48978,13 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutObjectLockConfigurationCommand, "PutObjectLockConfigurationCommand");
     var PutObjectLockConfigurationCommand = _PutObjectLockConfigurationCommand;
-    var _PutObjectRetentionCommand = class _PutObjectRetentionCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutObjectRetentionCommand = class _PutObjectRetentionCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48932,13 +48995,13 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutObjectRetentionCommand, "PutObjectRetentionCommand");
     var PutObjectRetentionCommand = _PutObjectRetentionCommand;
-    var _PutObjectTaggingCommand = class _PutObjectTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutObjectTaggingCommand = class _PutObjectTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48949,14 +49012,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutObjectTaggingCommand, "PutObjectTaggingCommand");
     var PutObjectTaggingCommand = _PutObjectTaggingCommand;
-    var _PutPublicAccessBlockCommand = class _PutPublicAccessBlockCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _PutPublicAccessBlockCommand = class _PutPublicAccessBlockCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48967,13 +49030,13 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutPublicAccessBlockCommand, "PutPublicAccessBlockCommand");
     var PutPublicAccessBlockCommand = _PutPublicAccessBlockCommand;
-    var _RestoreObjectCommand = class _RestoreObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _RestoreObjectCommand = class _RestoreObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
@@ -48984,13 +49047,13 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_RestoreObjectCommand, "RestoreObjectCommand");
     var RestoreObjectCommand = _RestoreObjectCommand;
-    var _SelectObjectContentCommand = class _SelectObjectContentCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _SelectObjectContentCommand = class _SelectObjectContentCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "SelectObjectContent", {
@@ -49004,14 +49067,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_SelectObjectContentCommand, "SelectObjectContentCommand");
     var SelectObjectContentCommand = _SelectObjectContentCommand;
-    var _UploadPartCommand = class _UploadPartCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _UploadPartCommand = class _UploadPartCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Key: { type: "contextParams", name: "Key" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_ssec.getSsecPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
@@ -49024,14 +49087,14 @@ var require_dist_cjs71 = __commonJS({
     __name(_UploadPartCommand, "UploadPartCommand");
     var UploadPartCommand = _UploadPartCommand;
     var import_middleware_sdk_s37 = require_dist_cjs23();
-    var _UploadPartCopyCommand = class _UploadPartCopyCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _UploadPartCopyCommand = class _UploadPartCopyCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       DisableS3ExpressSessionAuth: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s37.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
@@ -49039,13 +49102,13 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_UploadPartCopyCommand, "UploadPartCopyCommand");
     var UploadPartCopyCommand = _UploadPartCopyCommand;
-    var _WriteGetObjectResponseCommand = class _WriteGetObjectResponseCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _WriteGetObjectResponseCommand = class _WriteGetObjectResponseCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseObjectLambdaEndpoint: { type: "staticContextParams", value: true }
     }).m(function(Command, cs, config, o) {
       return [
-        (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
       ];
     }).s("AmazonS3", "WriteGetObjectResponse", {}).n("S3Client", "WriteGetObjectResponseCommand").f(WriteGetObjectResponseRequestFilterSensitiveLog, void 0).ser(se_WriteGetObjectResponseCommand).de(de_WriteGetObjectResponseCommand).build() {
     };
@@ -49152,14 +49215,14 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_S3, "S3");
     var S32 = _S3;
-    (0, import_smithy_client4.createAggregatedClient)(commands, S32);
-    var import_core3 = require_dist_cjs41();
+    (0, import_smithy_client5.createAggregatedClient)(commands, S32);
+    var import_core3 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var paginateListDirectoryBuckets = (0, import_core3.createPaginator)(S3Client, ListDirectoryBucketsCommand, "ContinuationToken", "ContinuationToken", "MaxDirectoryBuckets");
-    var import_core4 = require_dist_cjs41();
+    var import_core4 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var paginateListObjectsV2 = (0, import_core4.createPaginator)(S3Client, ListObjectsV2Command, "ContinuationToken", "NextContinuationToken", "MaxKeys");
-    var import_core5 = require_dist_cjs41();
+    var import_core5 = (init_dist_es(), __toCommonJS(dist_es_exports));
     var paginateListParts = (0, import_core5.createPaginator)(S3Client, ListPartsCommand, "PartNumberMarker", "NextPartNumberMarker", "MaxParts");
-    var import_util_waiter = require_dist_cjs70();
+    var import_util_waiter = require_dist_cjs69();
     var checkState = /* @__PURE__ */ __name(async (client, input) => {
       let reason;
       try {
@@ -58891,7 +58954,7 @@ var require_exec = __commonJS({
 var path = __toESM(require("node:path"));
 var crypto8 = __toESM(require("node:crypto"));
 var core = __toESM(require_core());
-var import_client_s3 = __toESM(require_dist_cjs71());
+var import_client_s3 = __toESM(require_dist_cjs70());
 var import_mime_types = __toESM(require_mime_types());
 
 // src/size_limit.ts
