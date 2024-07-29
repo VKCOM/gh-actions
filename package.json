@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
-    "@swc/core": "^1.7.0",
+    "@swc/core": "^1.7.3",
     "@swc/jest": "^0.2.36",
     "@types/node": "^20.14.11",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
