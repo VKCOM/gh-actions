@@ -17952,7 +17952,7 @@ var require_dist_cjs2 = __commonJS({
     __export2(src_exports, {
       Field: () => Field,
       Fields: () => Fields,
-      HttpRequest: () => HttpRequest6,
+      HttpRequest: () => HttpRequest7,
       HttpResponse: () => HttpResponse2,
       IHttpRequest: () => import_types5.HttpRequest,
       getHttpHandlerExtensionConfiguration: () => getHttpHandlerExtensionConfiguration,
@@ -18130,7 +18130,7 @@ var require_dist_cjs2 = __commonJS({
       }
     };
     __name(_HttpRequest, "HttpRequest");
-    var HttpRequest6 = _HttpRequest;
+    var HttpRequest7 = _HttpRequest;
     function cloneQuery(query) {
       return Object.keys(query).reduce((carry, paramName) => {
         const param = query[paramName];
@@ -18194,12 +18194,12 @@ var require_dist_cjs3 = __commonJS({
       getAddExpectContinuePlugin: () => getAddExpectContinuePlugin
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     function addExpectContinueMiddleware(options) {
       return (next) => async (args) => {
         var _a, _b;
         const { request } = args;
-        if (import_protocol_http7.HttpRequest.isInstance(request) && request.body && options.runtime === "node") {
+        if (import_protocol_http8.HttpRequest.isInstance(request) && request.body && options.runtime === "node") {
           if (((_b = (_a = options.requestHandler) == null ? void 0 : _a.constructor) == null ? void 0 : _b.name) !== "FetchHttpHandler") {
             request.headers = {
               ...request.headers,
@@ -18258,13 +18258,13 @@ var require_dist_cjs4 = __commonJS({
       resolveHostHeaderConfig: () => resolveHostHeaderConfig
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     function resolveHostHeaderConfig(input) {
       return input;
     }
     __name(resolveHostHeaderConfig, "resolveHostHeaderConfig");
     var hostHeaderMiddleware = /* @__PURE__ */ __name((options) => (next) => async (args) => {
-      if (!import_protocol_http7.HttpRequest.isInstance(args.request))
+      if (!import_protocol_http8.HttpRequest.isInstance(args.request))
         return next(args);
       const { request } = args;
       const { handlerProtocol = "" } = options.requestHandler.metadata || {};
@@ -18397,13 +18397,13 @@ var require_dist_cjs6 = __commonJS({
       recursionDetectionMiddleware: () => recursionDetectionMiddleware
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var TRACE_ID_HEADER_NAME = "X-Amzn-Trace-Id";
     var ENV_LAMBDA_FUNCTION_NAME = "AWS_LAMBDA_FUNCTION_NAME";
     var ENV_TRACE_ID = "_X_AMZN_TRACE_ID";
     var recursionDetectionMiddleware = /* @__PURE__ */ __name((options) => (next) => async (args) => {
       const { request } = args;
-      if (!import_protocol_http7.HttpRequest.isInstance(request) || options.runtime !== "node" || request.headers.hasOwnProperty(TRACE_ID_HEADER_NAME)) {
+      if (!import_protocol_http8.HttpRequest.isInstance(request) || options.runtime !== "node" || request.headers.hasOwnProperty(TRACE_ID_HEADER_NAME)) {
         return next(args);
       }
       const functionName = process.env[ENV_LAMBDA_FUNCTION_NAME];
@@ -19110,7 +19110,7 @@ var require_dist_cjs14 = __commonJS({
       streamCollector: () => streamCollector
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var import_querystring_builder = require_dist_cjs13();
     var import_http = require("http");
     var import_https = require("https");
@@ -19360,7 +19360,7 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
           };
           const requestFunc = isSSL ? import_https.request : import_http.request;
           const req2 = requestFunc(nodeHttpsOptions, (res) => {
-            const httpResponse = new import_protocol_http7.HttpResponse({
+            const httpResponse = new import_protocol_http8.HttpResponse({
               statusCode: res.statusCode || -1,
               reason: res.statusMessage,
               headers: getTransformedHeaders(res.headers),
@@ -19639,7 +19639,7 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
           });
           session.ref();
           req2.on("response", (headers) => {
-            const httpResponse = new import_protocol_http7.HttpResponse({
+            const httpResponse = new import_protocol_http8.HttpResponse({
               statusCode: headers[":status"] || -1,
               headers: getTransformedHeaders(headers),
               body: req2
@@ -19803,7 +19803,7 @@ var require_dist_cjs15 = __commonJS({
       streamCollector: () => streamCollector
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var import_querystring_builder = require_dist_cjs13();
     function requestTimeout(timeoutInMs = 0) {
       return new Promise((resolve, reject) => {
@@ -19903,7 +19903,7 @@ var require_dist_cjs15 = __commonJS({
             const hasReadableStream = response.body != void 0;
             if (!hasReadableStream) {
               return response.blob().then((body2) => ({
-                response: new import_protocol_http7.HttpResponse({
+                response: new import_protocol_http8.HttpResponse({
                   headers: transformedHeaders,
                   reason: response.statusText,
                   statusCode: response.status,
@@ -19912,7 +19912,7 @@ var require_dist_cjs15 = __commonJS({
               }));
             }
             return {
-              response: new import_protocol_http7.HttpResponse({
+              response: new import_protocol_http8.HttpResponse({
                 headers: transformedHeaders,
                 reason: response.statusText,
                 statusCode: response.status,
@@ -20609,6 +20609,7 @@ var require_dist_cjs18 = __commonJS({
           inputFilterSensitiveLog,
           outputFilterSensitiveLog,
           [import_types5.SMITHY_CONTEXT_KEY]: {
+            commandInstance: this,
             ...smithyContext
           },
           ...additionalContext
@@ -21919,10 +21920,10 @@ var require_dist_cjs20 = __commonJS({
       }
       return false;
     }, "hasHeader");
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var moveHeadersToQuery = /* @__PURE__ */ __name((request, options = {}) => {
       var _a;
-      const { headers, query = {} } = import_protocol_http7.HttpRequest.clone(request);
+      const { headers, query = {} } = import_protocol_http8.HttpRequest.clone(request);
       for (const name of Object.keys(headers)) {
         const lname = name.toLowerCase();
         if (lname.slice(0, 6) === "x-amz-" && !((_a = options.unhoistableHeaders) == null ? void 0 : _a.has(lname))) {
@@ -21937,7 +21938,7 @@ var require_dist_cjs20 = __commonJS({
       };
     }, "moveHeadersToQuery");
     var prepareRequest = /* @__PURE__ */ __name((request) => {
-      request = import_protocol_http7.HttpRequest.clone(request);
+      request = import_protocol_http8.HttpRequest.clone(request);
       for (const headerName of Object.keys(request.headers)) {
         if (GENERATED_HEADERS.indexOf(headerName.toLowerCase()) > -1) {
           delete request.headers[headerName];
@@ -22334,14 +22335,14 @@ var require_dist_cjs23 = __commonJS({
       validateBucketNameMiddlewareOptions: () => validateBucketNameMiddlewareOptions
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var import_smithy_client5 = require_dist_cjs18();
     var CONTENT_LENGTH_HEADER = "content-length";
     function checkContentLengthHeader() {
       return (next, context) => async (args) => {
         var _a;
         const { request } = args;
-        if (import_protocol_http7.HttpRequest.isInstance(request)) {
+        if (import_protocol_http8.HttpRequest.isInstance(request)) {
           if (!(CONTENT_LENGTH_HEADER in request.headers)) {
             const message = `Are you using a Stream of unknown length as the Body of a PutObject request? Consider using Upload instead from @aws-sdk/lib-storage.`;
             if (typeof ((_a = context == null ? void 0 : context.logger) == null ? void 0 : _a.warn) === "function" && !(context.logger instanceof import_smithy_client5.NoOpLogger)) {
@@ -22433,7 +22434,7 @@ var require_dist_cjs23 = __commonJS({
         var _a;
         const result = await next(args);
         const { response } = result;
-        if (import_protocol_http7.HttpResponse.isInstance(response)) {
+        if (import_protocol_http8.HttpResponse.isInstance(response)) {
           if (response.headers.expires) {
             response.headers.expiresstring = response.headers.expires;
             try {
@@ -22655,7 +22656,7 @@ var require_dist_cjs23 = __commonJS({
                 }
               );
               context.s3ExpressIdentity = s3ExpressIdentity;
-              if (import_protocol_http7.HttpRequest.isInstance(args.request) && s3ExpressIdentity.sessionToken) {
+              if (import_protocol_http8.HttpRequest.isInstance(args.request) && s3ExpressIdentity.sessionToken) {
                 args.request.headers[SESSION_TOKEN_HEADER] = s3ExpressIdentity.sessionToken;
               }
             }
@@ -22706,7 +22707,7 @@ var require_dist_cjs23 = __commonJS({
     var throw200ExceptionsMiddleware = /* @__PURE__ */ __name((config) => (next, context) => async (args) => {
       const result = await next(args);
       const { response } = result;
-      if (!import_protocol_http7.HttpResponse.isInstance(response)) {
+      if (!import_protocol_http8.HttpResponse.isInstance(response)) {
         return result;
       }
       const { statusCode, body: sourceBody } = response;
@@ -23120,7 +23121,7 @@ var require_dist_cjs25 = __commonJS({
       }
       return (0, import_util_middleware3.normalizeProvider)(credentials);
     }, "normalizeCredentialProvider");
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var getSkewCorrectedDate2 = /* @__PURE__ */ __name((systemClockOffset) => new Date(Date.now() + systemClockOffset), "getSkewCorrectedDate");
     var isClockSkewed2 = /* @__PURE__ */ __name((clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate2(systemClockOffset).getTime() - clockTime) >= 3e5, "isClockSkewed");
     var getUpdatedSystemClockOffset2 = /* @__PURE__ */ __name((clockTime, currentSystemClockOffset) => {
@@ -23132,7 +23133,7 @@ var require_dist_cjs25 = __commonJS({
     }, "getUpdatedSystemClockOffset");
     var awsAuthMiddleware = /* @__PURE__ */ __name((options) => (next, context) => async function(args) {
       var _a, _b, _c, _d, _e, _f, _g;
-      if (!import_protocol_http7.HttpRequest.isInstance(args.request))
+      if (!import_protocol_http8.HttpRequest.isInstance(args.request))
         return next(args);
       let authScheme;
       let signer;
@@ -23200,7 +23201,7 @@ var require_dist_cjs25 = __commonJS({
     }, "awsAuthMiddleware");
     var getDateHeader2 = /* @__PURE__ */ __name((response) => {
       var _a, _b;
-      return import_protocol_http7.HttpResponse.isInstance(response) ? ((_a = response.headers) == null ? void 0 : _a.date) ?? ((_b = response.headers) == null ? void 0 : _b.Date) : void 0;
+      return import_protocol_http8.HttpResponse.isInstance(response) ? ((_a = response.headers) == null ? void 0 : _a.date) ?? ((_b = response.headers) == null ? void 0 : _b.Date) : void 0;
     }, "getDateHeader");
     var awsAuthMiddlewareOptions = {
       name: "awsAuthMiddleware",
@@ -24035,7 +24036,7 @@ var require_dist_cjs28 = __commonJS({
     }
     __name(resolveUserAgentConfig, "resolveUserAgentConfig");
     var import_util_endpoints = require_dist_cjs27();
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var USER_AGENT = "user-agent";
     var X_AMZ_USER_AGENT = "x-amz-user-agent";
     var SPACE = " ";
@@ -24046,7 +24047,7 @@ var require_dist_cjs28 = __commonJS({
     var userAgentMiddleware = /* @__PURE__ */ __name((options) => (next, context) => async (args) => {
       var _a, _b;
       const { request } = args;
-      if (!import_protocol_http7.HttpRequest.isInstance(request))
+      if (!import_protocol_http8.HttpRequest.isInstance(request))
         return next(args);
       const { headers } = request;
       const userAgent = ((_a = context == null ? void 0 : context.userAgent) == null ? void 0 : _a.map(escapeUserAgent)) || [];
@@ -24354,12 +24355,12 @@ var require_dist_cjs31 = __commonJS({
       getContentLengthPlugin: () => getContentLengthPlugin
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var CONTENT_LENGTH_HEADER = "content-length";
     function contentLengthMiddleware(bodyLengthChecker) {
       return (next) => async (args) => {
         const request = args.request;
-        if (import_protocol_http7.HttpRequest.isInstance(request)) {
+        if (import_protocol_http8.HttpRequest.isInstance(request)) {
           const { body, headers } = request;
           if (body && Object.keys(headers).map((str) => str.toLowerCase()).indexOf(CONTENT_LENGTH_HEADER) === -1) {
             try {
@@ -25201,7 +25202,7 @@ var require_dist_cjs34 = __commonJS({
       retryMiddlewareOptions: () => retryMiddlewareOptions2
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var import_uuid = (init_esm_node2(), __toCommonJS(esm_node_exports2));
     var import_util_retry = require_dist_cjs33();
     var getDefaultRetryQuota = /* @__PURE__ */ __name((initialRetryTokens, options) => {
@@ -25273,12 +25274,12 @@ var require_dist_cjs34 = __commonJS({
         let totalDelay = 0;
         const maxAttempts = await this.getMaxAttempts();
         const { request } = args;
-        if (import_protocol_http7.HttpRequest.isInstance(request)) {
+        if (import_protocol_http8.HttpRequest.isInstance(request)) {
           request.headers[import_util_retry.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
         }
         while (true) {
           try {
-            if (import_protocol_http7.HttpRequest.isInstance(request)) {
+            if (import_protocol_http8.HttpRequest.isInstance(request)) {
               request.headers[import_util_retry.REQUEST_HEADER] = `attempt=${attempts + 1}; max=${maxAttempts}`;
             }
             if (options == null ? void 0 : options.beforeRequest) {
@@ -25320,7 +25321,7 @@ var require_dist_cjs34 = __commonJS({
     __name(_StandardRetryStrategy, "StandardRetryStrategy");
     var StandardRetryStrategy = _StandardRetryStrategy;
     var getDelayFromRetryAfterHeader = /* @__PURE__ */ __name((response) => {
-      if (!import_protocol_http7.HttpResponse.isInstance(response))
+      if (!import_protocol_http8.HttpResponse.isInstance(response))
         return;
       const retryAfterHeaderName = Object.keys(response.headers).find((key) => key.toLowerCase() === "retry-after");
       if (!retryAfterHeaderName)
@@ -25405,7 +25406,7 @@ var require_dist_cjs34 = __commonJS({
     };
     var omitRetryHeadersMiddleware = /* @__PURE__ */ __name(() => (next) => async (args) => {
       const { request } = args;
-      if (import_protocol_http7.HttpRequest.isInstance(request)) {
+      if (import_protocol_http8.HttpRequest.isInstance(request)) {
         delete request.headers[import_util_retry.INVOCATION_ID_HEADER];
         delete request.headers[import_util_retry.REQUEST_HEADER];
       }
@@ -25436,7 +25437,7 @@ var require_dist_cjs34 = __commonJS({
         let attempts = 0;
         let totalRetryDelay = 0;
         const { request } = args;
-        const isRequest = import_protocol_http7.HttpRequest.isInstance(request);
+        const isRequest = import_protocol_http8.HttpRequest.isInstance(request);
         if (isRequest) {
           request.headers[import_util_retry.INVOCATION_ID_HEADER] = (0, import_uuid.v4)();
         }
@@ -25516,7 +25517,7 @@ var require_dist_cjs34 = __commonJS({
       }
     }), "getRetryPlugin");
     var getRetryAfterHint = /* @__PURE__ */ __name((response) => {
-      if (!import_protocol_http7.HttpResponse.isInstance(response))
+      if (!import_protocol_http8.HttpResponse.isInstance(response))
         return;
       const retryAfterHeaderName = Object.keys(response.headers).find((key) => key.toLowerCase() === "retry-after");
       if (!retryAfterHeaderName)
@@ -26443,11 +26444,13 @@ var init_AwsSdkSigV4Signer = __esm({
       const signerFunction = throwSigningPropertyError("signer", config.signer);
       const signer = await signerFunction(authScheme);
       const signingRegion = signingProperties?.signingRegion;
+      const signingRegionSet = signingProperties?.signingRegionSet;
       const signingName = signingProperties?.signingName;
       return {
         config,
         signer,
         signingRegion,
+        signingRegionSet,
         signingName
       };
     };
@@ -26488,6 +26491,31 @@ var init_AwsSdkSigV4Signer = __esm({
       }
     };
     AWSSDKSigV4Signer = AwsSdkSigV4Signer;
+  }
+});
+
+// ../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js
+var import_protocol_http3, AwsSdkSigV4ASigner;
+var init_AwsSdkSigV4ASigner = __esm({
+  "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.js"() {
+    import_protocol_http3 = __toESM(require_dist_cjs2());
+    init_utils();
+    init_AwsSdkSigV4Signer();
+    AwsSdkSigV4ASigner = class extends AwsSdkSigV4Signer {
+      async sign(httpRequest, identity, signingProperties) {
+        if (!import_protocol_http3.HttpRequest.isInstance(httpRequest)) {
+          throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+        }
+        const { config, signer, signingRegion, signingRegionSet, signingName } = await validateSigningProperties(signingProperties);
+        const multiRegionOverride = signingRegionSet?.join?.(",") ?? signingRegion;
+        const signedRequest = await signer.sign(httpRequest, {
+          signingDate: getSkewCorrectedDate(config.systemClockOffset),
+          signingRegion: multiRegionOverride,
+          signingService: signingName
+        });
+        return signedRequest;
+      }
+    };
   }
 });
 
@@ -26598,10 +26626,10 @@ var init_middleware_http_auth_scheme = __esm({
 });
 
 // ../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js
-var import_protocol_http3, import_types2, import_util_middleware2, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
+var import_protocol_http4, import_types2, import_util_middleware2, defaultErrorHandler, defaultSuccessHandler, httpSigningMiddleware;
 var init_httpSigningMiddleware = __esm({
   "../../node_modules/@smithy/core/dist-es/middleware-http-signing/httpSigningMiddleware.js"() {
-    import_protocol_http3 = __toESM(require_dist_cjs2());
+    import_protocol_http4 = __toESM(require_dist_cjs2());
     import_types2 = __toESM(require_dist_cjs());
     import_util_middleware2 = __toESM(require_dist_cjs19());
     defaultErrorHandler = (signingProperties) => (error2) => {
@@ -26610,7 +26638,7 @@ var init_httpSigningMiddleware = __esm({
     defaultSuccessHandler = (httpResponse, signingProperties) => {
     };
     httpSigningMiddleware = (config) => (next, context) => async (args) => {
-      if (!import_protocol_http3.HttpRequest.isInstance(args.request)) {
+      if (!import_protocol_http4.HttpRequest.isInstance(args.request)) {
         return next(args);
       }
       const smithyContext = (0, import_util_middleware2.getSmithyContext)(context);
@@ -26681,10 +26709,10 @@ var init_DefaultIdentityProviderConfig = __esm({
 });
 
 // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js
-var import_protocol_http4, import_types3, HttpApiKeyAuthSigner;
+var import_protocol_http5, import_types3, HttpApiKeyAuthSigner;
 var init_httpApiKeyAuth = __esm({
   "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpApiKeyAuth.js"() {
-    import_protocol_http4 = __toESM(require_dist_cjs2());
+    import_protocol_http5 = __toESM(require_dist_cjs2());
     import_types3 = __toESM(require_dist_cjs());
     HttpApiKeyAuthSigner = class {
       async sign(httpRequest, identity, signingProperties) {
@@ -26700,7 +26728,7 @@ var init_httpApiKeyAuth = __esm({
         if (!identity.apiKey) {
           throw new Error("request could not be signed with `apiKey` since the `apiKey` is not defined");
         }
-        const clonedRequest = import_protocol_http4.HttpRequest.clone(httpRequest);
+        const clonedRequest = import_protocol_http5.HttpRequest.clone(httpRequest);
         if (signingProperties.in === import_types3.HttpApiKeyAuthLocation.QUERY) {
           clonedRequest.query[signingProperties.name] = identity.apiKey;
         } else if (signingProperties.in === import_types3.HttpApiKeyAuthLocation.HEADER) {
@@ -26715,13 +26743,13 @@ var init_httpApiKeyAuth = __esm({
 });
 
 // ../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js
-var import_protocol_http5, HttpBearerAuthSigner;
+var import_protocol_http6, HttpBearerAuthSigner;
 var init_httpBearerAuth = __esm({
   "../../node_modules/@smithy/core/dist-es/util-identity-and-auth/httpAuthSchemes/httpBearerAuth.js"() {
-    import_protocol_http5 = __toESM(require_dist_cjs2());
+    import_protocol_http6 = __toESM(require_dist_cjs2());
     HttpBearerAuthSigner = class {
       async sign(httpRequest, identity, signingProperties) {
-        const clonedRequest = import_protocol_http5.HttpRequest.clone(httpRequest);
+        const clonedRequest = import_protocol_http6.HttpRequest.clone(httpRequest);
         if (!identity.token) {
           throw new Error("request could not be signed with `token` since the `token` is not defined");
         }
@@ -26847,10 +26875,10 @@ var init_normalizeProvider = __esm({
 function requestBuilder(input, context) {
   return new RequestBuilder(input, context);
 }
-var import_protocol_http6, import_smithy_client, RequestBuilder;
+var import_protocol_http7, import_smithy_client, RequestBuilder;
 var init_requestBuilder = __esm({
   "../../node_modules/@smithy/core/dist-es/protocols/requestBuilder.js"() {
-    import_protocol_http6 = __toESM(require_dist_cjs2());
+    import_protocol_http7 = __toESM(require_dist_cjs2());
     import_smithy_client = __toESM(require_dist_cjs18());
     RequestBuilder = class {
       constructor(input, context) {
@@ -26870,7 +26898,7 @@ var init_requestBuilder = __esm({
         for (const resolvePath of this.resolvePathStack) {
           resolvePath(this.path);
         }
-        return new import_protocol_http6.HttpRequest({
+        return new import_protocol_http7.HttpRequest({
           protocol,
           hostname: this.hostname || hostname,
           port,
@@ -27087,6 +27115,7 @@ var init_resolveAwsSdkSigV4Config = __esm({
 var init_aws_sdk = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/httpAuthSchemes/aws_sdk/index.js"() {
     init_AwsSdkSigV4Signer();
+    init_AwsSdkSigV4ASigner();
     init_resolveAwsSdkSigV4Config();
   }
 });
@@ -27373,6 +27402,8 @@ var require_validator = __commonJS({
                 return getErrorObject("InvalidTag", "Closing tag '" + tagName + "' doesn't have proper closing.", getLineNumberForPosition(xmlData, i));
               } else if (attrStr.trim().length > 0) {
                 return getErrorObject("InvalidTag", "Closing tag '" + tagName + "' can't have attributes or invalid starting.", getLineNumberForPosition(xmlData, tagStartPos));
+              } else if (tags.length === 0) {
+                return getErrorObject("InvalidTag", "Closing tag '" + tagName + "' has not been opened.", getLineNumberForPosition(xmlData, tagStartPos));
               } else {
                 const otg = tags.pop();
                 if (tagName !== otg.tagName) {
@@ -27875,7 +27906,6 @@ var require_OrderedObjParser = __commonJS({
     var xmlNode = require_xmlNode();
     var readDocType = require_DocTypeReader();
     var toNumber = require_strnum();
-    var regx = "<((!\\[CDATA\\[([\\s\\S]*?)(]]>))|((NAME:)?(NAME))([^>]*)>|((\\/)(NAME)\\s*>))([^<]*)".replace(/NAME/g, util.nameRegexp);
     var OrderedObjParser = class {
       constructor(options) {
         this.options = options;
@@ -27902,7 +27932,9 @@ var require_OrderedObjParser = __commonJS({
           "euro": { regex: /&(euro|#8364);/g, val: "\u20AC" },
           "copyright": { regex: /&(copy|#169);/g, val: "\xA9" },
           "reg": { regex: /&(reg|#174);/g, val: "\xAE" },
-          "inr": { regex: /&(inr|#8377);/g, val: "\u20B9" }
+          "inr": { regex: /&(inr|#8377);/g, val: "\u20B9" },
+          "num_dec": { regex: /&#([0-9]{1,7});/g, val: (_, str) => String.fromCharCode(Number.parseInt(str, 10)) },
+          "num_hex": { regex: /&#x([0-9a-fA-F]{1,6});/g, val: (_, str) => String.fromCharCode(Number.parseInt(str, 16)) }
         };
         this.addExternalEntities = addExternalEntities;
         this.parseXml = parseXml;
@@ -28081,17 +28113,18 @@ var require_OrderedObjParser = __commonJS({
             const closeIndex = findClosingIndex(xmlData, "]]>", i, "CDATA is not closed.") - 2;
             const tagExp = xmlData.substring(i + 9, closeIndex);
             textData = this.saveTextToParentTag(textData, currentNode, jPath);
+            let val2 = this.parseTextData(tagExp, currentNode.tagname, jPath, true, false, true, true);
+            if (val2 == void 0) val2 = "";
             if (this.options.cdataPropName) {
               currentNode.add(this.options.cdataPropName, [{ [this.options.textNodeName]: tagExp }]);
             } else {
-              let val2 = this.parseTextData(tagExp, currentNode.tagname, jPath, true, false, true);
-              if (val2 == void 0) val2 = "";
               currentNode.add(this.options.textNodeName, val2);
             }
             i = closeIndex + 2;
           } else {
             let result = readTagExp(xmlData, i, this.options.removeNSPrefix);
             let tagName = result.tagName;
+            const rawTagName = result.rawTagName;
             let tagExp = result.tagExp;
             let attrExpPresent = result.attrExpPresent;
             let closeIndex = result.closeIndex;
@@ -28114,12 +28147,19 @@ var require_OrderedObjParser = __commonJS({
             if (this.isItStopNode(this.options.stopNodes, jPath, tagName)) {
               let tagContent = "";
               if (tagExp.length > 0 && tagExp.lastIndexOf("/") === tagExp.length - 1) {
+                if (tagName[tagName.length - 1] === "/") {
+                  tagName = tagName.substr(0, tagName.length - 1);
+                  jPath = jPath.substr(0, jPath.length - 1);
+                  tagExp = tagName;
+                } else {
+                  tagExp = tagExp.substr(0, tagExp.length - 1);
+                }
                 i = result.closeIndex;
               } else if (this.options.unpairedTags.indexOf(tagName) !== -1) {
                 i = result.closeIndex;
               } else {
-                const result2 = this.readStopNodeData(xmlData, tagName, closeIndex + 1);
-                if (!result2) throw new Error(`Unexpected end of ${tagName}`);
+                const result2 = this.readStopNodeData(xmlData, rawTagName, closeIndex + 1);
+                if (!result2) throw new Error(`Unexpected end of ${rawTagName}`);
                 i = result2.i;
                 tagContent = result2.tagContent;
               }
@@ -28137,6 +28177,7 @@ var require_OrderedObjParser = __commonJS({
               if (tagExp.length > 0 && tagExp.lastIndexOf("/") === tagExp.length - 1) {
                 if (tagName[tagName.length - 1] === "/") {
                   tagName = tagName.substr(0, tagName.length - 1);
+                  jPath = jPath.substr(0, jPath.length - 1);
                   tagExp = tagName;
                 } else {
                   tagExp = tagExp.substr(0, tagExp.length - 1);
@@ -28270,9 +28311,10 @@ var require_OrderedObjParser = __commonJS({
       let tagName = tagExp;
       let attrExpPresent = true;
       if (separatorIndex !== -1) {
-        tagName = tagExp.substr(0, separatorIndex).replace(/\s\s*$/, "");
-        tagExp = tagExp.substr(separatorIndex + 1);
+        tagName = tagExp.substring(0, separatorIndex);
+        tagExp = tagExp.substring(separatorIndex + 1).trimStart();
       }
+      const rawTagName = tagName;
       if (removeNSPrefix) {
         const colonIndex = tagName.indexOf(":");
         if (colonIndex !== -1) {
@@ -28284,7 +28326,8 @@ var require_OrderedObjParser = __commonJS({
         tagName,
         tagExp,
         closeIndex,
-        attrExpPresent
+        attrExpPresent,
+        rawTagName
       };
     }
     function readStopNodeData(xmlData, tagName, i) {
@@ -28507,6 +28550,7 @@ var require_orderedJs2Xml = __commonJS({
       for (let i = 0; i < arr.length; i++) {
         const tagObj = arr[i];
         const tagName = propName(tagObj);
+        if (tagName === void 0) continue;
         let newJPath = "";
         if (jPath.length === 0) newJPath = tagName;
         else newJPath = `${jPath}.${tagName}`;
@@ -28573,6 +28617,7 @@ var require_orderedJs2Xml = __commonJS({
       const keys = Object.keys(obj);
       for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
+        if (!obj.hasOwnProperty(key)) continue;
         if (key !== ":@") return key;
       }
     }
@@ -28580,6 +28625,7 @@ var require_orderedJs2Xml = __commonJS({
       let attrStr = "";
       if (attrMap && !options.ignoreAttributes) {
         for (let attr in attrMap) {
+          if (!attrMap.hasOwnProperty(attr)) continue;
           let attrVal = options.attributeValueProcessor(attr, attrMap[attr]);
           attrVal = replaceEntitiesValue(attrVal, options);
           if (attrVal === true && options.suppressBooleanAttributes) {
@@ -28690,10 +28736,19 @@ var require_json2xml = __commonJS({
       let attrStr = "";
       let val2 = "";
       for (let key in jObj) {
+        if (!Object.prototype.hasOwnProperty.call(jObj, key)) continue;
         if (typeof jObj[key] === "undefined") {
+          if (this.isAttribute(key)) {
+            val2 += "";
+          }
         } else if (jObj[key] === null) {
-          if (key[0] === "?") val2 += this.indentate(level) + "<" + key + "?" + this.tagEndChar;
-          else val2 += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
+          if (this.isAttribute(key)) {
+            val2 += "";
+          } else if (key[0] === "?") {
+            val2 += this.indentate(level) + "<" + key + "?" + this.tagEndChar;
+          } else {
+            val2 += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
+          }
         } else if (jObj[key] instanceof Date) {
           val2 += this.buildTextValNode(jObj[key], key, "", level);
         } else if (typeof jObj[key] !== "object") {
@@ -28711,6 +28766,7 @@ var require_json2xml = __commonJS({
         } else if (Array.isArray(jObj[key])) {
           const arrLen = jObj[key].length;
           let listTagVal = "";
+          let listTagAttr = "";
           for (let j = 0; j < arrLen; j++) {
             const item = jObj[key][j];
             if (typeof item === "undefined") {
@@ -28719,16 +28775,26 @@ var require_json2xml = __commonJS({
               else val2 += this.indentate(level) + "<" + key + "/" + this.tagEndChar;
             } else if (typeof item === "object") {
               if (this.options.oneListGroup) {
-                listTagVal += this.j2x(item, level + 1).val;
+                const result = this.j2x(item, level + 1);
+                listTagVal += result.val;
+                if (this.options.attributesGroupName && item.hasOwnProperty(this.options.attributesGroupName)) {
+                  listTagAttr += result.attrStr;
+                }
               } else {
                 listTagVal += this.processTextOrObjNode(item, key, level);
               }
             } else {
-              listTagVal += this.buildTextValNode(item, key, "", level);
+              if (this.options.oneListGroup) {
+                let textValue = this.options.tagValueProcessor(key, item);
+                textValue = this.replaceEntitiesValue(textValue);
+                listTagVal += textValue;
+              } else {
+                listTagVal += this.buildTextValNode(item, key, "", level);
+              }
             }
           }
           if (this.options.oneListGroup) {
-            listTagVal = this.buildObjectNode(listTagVal, key, "", level);
+            listTagVal = this.buildObjectNode(listTagVal, key, listTagAttr, level);
           }
           val2 += listTagVal;
         } else {
@@ -28773,7 +28839,7 @@ var require_json2xml = __commonJS({
           piClosingChar = "?";
           tagEndExp = "";
         }
-        if (attrStr && val2.indexOf("<") === -1) {
+        if ((attrStr || attrStr === "") && val2.indexOf("<") === -1) {
           return this.indentate(level) + "<" + key + attrStr + piClosingChar + ">" + val2 + tagEndExp;
         } else if (this.options.commentPropName !== false && key === this.options.commentPropName && piClosingChar.length === 0) {
           return this.indentate(level) + `<!--${val2}-->` + this.newLine;
@@ -28823,7 +28889,7 @@ var require_json2xml = __commonJS({
       return this.options.indentBy.repeat(level);
     }
     function isAttribute(name) {
-      if (name.startsWith(this.options.attributeNamePrefix)) {
+      if (name.startsWith(this.options.attributeNamePrefix) && name !== this.options.textNodeName) {
         return name.substr(this.attrPrefixLen);
       } else {
         return false;
@@ -28925,6 +28991,7 @@ var init_protocols = __esm({
 var dist_es_exports2 = {};
 __export(dist_es_exports2, {
   AWSSDKSigV4Signer: () => AWSSDKSigV4Signer,
+  AwsSdkSigV4ASigner: () => AwsSdkSigV4ASigner,
   AwsSdkSigV4Signer: () => AwsSdkSigV4Signer,
   _toBool: () => _toBool,
   _toNum: () => _toNum,
@@ -29597,7 +29664,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.620.0",
+      version: "3.623.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -29622,10 +29689,10 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "5.2.0",
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.620.0",
-        "@aws-sdk/client-sts": "3.620.0",
-        "@aws-sdk/core": "3.620.0",
-        "@aws-sdk/credential-provider-node": "3.620.0",
+        "@aws-sdk/client-sso-oidc": "3.623.0",
+        "@aws-sdk/client-sts": "3.623.0",
+        "@aws-sdk/core": "3.623.0",
+        "@aws-sdk/credential-provider-node": "3.623.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.620.0",
         "@aws-sdk/middleware-expect-continue": "3.620.0",
         "@aws-sdk/middleware-flexible-checksums": "3.620.0",
@@ -29633,23 +29700,23 @@ var require_package = __commonJS({
         "@aws-sdk/middleware-location-constraint": "3.609.0",
         "@aws-sdk/middleware-logger": "3.609.0",
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
-        "@aws-sdk/middleware-sdk-s3": "3.620.0",
+        "@aws-sdk/middleware-sdk-s3": "3.622.0",
         "@aws-sdk/middleware-signing": "3.620.0",
         "@aws-sdk/middleware-ssec": "3.609.0",
         "@aws-sdk/middleware-user-agent": "3.620.0",
         "@aws-sdk/region-config-resolver": "3.614.0",
-        "@aws-sdk/signature-v4-multi-region": "3.620.0",
+        "@aws-sdk/signature-v4-multi-region": "3.622.0",
         "@aws-sdk/types": "3.609.0",
         "@aws-sdk/util-endpoints": "3.614.0",
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@aws-sdk/xml-builder": "3.609.0",
         "@smithy/config-resolver": "^3.0.5",
-        "@smithy/core": "^2.3.0",
+        "@smithy/core": "^2.3.2",
         "@smithy/eventstream-serde-browser": "^3.0.5",
         "@smithy/eventstream-serde-config-resolver": "^3.0.3",
         "@smithy/eventstream-serde-node": "^3.0.4",
-        "@smithy/fetch-http-handler": "^3.2.3",
+        "@smithy/fetch-http-handler": "^3.2.4",
         "@smithy/hash-blob-browser": "^3.1.2",
         "@smithy/hash-node": "^3.0.3",
         "@smithy/hash-stream-node": "^3.1.2",
@@ -29657,29 +29724,29 @@ var require_package = __commonJS({
         "@smithy/md5-js": "^3.0.3",
         "@smithy/middleware-content-length": "^3.0.5",
         "@smithy/middleware-endpoint": "^3.1.0",
-        "@smithy/middleware-retry": "^3.0.12",
+        "@smithy/middleware-retry": "^3.0.14",
         "@smithy/middleware-serde": "^3.0.3",
         "@smithy/middleware-stack": "^3.0.3",
         "@smithy/node-config-provider": "^3.1.4",
         "@smithy/node-http-handler": "^3.1.4",
         "@smithy/protocol-http": "^4.1.0",
-        "@smithy/smithy-client": "^3.1.10",
+        "@smithy/smithy-client": "^3.1.12",
         "@smithy/types": "^3.3.0",
         "@smithy/url-parser": "^3.0.3",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.12",
-        "@smithy/util-defaults-mode-node": "^3.0.12",
+        "@smithy/util-defaults-mode-browser": "^3.0.14",
+        "@smithy/util-defaults-mode-node": "^3.0.14",
         "@smithy/util-endpoints": "^2.0.5",
         "@smithy/util-retry": "^3.0.3",
-        "@smithy/util-stream": "^3.1.2",
+        "@smithy/util-stream": "^3.1.3",
         "@smithy/util-utf8": "^3.0.0",
         "@smithy/util-waiter": "^3.1.2",
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.620.0",
+        "@aws-sdk/signature-v4-crt": "3.622.0",
         "@tsconfig/node16": "16.1.3",
         "@types/chai": "^4.2.11",
         "@types/mocha": "^8.0.4",
@@ -29747,6 +29814,7 @@ var require_dist_cjs42 = __commonJS({
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
     var src_exports = {};
     __export2(src_exports, {
+      ENV_ACCOUNT_ID: () => ENV_ACCOUNT_ID,
       ENV_CREDENTIAL_SCOPE: () => ENV_CREDENTIAL_SCOPE,
       ENV_EXPIRATION: () => ENV_EXPIRATION,
       ENV_KEY: () => ENV_KEY,
@@ -29761,6 +29829,7 @@ var require_dist_cjs42 = __commonJS({
     var ENV_SESSION = "AWS_SESSION_TOKEN";
     var ENV_EXPIRATION = "AWS_CREDENTIAL_EXPIRATION";
     var ENV_CREDENTIAL_SCOPE = "AWS_CREDENTIAL_SCOPE";
+    var ENV_ACCOUNT_ID = "AWS_ACCOUNT_ID";
     var fromEnv = /* @__PURE__ */ __name((init) => async () => {
       var _a;
       (_a = init == null ? void 0 : init.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-env - fromEnv");
@@ -29769,13 +29838,15 @@ var require_dist_cjs42 = __commonJS({
       const sessionToken = process.env[ENV_SESSION];
       const expiry = process.env[ENV_EXPIRATION];
       const credentialScope = process.env[ENV_CREDENTIAL_SCOPE];
+      const accountId = process.env[ENV_ACCOUNT_ID];
       if (accessKeyId && secretAccessKey) {
         return {
           accessKeyId,
           secretAccessKey,
           ...sessionToken && { sessionToken },
           ...expiry && { expiration: new Date(expiry) },
-          ...credentialScope && { credentialScope }
+          ...credentialScope && { credentialScope },
+          ...accountId && { accountId }
         };
       }
       throw new import_property_provider.CredentialsProviderError("Unable to find environment variable credentials.", { logger: init == null ? void 0 : init.logger });
@@ -30460,7 +30531,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.620.0",
+      version: "3.623.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -30479,7 +30550,7 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.620.0",
+        "@aws-sdk/core": "3.623.0",
         "@aws-sdk/middleware-host-header": "3.620.0",
         "@aws-sdk/middleware-logger": "3.609.0",
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
@@ -30490,26 +30561,26 @@ var require_package2 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@smithy/config-resolver": "^3.0.5",
-        "@smithy/core": "^2.3.0",
-        "@smithy/fetch-http-handler": "^3.2.3",
+        "@smithy/core": "^2.3.2",
+        "@smithy/fetch-http-handler": "^3.2.4",
         "@smithy/hash-node": "^3.0.3",
         "@smithy/invalid-dependency": "^3.0.3",
         "@smithy/middleware-content-length": "^3.0.5",
         "@smithy/middleware-endpoint": "^3.1.0",
-        "@smithy/middleware-retry": "^3.0.12",
+        "@smithy/middleware-retry": "^3.0.14",
         "@smithy/middleware-serde": "^3.0.3",
         "@smithy/middleware-stack": "^3.0.3",
         "@smithy/node-config-provider": "^3.1.4",
         "@smithy/node-http-handler": "^3.1.4",
         "@smithy/protocol-http": "^4.1.0",
-        "@smithy/smithy-client": "^3.1.10",
+        "@smithy/smithy-client": "^3.1.12",
         "@smithy/types": "^3.3.0",
         "@smithy/url-parser": "^3.0.3",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.12",
-        "@smithy/util-defaults-mode-node": "^3.0.12",
+        "@smithy/util-defaults-mode-browser": "^3.0.14",
+        "@smithy/util-defaults-mode-node": "^3.0.14",
         "@smithy/util-endpoints": "^2.0.5",
         "@smithy/util-middleware": "^3.0.3",
         "@smithy/util-retry": "^3.0.3",
@@ -31186,7 +31257,7 @@ var require_dist_cjs50 = __commonJS({
     };
     var import_runtimeConfig = require_runtimeConfig();
     var import_region_config_resolver = require_dist_cjs49();
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var import_smithy_client5 = require_dist_cjs18();
     var getHttpAuthExtensionConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
       const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
@@ -31230,7 +31301,7 @@ var require_dist_cjs50 = __commonJS({
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
         ...asPartial((0, import_smithy_client5.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http7.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_protocol_http8.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
         ...asPartial(getHttpAuthExtensionConfiguration(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
@@ -31238,7 +31309,7 @@ var require_dist_cjs50 = __commonJS({
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
         ...(0, import_smithy_client5.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http7.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
+        ...(0, import_protocol_http8.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
         ...resolveHttpAuthRuntimeConfig(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
@@ -31246,25 +31317,27 @@ var require_dist_cjs50 = __commonJS({
       constructor(...[configuration2]) {
         const _config_0 = (0, import_runtimeConfig.getRuntimeConfig)(configuration2 || {});
         const _config_1 = resolveClientEndpointParameters(_config_0);
-        const _config_2 = (0, import_config_resolver.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_3);
-        const _config_5 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_4);
-        const _config_6 = (0, import_middleware_retry2.resolveRetryConfig)(_config_5);
+        const _config_2 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_1);
+        const _config_3 = (0, import_middleware_retry2.resolveRetryConfig)(_config_2);
+        const _config_4 = (0, import_config_resolver.resolveRegionConfig)(_config_3);
+        const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
+        const _config_6 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_5);
         const _config_7 = (0, import_httpAuthSchemeProvider.resolveHttpAuthSchemeConfig)(_config_6);
         const _config_8 = resolveRuntimeExtensions(_config_7, (configuration2 == null ? void 0 : configuration2.extensions) || []);
         super(_config_8);
         this.config = _config_8;
-        this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
-        this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
-        this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_user_agent.getUserAgentPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_retry2.getRetryPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use(
           (0, import_core2.getHttpAuthSchemeEndpointRuleSetPlugin)(this.config, {
-            httpAuthSchemeParametersProvider: this.getDefaultHttpAuthSchemeParametersProvider(),
-            identityProviderConfigProvider: this.getIdentityProviderConfigProvider()
+            httpAuthSchemeParametersProvider: import_httpAuthSchemeProvider.defaultSSOHttpAuthSchemeParametersProvider,
+            identityProviderConfigProvider: async (config) => new import_core2.DefaultIdentityProviderConfig({
+              "aws.auth#sigv4": config.credentials
+            })
           })
         );
         this.middlewareStack.use((0, import_core2.getHttpSigningPlugin)(this.config));
@@ -31276,14 +31349,6 @@ var require_dist_cjs50 = __commonJS({
        */
       destroy() {
         super.destroy();
-      }
-      getDefaultHttpAuthSchemeParametersProvider() {
-        return import_httpAuthSchemeProvider.defaultSSOHttpAuthSchemeParametersProvider;
-      }
-      getIdentityProviderConfigProvider() {
-        return async (config) => new import_core2.DefaultIdentityProviderConfig({
-          "aws.auth#sigv4": config.credentials
-        });
       }
     };
     __name(_SSOClient, "SSOClient");
@@ -31734,7 +31799,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.620.0",
+      version: "3.623.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -31753,8 +31818,8 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.620.0",
-        "@aws-sdk/credential-provider-node": "3.620.0",
+        "@aws-sdk/core": "3.623.0",
+        "@aws-sdk/credential-provider-node": "3.623.0",
         "@aws-sdk/middleware-host-header": "3.620.0",
         "@aws-sdk/middleware-logger": "3.609.0",
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
@@ -31765,26 +31830,26 @@ var require_package3 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@smithy/config-resolver": "^3.0.5",
-        "@smithy/core": "^2.3.0",
-        "@smithy/fetch-http-handler": "^3.2.3",
+        "@smithy/core": "^2.3.2",
+        "@smithy/fetch-http-handler": "^3.2.4",
         "@smithy/hash-node": "^3.0.3",
         "@smithy/invalid-dependency": "^3.0.3",
         "@smithy/middleware-content-length": "^3.0.5",
         "@smithy/middleware-endpoint": "^3.1.0",
-        "@smithy/middleware-retry": "^3.0.12",
+        "@smithy/middleware-retry": "^3.0.14",
         "@smithy/middleware-serde": "^3.0.3",
         "@smithy/middleware-stack": "^3.0.3",
         "@smithy/node-config-provider": "^3.1.4",
         "@smithy/node-http-handler": "^3.1.4",
         "@smithy/protocol-http": "^4.1.0",
-        "@smithy/smithy-client": "^3.1.10",
+        "@smithy/smithy-client": "^3.1.12",
         "@smithy/types": "^3.3.0",
         "@smithy/url-parser": "^3.0.3",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.12",
-        "@smithy/util-defaults-mode-node": "^3.0.12",
+        "@smithy/util-defaults-mode-browser": "^3.0.14",
+        "@smithy/util-defaults-mode-node": "^3.0.14",
         "@smithy/util-endpoints": "^2.0.5",
         "@smithy/util-middleware": "^3.0.3",
         "@smithy/util-retry": "^3.0.3",
@@ -31818,7 +31883,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/client-sts": "^3.620.0"
+        "@aws-sdk/client-sts": "^3.623.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -32070,7 +32135,7 @@ var require_dist_cjs51 = __commonJS({
     };
     var import_runtimeConfig = require_runtimeConfig2();
     var import_region_config_resolver = require_dist_cjs49();
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var import_smithy_client5 = require_dist_cjs18();
     var getHttpAuthExtensionConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
       const _httpAuthSchemes = runtimeConfig.httpAuthSchemes;
@@ -32114,7 +32179,7 @@ var require_dist_cjs51 = __commonJS({
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
         ...asPartial((0, import_smithy_client5.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http7.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
+        ...asPartial((0, import_protocol_http8.getHttpHandlerExtensionConfiguration)(runtimeConfig)),
         ...asPartial(getHttpAuthExtensionConfiguration(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
@@ -32122,7 +32187,7 @@ var require_dist_cjs51 = __commonJS({
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
         ...(0, import_smithy_client5.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http7.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
+        ...(0, import_protocol_http8.resolveHttpHandlerRuntimeConfig)(extensionConfiguration),
         ...resolveHttpAuthRuntimeConfig(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
@@ -32130,25 +32195,27 @@ var require_dist_cjs51 = __commonJS({
       constructor(...[configuration2]) {
         const _config_0 = (0, import_runtimeConfig.getRuntimeConfig)(configuration2 || {});
         const _config_1 = resolveClientEndpointParameters(_config_0);
-        const _config_2 = (0, import_config_resolver.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_3);
-        const _config_5 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_4);
-        const _config_6 = (0, import_middleware_retry2.resolveRetryConfig)(_config_5);
+        const _config_2 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_1);
+        const _config_3 = (0, import_middleware_retry2.resolveRetryConfig)(_config_2);
+        const _config_4 = (0, import_config_resolver.resolveRegionConfig)(_config_3);
+        const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
+        const _config_6 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_5);
         const _config_7 = (0, import_httpAuthSchemeProvider.resolveHttpAuthSchemeConfig)(_config_6);
         const _config_8 = resolveRuntimeExtensions(_config_7, (configuration2 == null ? void 0 : configuration2.extensions) || []);
         super(_config_8);
         this.config = _config_8;
-        this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
-        this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
-        this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_user_agent.getUserAgentPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_retry2.getRetryPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use(
           (0, import_core2.getHttpAuthSchemeEndpointRuleSetPlugin)(this.config, {
-            httpAuthSchemeParametersProvider: this.getDefaultHttpAuthSchemeParametersProvider(),
-            identityProviderConfigProvider: this.getIdentityProviderConfigProvider()
+            httpAuthSchemeParametersProvider: import_httpAuthSchemeProvider.defaultSSOOIDCHttpAuthSchemeParametersProvider,
+            identityProviderConfigProvider: async (config) => new import_core2.DefaultIdentityProviderConfig({
+              "aws.auth#sigv4": config.credentials
+            })
           })
         );
         this.middlewareStack.use((0, import_core2.getHttpSigningPlugin)(this.config));
@@ -32160,14 +32227,6 @@ var require_dist_cjs51 = __commonJS({
        */
       destroy() {
         super.destroy();
-      }
-      getDefaultHttpAuthSchemeParametersProvider() {
-        return import_httpAuthSchemeProvider.defaultSSOOIDCHttpAuthSchemeParametersProvider;
-      }
-      getIdentityProviderConfigProvider() {
-        return async (config) => new import_core2.DefaultIdentityProviderConfig({
-          "aws.auth#sigv4": config.credentials
-        });
       }
     };
     __name(_SSOOIDCClient, "SSOOIDCClient");
@@ -33266,14 +33325,23 @@ var require_dist_cjs53 = __commonJS({
           logger
         });
       }
-      const { roleCredentials: { accessKeyId, secretAccessKey, sessionToken, expiration, credentialScope } = {} } = ssoResp;
+      const {
+        roleCredentials: { accessKeyId, secretAccessKey, sessionToken, expiration, credentialScope, accountId } = {}
+      } = ssoResp;
       if (!accessKeyId || !secretAccessKey || !sessionToken || !expiration) {
         throw new import_property_provider.CredentialsProviderError("SSO returns an invalid temporary credential.", {
           tryNextLink: SHOULD_FAIL_CREDENTIAL_CHAIN,
           logger
         });
       }
-      return { accessKeyId, secretAccessKey, sessionToken, expiration: new Date(expiration), credentialScope };
+      return {
+        accessKeyId,
+        secretAccessKey,
+        sessionToken,
+        expiration: new Date(expiration),
+        ...credentialScope && { credentialScope },
+        ...accountId && { accountId }
+      };
     }, "resolveSSOCredentials");
     var validateSsoProfile = /* @__PURE__ */ __name((profile, logger) => {
       const { sso_start_url, sso_account_id, sso_region, sso_role_name } = profile;
@@ -33463,7 +33531,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.620.0",
+      version: "3.623.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -33484,9 +33552,9 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.620.0",
-        "@aws-sdk/core": "3.620.0",
-        "@aws-sdk/credential-provider-node": "3.620.0",
+        "@aws-sdk/client-sso-oidc": "3.623.0",
+        "@aws-sdk/core": "3.623.0",
+        "@aws-sdk/credential-provider-node": "3.623.0",
         "@aws-sdk/middleware-host-header": "3.620.0",
         "@aws-sdk/middleware-logger": "3.609.0",
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
@@ -33497,26 +33565,26 @@ var require_package4 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@smithy/config-resolver": "^3.0.5",
-        "@smithy/core": "^2.3.0",
-        "@smithy/fetch-http-handler": "^3.2.3",
+        "@smithy/core": "^2.3.2",
+        "@smithy/fetch-http-handler": "^3.2.4",
         "@smithy/hash-node": "^3.0.3",
         "@smithy/invalid-dependency": "^3.0.3",
         "@smithy/middleware-content-length": "^3.0.5",
         "@smithy/middleware-endpoint": "^3.1.0",
-        "@smithy/middleware-retry": "^3.0.12",
+        "@smithy/middleware-retry": "^3.0.14",
         "@smithy/middleware-serde": "^3.0.3",
         "@smithy/middleware-stack": "^3.0.3",
         "@smithy/node-config-provider": "^3.1.4",
         "@smithy/node-http-handler": "^3.1.4",
         "@smithy/protocol-http": "^4.1.0",
-        "@smithy/smithy-client": "^3.1.10",
+        "@smithy/smithy-client": "^3.1.12",
         "@smithy/types": "^3.3.0",
         "@smithy/url-parser": "^3.0.3",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.12",
-        "@smithy/util-defaults-mode-node": "^3.0.12",
+        "@smithy/util-defaults-mode-browser": "^3.0.14",
+        "@smithy/util-defaults-mode-node": "^3.0.14",
         "@smithy/util-endpoints": "^2.0.5",
         "@smithy/util-middleware": "^3.0.3",
         "@smithy/util-retry": "^3.0.3",
@@ -33850,37 +33918,31 @@ var require_STSClient = __commonJS({
       constructor(...[configuration2]) {
         const _config_0 = (0, runtimeConfig_1.getRuntimeConfig)(configuration2 || {});
         const _config_1 = (0, EndpointParameters_1.resolveClientEndpointParameters)(_config_0);
-        const _config_2 = (0, config_resolver_1.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, middleware_endpoint_1.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, middleware_host_header_1.resolveHostHeaderConfig)(_config_3);
-        const _config_5 = (0, middleware_user_agent_1.resolveUserAgentConfig)(_config_4);
-        const _config_6 = (0, middleware_retry_1.resolveRetryConfig)(_config_5);
+        const _config_2 = (0, middleware_user_agent_1.resolveUserAgentConfig)(_config_1);
+        const _config_3 = (0, middleware_retry_1.resolveRetryConfig)(_config_2);
+        const _config_4 = (0, config_resolver_1.resolveRegionConfig)(_config_3);
+        const _config_5 = (0, middleware_host_header_1.resolveHostHeaderConfig)(_config_4);
+        const _config_6 = (0, middleware_endpoint_1.resolveEndpointConfig)(_config_5);
         const _config_7 = (0, httpAuthSchemeProvider_1.resolveHttpAuthSchemeConfig)(_config_6);
         const _config_8 = (0, runtimeExtensions_1.resolveRuntimeExtensions)(_config_7, configuration2?.extensions || []);
         super(_config_8);
         this.config = _config_8;
-        this.middlewareStack.use((0, middleware_host_header_1.getHostHeaderPlugin)(this.config));
-        this.middlewareStack.use((0, middleware_logger_1.getLoggerPlugin)(this.config));
-        this.middlewareStack.use((0, middleware_recursion_detection_1.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use((0, middleware_user_agent_1.getUserAgentPlugin)(this.config));
         this.middlewareStack.use((0, middleware_retry_1.getRetryPlugin)(this.config));
         this.middlewareStack.use((0, middleware_content_length_1.getContentLengthPlugin)(this.config));
+        this.middlewareStack.use((0, middleware_host_header_1.getHostHeaderPlugin)(this.config));
+        this.middlewareStack.use((0, middleware_logger_1.getLoggerPlugin)(this.config));
+        this.middlewareStack.use((0, middleware_recursion_detection_1.getRecursionDetectionPlugin)(this.config));
         this.middlewareStack.use((0, core_1.getHttpAuthSchemeEndpointRuleSetPlugin)(this.config, {
-          httpAuthSchemeParametersProvider: this.getDefaultHttpAuthSchemeParametersProvider(),
-          identityProviderConfigProvider: this.getIdentityProviderConfigProvider()
+          httpAuthSchemeParametersProvider: httpAuthSchemeProvider_1.defaultSTSHttpAuthSchemeParametersProvider,
+          identityProviderConfigProvider: async (config) => new core_1.DefaultIdentityProviderConfig({
+            "aws.auth#sigv4": config.credentials
+          })
         }));
         this.middlewareStack.use((0, core_1.getHttpSigningPlugin)(this.config));
       }
       destroy() {
         super.destroy();
-      }
-      getDefaultHttpAuthSchemeParametersProvider() {
-        return httpAuthSchemeProvider_1.defaultSTSHttpAuthSchemeParametersProvider;
-      }
-      getIdentityProviderConfigProvider() {
-        return async (config) => new core_1.DefaultIdentityProviderConfig({
-          "aws.auth#sigv4": config.credentials
-        });
       }
     };
     exports2.STSClient = STSClient2;
@@ -34129,7 +34191,7 @@ var require_dist_cjs54 = __commonJS({
       ...obj.Credentials && { Credentials: CredentialsFilterSensitiveLog(obj.Credentials) }
     }), "GetSessionTokenResponseFilterSensitiveLog");
     var import_core2 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var se_AssumeRoleCommand = /* @__PURE__ */ __name(async (input, context) => {
       const headers = SHARED_HEADERS;
       let body;
@@ -34941,7 +35003,7 @@ var require_dist_cjs54 = __commonJS({
       if (body !== void 0) {
         contents.body = body;
       }
-      return new import_protocol_http7.HttpRequest(contents);
+      return new import_protocol_http8.HttpRequest(contents);
     }, "buildHttpRpcRequest");
     var SHARED_HEADERS = {
       "content-type": "application/x-www-form-urlencoded"
@@ -35125,6 +35187,15 @@ var require_dist_cjs54 = __commonJS({
     (0, import_smithy_client5.createAggregatedClient)(commands, STS);
     var import_EndpointParameters9 = require_EndpointParameters();
     var ASSUME_ROLE_DEFAULT_REGION = "us-east-1";
+    var getAccountIdFromAssumedRoleUser = /* @__PURE__ */ __name((assumedRoleUser) => {
+      if (typeof (assumedRoleUser == null ? void 0 : assumedRoleUser.Arn) === "string") {
+        const arnComponents = assumedRoleUser.Arn.split(":");
+        if (arnComponents.length > 4 && arnComponents[4] !== "") {
+          return arnComponents[4];
+        }
+      }
+      return void 0;
+    }, "getAccountIdFromAssumedRoleUser");
     var resolveRegion = /* @__PURE__ */ __name(async (_region, _parentRegion, credentialProviderLogger) => {
       var _a2;
       const region = typeof _region === "function" ? await _region() : _region;
@@ -35165,17 +35236,19 @@ var require_dist_cjs54 = __commonJS({
             logger
           });
         }
-        const { Credentials: Credentials2 } = await stsClient.send(new AssumeRoleCommand(params));
+        const { Credentials: Credentials2, AssumedRoleUser: AssumedRoleUser2 } = await stsClient.send(new AssumeRoleCommand(params));
         if (!Credentials2 || !Credentials2.AccessKeyId || !Credentials2.SecretAccessKey) {
           throw new Error(`Invalid response from STS.assumeRole call with role ${params.RoleArn}`);
         }
+        const accountId = getAccountIdFromAssumedRoleUser(AssumedRoleUser2);
         return {
           accessKeyId: Credentials2.AccessKeyId,
           secretAccessKey: Credentials2.SecretAccessKey,
           sessionToken: Credentials2.SessionToken,
           expiration: Credentials2.Expiration,
           // TODO(credentialScope): access normally when shape is updated.
-          credentialScope: Credentials2.CredentialScope
+          ...Credentials2.CredentialScope && { credentialScope: Credentials2.CredentialScope },
+          ...accountId && { accountId }
         };
       };
     }, "getDefaultRoleAssumer");
@@ -35201,17 +35274,19 @@ var require_dist_cjs54 = __commonJS({
             logger
           });
         }
-        const { Credentials: Credentials2 } = await stsClient.send(new AssumeRoleWithWebIdentityCommand(params));
+        const { Credentials: Credentials2, AssumedRoleUser: AssumedRoleUser2 } = await stsClient.send(new AssumeRoleWithWebIdentityCommand(params));
         if (!Credentials2 || !Credentials2.AccessKeyId || !Credentials2.SecretAccessKey) {
           throw new Error(`Invalid response from STS.assumeRoleWithWebIdentity call with role ${params.RoleArn}`);
         }
+        const accountId = getAccountIdFromAssumedRoleUser(AssumedRoleUser2);
         return {
           accessKeyId: Credentials2.AccessKeyId,
           secretAccessKey: Credentials2.SecretAccessKey,
           sessionToken: Credentials2.SessionToken,
           expiration: Credentials2.Expiration,
           // TODO(credentialScope): access normally when shape is updated.
-          credentialScope: Credentials2.CredentialScope
+          ...Credentials2.CredentialScope && { credentialScope: Credentials2.CredentialScope },
+          ...accountId && { accountId }
         };
       };
     }, "getDefaultRoleAssumerWithWebIdentity");
@@ -35271,7 +35346,8 @@ var require_dist_cjs55 = __commonJS({
     var import_property_provider = require_dist_cjs24();
     var import_child_process = require("child_process");
     var import_util = require("util");
-    var getValidatedProcessCredentials = /* @__PURE__ */ __name((profileName, data) => {
+    var getValidatedProcessCredentials = /* @__PURE__ */ __name((profileName, data, profiles) => {
+      var _a;
       if (data.Version !== 1) {
         throw Error(`Profile ${profileName} credential_process did not return Version 1.`);
       }
@@ -35285,12 +35361,17 @@ var require_dist_cjs55 = __commonJS({
           throw Error(`Profile ${profileName} credential_process returned expired credentials.`);
         }
       }
+      let accountId = data.AccountId;
+      if (!accountId && ((_a = profiles == null ? void 0 : profiles[profileName]) == null ? void 0 : _a.aws_account_id)) {
+        accountId = profiles[profileName].aws_account_id;
+      }
       return {
         accessKeyId: data.AccessKeyId,
         secretAccessKey: data.SecretAccessKey,
         ...data.SessionToken && { sessionToken: data.SessionToken },
         ...data.Expiration && { expiration: new Date(data.Expiration) },
-        ...data.CredentialScope && { credentialScope: data.CredentialScope }
+        ...data.CredentialScope && { credentialScope: data.CredentialScope },
+        ...accountId && { accountId }
       };
     }, "getValidatedProcessCredentials");
     var resolveProcessCredentials = /* @__PURE__ */ __name(async (profileName, profiles, logger) => {
@@ -35307,7 +35388,7 @@ var require_dist_cjs55 = __commonJS({
             } catch {
               throw Error(`Profile ${profileName} credential_process returned invalid JSON.`);
             }
-            return getValidatedProcessCredentials(profileName, data);
+            return getValidatedProcessCredentials(profileName, data, profiles);
           } catch (error2) {
             throw new import_property_provider.CredentialsProviderError(error2.message, { logger });
           }
@@ -35610,7 +35691,7 @@ var require_dist_cjs57 = __commonJS({
       })();
     }, "resolveSsoCredentials");
     var isSsoProfile = /* @__PURE__ */ __name((arg) => arg && (typeof arg.sso_start_url === "string" || typeof arg.sso_account_id === "string" || typeof arg.sso_session === "string" || typeof arg.sso_region === "string" || typeof arg.sso_role_name === "string"), "isSsoProfile");
-    var isStaticCredsProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.aws_access_key_id === "string" && typeof arg.aws_secret_access_key === "string" && ["undefined", "string"].indexOf(typeof arg.aws_session_token) > -1, "isStaticCredsProfile");
+    var isStaticCredsProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.aws_access_key_id === "string" && typeof arg.aws_secret_access_key === "string" && ["undefined", "string"].indexOf(typeof arg.aws_session_token) > -1 && ["undefined", "string"].indexOf(typeof arg.aws_account_id) > -1, "isStaticCredsProfile");
     var resolveStaticCredentials = /* @__PURE__ */ __name((profile, options) => {
       var _a;
       (_a = options == null ? void 0 : options.logger) == null ? void 0 : _a.debug("@aws-sdk/credential-provider-ini - resolveStaticCredentials");
@@ -35618,7 +35699,8 @@ var require_dist_cjs57 = __commonJS({
         accessKeyId: profile.aws_access_key_id,
         secretAccessKey: profile.aws_secret_access_key,
         sessionToken: profile.aws_session_token,
-        credentialScope: profile.aws_credential_scope
+        ...profile.aws_credential_scope && { credentialScope: profile.aws_credential_scope },
+        ...profile.aws_account_id && { accountId: profile.aws_account_id }
       });
     }, "resolveStaticCredentials");
     var isWebIdentityProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.web_identity_token_file === "string" && typeof arg.role_arn === "string" && ["undefined", "string"].indexOf(typeof arg.role_session_name) > -1, "isWebIdentityProfile");
@@ -35871,7 +35953,7 @@ var require_dist_cjs59 = __commonJS({
       default: false
     };
     var import_util_arn_parser = require_dist_cjs22();
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var DOMAIN_PATTERN = /^[a-z0-9][a-z0-9\.\-]{1,61}[a-z0-9]$/;
     var IP_ADDRESS_PATTERN = /(\d+\.){3}\d+/;
     var DOTS_PATTERN = /\.\./;
@@ -36176,7 +36258,7 @@ var require_dist_cjs59 = __commonJS({
       const { Bucket: bucketName } = args.input;
       let replaceBucketInPath = options.bucketEndpoint;
       const request = args.request;
-      if (import_protocol_http7.HttpRequest.isInstance(request)) {
+      if (import_protocol_http8.HttpRequest.isInstance(request)) {
         if (options.bucketEndpoint) {
           request.hostname = bucketName;
         } else if ((0, import_util_arn_parser.validate)(bucketName)) {
@@ -38618,7 +38700,7 @@ var require_dist_cjs70 = __commonJS({
     })(ChecksumLocation || {});
     var DEFAULT_CHECKSUM_ALGORITHM = "MD5";
     var S3_EXPRESS_DEFAULT_CHECKSUM_ALGORITHM = "CRC32";
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var CLIENT_SUPPORTED_ALGORITHMS = [
       "CRC32",
       "CRC32C",
@@ -38695,7 +38777,7 @@ var require_dist_cjs70 = __commonJS({
       override: true
     };
     var flexibleChecksumsMiddleware = /* @__PURE__ */ __name((config, middlewareConfig) => (next, context) => async (args) => {
-      if (!import_protocol_http7.HttpRequest.isInstance(args.request)) {
+      if (!import_protocol_http8.HttpRequest.isInstance(args.request)) {
         return next(args);
       }
       const { request } = args;
@@ -38806,7 +38888,7 @@ var require_dist_cjs70 = __commonJS({
       override: true
     };
     var flexibleChecksumsResponseMiddleware = /* @__PURE__ */ __name((config, middlewareConfig) => (next, context) => async (args) => {
-      if (!import_protocol_http7.HttpRequest.isInstance(args.request)) {
+      if (!import_protocol_http8.HttpRequest.isInstance(args.request)) {
         return next(args);
       }
       const input = args.input;
@@ -39968,7 +40050,7 @@ var require_dist_cjs72 = __commonJS({
     var import_core2 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var import_xml_builder = require_dist_cjs41();
     var import_core22 = (init_dist_es(), __toCommonJS(dist_es_exports));
-    var import_protocol_http7 = require_dist_cjs2();
+    var import_protocol_http8 = require_dist_cjs2();
     var MFADelete = {
       Disabled: "Disabled",
       Enabled: "Enabled"
@@ -42107,7 +42189,7 @@ var require_dist_cjs72 = __commonJS({
           throw new Error("Empty value provided for input host prefix: RequestRoute.");
         }
         resolvedHostname = resolvedHostname.replace("{RequestRoute}", input.RequestRoute);
-        if (!(0, import_protocol_http7.isValidHostname)(resolvedHostname)) {
+        if (!(0, import_protocol_http8.isValidHostname)(resolvedHostname)) {
           throw new Error("ValidationError: prefixed hostname must be hostname compatible.");
         }
       }
@@ -47385,31 +47467,34 @@ var require_dist_cjs72 = __commonJS({
       const extensionConfiguration = {
         ...asPartial((0, import_region_config_resolver.getAwsRegionExtensionConfiguration)(runtimeConfig)),
         ...asPartial((0, import_smithy_client5.getDefaultExtensionConfiguration)(runtimeConfig)),
-        ...asPartial((0, import_protocol_http7.getHttpHandlerExtensionConfiguration)(runtimeConfig))
+        ...asPartial((0, import_protocol_http8.getHttpHandlerExtensionConfiguration)(runtimeConfig))
       };
       extensions.forEach((extension) => extension.configure(extensionConfiguration));
       return {
         ...runtimeConfig,
         ...(0, import_region_config_resolver.resolveAwsRegionExtensionConfiguration)(extensionConfiguration),
         ...(0, import_smithy_client5.resolveDefaultRuntimeConfig)(extensionConfiguration),
-        ...(0, import_protocol_http7.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
+        ...(0, import_protocol_http8.resolveHttpHandlerRuntimeConfig)(extensionConfiguration)
       };
     }, "resolveRuntimeExtensions");
     var _S3Client = class _S3Client extends import_smithy_client5.Client {
       constructor(...[configuration2]) {
         const _config_0 = (0, import_runtimeConfig.getRuntimeConfig)(configuration2 || {});
         const _config_1 = resolveClientEndpointParameters(_config_0);
-        const _config_2 = (0, import_config_resolver.resolveRegionConfig)(_config_1);
-        const _config_3 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_2);
-        const _config_4 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_3);
-        const _config_5 = (0, import_middleware_signing.resolveAwsAuthConfig)(_config_4);
-        const _config_6 = (0, import_middleware_sdk_s32.resolveS3Config)(_config_5, { session: [() => this, CreateSessionCommand] });
-        const _config_7 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_6);
-        const _config_8 = (0, import_middleware_retry2.resolveRetryConfig)(_config_7);
+        const _config_2 = (0, import_middleware_user_agent.resolveUserAgentConfig)(_config_1);
+        const _config_3 = (0, import_middleware_retry2.resolveRetryConfig)(_config_2);
+        const _config_4 = (0, import_config_resolver.resolveRegionConfig)(_config_3);
+        const _config_5 = (0, import_middleware_host_header.resolveHostHeaderConfig)(_config_4);
+        const _config_6 = (0, import_middleware_endpoint2.resolveEndpointConfig)(_config_5);
+        const _config_7 = (0, import_middleware_signing.resolveAwsAuthConfig)(_config_6);
+        const _config_8 = (0, import_middleware_sdk_s32.resolveS3Config)(_config_7, { session: [() => this, CreateSessionCommand] });
         const _config_9 = (0, import_eventstream_serde_config_resolver.resolveEventStreamSerdeConfig)(_config_8);
         const _config_10 = resolveRuntimeExtensions(_config_9, (configuration2 == null ? void 0 : configuration2.extensions) || []);
         super(_config_10);
         this.config = _config_10;
+        this.middlewareStack.use((0, import_middleware_user_agent.getUserAgentPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_retry2.getRetryPlugin)(this.config));
+        this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_host_header.getHostHeaderPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_logger.getLoggerPlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_recursion_detection.getRecursionDetectionPlugin)(this.config));
@@ -47418,9 +47503,6 @@ var require_dist_cjs72 = __commonJS({
         this.middlewareStack.use((0, import_middleware_expect_continue.getAddExpectContinuePlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_sdk_s32.getRegionRedirectMiddlewarePlugin)(this.config));
         this.middlewareStack.use((0, import_middleware_sdk_s32.getS3ExpressPlugin)(this.config));
-        this.middlewareStack.use((0, import_middleware_user_agent.getUserAgentPlugin)(this.config));
-        this.middlewareStack.use((0, import_middleware_retry2.getRetryPlugin)(this.config));
-        this.middlewareStack.use((0, import_middleware_content_length.getContentLengthPlugin)(this.config));
       }
       /**
        * Destroy underlying resources, like sockets. It's usually not necessary to do this.
@@ -47710,12 +47792,12 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s39.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
-        })
+        }),
+        (0, import_middleware_sdk_s39.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "DeleteObjects", {}).n("S3Client", "DeleteObjectsCommand").f(void 0, void 0).ser(se_DeleteObjectsCommand).de(de_DeleteObjectsCommand).build() {
     };
@@ -48087,14 +48169,14 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_ssec.getSsecPlugin)(config),
-        (0, import_middleware_sdk_s333.getS3ExpiresMiddlewarePlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestChecksumRequired: false,
           requestValidationModeMember: "ChecksumMode",
           responseAlgorithms: ["CRC32", "CRC32C", "SHA256", "SHA1"]
-        })
+        }),
+        (0, import_middleware_ssec.getSsecPlugin)(config),
+        (0, import_middleware_sdk_s333.getS3ExpiresMiddlewarePlugin)(config)
       ];
     }).s("AmazonS3", "GetObject", {}).n("S3Client", "GetObjectCommand").f(GetObjectRequestFilterSensitiveLog, GetObjectOutputFilterSensitiveLog).ser(se_GetObjectCommand).de(de_GetObjectCommand).build() {
     };
@@ -48557,7 +48639,10 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, { input: this.input, requestChecksumRequired: true })
+        (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
+          input: this.input,
+          requestChecksumRequired: true
+        })
       ];
     }).s("AmazonS3", "PutBucketOwnershipControls", {}).n("S3Client", "PutBucketOwnershipControlsCommand").f(void 0, void 0).ser(se_PutBucketOwnershipControlsCommand).de(de_PutBucketOwnershipControlsCommand).build() {
     };
@@ -48680,12 +48765,12 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
-        })
+        }),
+        (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectAcl", {}).n("S3Client", "PutObjectAclCommand").f(void 0, void 0).ser(se_PutObjectAclCommand).de(de_PutObjectAclCommand).build() {
     };
@@ -48700,14 +48785,14 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s353.getCheckContentLengthHeaderPlugin)(config),
-        (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config),
-        (0, import_middleware_ssec.getSsecPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: false
-        })
+        }),
+        (0, import_middleware_sdk_s353.getCheckContentLengthHeaderPlugin)(config),
+        (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "PutObject", {}).n("S3Client", "PutObjectCommand").f(PutObjectRequestFilterSensitiveLog, PutObjectOutputFilterSensitiveLog).ser(se_PutObjectCommand).de(de_PutObjectCommand).build() {
     };
@@ -48721,12 +48806,12 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
-        })
+        }),
+        (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectLegalHold", {}).n("S3Client", "PutObjectLegalHoldCommand").f(void 0, void 0).ser(se_PutObjectLegalHoldCommand).de(de_PutObjectLegalHoldCommand).build() {
     };
@@ -48740,12 +48825,12 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s355.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
-        })
+        }),
+        (0, import_middleware_sdk_s355.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectLockConfiguration", {}).n("S3Client", "PutObjectLockConfigurationCommand").f(void 0, void 0).ser(se_PutObjectLockConfigurationCommand).de(de_PutObjectLockConfigurationCommand).build() {
     };
@@ -48759,12 +48844,12 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s356.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
-        })
+        }),
+        (0, import_middleware_sdk_s356.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectRetention", {}).n("S3Client", "PutObjectRetentionCommand").f(void 0, void 0).ser(se_PutObjectRetentionCommand).de(de_PutObjectRetentionCommand).build() {
     };
@@ -48778,12 +48863,12 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s357.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
-        })
+        }),
+        (0, import_middleware_sdk_s357.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectTagging", {}).n("S3Client", "PutObjectTaggingCommand").f(void 0, void 0).ser(se_PutObjectTaggingCommand).de(de_PutObjectTaggingCommand).build() {
     };
@@ -48815,12 +48900,12 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: false
-        })
+        }),
+        (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "RestoreObject", {}).n("S3Client", "RestoreObjectCommand").f(RestoreObjectRequestFilterSensitiveLog, void 0).ser(se_RestoreObjectCommand).de(de_RestoreObjectCommand).build() {
     };
@@ -48857,13 +48942,13 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config),
-        (0, import_middleware_ssec.getSsecPlugin)(config),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: false
-        })
+        }),
+        (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "UploadPart", {}).n("S3Client", "UploadPartCommand").f(UploadPartRequestFilterSensitiveLog, UploadPartOutputFilterSensitiveLog).ser(se_UploadPartCommand).de(de_UploadPartCommand).build() {
     };
