@@ -26,7 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",
     "@vkontakte/eslint-plugin": "^2.0.0",
-    "@vkontakte/prettier-config": "^0.1.0",
+    "@vkontakte/prettier-config": "^0.2.0",
     "concurrently": "^8.2.2",
     "esbuild": "^0.23.0",
     "eslint": "^8.57.0",
