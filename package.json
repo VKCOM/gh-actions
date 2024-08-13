@@ -43,6 +43,7 @@
     "typescript": "^5.5.4",
     "yarn-deduplicate": "^6.0.2"
   },
+  "prettier": "@vkontakte/prettier-config",
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "eslint"
