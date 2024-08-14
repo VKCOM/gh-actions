@@ -1,0 +1,9 @@
+name: 'Add Milestone to Dependabot PR'
+description: 'Adds the next minor version milestone to Dependabot PRs for specific dependencies'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+runs:
+  using: 'node20'
+  main: 'index.js'
