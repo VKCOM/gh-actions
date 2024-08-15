@@ -1,5 +1,5 @@
 {
-  "name": "@actions-internal/add-dependabot-pr-milestone",
+  "name": "@actions-internal/add-next-minor-milestone",
   "version": "0.0.0",
   "main": "src/main.ts",
   "license": "MIT",

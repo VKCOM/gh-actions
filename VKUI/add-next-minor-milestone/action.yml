@@ -1,4 +1,4 @@
-name: 'Add Milestone to Dependabot PR'
+name: 'Add Milestone to PR'
 description: 'Adds the next minor version milestone to Dependabot PRs for specific dependencies'
 inputs:
   token:
