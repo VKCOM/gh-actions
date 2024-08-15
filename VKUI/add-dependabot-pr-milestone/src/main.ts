@@ -1,6 +1,5 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { isPRFromDependabotAndRelevant } from './isPRFromDependabotAndRelevant';
 import { getCurrentVersion, getNextMinorVersion } from './getVersion';
 import { addMilestoneToPR, createMilestone, getMilestone } from './milestone';
 
@@ -11,7 +10,7 @@ async function run() {
 
     const { pull_request } = github.context.payload;
 
-    if (pull_request && isPRFromDependabotAndRelevant(pull_request)) {
+    if (pull_request) {
       const currentVersion = getCurrentVersion();
       const nextMinorVersion = getNextMinorVersion(currentVersion);
 
