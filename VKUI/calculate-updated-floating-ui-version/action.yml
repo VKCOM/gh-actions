@@ -1,5 +1,5 @@
 name: 'Calculate updated floating ui version'
-description: 'GitLab Flow calculated updated floating ui version'
+description: 'Calculate updated floating ui version'
 inputs:
   prev_version:
     required: true
