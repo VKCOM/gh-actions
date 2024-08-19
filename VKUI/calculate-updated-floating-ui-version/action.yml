@@ -1,0 +1,13 @@
+name: 'Calculate updated floating ui version'
+description: 'GitLab Flow calculated updated floating ui version'
+inputs:
+  prev_version:
+    required: true
+    description: 'prev @floating-ui/react-dom version'
+  new_version:
+    required: true
+    description: 'new @floating-ui/react-dom version'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
