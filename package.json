@@ -22,7 +22,7 @@
     "@jest/globals": "^29.7.0",
     "@swc/core": "^1.7.10",
     "@swc/jest": "^0.2.36",
-    "@types/node": "^22.2.0",
+    "@types/node": "^22.4.1",
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/prettier-config": "^0.2.1",
     "concurrently": "^8.2.2",
