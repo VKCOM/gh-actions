@@ -1,4 +1,4 @@
-import { PullRequestType } from '../types';
+import { SectionType } from '../types';
 
 export const IMPROVEMENT_HEADER = 'Улучшения';
 export const FIX_HEADER = 'Исправления';
@@ -7,7 +7,7 @@ export const DEPENDENCY_HEADER = 'Зависимости';
 export const NEW_COMPONENT_HEADER = 'Новые компоненты';
 export const NEED_TO_DESCRIBE_HEADER = 'Нужно описать';
 
-export const getSectionTypeByHeader = (header: string): PullRequestType | null => {
+export const getSectionTypeByHeader = (header: string): SectionType | null => {
   switch (header) {
     case IMPROVEMENT_HEADER:
       return 'improvement';
@@ -23,7 +23,7 @@ export const getSectionTypeByHeader = (header: string): PullRequestType | null =
   return null;
 };
 
-export const getHeaderBySectionType = (type: PullRequestType): string | null => {
+export const getHeaderBySectionType = (type: SectionType): string | null => {
   switch (type) {
     case 'improvement':
       return IMPROVEMENT_HEADER;

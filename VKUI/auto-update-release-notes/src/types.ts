@@ -1,9 +1,4 @@
-export type PullRequestType =
-  | 'improvement'
-  | 'fix'
-  | 'documentation'
-  | 'new-component'
-  | 'dependency';
+export type SectionType = 'improvement' | 'fix' | 'documentation' | 'new-component' | 'dependency';
 
 type ComponentChangeData = {
   type: 'component';
@@ -23,6 +18,6 @@ type UnknownChangeData = {
 export type ChangeData = ComponentChangeData | UnknownChangeData;
 
 export type ReleaseNoteData = {
-  type: PullRequestType;
+  type: SectionType;
   data: ChangeData[];
 };
