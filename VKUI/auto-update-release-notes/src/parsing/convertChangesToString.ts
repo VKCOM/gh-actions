@@ -12,6 +12,10 @@ const pullRequestNumberToString = (prNumber: number | undefined, author: string)
   return prNumber ? ` (#${prNumber}${prAuthorToString(author)})` : '';
 };
 
+const changeDescriptionToString = (changeItem: ChangeData, author: string) => {
+  return ` ${changeItem.description}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
+};
+
 export const convertChangesToString = (
   changes: ChangeData[],
   version: string,
@@ -36,6 +40,12 @@ export const convertChangesToString = (
     }
   });
 
+  const addAdditionalInfo = (change: ChangeData) => {
+    if (change.additionalInfo) {
+      result += `${change.additionalInfo}\n`;
+    }
+  };
+
   filteredChanges.forEach((change) => {
     if (change.type === 'component') {
       const componentChanges = mapComponentToChanges.get(change.component);
@@ -46,19 +56,15 @@ export const convertChangesToString = (
       if (componentChanges.length > 1) {
         result += '\n';
         componentChanges.forEach((changeItem) => {
-          result += `  - ${changeItem.description}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}\n`;
-          if (changeItem.additionalInfo) {
-            result += `${changeItem.additionalInfo}\n`;
-          }
+          result += `  -${changeDescriptionToString(changeItem, author)}\n`;
+          addAdditionalInfo(changeItem);
         });
       } else {
-        result += ` ${change.description}${pullRequestNumberToString(change.pullRequestNumber, author)}\n`;
+        result += `${changeDescriptionToString(change, author)}\n`;
       }
     } else {
-      result += `- ${change.description}${pullRequestNumberToString(change.pullRequestNumber, author)}\n`;
-      if (change.additionalInfo) {
-        result += `${change.additionalInfo}\n`;
-      }
+      result += `-${changeDescriptionToString(change, author)}\n`;
+      addAdditionalInfo(change);
     }
   });
 

@@ -14,8 +14,8 @@ export function releaseNotesUpdater(currentBody: string) {
 
   const getReleaseNotesData = (): ReleaseNoteData[] => {
     const releaseNotesData: ReleaseNoteData[] = [];
-    const pattern = /## (.+)\n([\s\S]*?)(?=##|$)/g;
-    const matches = body.matchAll(pattern);
+    const sectionRegex = /## (.+)\n([\s\S]*?)(?=##|$)/g;
+    const matches = body.matchAll(sectionRegex);
     for (const match of matches) {
       const [, header, content] = match;
       const trimmedContent = content.trim();
@@ -40,7 +40,6 @@ export function releaseNotesUpdater(currentBody: string) {
     const startIndex = body.indexOf(header) + header.length;
     const endIndex = findNextHeaderPosition(startIndex);
     let currentContent = body.substring(startIndex, endIndex).trim();
-    currentContent += '\n';
     currentContent = calculateNewContent(currentContent);
     body = body.slice(0, startIndex) + '\n' + currentContent + '\n' + body.slice(endIndex);
   };

@@ -1,7 +1,7 @@
 import { ChangeData } from '../types';
 
 const COMPONENT_REGEX = /-\s(\w+):(.+)?/;
-const COMPONENT_WITH_LINK_REGEX = /-\s\[(\w+)\]\(.+\):(.+)?/;
+const COMPONENT_WITH_LINK_REGEX = /-\s\[(\w+)]\(.+\):(.+)?/;
 const COMPONENT_SUB_ITEM_REGEX = /\s{2}-\s(.+)/;
 const UNKNOWN_CHANGE_REGEX = /-\s(.+)/;
 
@@ -11,7 +11,7 @@ export function parseChanges(text: string): ChangeData[] {
   let currentChange: ChangeData | null = null;
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trimEnd();
+    const line = lines[i];
     const componentMatch = line.match(COMPONENT_REGEX);
     const componentWithLinkMatch = line.match(COMPONENT_WITH_LINK_REGEX);
     const componentSubItemMatch = line.match(COMPONENT_SUB_ITEM_REGEX);
@@ -49,7 +49,7 @@ export function parseChanges(text: string): ChangeData[] {
         additionalInfo: '',
       };
       changes.push(currentChange);
-    } else if (line && currentChange) {
+    } else if (line.trim() && currentChange) {
       // Дополнительная информация
       currentChange.additionalInfo += `${line}\n`;
     } else if (line) {
@@ -64,12 +64,7 @@ export function parseChanges(text: string): ChangeData[] {
     }
   }
   changes = changes.filter((change) => !!change.description);
-  changes.forEach((change) => {
-    change.additionalInfo = change.additionalInfo?.trim();
-    if (!change.additionalInfo) {
-      delete change.additionalInfo;
-    }
-  });
+  changes.forEach((change) => (change.additionalInfo = change.additionalInfo?.trim()));
 
   return changes;
 }
