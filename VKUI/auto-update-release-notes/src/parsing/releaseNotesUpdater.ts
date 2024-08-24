@@ -57,8 +57,9 @@ export function releaseNotesUpdater(currentBody: string) {
     if (!headerByType) {
       return;
     }
-    if (body.includes(headerByType)) {
-      insertContentInSection(headerByType, (currentContent) => {
+    const headerWithFormatting = `## ${headerByType}`;
+    if (body.includes(headerWithFormatting)) {
+      insertContentInSection(headerWithFormatting, (currentContent) => {
         const currentSectionContentData = parseChanges(currentContent);
         currentSectionContentData.push(...noteData.data);
         return convertChangesToString(currentSectionContentData, version, author || '');

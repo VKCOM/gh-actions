@@ -4,6 +4,8 @@ import fs from 'fs';
 import { updateReleaseNotes } from './updateReleaseNotes';
 
 type Octokit = ReturnType<typeof github.getOctokit>;
+type ArrayElement<ArrayType extends any[] | undefined> =
+  ArrayType extends Array<infer ElementType> ? ElementType : never;
 
 const setupData = () => {
   const getPullRequest = jest.fn();
@@ -85,15 +87,16 @@ const setupData = () => {
     updateReleaseRequest,
     octokit: octokit as unknown as Octokit,
     set pullRequestData(
-      data: Partial<Omit<typeof pullRequestData, 'user'>> & {
-        user: Partial<(typeof pullRequestData)['user']>;
+      data: Partial<Omit<typeof pullRequestData, 'user' | 'labels'>> & {
+        user?: Partial<(typeof pullRequestData)['user']>;
+        labels?: Array<Partial<ArrayElement<(typeof pullRequestData)['labels']>>>;
       },
     ) {
       if (data.milestone) {
         pullRequestData.milestone = data.milestone;
       }
       if (data.labels) {
-        pullRequestData.labels = data.labels;
+        pullRequestData.labels = data.labels as (typeof pullRequestData)['labels'];
       }
       if (data.body) {
         pullRequestData.body = data.body;
@@ -320,6 +323,112 @@ describe('run updateReleaseNotes', () => {
 ## Зависимости
 - Обновлена какая-то зависимость 2 (#1234)
 `,
+    });
+  });
+
+  it('update release notes with pull request without release notes', async () => {
+    const mockedData = setupData();
+
+    mockedData.releaseData = {
+      draft: true,
+      id: 123,
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Исправления
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List (#7094)
+
+## Документация
+- [CustomScrollView](https://vkcom.github.io/VKUI/6.5.0/#/CustomScrollView): Обновлена документация CustomScrollView
+`,
+    };
+
+    mockedData.pullRequestData = {
+      body: `
+## Описание
+Какое-то описание Pull Request
+
+## Изменения
+Какие-то изменения Pull Request
+`,
+      user: {
+        login: 'eldar',
+      },
+    };
+
+    await updateReleaseNotes({
+      octokit: mockedData.octokit,
+      owner: 'owner',
+      repo: 'repo',
+      prNumber: 1234,
+    });
+    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
+    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      tag: 'v6.6.0',
+    });
+
+    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      release_id: 123,
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Исправления
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List (#7094)
+
+## Документация
+- [CustomScrollView](https://vkcom.github.io/VKUI/6.5.0/#/CustomScrollView): Обновлена документация CustomScrollView
+
+## Нужно описать
+#1234`,
+    });
+  });
+
+  it('check update next patch version release notes', async () => {
+    const mockedData = setupData();
+
+    mockedData.releaseData = {
+      draft: true,
+      id: 123,
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+`,
+    };
+
+    mockedData.pullRequestData = {
+      body: `
+## Release notes
+## Новые компоненты
+- Новый компонент с название COMPONENT2
+- Новый компонент с название COMPONENT3
+`,
+      user: {
+        login: 'eldar',
+      },
+      labels: [
+        {
+          name: 'patch',
+        },
+      ],
+    };
+
+    await updateReleaseNotes({
+      octokit: mockedData.octokit,
+      owner: 'owner',
+      repo: 'repo',
+      prNumber: 1234,
+    });
+    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
+    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      tag: 'v6.5.2',
     });
   });
 });
