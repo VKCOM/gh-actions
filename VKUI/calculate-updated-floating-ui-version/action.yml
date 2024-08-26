@@ -7,6 +7,9 @@ inputs:
   new_version:
     required: true
     description: 'new @floating-ui/react-dom version'
+  floating_ui_version:
+    required: true
+    description: 'current @vkui-floating-ui version'
 
 runs:
   using: 'node20'
