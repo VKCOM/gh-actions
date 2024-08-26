@@ -10,11 +10,13 @@ export const updateReleaseNotes = async ({
   owner,
   repo,
   prNumber,
+  currentVKUIVersion,
 }: {
   octokit: ReturnType<typeof github.getOctokit>;
   owner: string;
   repo: string;
   prNumber: number;
+  currentVKUIVersion: string;
 }) => {
   const { data: pullRequest } = await octokit.rest.pulls.get({
     owner,
@@ -32,6 +34,7 @@ export const updateReleaseNotes = async ({
   const releaseVersion = calculateReleaseVersion({
     labels: pullRequestLabels,
     milestone: pullRequest.milestone,
+    currentVKUIVersion,
   });
 
   const release = await getRelease({

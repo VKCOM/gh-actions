@@ -1,11 +1,4 @@
-import fs from 'fs';
 import semver from 'semver';
-
-// Получает текущую версию пакета VKUI
-function getCurrentVersion(): string {
-  const packageJson = JSON.parse(fs.readFileSync('packages/vkui/package.json', 'utf8'));
-  return packageJson.version;
-}
 
 // Вычисляет следующую минорную версию
 function getNextMinorVersion(currentVersion: string): string {
@@ -21,13 +14,12 @@ function getNextPatchVersion(currentVersion: string): string {
   return nextVersion;
 }
 
-export function getNextReleaseVersion(updateType: 'patch' | 'minor') {
-  const currentVersion = getCurrentVersion();
+export function getNextReleaseVersion(currentVKUIVersion: string, updateType: 'patch' | 'minor') {
   switch (updateType) {
     case 'minor':
-      return getNextMinorVersion(currentVersion);
+      return getNextMinorVersion(currentVKUIVersion);
     case 'patch':
-      return getNextPatchVersion(currentVersion);
+      return getNextPatchVersion(currentVKUIVersion);
   }
-  return currentVersion;
+  return currentVKUIVersion;
 }
