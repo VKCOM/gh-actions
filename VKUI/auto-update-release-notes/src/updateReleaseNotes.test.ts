@@ -1,6 +1,5 @@
 import { describe, expect, it, jest } from '@jest/globals';
 import * as github from '@actions/github';
-import fs from 'fs';
 import { updateReleaseNotes } from './updateReleaseNotes';
 
 type Octokit = ReturnType<typeof github.getOctokit>;
@@ -23,14 +22,6 @@ const setupData = () => {
     Awaited<ReturnType<Octokit['rest']['repos']['getReleaseByTag']>>['data']
   > | null = null;
 
-  jest.spyOn(fs, 'readFileSync').mockImplementation((path) => {
-    if (path === 'packages/vkui/package.json') {
-      return JSON.stringify({
-        version: '6.5.1',
-      });
-    }
-    return '';
-  });
   const octokit = {
     rest: {
       pulls: {
@@ -189,6 +180,7 @@ describe('run updateReleaseNotes', () => {
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
+      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
@@ -288,6 +280,7 @@ describe('run updateReleaseNotes', () => {
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
+      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
@@ -362,6 +355,7 @@ describe('run updateReleaseNotes', () => {
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
+      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
@@ -423,6 +417,7 @@ describe('run updateReleaseNotes', () => {
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
+      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
