@@ -2236,6 +2236,7 @@ var require_basename = __commonJS({
       for (var i = path4.length - 1; i >= 0; --i) {
         switch (path4.charCodeAt(i)) {
           case 47:
+          // '/'
           case 92:
             path4 = path4.slice(i + 1);
             return path4 === ".." || path4 === "." ? "" : path4;
@@ -3436,7 +3437,21 @@ var require_util2 = __commonJS({
           return referrerOrigin;
         }
         case "strict-origin":
+        // eslint-disable-line
+        /**
+           * 1. If referrerURL is a potentially trustworthy URL and
+           * request’s current URL is not a potentially trustworthy URL,
+           * then return no referrer.
+           * 2. Return referrerOrigin
+          */
         case "no-referrer-when-downgrade":
+        // eslint-disable-line
+        /**
+         * 1. If referrerURL is a potentially trustworthy URL and
+         * request’s current URL is not a potentially trustworthy URL,
+         * then return no referrer.
+         * 2. Return referrerOrigin
+        */
         default:
           return isNonPotentiallyTrustWorthy ? "no-referrer" : referrerOrigin;
       }

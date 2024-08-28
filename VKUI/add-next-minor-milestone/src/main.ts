@@ -6,11 +6,10 @@ import { addMilestoneToPR, createMilestone, getMilestone } from './milestone';
 async function run() {
   try {
     const token = core.getInput('token', { required: true });
+    const prNumber = Number(core.getInput('pull_request_number', { required: true }));
     const octokit = github.getOctokit(token);
 
-    const { pull_request } = github.context.payload;
-
-    if (pull_request) {
+    if (prNumber) {
       const currentVersion = getCurrentVersion();
       const nextMinorVersion = getNextMinorVersion(currentVersion);
 
@@ -19,7 +18,7 @@ async function run() {
         milestone = await createMilestone(octokit, nextMinorVersion);
       }
 
-      await addMilestoneToPR(octokit, pull_request.number, milestone.number);
+      await addMilestoneToPR(octokit, prNumber, milestone.number);
     }
   } catch (error) {}
 }

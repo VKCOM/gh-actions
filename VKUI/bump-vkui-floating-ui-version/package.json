@@ -1,11 +1,11 @@
 {
-  "name": "@vkui-tokens/token-base",
+  "name": "@actions-internal/bump-vkui-floating-ui-version",
   "version": "0.0.0",
   "main": "src/main.ts",
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@types/node": "^22.5.0",
+    "@types/node": "^22.2.0",
     "@types/semver": "^7.5.8",
     "typescript": "^5.5.4"
   },
@@ -13,7 +13,6 @@
     "@actions/core": "^1.10.1",
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.0",
-    "figma-js": "^1.16.0",
     "semver": "^7.6.3"
   },
   "scripts": {

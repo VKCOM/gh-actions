@@ -4,6 +4,10 @@ inputs:
   token:
     required: true
     description: 'token with access to your repository'
+
+  pull_request_number:
+    required: true
+    description: 'pull request number to add milestone'
 runs:
   using: 'node20'
   main: 'index.js'
