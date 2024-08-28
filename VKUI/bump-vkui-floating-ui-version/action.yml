@@ -1,0 +1,16 @@
+name: 'Bump vkui floating ui version'
+description: 'Bump vkui floating ui version'
+inputs:
+  prev_origin_version:
+    required: true
+    description: 'prev @floating-ui/react-dom version'
+  new_origin_version:
+    required: true
+    description: 'new @floating-ui/react-dom version'
+  current_version:
+    required: true
+    description: 'current @vkui-floating-ui version'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
