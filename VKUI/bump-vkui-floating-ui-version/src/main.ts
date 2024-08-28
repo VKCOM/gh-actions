@@ -3,9 +3,9 @@ import semver from 'semver';
 
 async function run() {
   try {
-    const prevFloatingUiReactDomVersion = core.getInput('prev_version', { required: true });
-    const newFloatingUiReactDomVersion = core.getInput('new_version', { required: true });
-    const floatingUIVersion = core.getInput('vkui_floating_ui_version', { required: true });
+    const prevFloatingUiReactDomVersion = core.getInput('prev_origin_version', { required: true });
+    const newFloatingUiReactDomVersion = core.getInput('new_origin_version', { required: true });
+    const floatingUIVersion = core.getInput('current_version', { required: true });
     const updateType = semver.diff(
       prevFloatingUiReactDomVersion,
       newFloatingUiReactDomVersion,

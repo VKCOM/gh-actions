@@ -1,5 +1,5 @@
 {
-  "name": "@actions-internal/calculate-updated-floating-ui-version",
+  "name": "@actions-internal/bump-vkui-floating-ui-version",
   "version": "0.0.0",
   "main": "src/main.ts",
   "license": "MIT",

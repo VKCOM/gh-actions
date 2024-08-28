@@ -1,13 +1,13 @@
-name: 'Calculate updated floating ui version'
-description: 'Calculate updated floating ui version'
+name: 'Bump vkui floating ui version'
+description: 'Bump vkui floating ui version'
 inputs:
-  prev_version:
+  prev_origin_version:
     required: true
     description: 'prev @floating-ui/react-dom version'
-  new_version:
+  new_origin_version:
     required: true
     description: 'new @floating-ui/react-dom version'
-  vkui_floating_ui_version:
+  current_version:
     required: true
     description: 'current @vkui-floating-ui version'
 
