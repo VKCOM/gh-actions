@@ -5,7 +5,7 @@ async function run() {
   try {
     const prevFloatingUiReactDomVersion = core.getInput('prev_version', { required: true });
     const newFloatingUiReactDomVersion = core.getInput('new_version', { required: true });
-    const floatingUIVersion = core.getInput('floating_ui_version', { required: true });
+    const floatingUIVersion = core.getInput('vkui_floating_ui_version', { required: true });
     const updateType = semver.diff(
       prevFloatingUiReactDomVersion,
       newFloatingUiReactDomVersion,
