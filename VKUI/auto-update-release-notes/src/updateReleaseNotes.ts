@@ -18,11 +18,19 @@ export const updateReleaseNotes = async ({
   prNumber: number;
   currentVKUIVersion: string;
 }) => {
-  const { data: pullRequest } = await octokit.rest.pulls.get({
-    owner,
-    repo,
-    pull_number: prNumber,
-  });
+  let pullRequest;
+  try {
+    const { data: searchedPullRequest } = await octokit.rest.pulls.get({
+      owner,
+      repo,
+      pull_number: prNumber,
+    });
+    pullRequest = searchedPullRequest;
+  } catch (e) {}
+
+  if (!pullRequest) {
+    return;
+  }
 
   const pullRequestBody = pullRequest.body;
   const pullRequestLabels = pullRequest.labels;
@@ -44,7 +52,7 @@ export const updateReleaseNotes = async ({
     releaseVersion,
   });
 
-  if (!release.draft) {
+  if (!release || !release.draft) {
     return;
   }
 

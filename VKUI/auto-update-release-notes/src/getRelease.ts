@@ -11,25 +11,28 @@ export async function getRelease({
   repo: string;
   releaseVersion: string;
 }) {
-  // Получаем информацию о релизе
-  let { data: release } = await octokit.rest.repos.getReleaseByTag({
-    owner,
-    repo,
-    tag: releaseVersion,
-  });
-
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!release) {
-    const { data: createdRelease } = await octokit.rest.repos.createRelease({
+  let resultRelease;
+  try {
+    // Получаем информацию о релизе
+    const { data: searchedRelease } = await octokit.rest.repos.getReleaseByTag({
       owner,
       repo,
-      tag_name: releaseVersion,
-      name: `Release ${releaseVersion}`,
-      body: '',
-      draft: true,
-      prerelease: false,
+      tag: releaseVersion,
     });
-    release = createdRelease;
+    resultRelease = searchedRelease;
+  } catch (e) {
+    if (e instanceof Error && 'status' in e && e.status === 404) {
+      const { data: createdRelease } = await octokit.rest.repos.createRelease({
+        owner,
+        repo,
+        tag_name: releaseVersion,
+        name: `Release ${releaseVersion}`,
+        body: '',
+        draft: true,
+        prerelease: false,
+      });
+      resultRelease = createdRelease;
+    }
   }
-  return release;
+  return resultRelease;
 }

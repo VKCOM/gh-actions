@@ -9,12 +9,15 @@ export const checkVKCOMMember = async ({
   octokit: Octokit;
   author: string;
 }) => {
-  // Проверяем, принадлежит ли автор к организации VKCOM
-  const { data: orgs } = await octokit.rest.orgs.listForUser({
-    username: author,
-  });
+  try {
+    // Проверяем, принадлежит ли автор к организации VKCOM
+    const { data: orgs } = await octokit.rest.orgs.listForUser({
+      username: author,
+    });
 
-  const isVKCOMMember = orgs.some((org) => org.login === 'VKCOM');
+    const isVKCOMMember = orgs.some((org) => org.login === 'VKCOM');
 
-  return isVKCOMMember;
+    return isVKCOMMember;
+  } catch (e) {}
+  return false;
 };
