@@ -11,7 +11,6 @@ export async function getRelease({
   repo: string;
   releaseVersion: string;
 }) {
-  let resultRelease;
   try {
     // Получаем информацию о релизе
     const { data: searchedRelease } = await octokit.rest.repos.getReleaseByTag({
@@ -19,7 +18,7 @@ export async function getRelease({
       repo,
       tag: releaseVersion,
     });
-    resultRelease = searchedRelease;
+    return searchedRelease;
   } catch (e) {
     if (e instanceof Error && 'status' in e && e.status === 404) {
       const { data: createdRelease } = await octokit.rest.repos.createRelease({
@@ -31,8 +30,8 @@ export async function getRelease({
         draft: true,
         prerelease: false,
       });
-      resultRelease = createdRelease;
+      return createdRelease;
     }
   }
-  return resultRelease;
+  return null;
 }
