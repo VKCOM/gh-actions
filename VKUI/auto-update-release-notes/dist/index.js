@@ -509,7 +509,7 @@ var require_file_command = __commonJS({
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.prepareKeyValueMessage = exports2.issueFileCommand = void 0;
-    var fs2 = __importStar(require("fs"));
+    var fs = __importStar(require("fs"));
     var os = __importStar(require("os"));
     var uuid_1 = (init_esm_node(), __toCommonJS(esm_node_exports));
     var utils_1 = require_utils();
@@ -518,10 +518,10 @@ var require_file_command = __commonJS({
       if (!filePath) {
         throw new Error(`Unable to find environment variable for file command ${command}`);
       }
-      if (!fs2.existsSync(filePath)) {
+      if (!fs.existsSync(filePath)) {
         throw new Error(`Missing file at path: ${filePath}`);
       }
-      fs2.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os.EOL}`, {
+      fs.appendFileSync(filePath, `${utils_1.toCommandValue(message)}${os.EOL}`, {
         encoding: "utf8"
       });
     }
@@ -23604,7 +23604,7 @@ var getHeaderBySectionType = (type) => {
 
 // src/parsing/parseChanges.ts
 var COMPONENT_REGEX = /-\s(\w+):(.+)?/;
-var COMPONENT_WITH_LINK_REGEX = /-\s\[(\w+)\]\(.+\):(.+)?/;
+var COMPONENT_WITH_LINK_REGEX = /-\s\[(\w+)]\(.+\):(.+)?/;
 var COMPONENT_SUB_ITEM_REGEX = /\s{2}-\s(.+)/;
 var UNKNOWN_CHANGE_REGEX = /-\s(.+)/;
 function parseChanges(text) {
@@ -23612,7 +23612,7 @@ function parseChanges(text) {
   const lines = text.split("\n");
   let currentChange = null;
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trimEnd();
+    const line = lines[i];
     const componentMatch = line.match(COMPONENT_REGEX);
     const componentWithLinkMatch = line.match(COMPONENT_WITH_LINK_REGEX);
     const componentSubItemMatch = line.match(COMPONENT_SUB_ITEM_REGEX);
@@ -23647,7 +23647,7 @@ function parseChanges(text) {
         additionalInfo: ""
       };
       changes.push(currentChange);
-    } else if (line && currentChange) {
+    } else if (line.trim() && currentChange) {
       currentChange.additionalInfo += `${line}
 `;
     } else if (line) {
@@ -23660,12 +23660,7 @@ function parseChanges(text) {
     }
   }
   changes = changes.filter((change) => !!change.description);
-  changes.forEach((change) => {
-    change.additionalInfo = change.additionalInfo?.trim();
-    if (!change.additionalInfo) {
-      delete change.additionalInfo;
-    }
-  });
+  changes.forEach((change) => change.additionalInfo = change.additionalInfo?.trim());
   return changes;
 }
 
@@ -23678,6 +23673,9 @@ var prAuthorToString = (author) => {
 };
 var pullRequestNumberToString = (prNumber, author) => {
   return prNumber ? ` (#${prNumber}${prAuthorToString(author)})` : "";
+};
+var changeDescriptionToString = (changeItem, author) => {
+  return ` ${changeItem.description}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
 };
 var convertChangesToString = (changes, version2, author) => {
   let result = "";
@@ -23696,6 +23694,12 @@ var convertChangesToString = (changes, version2, author) => {
       filteredChanges.push(change);
     }
   });
+  const addAdditionalInfo = (change) => {
+    if (change.additionalInfo) {
+      result += `${change.additionalInfo}
+`;
+    }
+  };
   filteredChanges.forEach((change) => {
     if (change.type === "component") {
       const componentChanges = mapComponentToChanges.get(change.component);
@@ -23706,24 +23710,18 @@ var convertChangesToString = (changes, version2, author) => {
       if (componentChanges.length > 1) {
         result += "\n";
         componentChanges.forEach((changeItem) => {
-          result += `  - ${changeItem.description}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}
+          result += `  -${changeDescriptionToString(changeItem, author)}
 `;
-          if (changeItem.additionalInfo) {
-            result += `${changeItem.additionalInfo}
-`;
-          }
+          addAdditionalInfo(changeItem);
         });
       } else {
-        result += ` ${change.description}${pullRequestNumberToString(change.pullRequestNumber, author)}
+        result += `${changeDescriptionToString(change, author)}
 `;
       }
     } else {
-      result += `- ${change.description}${pullRequestNumberToString(change.pullRequestNumber, author)}
+      result += `-${changeDescriptionToString(change, author)}
 `;
-      if (change.additionalInfo) {
-        result += `${change.additionalInfo}
-`;
-      }
+      addAdditionalInfo(change);
     }
   });
   return result;
@@ -23739,8 +23737,8 @@ function releaseNotesUpdater(currentBody) {
   };
   const getReleaseNotesData = () => {
     const releaseNotesData = [];
-    const pattern = /## (.+)\n([\s\S]*?)(?=##|$)/g;
-    const matches = body.matchAll(pattern);
+    const sectionRegex = /## (.+)\n([\s\S]*?)(?=##|$)/g;
+    const matches = body.matchAll(sectionRegex);
     for (const match of matches) {
       const [, header, content] = match;
       const trimmedContent = content.trim();
@@ -23759,7 +23757,6 @@ function releaseNotesUpdater(currentBody) {
     const startIndex = body.indexOf(header) + header.length;
     const endIndex = findNextHeaderPosition(startIndex);
     let currentContent = body.substring(startIndex, endIndex).trim();
-    currentContent += "\n";
     currentContent = calculateNewContent(currentContent);
     body = body.slice(0, startIndex) + "\n" + currentContent + "\n" + body.slice(endIndex);
   };
@@ -23772,8 +23769,9 @@ function releaseNotesUpdater(currentBody) {
     if (!headerByType) {
       return;
     }
-    if (body.includes(headerByType)) {
-      insertContentInSection(headerByType, (currentContent) => {
+    const headerWithFormatting = `## ${headerByType}`;
+    if (body.includes(headerWithFormatting)) {
+      insertContentInSection(headerWithFormatting, (currentContent) => {
         const currentSectionContentData = parseChanges(currentContent);
         currentSectionContentData.push(...noteData.data);
         return convertChangesToString(currentSectionContentData, version2, author || "");
@@ -23812,7 +23810,7 @@ var RELEASE_NOTE_HEADER = "## Release notes\n";
 function parsePullRequestBody(body, prNumber) {
   const releaseNotesIndex = body.indexOf(RELEASE_NOTE_HEADER);
   if (releaseNotesIndex === -1) {
-    return [];
+    return null;
   }
   const releaseNotesPart = body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length);
   const updater = releaseNotesUpdater(releaseNotesPart);
@@ -23830,11 +23828,15 @@ var checkVKCOMMember = async ({
   octokit,
   author
 }) => {
-  const { data: orgs } = await octokit.rest.orgs.listForUser({
-    username: author
-  });
-  const isVKCOMMember = orgs.some((org) => org.login === "VKCOM");
-  return isVKCOMMember;
+  try {
+    const { data: orgs } = await octokit.rest.orgs.listForUser({
+      username: author
+    });
+    const isVKCOMMember = orgs.some((org) => org.login === "VKCOM");
+    return isVKCOMMember;
+  } catch (e) {
+  }
+  return false;
 };
 
 // src/getRelease.ts
@@ -23844,33 +23846,32 @@ async function getRelease({
   repo,
   releaseVersion
 }) {
-  let { data: release } = await octokit.rest.repos.getReleaseByTag({
-    owner,
-    repo,
-    tag: releaseVersion
-  });
-  if (!release) {
-    const { data: createdRelease } = await octokit.rest.repos.createRelease({
+  try {
+    const { data: searchedRelease } = await octokit.rest.repos.getReleaseByTag({
       owner,
       repo,
-      tag_name: releaseVersion,
-      name: `Release ${releaseVersion}`,
-      body: "",
-      draft: true,
-      prerelease: false
+      tag: releaseVersion
     });
-    release = createdRelease;
+    return searchedRelease;
+  } catch (e) {
+    if (e instanceof Error && "status" in e && e.status === 404) {
+      const { data: createdRelease } = await octokit.rest.repos.createRelease({
+        owner,
+        repo,
+        tag_name: releaseVersion,
+        name: `Release ${releaseVersion}`,
+        body: "",
+        draft: true,
+        prerelease: false
+      });
+      return createdRelease;
+    }
   }
-  return release;
+  return null;
 }
 
 // src/getVersion.ts
-var import_fs = __toESM(require("fs"));
 var import_semver = __toESM(require_semver2());
-function getCurrentVersion() {
-  const packageJson = JSON.parse(import_fs.default.readFileSync("packages/vkui/package.json", "utf8"));
-  return packageJson.version;
-}
 function getNextMinorVersion(currentVersion) {
   const nextVersion = import_semver.default.inc(currentVersion, "minor");
   if (!nextVersion) throw new Error("Failed to increment version");
@@ -23881,24 +23882,24 @@ function getNextPatchVersion(currentVersion) {
   if (!nextVersion) throw new Error("Failed to increment version");
   return nextVersion;
 }
-function getNextReleaseVersion(updateType) {
-  const currentVersion = getCurrentVersion();
+function getNextReleaseVersion(currentVKUIVersion, updateType) {
   switch (updateType) {
     case "minor":
-      return getNextMinorVersion(currentVersion);
+      return getNextMinorVersion(currentVKUIVersion);
     case "patch":
-      return getNextPatchVersion(currentVersion);
+      return getNextPatchVersion(currentVKUIVersion);
   }
-  return currentVersion;
+  return currentVKUIVersion;
 }
 
 // src/calculateReleaseVersion.ts
 function calculateReleaseVersion({
   labels,
-  milestone
+  milestone,
+  currentVKUIVersion
 }) {
   const hasPatchLabel = labels.some((label) => label.name === "patch");
-  const nextReleaseVersion = milestone?.title || `v${getNextReleaseVersion(hasPatchLabel ? "patch" : "minor")}`;
+  const nextReleaseVersion = milestone?.title || `v${getNextReleaseVersion(currentVKUIVersion, hasPatchLabel ? "patch" : "minor")}`;
   return nextReleaseVersion;
 }
 
@@ -23907,20 +23908,30 @@ var updateReleaseNotes = async ({
   octokit,
   owner,
   repo,
-  prNumber
+  prNumber,
+  currentVKUIVersion
 }) => {
-  const { data: pullRequest } = await octokit.rest.pulls.get({
-    owner,
-    repo,
-    pull_number: prNumber
-  });
+  let pullRequest;
+  try {
+    const { data: searchedPullRequest } = await octokit.rest.pulls.get({
+      owner,
+      repo,
+      pull_number: prNumber
+    });
+    pullRequest = searchedPullRequest;
+  } catch (e) {
+  }
+  if (!pullRequest) {
+    return;
+  }
   const pullRequestBody = pullRequest.body;
   const pullRequestLabels = pullRequest.labels;
   const author = pullRequest.user.login;
   const pullRequestReleaseNotes = pullRequestBody && parsePullRequestBody(pullRequestBody, prNumber);
   const releaseVersion = calculateReleaseVersion({
     labels: pullRequestLabels,
-    milestone: pullRequest.milestone
+    milestone: pullRequest.milestone,
+    currentVKUIVersion
   });
   const release = await getRelease({
     owner,
@@ -23928,7 +23939,7 @@ var updateReleaseNotes = async ({
     octokit,
     releaseVersion
   });
-  if (!release.draft) {
+  if (!release || !release.draft) {
     return;
   }
   const isVKCOMember = await checkVKCOMMember({ octokit, author });
@@ -23956,13 +23967,15 @@ var updateReleaseNotes = async ({
 async function run() {
   const token = core.getInput("token", { required: true });
   const prNumber = Number(core.getInput("pull_request_number", { required: true }));
+  const currentVKUIVersion = core.getInput("current_vkui_version", { required: true });
   const octokit = github.getOctokit(token);
   const { owner, repo } = github.context.repo;
   await updateReleaseNotes({
     octokit,
     prNumber,
     owner,
-    repo
+    repo,
+    currentVKUIVersion
   });
 }
 void run();
