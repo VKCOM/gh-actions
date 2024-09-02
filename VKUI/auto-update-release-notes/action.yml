@@ -1,0 +1,17 @@
+name: 'Update release notes'
+description: 'Auto update release notes'
+inputs:
+  pull_request_number:
+    required: true
+    description: 'pull request number'
+
+  token:
+    required: true
+    description: 'token with access to your repository'
+
+  current_vkui_version:
+    required: true
+    description: 'current vkui package version'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
