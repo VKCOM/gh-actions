@@ -23826,15 +23826,9 @@ function releaseNotesUpdater(currentBody) {
   };
 }
 
-// src/parsing/parsePullRequestBody.ts
-var RELEASE_NOTE_HEADER = "## Release notes\n";
-function parsePullRequestBody(body, prNumber) {
-  const releaseNotesIndex = body.indexOf(RELEASE_NOTE_HEADER);
-  if (releaseNotesIndex === -1) {
-    return null;
-  }
-  const releaseNotesPart = body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length);
-  const updater = releaseNotesUpdater(releaseNotesPart);
+// src/parsing/parsePullRequestReleaseNotesBody.ts
+function parsePullRequestReleaseNotesBody(releaseNotesBody, prNumber) {
+  const updater = releaseNotesUpdater(releaseNotesBody);
   return updater.getReleaseNotesData().map((change) => ({
     ...change,
     data: change.data.map((item) => ({
@@ -23861,6 +23855,24 @@ var checkVKCOMMember = async ({
 };
 
 // src/getRelease.ts
+async function getRecentDraftReleaseByName({
+  octokit,
+  owner,
+  repo,
+  releaseName
+}) {
+  try {
+    const response = await octokit.rest.repos.listReleases({
+      owner,
+      repo,
+      per_page: 10
+    });
+    const searchedRelease = response.data.filter((release) => release.draft).find((release) => release.name === releaseName);
+    return searchedRelease || null;
+  } catch (error) {
+    return null;
+  }
+}
 async function getRelease({
   octokit,
   owner,
@@ -23868,10 +23880,11 @@ async function getRelease({
   releaseVersion
 }) {
   try {
-    const { data: searchedRelease } = await octokit.rest.repos.getReleaseByTag({
+    const searchedRelease = await getRecentDraftReleaseByName({
+      octokit,
       owner,
       repo,
-      tag: releaseVersion
+      releaseName: releaseVersion
     });
     return searchedRelease;
   } catch (e) {
@@ -23880,7 +23893,7 @@ async function getRelease({
         owner,
         repo,
         tag_name: releaseVersion,
-        name: `Release ${releaseVersion}`,
+        name: releaseVersion,
         body: "",
         draft: true,
         prerelease: false
@@ -23924,7 +23937,18 @@ function calculateReleaseVersion({
   return nextReleaseVersion;
 }
 
+// src/parsing/getPullRequestReleaseNotesBody.ts
+var RELEASE_NOTE_HEADER = "## Release notes\n";
+var getPullRequestReleaseNotesBody = (body) => {
+  const releaseNotesIndex = body.indexOf(RELEASE_NOTE_HEADER);
+  if (releaseNotesIndex === -1) {
+    return null;
+  }
+  return body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length).trim();
+};
+
 // src/updateReleaseNotes.ts
+var EMPTY_NOTES = "-";
 var updateReleaseNotes = async ({
   octokit,
   owner,
@@ -23948,7 +23972,11 @@ var updateReleaseNotes = async ({
   const pullRequestBody = pullRequest.body;
   const pullRequestLabels = pullRequest.labels;
   const author = pullRequest.user.login;
-  const pullRequestReleaseNotes = pullRequestBody && parsePullRequestBody(pullRequestBody, prNumber);
+  const pullRequestReleaseNotesBody = pullRequestBody && getPullRequestReleaseNotesBody(pullRequestBody);
+  if (pullRequestReleaseNotesBody === EMPTY_NOTES) {
+    return;
+  }
+  const pullRequestReleaseNotes = pullRequestReleaseNotesBody && parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
   const releaseVersion = calculateReleaseVersion({
     labels: pullRequestLabels,
     milestone: pullRequest.milestone,
