@@ -25,7 +25,7 @@ export async function getRelease({
         owner,
         repo,
         tag_name: releaseVersion,
-        name: `Release ${releaseVersion}`,
+        name: releaseVersion,
         body: '',
         draft: true,
         prerelease: false,

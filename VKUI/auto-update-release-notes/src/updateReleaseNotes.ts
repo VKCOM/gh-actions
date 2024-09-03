@@ -1,9 +1,12 @@
-import { parsePullRequestBody } from './parsing/parsePullRequestBody';
+import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody';
 import { releaseNotesUpdater } from './parsing/releaseNotesUpdater';
 import * as github from '@actions/github';
 import { checkVKCOMMember } from './checkVKCOMMember';
 import { getRelease } from './getRelease';
 import { calculateReleaseVersion } from './calculateReleaseVersion';
+import { getPullRequestReleaseNotesBody } from './parsing/getPullRequestReleaseNotesBody';
+
+const EMPTY_NOTES = '-';
 
 export const updateReleaseNotes = async ({
   octokit,
@@ -36,8 +39,16 @@ export const updateReleaseNotes = async ({
   const pullRequestLabels = pullRequest.labels;
   const author = pullRequest.user.login;
 
+  const pullRequestReleaseNotesBody =
+    pullRequestBody && getPullRequestReleaseNotesBody(pullRequestBody);
+
+  if (pullRequestReleaseNotesBody === EMPTY_NOTES) {
+    return;
+  }
+
   const pullRequestReleaseNotes =
-    pullRequestBody && parsePullRequestBody(pullRequestBody, prNumber);
+    pullRequestReleaseNotesBody &&
+    parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
 
   const releaseVersion = calculateReleaseVersion({
     labels: pullRequestLabels,
