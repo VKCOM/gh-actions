@@ -51,10 +51,12 @@ const setupData = () => {
         }) as Octokit['rest']['orgs']['listForUser'],
       },
       repos: {
-        getReleaseByTag: (async (options) => {
+        listReleases: (async (options) => {
           getReleaseRequest(options);
-          return { data: releaseData };
-        }) as Octokit['rest']['repos']['getReleaseByTag'],
+          return {
+            data: [releaseData],
+          };
+        }) as Octokit['rest']['repos']['listReleases'],
         createRelease: (async (options) => {
           createReleaseRequest(options);
           releaseData = {
@@ -112,6 +114,9 @@ const setupData = () => {
       if (data.id) {
         releaseData.id = data.id;
       }
+      if (data.name) {
+        releaseData.name = data.name;
+      }
     },
   };
 };
@@ -123,6 +128,7 @@ describe('run updateReleaseNotes', () => {
     mockedData.releaseData = {
       draft: true,
       id: 123,
+      name: 'v6.6.0',
       body: `
 ## Новые компоненты
 - Новый компонент с название COMPONENT
@@ -186,7 +192,7 @@ describe('run updateReleaseNotes', () => {
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
       owner: 'owner',
       repo: 'repo',
-      tag: 'v6.6.0',
+      per_page: 10,
     });
 
     expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
@@ -232,6 +238,7 @@ describe('run updateReleaseNotes', () => {
     mockedData.releaseData = {
       draft: true,
       id: 123,
+      name: 'v6.6.0',
       body: `
 ## Новые компоненты
 - Новый компонент с название COMPONENT
@@ -286,7 +293,7 @@ describe('run updateReleaseNotes', () => {
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
       owner: 'owner',
       repo: 'repo',
-      tag: 'v6.6.0',
+      per_page: 10,
     });
 
     expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
@@ -325,6 +332,7 @@ describe('run updateReleaseNotes', () => {
     mockedData.releaseData = {
       draft: true,
       id: 123,
+      name: 'v6.6.0',
       body: `
 ## Новые компоненты
 - Новый компонент с название COMPONENT
@@ -361,7 +369,7 @@ describe('run updateReleaseNotes', () => {
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
       owner: 'owner',
       repo: 'repo',
-      tag: 'v6.6.0',
+      per_page: 10,
     });
 
     expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
@@ -389,6 +397,7 @@ describe('run updateReleaseNotes', () => {
     mockedData.releaseData = {
       draft: true,
       id: 123,
+      name: 'v6.5.2',
       body: `
 ## Новые компоненты
 - Новый компонент с название COMPONENT
@@ -423,7 +432,7 @@ describe('run updateReleaseNotes', () => {
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
       owner: 'owner',
       repo: 'repo',
-      tag: 'v6.5.2',
+      per_page: 10,
     });
   });
 });
