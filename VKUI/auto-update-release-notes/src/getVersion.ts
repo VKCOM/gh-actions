@@ -14,12 +14,12 @@ function getNextPatchVersion(currentVersion: string): string {
   return nextVersion;
 }
 
-export function getNextReleaseVersion(currentVKUIVersion: string, updateType: 'patch' | 'minor') {
+export function getNextReleaseVersion(lastVKUIVersion: string, updateType: 'patch' | 'minor') {
   switch (updateType) {
     case 'minor':
-      return getNextMinorVersion(currentVKUIVersion);
+      return getNextMinorVersion(lastVKUIVersion);
     case 'patch':
-      return getNextPatchVersion(currentVKUIVersion);
+      return getNextPatchVersion(lastVKUIVersion);
   }
-  return currentVKUIVersion;
+  return lastVKUIVersion;
 }

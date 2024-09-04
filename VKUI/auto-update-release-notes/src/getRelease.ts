@@ -48,12 +48,13 @@ export async function getRelease({
   repo: string;
   releaseVersion: string;
 }) {
+  const releaseName = `v${releaseVersion}`;
   try {
     const searchedRelease = await getRecentDraftReleaseByName({
       octokit,
       owner,
       repo,
-      releaseName: releaseVersion,
+      releaseName,
     });
     return searchedRelease;
   } catch (e) {
@@ -61,8 +62,8 @@ export async function getRelease({
       const { data: createdRelease } = await octokit.rest.repos.createRelease({
         owner,
         repo,
-        tag_name: releaseVersion,
-        name: releaseVersion,
+        tag_name: releaseName,
+        name: releaseName,
         body: '',
         draft: true,
         prerelease: false,

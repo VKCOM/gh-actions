@@ -13,13 +13,11 @@ export const updateReleaseNotes = async ({
   owner,
   repo,
   prNumber,
-  currentVKUIVersion,
 }: {
   octokit: ReturnType<typeof github.getOctokit>;
   owner: string;
   repo: string;
   prNumber: number;
-  currentVKUIVersion: string;
 }) => {
   let pullRequest;
   try {
@@ -50,11 +48,16 @@ export const updateReleaseNotes = async ({
     pullRequestReleaseNotesBody &&
     parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
 
-  const releaseVersion = calculateReleaseVersion({
+  const releaseVersion = await calculateReleaseVersion({
+    octokit,
+    repo,
+    owner,
     labels: pullRequestLabels,
     milestone: pullRequest.milestone,
-    currentVKUIVersion,
   });
+  if (!releaseVersion) {
+    return;
+  }
 
   const release = await getRelease({
     owner,
@@ -75,7 +78,7 @@ export const updateReleaseNotes = async ({
     pullRequestReleaseNotes.forEach((note) => {
       releaseUpdater.addNotes({
         noteData: note,
-        version: releaseVersion.slice(1),
+        version: releaseVersion,
         author: isVKCOMember ? '' : author,
       });
     });
