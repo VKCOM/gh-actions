@@ -73,7 +73,7 @@ export function releaseNotesUpdater(currentBody: string) {
   const addUndescribedPRNumber = (prNumber: number) => {
     if (body.includes(NEED_TO_DESCRIBE_HEADER)) {
       insertContentInSection(NEED_TO_DESCRIBE_HEADER, (currentContent) => {
-        currentContent += `#${prNumber}\n`;
+        currentContent += `\n#${prNumber}`;
         return currentContent;
       });
     } else {
