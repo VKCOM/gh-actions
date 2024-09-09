@@ -22,6 +22,8 @@ const setupData = () => {
     Awaited<ReturnType<Octokit['rest']['repos']['getReleaseByTag']>>['data']
   > | null = null;
 
+  let lastReleaseName = '';
+
   const octokit = {
     rest: {
       pulls: {
@@ -57,6 +59,13 @@ const setupData = () => {
             data: [releaseData],
           };
         }) as Octokit['rest']['repos']['listReleases'],
+        getLatestRelease: (async () => {
+          return {
+            data: {
+              name: lastReleaseName,
+            },
+          };
+        }) as Octokit['rest']['repos']['getLatestRelease'],
         createRelease: (async (options) => {
           createReleaseRequest(options);
           releaseData = {
@@ -79,6 +88,9 @@ const setupData = () => {
     createReleaseRequest,
     updateReleaseRequest,
     octokit: octokit as unknown as Octokit,
+    set lastReleaseName(name: string) {
+      lastReleaseName = name;
+    },
     set pullRequestData(
       data: Partial<Omit<typeof pullRequestData, 'user' | 'labels'>> & {
         user?: Partial<(typeof pullRequestData)['user']>;
@@ -181,12 +193,13 @@ describe('run updateReleaseNotes', () => {
       },
     };
 
+    mockedData.lastReleaseName = 'v6.5.1';
+
     await updateReleaseNotes({
       octokit: mockedData.octokit,
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
-      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
@@ -282,12 +295,13 @@ describe('run updateReleaseNotes', () => {
       },
     };
 
+    mockedData.lastReleaseName = 'v6.5.1';
+
     await updateReleaseNotes({
       octokit: mockedData.octokit,
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
-      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
@@ -357,13 +371,13 @@ describe('run updateReleaseNotes', () => {
         login: 'eldar',
       },
     };
+    mockedData.lastReleaseName = 'v6.5.1';
 
     await updateReleaseNotes({
       octokit: mockedData.octokit,
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
-      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
@@ -421,12 +435,13 @@ describe('run updateReleaseNotes', () => {
       ],
     };
 
+    mockedData.lastReleaseName = 'v6.5.1';
+
     await updateReleaseNotes({
       octokit: mockedData.octokit,
       owner: 'owner',
       repo: 'repo',
       prNumber: 1234,
-      currentVKUIVersion: '6.5.1',
     });
     expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
     expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({

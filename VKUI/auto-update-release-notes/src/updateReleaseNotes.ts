@@ -1,6 +1,7 @@
 import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody';
 import { releaseNotesUpdater } from './parsing/releaseNotesUpdater';
 import * as github from '@actions/github';
+import * as core from '@actions/core';
 import { checkVKCOMMember } from './checkVKCOMMember';
 import { getRelease } from './getRelease';
 import { calculateReleaseVersion } from './calculateReleaseVersion';
@@ -13,13 +14,11 @@ export const updateReleaseNotes = async ({
   owner,
   repo,
   prNumber,
-  currentVKUIVersion,
 }: {
   octokit: ReturnType<typeof github.getOctokit>;
   owner: string;
   repo: string;
   prNumber: number;
-  currentVKUIVersion: string;
 }) => {
   let pullRequest;
   try {
@@ -34,13 +33,18 @@ export const updateReleaseNotes = async ({
   if (!pullRequest) {
     return;
   }
-
+  core.debug(`[updateReleaseNotes] pull request: ${JSON.stringify(pullRequest)}`);
+  core.debug(`[updateReleaseNotes] pull request body: ${pullRequest.body}`);
   const pullRequestBody = pullRequest.body;
   const pullRequestLabels = pullRequest.labels;
   const author = pullRequest.user.login;
 
   const pullRequestReleaseNotesBody =
     pullRequestBody && getPullRequestReleaseNotesBody(pullRequestBody);
+
+  core.debug(
+    `[updateReleaseNotes] pull request pullRequestReleaseNotesBody: ${pullRequestReleaseNotesBody}`,
+  );
 
   if (pullRequestReleaseNotesBody === EMPTY_NOTES) {
     return;
@@ -50,11 +54,22 @@ export const updateReleaseNotes = async ({
     pullRequestReleaseNotesBody &&
     parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
 
-  const releaseVersion = calculateReleaseVersion({
+  core.debug(
+    `[updateReleaseNotes] pullRequestReleaseNotes count: ${pullRequestReleaseNotes?.length}`,
+  );
+
+  const releaseVersion = await calculateReleaseVersion({
+    octokit,
+    repo,
+    owner,
     labels: pullRequestLabels,
     milestone: pullRequest.milestone,
-    currentVKUIVersion,
   });
+
+  core.debug(`[updateReleaseNotes] releaseVersion: ${releaseVersion}`);
+  if (!releaseVersion) {
+    return;
+  }
 
   const release = await getRelease({
     owner,
@@ -62,6 +77,7 @@ export const updateReleaseNotes = async ({
     octokit,
     releaseVersion,
   });
+  core.debug(`[updateReleaseNotes] release: ${JSON.stringify(release)}`);
 
   if (!release || !release.draft) {
     return;
@@ -69,19 +85,23 @@ export const updateReleaseNotes = async ({
 
   const isVKCOMember = await checkVKCOMMember({ octokit, author });
 
+  core.debug(`[updateReleaseNotes] isVKCOMember: ${isVKCOMember}`);
+
   const releaseUpdater = releaseNotesUpdater(release.body || '');
 
   if (pullRequestReleaseNotes) {
     pullRequestReleaseNotes.forEach((note) => {
       releaseUpdater.addNotes({
         noteData: note,
-        version: releaseVersion.slice(1),
+        version: releaseVersion,
         author: isVKCOMember ? '' : author,
       });
     });
   } else {
     releaseUpdater.addUndescribedPRNumber(prNumber);
   }
+
+  core.debug(`[updateReleaseNotes] result release notes: ${releaseUpdater.getBody()}`);
 
   await octokit.rest.repos.updateRelease({
     owner,

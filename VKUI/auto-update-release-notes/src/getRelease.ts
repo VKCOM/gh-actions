@@ -48,27 +48,30 @@ export async function getRelease({
   repo: string;
   releaseVersion: string;
 }) {
+  const releaseName = `v${releaseVersion}`;
   try {
     const searchedRelease = await getRecentDraftReleaseByName({
       octokit,
       owner,
       repo,
-      releaseName: releaseVersion,
+      releaseName,
     });
-    return searchedRelease;
-  } catch (e) {
-    if (e instanceof Error && 'status' in e && e.status === 404) {
-      const { data: createdRelease } = await octokit.rest.repos.createRelease({
-        owner,
-        repo,
-        tag_name: releaseVersion,
-        name: releaseVersion,
-        body: '',
-        draft: true,
-        prerelease: false,
-      });
-      return createdRelease;
+    if (searchedRelease) {
+      return searchedRelease;
     }
-  }
+  } catch (e) {}
+  try {
+    const { data: createdRelease } = await octokit.rest.repos.createRelease({
+      owner,
+      repo,
+      tag_name: releaseName,
+      name: releaseName,
+      body: '',
+      draft: true,
+      prerelease: false,
+    });
+    return createdRelease;
+  } catch (e) {}
+
   return null;
 }
