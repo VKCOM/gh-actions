@@ -14,7 +14,7 @@ export function releaseNotesUpdater(currentBody: string) {
 
   const getReleaseNotesData = (): ReleaseNoteData[] => {
     const releaseNotesData: ReleaseNoteData[] = [];
-    const sectionRegex = /## (.+)\n([\s\S]*?)(?=##|$)/g;
+    const sectionRegex = /## (.+)\r?\n([\s\S]*?)(?=##|$)/g;
     const matches = body.matchAll(sectionRegex);
     for (const match of matches) {
       const [, header, content] = match;
@@ -41,7 +41,7 @@ export function releaseNotesUpdater(currentBody: string) {
     const endIndex = findNextHeaderPosition(startIndex);
     let currentContent = body.substring(startIndex, endIndex).trim();
     currentContent = calculateNewContent(currentContent);
-    body = body.slice(0, startIndex) + '\n' + currentContent + '\n' + body.slice(endIndex);
+    body = body.slice(0, startIndex) + '\r\n' + currentContent + '\r\n' + body.slice(endIndex);
   };
 
   const addNotes = ({
@@ -65,7 +65,7 @@ export function releaseNotesUpdater(currentBody: string) {
         return convertChangesToString(currentSectionContentData, version, author || '');
       });
     } else {
-      body += `\n## ${getHeaderBySectionType(noteData.type)}\n`;
+      body += `\r\n## ${getHeaderBySectionType(noteData.type)}\r\n`;
       body += convertChangesToString(noteData.data, version, author || '');
     }
   };
@@ -73,11 +73,11 @@ export function releaseNotesUpdater(currentBody: string) {
   const addUndescribedPRNumber = (prNumber: number) => {
     if (body.includes(NEED_TO_DESCRIBE_HEADER)) {
       insertContentInSection(NEED_TO_DESCRIBE_HEADER, (currentContent) => {
-        currentContent += `\n#${prNumber}`;
+        currentContent += `\r\n#${prNumber}`;
         return currentContent;
       });
     } else {
-      body += `\n## ${NEED_TO_DESCRIBE_HEADER}\n`;
+      body += `\r\n## ${NEED_TO_DESCRIBE_HEADER}\r\n`;
       body += `#${prNumber}`;
     }
   };

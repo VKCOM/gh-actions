@@ -213,34 +213,34 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       release_id: 123,
       body: `
-## Новые компоненты
-- Новый компонент с название COMPONENT
-- Новый компонент с название COMPONENT2 (#1234, спасибо @other)
-Картинка с новым компонентом
-Какая-то доп информация
-- Новый компонент с название COMPONENT3 (#1234, спасибо @other)
-
-## Улучшения
-- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect):
-  - Улучшение компонента ChipsSelect (#7023)
-  - Улучшение компонента ChipsSelect 2 (#1234, спасибо @other)
-Немного подробнее об этом. Можно приложить картинку
-- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234, спасибо @other)
-
-## Исправления
-- [List](https://vkcom.github.io/VKUI/6.6.0/#/List):
-  - Исправление компонента List (#7094)
-  - Исправление компонента List 2 (#1234, спасибо @other)
-- [Flex](https://vkcom.github.io/VKUI/6.6.0/#/Flex): Исправление компонента Flex (#1234, спасибо @other)
-
-## Зависимости
-- Обновлена какая-то зависимость 1
-- Обновлена какая-то зависимость 2 (#1234, спасибо @other)
-
-## Документация
-- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView
-- Поправлены баги в документации (#1234, спасибо @other)
-
+## Новые компоненты\r
+- Новый компонент с название COMPONENT\r
+- Новый компонент с название COMPONENT2 (#1234, спасибо @other)\r
+Картинка с новым компонентом\r
+Какая-то доп информация\r
+- Новый компонент с название COMPONENT3 (#1234, спасибо @other)\r
+\r
+## Улучшения\r
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect):\r
+  - Улучшение компонента ChipsSelect (#7023)\r
+  - Улучшение компонента ChipsSelect 2 (#1234, спасибо @other)\r
+Немного подробнее об этом. Можно приложить картинку\r
+- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234, спасибо @other)\r
+\r
+## Исправления\r
+- [List](https://vkcom.github.io/VKUI/6.6.0/#/List):\r
+  - Исправление компонента List (#7094)\r
+  - Исправление компонента List 2 (#1234, спасибо @other)\r
+- [Flex](https://vkcom.github.io/VKUI/6.6.0/#/Flex): Исправление компонента Flex (#1234, спасибо @other)\r
+\r
+## Зависимости\r
+- Обновлена какая-то зависимость 1\r
+- Обновлена какая-то зависимость 2 (#1234, спасибо @other)\r
+\r
+## Документация\r
+- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView\r
+- Поправлены баги в документации (#1234, спасибо @other)\r
+\r
 `,
     });
   });
@@ -315,27 +315,27 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       release_id: 123,
       body: `
-## Новые компоненты
-- Новый компонент с название COMPONENT
-- Новый компонент с название COMPONENT2 (#1234)
-- Новый компонент с название COMPONENT3 (#1234)
-
-## Исправления
-- [List](https://vkcom.github.io/VKUI/6.6.0/#/List):
-  - Исправление компонента List (#7094)
-  - Исправление компонента List 2 (#1234)
-- [Flex](https://vkcom.github.io/VKUI/6.6.0/#/Flex): Исправление компонента Flex (#1234)
-
-## Документация
-- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView
-- Поправлены баги в документации (#1234)
-
-## Улучшения
-- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect): Улучшение компонента ChipsSelect 2 (#1234)
-- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234)
-
-## Зависимости
-- Обновлена какая-то зависимость 2 (#1234)
+## Новые компоненты\r
+- Новый компонент с название COMPONENT\r
+- Новый компонент с название COMPONENT2 (#1234)\r
+- Новый компонент с название COMPONENT3 (#1234)\r
+\r
+## Исправления\r
+- [List](https://vkcom.github.io/VKUI/6.6.0/#/List):\r
+  - Исправление компонента List (#7094)\r
+  - Исправление компонента List 2 (#1234)\r
+- [Flex](https://vkcom.github.io/VKUI/6.6.0/#/Flex): Исправление компонента Flex (#1234)\r
+\r
+## Документация\r
+- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView\r
+- Поправлены баги в документации (#1234)\r
+\r
+## Улучшения\r
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect): Улучшение компонента ChipsSelect 2 (#1234)\r
+- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234)\r
+\r
+## Зависимости\r
+- Обновлена какая-то зависимость 2 (#1234)\r
 `,
     });
   });
@@ -399,8 +399,8 @@ describe('run updateReleaseNotes', () => {
 
 ## Документация
 - [CustomScrollView](https://vkcom.github.io/VKUI/6.5.0/#/CustomScrollView): Обновлена документация CustomScrollView
-
-## Нужно описать
+\r
+## Нужно описать\r
 #1234`,
     });
   });

@@ -1,4 +1,4 @@
-const RELEASE_NOTE_HEADER = '## Release notes\n';
+const RELEASE_NOTE_HEADER = '## Release notes';
 
 export const getPullRequestReleaseNotesBody = (body: string): string | null => {
   const releaseNotesIndex = body.indexOf(RELEASE_NOTE_HEADER);

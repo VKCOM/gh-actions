@@ -7,7 +7,7 @@ const UNKNOWN_CHANGE_REGEX = /-\s(.+)/;
 
 export function parseChanges(text: string): ChangeData[] {
   let changes: ChangeData[] = [];
-  const lines = text.split('\n');
+  const lines = text.split(/\r?\n/);
   let currentChange: ChangeData | null = null;
 
   for (let i = 0; i < lines.length; i++) {
@@ -51,7 +51,7 @@ export function parseChanges(text: string): ChangeData[] {
       changes.push(currentChange);
     } else if (line.trim() && currentChange) {
       // Дополнительная информация
-      currentChange.additionalInfo += `${line}\n`;
+      currentChange.additionalInfo += `${line}\r\n`;
     } else if (line) {
       // Если строка не пустая и не относится к текущему изменению,
       // создаем новое неизвестное изменение

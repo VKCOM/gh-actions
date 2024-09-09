@@ -33,18 +33,12 @@ export const updateReleaseNotes = async ({
   if (!pullRequest) {
     return;
   }
-  core.debug(`[updateReleaseNotes] pull request: ${JSON.stringify(pullRequest)}`);
-  core.debug(`[updateReleaseNotes] pull request body: ${pullRequest.body}`);
   const pullRequestBody = pullRequest.body;
   const pullRequestLabels = pullRequest.labels;
   const author = pullRequest.user.login;
 
   const pullRequestReleaseNotesBody =
     pullRequestBody && getPullRequestReleaseNotesBody(pullRequestBody);
-
-  core.debug(
-    `[updateReleaseNotes] pull request pullRequestReleaseNotesBody: ${pullRequestReleaseNotesBody}`,
-  );
 
   if (pullRequestReleaseNotesBody === EMPTY_NOTES) {
     return;
@@ -53,10 +47,6 @@ export const updateReleaseNotes = async ({
   const pullRequestReleaseNotes =
     pullRequestReleaseNotesBody &&
     parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
-
-  core.debug(
-    `[updateReleaseNotes] pullRequestReleaseNotes count: ${pullRequestReleaseNotes?.length}`,
-  );
 
   const releaseVersion = await calculateReleaseVersion({
     octokit,
@@ -77,7 +67,6 @@ export const updateReleaseNotes = async ({
     octokit,
     releaseVersion,
   });
-  core.debug(`[updateReleaseNotes] release: ${JSON.stringify(release)}`);
 
   if (!release || !release.draft) {
     return;
@@ -100,8 +89,6 @@ export const updateReleaseNotes = async ({
   } else {
     releaseUpdater.addUndescribedPRNumber(prNumber);
   }
-
-  core.debug(`[updateReleaseNotes] result release notes: ${releaseUpdater.getBody()}`);
 
   await octokit.rest.repos.updateRelease({
     owner,
