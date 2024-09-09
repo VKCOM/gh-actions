@@ -1,8 +1,6 @@
 import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody';
 import { releaseNotesUpdater } from './parsing/releaseNotesUpdater';
 import * as github from '@actions/github';
-import * as core from '@actions/core';
-import { checkVKCOMMember } from './checkVKCOMMember';
 import { getRelease } from './getRelease';
 import { calculateReleaseVersion } from './calculateReleaseVersion';
 import { getPullRequestReleaseNotesBody } from './parsing/getPullRequestReleaseNotesBody';
@@ -56,7 +54,6 @@ export const updateReleaseNotes = async ({
     milestone: pullRequest.milestone,
   });
 
-  core.debug(`[updateReleaseNotes] releaseVersion: ${releaseVersion}`);
   if (!releaseVersion) {
     return;
   }
@@ -72,18 +69,16 @@ export const updateReleaseNotes = async ({
     return;
   }
 
-  const isVKCOMember = await checkVKCOMMember({ octokit, author });
-
-  core.debug(`[updateReleaseNotes] isVKCOMember: ${isVKCOMember}`);
-
   const releaseUpdater = releaseNotesUpdater(release.body || '');
+
+  const isFromForkedRepo = pullRequest.head.repo?.fork;
 
   if (pullRequestReleaseNotes) {
     pullRequestReleaseNotes.forEach((note) => {
       releaseUpdater.addNotes({
         noteData: note,
         version: releaseVersion,
-        author: isVKCOMember ? '' : author,
+        author: isFromForkedRepo ? author : '',
       });
     });
   } else {

@@ -6,16 +6,31 @@ type Octokit = ReturnType<typeof github.getOctokit>;
 type ArrayElement<ArrayType extends any[] | undefined> =
   ArrayType extends Array<infer ElementType> ? ElementType : never;
 
+type PullRequestData = Awaited<ReturnType<Octokit['rest']['pulls']['get']>>['data'];
+
+type PartialPullRequestData = Partial<Omit<PullRequestData, 'head'>> & {
+  head: {
+    repo: {
+      fork: boolean;
+    };
+  };
+};
+
 const setupData = () => {
   const getPullRequest = jest.fn();
   const getReleaseRequest = jest.fn();
   const createReleaseRequest = jest.fn();
   const updateReleaseRequest = jest.fn();
 
-  const pullRequestData: Partial<Awaited<ReturnType<Octokit['rest']['pulls']['get']>>['data']> = {
+  const pullRequestData: PartialPullRequestData = {
     body: '',
     labels: [],
     milestone: null,
+    head: {
+      repo: {
+        fork: false,
+      },
+    },
   };
 
   let releaseData: Partial<
@@ -31,26 +46,6 @@ const setupData = () => {
           getPullRequest(options);
           return { data: pullRequestData };
         }) as Octokit['rest']['pulls']['get'],
-      },
-      orgs: {
-        listForUser: (async (options) => {
-          if (options?.username === 'eldar') {
-            return {
-              data: [
-                {
-                  login: 'VKCOM',
-                },
-              ],
-            };
-          }
-          return {
-            data: [
-              {
-                login: 'OTHER',
-              },
-            ],
-          };
-        }) as Octokit['rest']['orgs']['listForUser'],
       },
       repos: {
         listReleases: (async (options) => {
@@ -95,6 +90,7 @@ const setupData = () => {
       data: Partial<Omit<typeof pullRequestData, 'user' | 'labels'>> & {
         user?: Partial<(typeof pullRequestData)['user']>;
         labels?: Array<Partial<ArrayElement<(typeof pullRequestData)['labels']>>>;
+        fork?: boolean;
       },
     ) {
       if (data.milestone) {
@@ -108,6 +104,9 @@ const setupData = () => {
       }
       if (data.user) {
         pullRequestData.user = data.user as (typeof pullRequestData)['user'];
+      }
+      if (data.fork !== undefined) {
+        pullRequestData.head.repo.fork = data.fork;
       }
     },
     set releaseData(data: Partial<typeof releaseData>) {
@@ -191,6 +190,7 @@ describe('run updateReleaseNotes', () => {
       user: {
         login: 'other',
       },
+      fork: true,
     };
 
     mockedData.lastReleaseName = 'v6.5.1';
