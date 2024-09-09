@@ -42,7 +42,7 @@ export const convertChangesToString = (
 
   const addAdditionalInfo = (change: ChangeData) => {
     if (change.additionalInfo) {
-      result += `${change.additionalInfo}\n`;
+      result += `${change.additionalInfo}\r\n`;
     }
   };
 
@@ -54,16 +54,16 @@ export const convertChangesToString = (
       }
       result += `- ${componentToString(change.component, version)}:`;
       if (componentChanges.length > 1) {
-        result += '\n';
+        result += '\r\n';
         componentChanges.forEach((changeItem) => {
-          result += `  -${changeDescriptionToString(changeItem, author)}\n`;
+          result += `  -${changeDescriptionToString(changeItem, author)}\r\n`;
           addAdditionalInfo(changeItem);
         });
       } else {
-        result += `${changeDescriptionToString(change, author)}\n`;
+        result += `${changeDescriptionToString(change, author)}\r\n`;
       }
     } else {
-      result += `-${changeDescriptionToString(change, author)}\n`;
+      result += `-${changeDescriptionToString(change, author)}\r\n`;
       addAdditionalInfo(change);
     }
   });
