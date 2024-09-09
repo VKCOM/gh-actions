@@ -26047,7 +26047,7 @@ var require_dist_cjs35 = __commonJS({
           supportsDualStack: true,
           supportsFIPS: true
         },
-        regionRegex: "^(us|eu|ap|sa|ca|me|af|il)\\-\\w+\\-\\d+$",
+        regionRegex: "^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$",
         regions: {
           "af-south-1": {
             description: "Africa (Cape Town)"
@@ -29993,7 +29993,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.637.0",
+      version: "3.645.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -30018,10 +30018,10 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "5.2.0",
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.637.0",
-        "@aws-sdk/client-sts": "3.637.0",
+        "@aws-sdk/client-sso-oidc": "3.645.0",
+        "@aws-sdk/client-sts": "3.645.0",
         "@aws-sdk/core": "3.635.0",
-        "@aws-sdk/credential-provider-node": "3.637.0",
+        "@aws-sdk/credential-provider-node": "3.645.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.620.0",
         "@aws-sdk/middleware-expect-continue": "3.620.0",
         "@aws-sdk/middleware-flexible-checksums": "3.620.0",
@@ -30031,11 +30031,11 @@ var require_package = __commonJS({
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
         "@aws-sdk/middleware-sdk-s3": "3.635.0",
         "@aws-sdk/middleware-ssec": "3.609.0",
-        "@aws-sdk/middleware-user-agent": "3.637.0",
+        "@aws-sdk/middleware-user-agent": "3.645.0",
         "@aws-sdk/region-config-resolver": "3.614.0",
         "@aws-sdk/signature-v4-multi-region": "3.635.0",
         "@aws-sdk/types": "3.609.0",
-        "@aws-sdk/util-endpoints": "3.637.0",
+        "@aws-sdk/util-endpoints": "3.645.0",
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@aws-sdk/xml-builder": "3.609.0",
@@ -30860,7 +30860,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.637.0",
+      version: "3.645.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -30883,10 +30883,10 @@ var require_package2 = __commonJS({
         "@aws-sdk/middleware-host-header": "3.620.0",
         "@aws-sdk/middleware-logger": "3.609.0",
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
-        "@aws-sdk/middleware-user-agent": "3.637.0",
+        "@aws-sdk/middleware-user-agent": "3.645.0",
         "@aws-sdk/region-config-resolver": "3.614.0",
         "@aws-sdk/types": "3.609.0",
-        "@aws-sdk/util-endpoints": "3.637.0",
+        "@aws-sdk/util-endpoints": "3.645.0",
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@smithy/config-resolver": "^3.0.5",
@@ -32128,7 +32128,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.637.0",
+      version: "3.645.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -32148,14 +32148,14 @@ var require_package3 = __commonJS({
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
         "@aws-sdk/core": "3.635.0",
-        "@aws-sdk/credential-provider-node": "3.637.0",
+        "@aws-sdk/credential-provider-node": "3.645.0",
         "@aws-sdk/middleware-host-header": "3.620.0",
         "@aws-sdk/middleware-logger": "3.609.0",
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
-        "@aws-sdk/middleware-user-agent": "3.637.0",
+        "@aws-sdk/middleware-user-agent": "3.645.0",
         "@aws-sdk/region-config-resolver": "3.614.0",
         "@aws-sdk/types": "3.609.0",
-        "@aws-sdk/util-endpoints": "3.637.0",
+        "@aws-sdk/util-endpoints": "3.645.0",
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@smithy/config-resolver": "^3.0.5",
@@ -32212,7 +32212,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/client-sts": "^3.637.0"
+        "@aws-sdk/client-sts": "^3.645.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -33860,7 +33860,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.637.0",
+      version: "3.645.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -33881,16 +33881,16 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.637.0",
+        "@aws-sdk/client-sso-oidc": "3.645.0",
         "@aws-sdk/core": "3.635.0",
-        "@aws-sdk/credential-provider-node": "3.637.0",
+        "@aws-sdk/credential-provider-node": "3.645.0",
         "@aws-sdk/middleware-host-header": "3.620.0",
         "@aws-sdk/middleware-logger": "3.609.0",
         "@aws-sdk/middleware-recursion-detection": "3.620.0",
-        "@aws-sdk/middleware-user-agent": "3.637.0",
+        "@aws-sdk/middleware-user-agent": "3.645.0",
         "@aws-sdk/region-config-resolver": "3.614.0",
         "@aws-sdk/types": "3.609.0",
-        "@aws-sdk/util-endpoints": "3.637.0",
+        "@aws-sdk/util-endpoints": "3.645.0",
         "@aws-sdk/util-user-agent-browser": "3.609.0",
         "@aws-sdk/util-user-agent-node": "3.614.0",
         "@smithy/config-resolver": "^3.0.5",
