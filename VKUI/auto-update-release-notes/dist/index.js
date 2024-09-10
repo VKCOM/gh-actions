@@ -23949,12 +23949,15 @@ async function calculateReleaseVersion({
 
 // src/parsing/getPullRequestReleaseNotesBody.ts
 var RELEASE_NOTE_HEADER = "## Release notes";
+var COMMENT_START = "<!-- ";
 var getPullRequestReleaseNotesBody = (body) => {
   const releaseNotesIndex = body.indexOf(RELEASE_NOTE_HEADER);
   if (releaseNotesIndex === -1) {
     return null;
   }
-  return body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length).trim();
+  const commentStart = body.indexOf(COMMENT_START, releaseNotesIndex);
+  const end = commentStart !== -1 ? commentStart : body.length;
+  return body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length, end).trim();
 };
 
 // src/updateReleaseNotes.ts
