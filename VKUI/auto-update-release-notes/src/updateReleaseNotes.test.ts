@@ -450,4 +450,90 @@ describe('run updateReleaseNotes', () => {
       per_page: 10,
     });
   });
+
+  it('check correct update release notes with additional info', async () => {
+    const mockedData = setupData();
+
+    mockedData.releaseData = {
+      draft: true,
+      id: 123,
+      name: 'v6.6.0',
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Улучшения
+- [PanelHeaderButton](https://vkcom.github.io/VKUI/6.7.0/#/PanelHeaderButton): добавлена поддержка компонента \`Badge\` в \`label\` (#7526)
+  <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/14bb6d5e-2390-4766-8bdb-8e16d5166523">
+  <img width="480" src="https://github.com/user-attachments/assets/404e2412-ed5d-4503-bf61-7c41d8784719"/>
+  </picture>
+- [Text](https://vkcom.github.io/VKUI/6.7.0/#/Text): добавлено использование compact токенов fontWeight/fontFamily в режиме compact (#7564)
+- [Caption](https://vkcom.github.io/VKUI/6.7.0/#/Caption): добавлена поддержка compact режима (#7555)
+`,
+    };
+
+    mockedData.pullRequestData = {
+      body: `
+- close #6267
+
+---
+
+- [x] e2e-тесты
+- [x] Дизайн-ревью
+- [x] Документация фичи
+- [x] Release notes
+
+## Описание
+
+Добавить возможность прокидывать текст в \`ScreenSpinner\`
+
+## Release notes
+
+## Улучшения
+- ScreenSpinner: добавлена возможность прокидывать \`caption\`
+ 
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">
+<img width="480" src="https://github.com/user-attachments/assets/6db873ff-7d78-49cf-b930-9e47f5557a8e"/>
+</picture>
+`,
+      user: {
+        login: 'eldar',
+      },
+    };
+
+    mockedData.lastReleaseName = 'v6.5.1';
+
+    await updateReleaseNotes({
+      octokit: mockedData.octokit,
+      owner: 'owner',
+      repo: 'repo',
+      prNumber: 1234,
+    });
+    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      release_id: 123,
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Улучшения\r
+- [PanelHeaderButton](https://vkcom.github.io/VKUI/6.6.0/#/PanelHeaderButton): добавлена поддержка компонента \`Badge\` в \`label\` (#7526)\r
+<picture>\r
+<source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/14bb6d5e-2390-4766-8bdb-8e16d5166523">\r
+<img width="480" src="https://github.com/user-attachments/assets/404e2412-ed5d-4503-bf61-7c41d8784719"/>\r
+</picture>\r
+- [Text](https://vkcom.github.io/VKUI/6.6.0/#/Text): добавлено использование compact токенов fontWeight/fontFamily в режиме compact (#7564)\r
+- [Caption](https://vkcom.github.io/VKUI/6.6.0/#/Caption): добавлена поддержка compact режима (#7555)\r
+- [ScreenSpinner](https://vkcom.github.io/VKUI/6.6.0/#/ScreenSpinner): добавлена возможность прокидывать \`caption\` (#1234)\r
+<picture>\r
+<source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">\r
+<img width="480" src="https://github.com/user-attachments/assets/6db873ff-7d78-49cf-b930-9e47f5557a8e"/>\r
+</picture>\r
+\r
+`,
+    });
+  });
 });

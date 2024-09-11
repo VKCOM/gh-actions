@@ -11,7 +11,7 @@ export function parseChanges(text: string): ChangeData[] {
   let currentChange: ChangeData | null = null;
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+    const line = lines[i].trim();
     const componentMatch = line.match(COMPONENT_REGEX);
     const componentWithLinkMatch = line.match(COMPONENT_WITH_LINK_REGEX);
     const componentSubItemMatch = line.match(COMPONENT_SUB_ITEM_REGEX);
@@ -49,7 +49,7 @@ export function parseChanges(text: string): ChangeData[] {
         additionalInfo: '',
       };
       changes.push(currentChange);
-    } else if (line.trim() && currentChange) {
+    } else if (currentChange) {
       // Дополнительная информация
       currentChange.additionalInfo += `${line}\r\n`;
     } else if (line) {

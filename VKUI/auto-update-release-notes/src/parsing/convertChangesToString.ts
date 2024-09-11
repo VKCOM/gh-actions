@@ -61,6 +61,7 @@ export const convertChangesToString = (
         });
       } else {
         result += `${changeDescriptionToString(change, author)}\r\n`;
+        addAdditionalInfo(change);
       }
     } else {
       result += `-${changeDescriptionToString(change, author)}\r\n`;
