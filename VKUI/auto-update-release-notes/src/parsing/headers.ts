@@ -5,6 +5,7 @@ export const FIX_HEADER = 'Исправления';
 export const DOCUMENTATION_HEADER = 'Документация';
 export const DEPENDENCY_HEADER = 'Зависимости';
 export const NEW_COMPONENT_HEADER = 'Новые компоненты';
+export const BREAKING_CHANGE_HEADER = 'BREAKING CHANGE';
 export const NEED_TO_DESCRIBE_HEADER = 'Нужно описать';
 
 export const getSectionTypeByHeader = (header: string): SectionType | null => {
@@ -19,6 +20,8 @@ export const getSectionTypeByHeader = (header: string): SectionType | null => {
       return 'dependency';
     case NEW_COMPONENT_HEADER:
       return 'new-component';
+    case BREAKING_CHANGE_HEADER:
+      return 'breaking-change';
   }
   return null;
 };
@@ -35,6 +38,8 @@ export const getHeaderBySectionType = (type: SectionType): string | null => {
       return DEPENDENCY_HEADER;
     case 'new-component':
       return NEW_COMPONENT_HEADER;
+    case 'breaking-change':
+      return BREAKING_CHANGE_HEADER;
   }
   return null;
 };
