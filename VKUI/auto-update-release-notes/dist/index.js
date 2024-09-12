@@ -23633,7 +23633,7 @@ function parseChanges(text) {
   const lines = text.split(/\r?\n/);
   let currentChange = null;
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+    const line = lines[i].trim();
     const componentMatch = line.match(COMPONENT_REGEX);
     const componentWithLinkMatch = line.match(COMPONENT_WITH_LINK_REGEX);
     const componentSubItemMatch = line.match(COMPONENT_SUB_ITEM_REGEX);
@@ -23668,7 +23668,7 @@ function parseChanges(text) {
         additionalInfo: ""
       };
       changes.push(currentChange);
-    } else if (line.trim() && currentChange) {
+    } else if (currentChange) {
       currentChange.additionalInfo += `${line}\r
 `;
     } else if (line) {
@@ -23715,10 +23715,13 @@ var convertChangesToString = (changes, version2, author) => {
       filteredChanges.push(change);
     }
   });
-  const addAdditionalInfo = (change) => {
+  const addAdditionalInfo = (change, offsetLevel) => {
+    const offsetStr = " ".repeat(offsetLevel * 2);
     if (change.additionalInfo) {
-      result += `${change.additionalInfo}\r
+      change.additionalInfo.split(/\r?\n/).forEach((line) => {
+        result += `${offsetStr}${line.trim()}\r
 `;
+      });
     }
   };
   filteredChanges.forEach((change) => {
@@ -23733,16 +23736,17 @@ var convertChangesToString = (changes, version2, author) => {
         componentChanges.forEach((changeItem) => {
           result += `  -${changeDescriptionToString(changeItem, author)}\r
 `;
-          addAdditionalInfo(changeItem);
+          addAdditionalInfo(changeItem, 2);
         });
       } else {
         result += `${changeDescriptionToString(change, author)}\r
 `;
+        addAdditionalInfo(change, 1);
       }
     } else {
       result += `-${changeDescriptionToString(change, author)}\r
 `;
-      addAdditionalInfo(change);
+      addAdditionalInfo(change, 1);
     }
   });
   return result;
