@@ -1,4 +1,10 @@
-export type SectionType = 'improvement' | 'fix' | 'documentation' | 'new-component' | 'dependency';
+export type SectionType =
+  | 'breaking-change'
+  | 'improvement'
+  | 'fix'
+  | 'documentation'
+  | 'new-component'
+  | 'dependency';
 
 type ComponentChangeData = {
   type: 'component';
