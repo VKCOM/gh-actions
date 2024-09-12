@@ -23591,6 +23591,7 @@ var FIX_HEADER = "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u
 var DOCUMENTATION_HEADER = "\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u0430\u0446\u0438\u044F";
 var DEPENDENCY_HEADER = "\u0417\u0430\u0432\u0438\u0441\u0438\u043C\u043E\u0441\u0442\u0438";
 var NEW_COMPONENT_HEADER = "\u041D\u043E\u0432\u044B\u0435 \u043A\u043E\u043C\u043F\u043E\u043D\u0435\u043D\u0442\u044B";
+var BREAKING_CHANGE_HEADER = "BREAKING CHANGE";
 var NEED_TO_DESCRIBE_HEADER = "\u041D\u0443\u0436\u043D\u043E \u043E\u043F\u0438\u0441\u0430\u0442\u044C";
 var getSectionTypeByHeader = (header) => {
   switch (header) {
@@ -23604,6 +23605,8 @@ var getSectionTypeByHeader = (header) => {
       return "dependency";
     case NEW_COMPONENT_HEADER:
       return "new-component";
+    case BREAKING_CHANGE_HEADER:
+      return "breaking-change";
   }
   return null;
 };
@@ -23619,6 +23622,8 @@ var getHeaderBySectionType = (type) => {
       return DEPENDENCY_HEADER;
     case "new-component":
       return NEW_COMPONENT_HEADER;
+    case "breaking-change":
+      return BREAKING_CHANGE_HEADER;
   }
   return null;
 };
