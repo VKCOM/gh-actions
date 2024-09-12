@@ -216,15 +216,15 @@ describe('run updateReleaseNotes', () => {
 ## Новые компоненты\r
 - Новый компонент с название COMPONENT\r
 - Новый компонент с название COMPONENT2 (#1234, спасибо @other)\r
-Картинка с новым компонентом\r
-Какая-то доп информация\r
+  Картинка с новым компонентом\r
+  Какая-то доп информация\r
 - Новый компонент с название COMPONENT3 (#1234, спасибо @other)\r
 \r
 ## Улучшения\r
 - [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect):\r
   - Улучшение компонента ChipsSelect (#7023)\r
   - Улучшение компонента ChipsSelect 2 (#1234, спасибо @other)\r
-Немного подробнее об этом. Можно приложить картинку\r
+    Немного подробнее об этом. Можно приложить картинку\r
 - [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234, спасибо @other)\r
 \r
 ## Исправления\r
@@ -493,10 +493,10 @@ describe('run updateReleaseNotes', () => {
 ## Улучшения
 - ScreenSpinner: добавлена возможность прокидывать \`caption\`
  
-<picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">
-<img width="480" src="https://github.com/user-attachments/assets/6db873ff-7d78-49cf-b930-9e47f5557a8e"/>
-</picture>
+  <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">
+  <img width="480" src="https://github.com/user-attachments/assets/6db873ff-7d78-49cf-b930-9e47f5557a8e"/>
+  </picture>
 `,
       user: {
         login: 'eldar',
@@ -521,17 +521,17 @@ describe('run updateReleaseNotes', () => {
 
 ## Улучшения\r
 - [PanelHeaderButton](https://vkcom.github.io/VKUI/6.6.0/#/PanelHeaderButton): добавлена поддержка компонента \`Badge\` в \`label\` (#7526)\r
-<picture>\r
-<source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/14bb6d5e-2390-4766-8bdb-8e16d5166523">\r
-<img width="480" src="https://github.com/user-attachments/assets/404e2412-ed5d-4503-bf61-7c41d8784719"/>\r
-</picture>\r
+  <picture>\r
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/14bb6d5e-2390-4766-8bdb-8e16d5166523">\r
+  <img width="480" src="https://github.com/user-attachments/assets/404e2412-ed5d-4503-bf61-7c41d8784719"/>\r
+  </picture>\r
 - [Text](https://vkcom.github.io/VKUI/6.6.0/#/Text): добавлено использование compact токенов fontWeight/fontFamily в режиме compact (#7564)\r
 - [Caption](https://vkcom.github.io/VKUI/6.6.0/#/Caption): добавлена поддержка compact режима (#7555)\r
 - [ScreenSpinner](https://vkcom.github.io/VKUI/6.6.0/#/ScreenSpinner): добавлена возможность прокидывать \`caption\` (#1234)\r
-<picture>\r
-<source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">\r
-<img width="480" src="https://github.com/user-attachments/assets/6db873ff-7d78-49cf-b930-9e47f5557a8e"/>\r
-</picture>\r
+  <picture>\r
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">\r
+  <img width="480" src="https://github.com/user-attachments/assets/6db873ff-7d78-49cf-b930-9e47f5557a8e"/>\r
+  </picture>\r
 \r
 `,
     });
