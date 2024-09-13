@@ -46,7 +46,7 @@ export const updateReleaseNotes = async ({
     pullRequestReleaseNotesBody &&
     parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
 
-  const releaseVersion = await calculateReleaseVersion({
+  const releaseData = await calculateReleaseVersion({
     octokit,
     repo,
     owner,
@@ -54,15 +54,17 @@ export const updateReleaseNotes = async ({
     milestone: pullRequest.milestone,
   });
 
-  if (!releaseVersion) {
+  if (!releaseData || !releaseData.version) {
     return;
   }
+
+  const { releaseName, version: releaseVersion } = releaseData;
 
   const release = await getRelease({
     owner,
     repo,
     octokit,
-    releaseVersion,
+    releaseName,
   });
 
   if (!release || !release.draft) {

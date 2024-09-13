@@ -41,14 +41,13 @@ export async function getRelease({
   octokit,
   owner,
   repo,
-  releaseVersion,
+  releaseName,
 }: {
   octokit: ReturnType<typeof github.getOctokit>;
   owner: string;
   repo: string;
-  releaseVersion: string;
+  releaseName: string;
 }) {
-  const releaseName = `v${releaseVersion}`;
   try {
     const searchedRelease = await getRecentDraftReleaseByName({
       octokit,
