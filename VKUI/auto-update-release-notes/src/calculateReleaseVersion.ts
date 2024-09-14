@@ -1,6 +1,11 @@
 import { getNextReleaseVersion } from './getVersion';
 import * as github from '@actions/github';
 
+type ReleaseData = {
+  releaseName: string;
+  version: string | null;
+};
+
 const parseReleaseVersion = (releaseVersion: string): string | null => {
   const match = releaseVersion.match(/v(\d+\.\d+\.\d+)/);
   return match?.[1] || null;
@@ -18,9 +23,12 @@ export async function calculateReleaseVersion({
   repo: string;
   labels: Array<{ name: string }>;
   milestone: { title: string } | null;
-}): Promise<string | null> {
+}): Promise<ReleaseData | null> {
   if (milestone?.title) {
-    return parseReleaseVersion(milestone.title);
+    return {
+      releaseName: milestone.title,
+      version: parseReleaseVersion(milestone.title),
+    };
   }
   let latestRelease;
   try {
@@ -40,6 +48,10 @@ export async function calculateReleaseVersion({
 
   const hasPatchLabel = labels.some((label) => label.name === 'patch');
   const updateType = hasPatchLabel ? 'patch' : 'minor';
+  const nextVersion = getNextReleaseVersion(latestVersion, updateType);
 
-  return getNextReleaseVersion(latestVersion, updateType);
+  return {
+    releaseName: `v${nextVersion}`,
+    version: nextVersion,
+  };
 }

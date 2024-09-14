@@ -87,14 +87,15 @@ const setupData = () => {
       lastReleaseName = name;
     },
     set pullRequestData(
-      data: Partial<Omit<typeof pullRequestData, 'user' | 'labels'>> & {
+      data: Partial<Omit<typeof pullRequestData, 'user' | 'labels' | 'milestone'>> & {
+        milestone?: Partial<(typeof pullRequestData)['milestone']>;
         user?: Partial<(typeof pullRequestData)['user']>;
         labels?: Array<Partial<ArrayElement<(typeof pullRequestData)['labels']>>>;
         fork?: boolean;
       },
     ) {
       if (data.milestone) {
-        pullRequestData.milestone = data.milestone;
+        pullRequestData.milestone = data.milestone as (typeof pullRequestData)['milestone'];
       }
       if (data.labels) {
         pullRequestData.labels = data.labels as (typeof pullRequestData)['labels'];
@@ -532,6 +533,121 @@ describe('run updateReleaseNotes', () => {
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">\r
   <img width="480" src="https://github.com/user-attachments/assets/6db873ff-7d78-49cf-b930-9e47f5557a8e"/>\r
   </picture>\r
+\r
+`,
+    });
+  });
+
+  it('check calculate correct release by milestone title', async () => {
+    const mockedData = setupData();
+
+    mockedData.releaseData = {
+      draft: true,
+      id: 123,
+      name: 'v6.6.0-beta.0',
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Улучшения
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.3.0/#/ChipsSelect): Улучшение компонента ChipsSelect (#7023)
+
+## Исправления
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List (#7094)
+
+## Зависимости
+- Обновлена какая-то зависимость 1
+
+## Документация
+- CustomScrollView: Обновлена документация CustomScrollView`,
+    };
+
+    mockedData.pullRequestData = {
+      body: `
+## Описание
+Какое-то описание Pull Request
+
+## Изменения
+Какие-то изменения Pull Request
+
+## Release notes
+## Новые компоненты
+- Новый компонент с название COMPONENT2
+Картинка с новым компонентом
+Какая-то доп информация
+- Новый компонент с название COMPONENT3
+
+## Улучшения
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.3.0/#/ChipsSelect): Улучшение компонента ChipsSelect 2
+Немного подробнее об этом. Можно приложить картинку
+- ChipsInput: Улучшение компонента ChipsInput
+
+## Исправления
+- [Flex](https://vkcom.github.io/VKUI/6.3.0/#/Flex): Исправление компонента Flex
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List 2
+
+## Зависимости
+- Обновлена какая-то зависимость 2
+
+## Документация
+- Поправлены баги в документации
+`,
+      user: {
+        login: 'other',
+      },
+      fork: true,
+      milestone: {
+        title: 'v6.6.0-beta.0',
+      },
+    };
+
+    mockedData.lastReleaseName = 'v6.4.0';
+
+    await updateReleaseNotes({
+      octokit: mockedData.octokit,
+      owner: 'owner',
+      repo: 'repo',
+      prNumber: 1234,
+    });
+    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
+    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      per_page: 10,
+    });
+
+    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      release_id: 123,
+      body: `
+## Новые компоненты\r
+- Новый компонент с название COMPONENT\r
+- Новый компонент с название COMPONENT2 (#1234, спасибо @other)\r
+  Картинка с новым компонентом\r
+  Какая-то доп информация\r
+- Новый компонент с название COMPONENT3 (#1234, спасибо @other)\r
+\r
+## Улучшения\r
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect):\r
+  - Улучшение компонента ChipsSelect (#7023)\r
+  - Улучшение компонента ChipsSelect 2 (#1234, спасибо @other)\r
+    Немного подробнее об этом. Можно приложить картинку\r
+- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234, спасибо @other)\r
+\r
+## Исправления\r
+- [List](https://vkcom.github.io/VKUI/6.6.0/#/List):\r
+  - Исправление компонента List (#7094)\r
+  - Исправление компонента List 2 (#1234, спасибо @other)\r
+- [Flex](https://vkcom.github.io/VKUI/6.6.0/#/Flex): Исправление компонента Flex (#1234, спасибо @other)\r
+\r
+## Зависимости\r
+- Обновлена какая-то зависимость 1\r
+- Обновлена какая-то зависимость 2 (#1234, спасибо @other)\r
+\r
+## Документация\r
+- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView\r
+- Поправлены баги в документации (#1234, спасибо @other)\r
 \r
 `,
     });
