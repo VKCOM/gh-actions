@@ -23870,9 +23870,8 @@ async function getRelease({
   octokit,
   owner,
   repo,
-  releaseVersion
+  releaseName
 }) {
-  const releaseName = `v${releaseVersion}`;
   try {
     const searchedRelease = await getRecentDraftReleaseByName({
       octokit,
@@ -23936,7 +23935,10 @@ async function calculateReleaseVersion({
   milestone
 }) {
   if (milestone?.title) {
-    return parseReleaseVersion(milestone.title);
+    return {
+      releaseName: milestone.title,
+      version: parseReleaseVersion(milestone.title)
+    };
   }
   let latestRelease;
   try {
@@ -23953,7 +23955,11 @@ async function calculateReleaseVersion({
   }
   const hasPatchLabel = labels.some((label) => label.name === "patch");
   const updateType = hasPatchLabel ? "patch" : "minor";
-  return getNextReleaseVersion(latestVersion, updateType);
+  const nextVersion = getNextReleaseVersion(latestVersion, updateType);
+  return {
+    releaseName: `v${nextVersion}`,
+    version: nextVersion
+  };
 }
 
 // src/parsing/getPullRequestReleaseNotesBody.ts
@@ -23998,21 +24004,22 @@ var updateReleaseNotes = async ({
     return;
   }
   const pullRequestReleaseNotes = pullRequestReleaseNotesBody && parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
-  const releaseVersion = await calculateReleaseVersion({
+  const releaseData = await calculateReleaseVersion({
     octokit,
     repo,
     owner,
     labels: pullRequestLabels,
     milestone: pullRequest.milestone
   });
-  if (!releaseVersion) {
+  if (!releaseData || !releaseData.version) {
     return;
   }
+  const { releaseName, version: releaseVersion } = releaseData;
   const release = await getRelease({
     owner,
     repo,
     octokit,
-    releaseVersion
+    releaseName
   });
   if (!release || !release.draft) {
     return;
