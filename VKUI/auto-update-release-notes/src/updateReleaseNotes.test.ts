@@ -652,4 +652,143 @@ describe('run updateReleaseNotes', () => {
 `,
     });
   });
+
+  it('should correct add changes with code diff', async () => {
+    const mockedData = setupData();
+
+    mockedData.releaseData = {
+      draft: true,
+      id: 123,
+      name: 'v6.5.0',
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Улучшения
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.3.0/#/ChipsSelect): Улучшение компонента ChipsSelect (#7023)
+
+## Исправления
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List (#7094)
+
+## Зависимости
+- Обновлена какая-то зависимость 1
+
+## Документация
+- CustomScrollView: Обновлена документация CustomScrollView`,
+    };
+
+    mockedData.pullRequestData = {
+      body: `
+## Описание
+Какое-то описание Pull Request
+
+## Изменения
+Какие-то изменения Pull Request
+
+## Release notes
+## BREAKING CHANGE
+
+- Header: изменен формат \`size\`  с \`'regular' | 'large'\` на \`'m' | 'l'\`
+  \`\`\`diff
+  - <Header mode="primary" size="large">
+  + <Header mode="primary" size="l">
+    Большой заголовок
+  </Header>
+  \`\`\`
+- Проверка более сложного примера кода
+  \`\`\`diff
+  - <Header mode="primary" size="large">
+  + <Header mode="primary" size="l">
+    <div>
+      <div>
+        Большой заголовок
+      </div>
+    </div>
+  </Header>
+  \`\`\`
+- Spinner: изменен формат \`size\`  с \`'small' | 'regular' | 'medium' | 'large'\` на \`'s' | 'm' | 'l' | 'xl'\`
+  \`\`\`diff
+  - <Spinner size="large" />
+  + <Spinner size="xl" />
+  - <Spinner size="medium" />
+  + <Spinner size="l" />
+  - <Spinner size="regular" />
+  + <Spinner size="m" />
+  - <Spinner size="small" />
+  + <Spinner size="s" />
+  \`\`\`
+`,
+      user: {
+        login: 'eldar',
+      },
+      fork: false,
+    };
+
+    mockedData.lastReleaseName = 'v6.4.0';
+
+    await updateReleaseNotes({
+      octokit: mockedData.octokit,
+      owner: 'owner',
+      repo: 'repo',
+      prNumber: 1234,
+    });
+    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
+    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      per_page: 10,
+    });
+
+    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      release_id: 123,
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Улучшения
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.3.0/#/ChipsSelect): Улучшение компонента ChipsSelect (#7023)
+
+## Исправления
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List (#7094)
+
+## Зависимости
+- Обновлена какая-то зависимость 1
+
+## Документация
+- CustomScrollView: Обновлена документация CustomScrollView\r
+## BREAKING CHANGE\r
+- [Header](https://vkcom.github.io/VKUI/6.5.0/#/Header): изменен формат \`size\`  с \`'regular' | 'large'\` на \`'m' | 'l'\` (#1234)\r
+  \`\`\`diff\r
+  - <Header mode="primary" size="large">\r
+  + <Header mode="primary" size="l">\r
+    Большой заголовок\r
+  </Header>\r
+  \`\`\`\r
+- Проверка более сложного примера кода (#1234)\r
+  \`\`\`diff\r
+  - <Header mode="primary" size="large">\r
+  + <Header mode="primary" size="l">\r
+    <div>\r
+      <div>\r
+        Большой заголовок\r
+      </div>\r
+    </div>\r
+  </Header>\r
+  \`\`\`\r
+- [Spinner](https://vkcom.github.io/VKUI/6.5.0/#/Spinner): изменен формат \`size\`  с \`'small' | 'regular' | 'medium' | 'large'\` на \`'s' | 'm' | 'l' | 'xl'\` (#1234)\r
+  \`\`\`diff\r
+  - <Spinner size="large" />\r
+  + <Spinner size="xl" />\r
+  - <Spinner size="medium" />\r
+  + <Spinner size="l" />\r
+  - <Spinner size="regular" />\r
+  + <Spinner size="m" />\r
+  - <Spinner size="small" />\r
+  + <Spinner size="s" />\r
+  \`\`\`\r
+`,
+    });
+  });
 });

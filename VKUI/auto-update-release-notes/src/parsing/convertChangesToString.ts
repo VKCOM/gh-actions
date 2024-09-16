@@ -44,7 +44,7 @@ export const convertChangesToString = (
     const offsetStr = ' '.repeat(offsetLevel * 2);
     if (change.additionalInfo) {
       change.additionalInfo.split(/\r?\n/).forEach((line) => {
-        result += `${offsetStr}${line.trim()}\r\n`;
+        result += `${offsetStr}${line}\r\n`;
       });
     }
   };
