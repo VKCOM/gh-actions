@@ -8,10 +8,13 @@ const CODE_BLOCK_START_REGEX = /```(diff)?/;
 const CODE_BLOCK_END_REGEX = /```/;
 
 function removeLeadingSpaces(str: string, n: number): string {
-  // Создаем регулярное выражение для проверки n пробелов в начале строки
-  const regexStr = `^\\s{${n}}`;
-  const regex = new RegExp(regexStr);
-  return regex.test(str) ? str.slice(n) : str;
+  const spaceRegex = /^(\s+)/;
+  const match = str.match(spaceRegex);
+  if (!match || !match[1]) {
+    return str;
+  }
+  const leadingSpacesCount = match[1].length;
+  return str.slice(Math.min(leadingSpacesCount, n));
 }
 
 export function parseChanges(text: string): ChangeData[] {
@@ -30,7 +33,7 @@ export function parseChanges(text: string): ChangeData[] {
     const codeBlockEndMatch: RegExpMatchArray | null = codeBlockStarted
       ? line.match(CODE_BLOCK_END_REGEX)
       : null;
-
+    // '  Большой заголовок'
     const addToAdditionalInfo = () => {
       if (currentChange) {
         const subInfo = currentChange.type === 'component' && currentChange.subInfo;
