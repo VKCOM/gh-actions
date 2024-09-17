@@ -4,6 +4,8 @@ import * as github from '@actions/github';
 import { getRelease } from './getRelease';
 import { calculateReleaseVersion } from './calculateReleaseVersion';
 import { getPullRequestReleaseNotesBody } from './parsing/getPullRequestReleaseNotesBody';
+import { parsePullRequestLinkedIssue } from './parsing/parsePullRequestLinkedIssue';
+import { getMilestone } from './getMilestone';
 
 const EMPTY_NOTES = '-';
 
@@ -42,6 +44,22 @@ export const updateReleaseNotes = async ({
     return;
   }
 
+  const pullRequestLinkedIssue = pullRequestBody
+    ? parsePullRequestLinkedIssue(pullRequestBody)
+    : null;
+
+  const milestone = await getMilestone({
+    octokit,
+    owner,
+    repo,
+    pullRequestMilestone: pullRequest.milestone,
+    linkedIssueNumber: pullRequestLinkedIssue,
+  });
+
+  if (!pullRequestReleaseNotesBody && !milestone) {
+    return;
+  }
+
   const pullRequestReleaseNotes =
     pullRequestReleaseNotesBody &&
     parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
@@ -51,7 +69,7 @@ export const updateReleaseNotes = async ({
     repo,
     owner,
     labels: pullRequestLabels,
-    milestone: pullRequest.milestone,
+    milestone,
   });
 
   if (!releaseData || !releaseData.version) {

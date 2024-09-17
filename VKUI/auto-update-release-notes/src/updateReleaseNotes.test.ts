@@ -8,6 +8,8 @@ type ArrayElement<ArrayType extends any[] | undefined> =
 
 type PullRequestData = Awaited<ReturnType<Octokit['rest']['pulls']['get']>>['data'];
 
+type IssueData = Awaited<ReturnType<Octokit['rest']['issues']['get']>>['data'];
+
 type PartialPullRequestData = Partial<Omit<PullRequestData, 'head'>> & {
   head: {
     repo: {
@@ -16,11 +18,14 @@ type PartialPullRequestData = Partial<Omit<PullRequestData, 'head'>> & {
   };
 };
 
+type PartialIssueData = Partial<IssueData>;
+
 const setupData = () => {
   const getPullRequest = jest.fn();
   const getReleaseRequest = jest.fn();
   const createReleaseRequest = jest.fn();
   const updateReleaseRequest = jest.fn();
+  const getIssueRequest = jest.fn();
 
   const pullRequestData: PartialPullRequestData = {
     body: '',
@@ -33,6 +38,11 @@ const setupData = () => {
     },
   };
 
+  const issueData: PartialIssueData = {
+    number: 123,
+    milestone: null,
+  };
+
   let releaseData: Partial<
     Awaited<ReturnType<Octokit['rest']['repos']['getReleaseByTag']>>['data']
   > | null = null;
@@ -41,6 +51,12 @@ const setupData = () => {
 
   const octokit = {
     rest: {
+      issues: {
+        get: (async (options) => {
+          getIssueRequest(options);
+          return { data: issueData };
+        }) as Octokit['rest']['issues']['get'],
+      },
       pulls: {
         get: (async (options) => {
           getPullRequest(options);
@@ -85,6 +101,15 @@ const setupData = () => {
     octokit: octokit as unknown as Octokit,
     set lastReleaseName(name: string) {
       lastReleaseName = name;
+    },
+    set issueData(
+      data: Partial<Omit<IssueData, 'milestone'>> & {
+        milestone?: Partial<IssueData['milestone']>;
+      },
+    ) {
+      if (data.milestone) {
+        issueData.milestone = data.milestone as IssueData['milestone'];
+      }
     },
     set pullRequestData(
       data: Partial<Omit<typeof pullRequestData, 'user' | 'labels' | 'milestone'>> & {
@@ -371,6 +396,9 @@ describe('run updateReleaseNotes', () => {
       user: {
         login: 'eldar',
       },
+      milestone: {
+        title: 'v6.6.0',
+      },
     };
     mockedData.lastReleaseName = 'v6.5.1';
 
@@ -648,6 +676,126 @@ describe('run updateReleaseNotes', () => {
 ## Документация\r
 - [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView\r
 - Поправлены баги в документации (#1234, спасибо @other)\r
+\r
+`,
+    });
+  });
+
+  it('should select release by linked issue milestone', async () => {
+    const mockedData = setupData();
+
+    mockedData.releaseData = {
+      draft: true,
+      id: 123,
+      name: 'v6.6.0',
+      body: `
+## Новые компоненты
+- Новый компонент с название COMPONENT
+
+## Улучшения
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.3.0/#/ChipsSelect): Улучшение компонента ChipsSelect (#7023)
+
+## Исправления
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List (#7094)
+
+## Зависимости
+- Обновлена какая-то зависимость 1
+
+## Документация
+- CustomScrollView: Обновлена документация CustomScrollView`,
+    };
+
+    mockedData.pullRequestData = {
+      body: `
+- close #123      
+
+## Описание
+Какое-то описание Pull Request
+
+## Изменения
+Какие-то изменения Pull Request
+
+## Release notes
+## Новые компоненты
+- Новый компонент с название COMPONENT2
+Картинка с новым компонентом
+Какая-то доп информация
+- Новый компонент с название COMPONENT3
+
+## Улучшения
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.3.0/#/ChipsSelect): Улучшение компонента ChipsSelect 2
+Немного подробнее об этом. Можно приложить картинку
+- ChipsInput: Улучшение компонента ChipsInput
+
+## Исправления
+- [Flex](https://vkcom.github.io/VKUI/6.3.0/#/Flex): Исправление компонента Flex
+- [List](https://vkcom.github.io/VKUI/6.3.0/#/List): Исправление компонента List 2
+
+## Зависимости
+- Обновлена какая-то зависимость 2
+
+## Документация
+- Поправлены баги в документации
+`,
+      user: {
+        login: 'eldar',
+      },
+      fork: false,
+    };
+
+    mockedData.issueData = {
+      milestone: {
+        title: 'v6.6.0',
+      },
+    };
+
+    mockedData.lastReleaseName = 'v6.5.1';
+
+    await updateReleaseNotes({
+      octokit: mockedData.octokit,
+      owner: 'owner',
+      repo: 'repo',
+      prNumber: 1234,
+    });
+    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
+    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      per_page: 10,
+    });
+
+    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+      owner: 'owner',
+      repo: 'repo',
+      release_id: 123,
+      body: `
+## Новые компоненты\r
+- Новый компонент с название COMPONENT\r
+- Новый компонент с название COMPONENT2 (#1234)\r
+  Картинка с новым компонентом\r
+  Какая-то доп информация\r
+- Новый компонент с название COMPONENT3 (#1234)\r
+\r
+## Улучшения\r
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect):\r
+  - Улучшение компонента ChipsSelect (#7023)\r
+  - Улучшение компонента ChipsSelect 2 (#1234)\r
+    Немного подробнее об этом. Можно приложить картинку\r
+- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234)\r
+\r
+## Исправления\r
+- [List](https://vkcom.github.io/VKUI/6.6.0/#/List):\r
+  - Исправление компонента List (#7094)\r
+  - Исправление компонента List 2 (#1234)\r
+- [Flex](https://vkcom.github.io/VKUI/6.6.0/#/Flex): Исправление компонента Flex (#1234)\r
+\r
+## Зависимости\r
+- Обновлена какая-то зависимость 1\r
+- Обновлена какая-то зависимость 2 (#1234)\r
+\r
+## Документация\r
+- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView\r
+- Поправлены баги в документации (#1234)\r
 \r
 `,
     });
