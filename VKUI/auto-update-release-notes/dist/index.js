@@ -23633,23 +23633,50 @@ var COMPONENT_REGEX = /-\s(\w+):(.+)?/;
 var COMPONENT_WITH_LINK_REGEX = /-\s\[(\w+)]\(.+\):(.+)?/;
 var COMPONENT_SUB_ITEM_REGEX = /\s{2}-\s(.+)/;
 var UNKNOWN_CHANGE_REGEX = /-\s(.+)/;
+var CODE_BLOCK_START_REGEX = /```(diff)?/;
+var CODE_BLOCK_END_REGEX = /```/;
+function removeLeadingSpaces(str, n) {
+  const spaceRegex = /^(\s+)/;
+  const match = str.match(spaceRegex);
+  if (!match || !match[1]) {
+    return str;
+  }
+  const leadingSpacesCount = match[1].length;
+  return str.slice(Math.min(leadingSpacesCount, n));
+}
 function parseChanges(text) {
   let changes = [];
   const lines = text.split(/\r?\n/);
   let currentChange = null;
+  let codeBlockStarted = false;
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
+    const line = lines[i];
     const componentMatch = line.match(COMPONENT_REGEX);
     const componentWithLinkMatch = line.match(COMPONENT_WITH_LINK_REGEX);
     const componentSubItemMatch = line.match(COMPONENT_SUB_ITEM_REGEX);
     const unknownChangeMatch = line.match(UNKNOWN_CHANGE_REGEX);
-    if (componentMatch || componentWithLinkMatch) {
+    const codeBlockStartMatch = line.match(CODE_BLOCK_START_REGEX);
+    const codeBlockEndMatch = codeBlockStarted ? line.match(CODE_BLOCK_END_REGEX) : null;
+    const addToAdditionalInfo = () => {
+      if (currentChange) {
+        const subInfo = currentChange.type === "component" && currentChange.subInfo;
+        currentChange.additionalInfo += `${removeLeadingSpaces(line, subInfo ? 4 : 2)}\r
+`;
+      }
+    };
+    if (codeBlockStartMatch || codeBlockEndMatch) {
+      codeBlockStarted = !codeBlockEndMatch;
+      addToAdditionalInfo();
+    } else if (codeBlockStarted) {
+      addToAdditionalInfo();
+    } else if (componentMatch || componentWithLinkMatch) {
       const match = componentMatch || componentWithLinkMatch;
       if (match) {
         const component = match[1];
         const description = match[2].trim();
         currentChange = {
           type: "component",
+          subInfo: false,
           component,
           description,
           additionalInfo: ""
@@ -23660,6 +23687,7 @@ function parseChanges(text) {
       const description = componentSubItemMatch[1].trim();
       currentChange = {
         type: "component",
+        subInfo: true,
         component: currentChange.component,
         description,
         additionalInfo: ""
@@ -23674,8 +23702,7 @@ function parseChanges(text) {
       };
       changes.push(currentChange);
     } else if (currentChange) {
-      currentChange.additionalInfo += `${line}\r
-`;
+      addToAdditionalInfo();
     } else if (line) {
       currentChange = {
         type: "unknown",
@@ -23724,7 +23751,7 @@ var convertChangesToString = (changes, version2, author) => {
     const offsetStr = " ".repeat(offsetLevel * 2);
     if (change.additionalInfo) {
       change.additionalInfo.split(/\r?\n/).forEach((line) => {
-        result += `${offsetStr}${line.trim()}\r
+        result += `${offsetStr}${line}\r
 `;
       });
     }

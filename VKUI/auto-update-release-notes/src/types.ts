@@ -8,6 +8,7 @@ export type SectionType =
 
 type ComponentChangeData = {
   type: 'component';
+  subInfo: boolean;
   component: string;
   description: string;
   pullRequestNumber?: number;
