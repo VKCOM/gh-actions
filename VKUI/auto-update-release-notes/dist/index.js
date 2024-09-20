@@ -17762,17 +17762,17 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
       process.stdout.write(message + os.EOL);
     }
     exports2.info = info;
-    function startGroup(name) {
+    function startGroup2(name) {
       command_1.issue("group", name);
     }
-    exports2.startGroup = startGroup;
+    exports2.startGroup = startGroup2;
     function endGroup() {
       command_1.issue("endgroup");
     }
     exports2.endGroup = endGroup;
     function group(name, fn) {
       return __awaiter(this, void 0, void 0, function* () {
-        startGroup(name);
+        startGroup2(name);
         let result;
         try {
           result = yield fn();
@@ -24002,6 +24002,60 @@ var getPullRequestReleaseNotesBody = (body) => {
   return body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length, end).trim();
 };
 
+// src/parsing/parsePullRequestLinkedIssue.ts
+var keywords = [
+  "close",
+  "closes",
+  "closed",
+  "fix",
+  "fixes",
+  "fixed",
+  "resolve",
+  "resolves",
+  "resolved"
+];
+var startGroup = "(|-\\s)";
+var keywordsGroup = `(${keywords.join("|")})`;
+var issueNumberRegexStr = "#(\\d+)";
+var linkedIssueRegExp = new RegExp(
+  `^${startGroup}${keywordsGroup}\\s${issueNumberRegexStr}`,
+  "mi"
+);
+var ISSUE_NUMBER_MATCH_INDEX = 3;
+var parsePullRequestLinkedIssue = (pullRequestBody) => {
+  const match = pullRequestBody.match(linkedIssueRegExp);
+  if (!match || !match[ISSUE_NUMBER_MATCH_INDEX]) {
+    return null;
+  }
+  return Number(match[ISSUE_NUMBER_MATCH_INDEX]);
+};
+
+// src/getMilestone.ts
+var getMilestone = async ({
+  octokit,
+  owner,
+  repo,
+  pullRequestMilestone,
+  linkedIssueNumber
+}) => {
+  if (pullRequestMilestone) {
+    return pullRequestMilestone;
+  }
+  if (!linkedIssueNumber) {
+    return null;
+  }
+  try {
+    const { data: issue } = await octokit.rest.issues.get({
+      owner,
+      repo,
+      issue_number: linkedIssueNumber
+    });
+    return issue.milestone;
+  } catch (e) {
+    return null;
+  }
+};
+
 // src/updateReleaseNotes.ts
 var EMPTY_NOTES = "-";
 var updateReleaseNotes = async ({
@@ -24030,13 +24084,24 @@ var updateReleaseNotes = async ({
   if (pullRequestReleaseNotesBody === EMPTY_NOTES) {
     return;
   }
+  const pullRequestLinkedIssue = pullRequestBody ? parsePullRequestLinkedIssue(pullRequestBody) : null;
+  const milestone = await getMilestone({
+    octokit,
+    owner,
+    repo,
+    pullRequestMilestone: pullRequest.milestone,
+    linkedIssueNumber: pullRequestLinkedIssue
+  });
+  if (!pullRequestReleaseNotesBody && !milestone) {
+    return;
+  }
   const pullRequestReleaseNotes = pullRequestReleaseNotesBody && parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
   const releaseData = await calculateReleaseVersion({
     octokit,
     repo,
     owner,
     labels: pullRequestLabels,
-    milestone: pullRequest.milestone
+    milestone
   });
   if (!releaseData || !releaseData.version) {
     return;
