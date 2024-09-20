@@ -504,10 +504,6 @@ describe('run updateReleaseNotes', () => {
 
     mockedData.pullRequestData = {
       body: `
-- close #6267
-
----
-
 - [x] e2e-тесты
 - [x] Дизайн-ревью
 - [x] Документация фичи
@@ -888,7 +884,7 @@ describe('run updateReleaseNotes', () => {
       },
     };
 
-    mockedData.lastReleaseName = 'v6.5.1';
+    mockedData.lastReleaseName = 'v6.4.1';
 
     await updateReleaseNotes({
       octokit: mockedData.octokit,
