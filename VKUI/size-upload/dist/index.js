@@ -19984,11 +19984,11 @@ var require_dist_cjs11 = __commonJS({
       /* SHA256 */
     ];
     var PRIORITY_ORDER_ALGORITHMS = [
-      "CRC32",
-      "CRC32C",
+      "SHA256",
       "SHA1",
-      "SHA256"
-      /* SHA256 */
+      "CRC32",
+      "CRC32C"
+      /* CRC32C */
     ];
     var getChecksumAlgorithmForRequest = /* @__PURE__ */ __name((input, { requestChecksumRequired, requestAlgorithmMember }, isS3Express) => {
       const defaultAlgorithm = isS3Express ? S3_EXPRESS_DEFAULT_CHECKSUM_ALGORITHM : DEFAULT_CHECKSUM_ALGORITHM;
@@ -22402,6 +22402,7 @@ var require_dist_cjs23 = __commonJS({
       getDefaultExtensionConfiguration: () => getDefaultExtensionConfiguration,
       getValueFromTextNode: () => getValueFromTextNode2,
       handleFloat: () => handleFloat,
+      isSerializableHeaderValue: () => isSerializableHeaderValue,
       limitedParseDouble: () => limitedParseDouble,
       limitedParseFloat: () => limitedParseFloat,
       limitedParseFloat32: () => limitedParseFloat32,
@@ -22431,20 +22432,6 @@ var require_dist_cjs23 = __commonJS({
       withBaseException: () => withBaseException
     });
     module2.exports = __toCommonJS2(src_exports);
-    var _NoOpLogger = class _NoOpLogger {
-      trace() {
-      }
-      debug() {
-      }
-      info() {
-      }
-      warn() {
-      }
-      error() {
-      }
-    };
-    __name(_NoOpLogger, "NoOpLogger");
-    var NoOpLogger = _NoOpLogger;
     var import_middleware_stack = require_dist_cjs15();
     var _Client = class _Client {
       constructor(config) {
@@ -23227,6 +23214,12 @@ var require_dist_cjs23 = __commonJS({
         warningEmitted2 = true;
       }
     }, "emitWarningIfUnsupportedVersion");
+    function extendedEncodeURIComponent(str) {
+      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+        return "%" + c.charCodeAt(0).toString(16).toUpperCase();
+      });
+    }
+    __name(extendedEncodeURIComponent, "extendedEncodeURIComponent");
     var getChecksumConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
       const checksumAlgorithms = [];
       for (const id in import_types5.AlgorithmId) {
@@ -23285,12 +23278,6 @@ var require_dist_cjs23 = __commonJS({
         ...resolveRetryRuntimeConfig(config)
       };
     }, "resolveDefaultRuntimeConfig");
-    function extendedEncodeURIComponent(str) {
-      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
-        return "%" + c.charCodeAt(0).toString(16).toUpperCase();
-      });
-    }
-    __name(extendedEncodeURIComponent, "extendedEncodeURIComponent");
     var getArrayIfSingleItem = /* @__PURE__ */ __name((mayBeArray) => Array.isArray(mayBeArray) ? mayBeArray : [mayBeArray], "getArrayIfSingleItem");
     var getValueFromTextNode2 = /* @__PURE__ */ __name((obj) => {
       const textNodeName = "#text";
@@ -23303,6 +23290,9 @@ var require_dist_cjs23 = __commonJS({
       }
       return obj;
     }, "getValueFromTextNode");
+    var isSerializableHeaderValue = /* @__PURE__ */ __name((value) => {
+      return value != null;
+    }, "isSerializableHeaderValue");
     var StringWrapper = /* @__PURE__ */ __name(function() {
       const Class = Object.getPrototypeOf(this).constructor;
       const Constructor = Function.bind.apply(String, [null, ...arguments]);
@@ -23337,6 +23327,20 @@ var require_dist_cjs23 = __commonJS({
     };
     __name(_LazyJsonString, "LazyJsonString");
     var LazyJsonString = _LazyJsonString;
+    var _NoOpLogger = class _NoOpLogger {
+      trace() {
+      }
+      debug() {
+      }
+      info() {
+      }
+      warn() {
+      }
+      error() {
+      }
+    };
+    __name(_NoOpLogger, "NoOpLogger");
+    var NoOpLogger = _NoOpLogger;
     function map(arg0, arg1, arg2) {
       let target;
       let filter;
@@ -31482,7 +31486,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.654.0",
+      version: "3.658.1",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -31507,33 +31511,33 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "5.2.0",
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.654.0",
-        "@aws-sdk/client-sts": "3.654.0",
-        "@aws-sdk/core": "3.654.0",
-        "@aws-sdk/credential-provider-node": "3.654.0",
+        "@aws-sdk/client-sso-oidc": "3.658.1",
+        "@aws-sdk/client-sts": "3.658.1",
+        "@aws-sdk/core": "3.658.1",
+        "@aws-sdk/credential-provider-node": "3.658.1",
         "@aws-sdk/middleware-bucket-endpoint": "3.654.0",
         "@aws-sdk/middleware-expect-continue": "3.654.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.654.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.658.1",
         "@aws-sdk/middleware-host-header": "3.654.0",
         "@aws-sdk/middleware-location-constraint": "3.654.0",
         "@aws-sdk/middleware-logger": "3.654.0",
         "@aws-sdk/middleware-recursion-detection": "3.654.0",
-        "@aws-sdk/middleware-sdk-s3": "3.654.0",
+        "@aws-sdk/middleware-sdk-s3": "3.658.1",
         "@aws-sdk/middleware-ssec": "3.654.0",
         "@aws-sdk/middleware-user-agent": "3.654.0",
         "@aws-sdk/region-config-resolver": "3.654.0",
-        "@aws-sdk/signature-v4-multi-region": "3.654.0",
+        "@aws-sdk/signature-v4-multi-region": "3.658.1",
         "@aws-sdk/types": "3.654.0",
         "@aws-sdk/util-endpoints": "3.654.0",
         "@aws-sdk/util-user-agent-browser": "3.654.0",
         "@aws-sdk/util-user-agent-node": "3.654.0",
         "@aws-sdk/xml-builder": "3.654.0",
         "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.3",
+        "@smithy/core": "^2.4.6",
         "@smithy/eventstream-serde-browser": "^3.0.9",
         "@smithy/eventstream-serde-config-resolver": "^3.0.6",
         "@smithy/eventstream-serde-node": "^3.0.8",
-        "@smithy/fetch-http-handler": "^3.2.7",
+        "@smithy/fetch-http-handler": "^3.2.8",
         "@smithy/hash-blob-browser": "^3.1.5",
         "@smithy/hash-node": "^3.0.6",
         "@smithy/hash-stream-node": "^3.1.5",
@@ -31541,30 +31545,30 @@ var require_package = __commonJS({
         "@smithy/md5-js": "^3.0.6",
         "@smithy/middleware-content-length": "^3.0.8",
         "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.18",
+        "@smithy/middleware-retry": "^3.0.21",
         "@smithy/middleware-serde": "^3.0.6",
         "@smithy/middleware-stack": "^3.0.6",
         "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.2",
+        "@smithy/node-http-handler": "^3.2.3",
         "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.2",
+        "@smithy/smithy-client": "^3.3.5",
         "@smithy/types": "^3.4.2",
         "@smithy/url-parser": "^3.0.6",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.18",
-        "@smithy/util-defaults-mode-node": "^3.0.18",
+        "@smithy/util-defaults-mode-browser": "^3.0.21",
+        "@smithy/util-defaults-mode-node": "^3.0.21",
         "@smithy/util-endpoints": "^2.1.2",
         "@smithy/util-middleware": "^3.0.6",
         "@smithy/util-retry": "^3.0.6",
-        "@smithy/util-stream": "^3.1.6",
+        "@smithy/util-stream": "^3.1.8",
         "@smithy/util-utf8": "^3.0.0",
         "@smithy/util-waiter": "^3.1.5",
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.654.0",
+        "@aws-sdk/signature-v4-crt": "3.658.1",
         "@tsconfig/node16": "16.1.3",
         "@types/chai": "^4.2.11",
         "@types/mocha": "^8.0.4",
@@ -32349,7 +32353,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.654.0",
+      version: "3.658.1",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -32368,7 +32372,7 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.654.0",
+        "@aws-sdk/core": "3.658.1",
         "@aws-sdk/middleware-host-header": "3.654.0",
         "@aws-sdk/middleware-logger": "3.654.0",
         "@aws-sdk/middleware-recursion-detection": "3.654.0",
@@ -32379,26 +32383,26 @@ var require_package2 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.654.0",
         "@aws-sdk/util-user-agent-node": "3.654.0",
         "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.3",
-        "@smithy/fetch-http-handler": "^3.2.7",
+        "@smithy/core": "^2.4.6",
+        "@smithy/fetch-http-handler": "^3.2.8",
         "@smithy/hash-node": "^3.0.6",
         "@smithy/invalid-dependency": "^3.0.6",
         "@smithy/middleware-content-length": "^3.0.8",
         "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.18",
+        "@smithy/middleware-retry": "^3.0.21",
         "@smithy/middleware-serde": "^3.0.6",
         "@smithy/middleware-stack": "^3.0.6",
         "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.2",
+        "@smithy/node-http-handler": "^3.2.3",
         "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.2",
+        "@smithy/smithy-client": "^3.3.5",
         "@smithy/types": "^3.4.2",
         "@smithy/url-parser": "^3.0.6",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.18",
-        "@smithy/util-defaults-mode-node": "^3.0.18",
+        "@smithy/util-defaults-mode-browser": "^3.0.21",
+        "@smithy/util-defaults-mode-node": "^3.0.21",
         "@smithy/util-endpoints": "^2.1.2",
         "@smithy/util-middleware": "^3.0.6",
         "@smithy/util-retry": "^3.0.6",
@@ -33283,7 +33287,7 @@ var require_dist_cjs54 = __commonJS({
     var import_core22 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var se_GetRoleCredentialsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core3.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/federation/credentials");
@@ -33297,7 +33301,7 @@ var require_dist_cjs54 = __commonJS({
     }, "se_GetRoleCredentialsCommand");
     var se_ListAccountRolesCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core3.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/assignment/roles");
@@ -33312,7 +33316,7 @@ var require_dist_cjs54 = __commonJS({
     }, "se_ListAccountRolesCommand");
     var se_ListAccountsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core3.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/assignment/accounts");
@@ -33326,7 +33330,7 @@ var require_dist_cjs54 = __commonJS({
     }, "se_ListAccountsCommand");
     var se_LogoutCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core3.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xasbt]: input[_aT]
       });
       b.bp("/logout");
@@ -33475,7 +33479,6 @@ var require_dist_cjs54 = __commonJS({
       extendedRequestId: output.headers["x-amz-id-2"],
       cfId: output.headers["x-amz-cf-id"]
     }), "deserializeMetadata");
-    var isSerializableHeaderValue = /* @__PURE__ */ __name((value) => value !== void 0 && value !== null && value !== "" && (!Object.getOwnPropertyNames(value).includes("length") || value.length != 0) && (!Object.getOwnPropertyNames(value).includes("size") || value.size != 0), "isSerializableHeaderValue");
     var _aI = "accountId";
     var _aT = "accessToken";
     var _ai = "account_id";
@@ -33613,7 +33616,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.654.0",
+      version: "3.658.1",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -33632,8 +33635,8 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.654.0",
-        "@aws-sdk/credential-provider-node": "3.654.0",
+        "@aws-sdk/core": "3.658.1",
+        "@aws-sdk/credential-provider-node": "3.658.1",
         "@aws-sdk/middleware-host-header": "3.654.0",
         "@aws-sdk/middleware-logger": "3.654.0",
         "@aws-sdk/middleware-recursion-detection": "3.654.0",
@@ -33644,26 +33647,26 @@ var require_package3 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.654.0",
         "@aws-sdk/util-user-agent-node": "3.654.0",
         "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.3",
-        "@smithy/fetch-http-handler": "^3.2.7",
+        "@smithy/core": "^2.4.6",
+        "@smithy/fetch-http-handler": "^3.2.8",
         "@smithy/hash-node": "^3.0.6",
         "@smithy/invalid-dependency": "^3.0.6",
         "@smithy/middleware-content-length": "^3.0.8",
         "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.18",
+        "@smithy/middleware-retry": "^3.0.21",
         "@smithy/middleware-serde": "^3.0.6",
         "@smithy/middleware-stack": "^3.0.6",
         "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.2",
+        "@smithy/node-http-handler": "^3.2.3",
         "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.2",
+        "@smithy/smithy-client": "^3.3.5",
         "@smithy/types": "^3.4.2",
         "@smithy/url-parser": "^3.0.6",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.18",
-        "@smithy/util-defaults-mode-node": "^3.0.18",
+        "@smithy/util-defaults-mode-browser": "^3.0.21",
+        "@smithy/util-defaults-mode-node": "^3.0.21",
         "@smithy/util-endpoints": "^2.1.2",
         "@smithy/util-middleware": "^3.0.6",
         "@smithy/util-retry": "^3.0.6",
@@ -33697,7 +33700,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/client-sts": "^3.654.0"
+        "@aws-sdk/client-sts": "^3.658.1"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -35341,7 +35344,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.654.0",
+      version: "3.658.1",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -35362,9 +35365,9 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.654.0",
-        "@aws-sdk/core": "3.654.0",
-        "@aws-sdk/credential-provider-node": "3.654.0",
+        "@aws-sdk/client-sso-oidc": "3.658.1",
+        "@aws-sdk/core": "3.658.1",
+        "@aws-sdk/credential-provider-node": "3.658.1",
         "@aws-sdk/middleware-host-header": "3.654.0",
         "@aws-sdk/middleware-logger": "3.654.0",
         "@aws-sdk/middleware-recursion-detection": "3.654.0",
@@ -35375,26 +35378,26 @@ var require_package4 = __commonJS({
         "@aws-sdk/util-user-agent-browser": "3.654.0",
         "@aws-sdk/util-user-agent-node": "3.654.0",
         "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.3",
-        "@smithy/fetch-http-handler": "^3.2.7",
+        "@smithy/core": "^2.4.6",
+        "@smithy/fetch-http-handler": "^3.2.8",
         "@smithy/hash-node": "^3.0.6",
         "@smithy/invalid-dependency": "^3.0.6",
         "@smithy/middleware-content-length": "^3.0.8",
         "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.18",
+        "@smithy/middleware-retry": "^3.0.21",
         "@smithy/middleware-serde": "^3.0.6",
         "@smithy/middleware-stack": "^3.0.6",
         "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.2",
+        "@smithy/node-http-handler": "^3.2.3",
         "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.2",
+        "@smithy/smithy-client": "^3.3.5",
         "@smithy/types": "^3.4.2",
         "@smithy/url-parser": "^3.0.6",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.18",
-        "@smithy/util-defaults-mode-node": "^3.0.18",
+        "@smithy/util-defaults-mode-browser": "^3.0.21",
+        "@smithy/util-defaults-mode-node": "^3.0.21",
         "@smithy/util-endpoints": "^2.1.2",
         "@smithy/util-middleware": "^3.0.6",
         "@smithy/util-retry": "^3.0.6",
@@ -40498,7 +40501,7 @@ var require_dist_cjs71 = __commonJS({
     }), "WriteGetObjectResponseRequestFilterSensitiveLog");
     var se_AbortMultipartUploadCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
@@ -40515,7 +40518,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_AbortMultipartUploadCommand");
     var se_CompleteMultipartUploadCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xacc]: input[_CCRC],
         [_xacc_]: input[_CCRCC],
@@ -40548,7 +40551,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CompleteMultipartUploadCommand");
     var se_CopyObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaa]: input[_ACL],
         [_cc]: input[_CC],
         [_xaca]: input[_CA],
@@ -40558,10 +40561,10 @@ var require_dist_cjs71 = __commonJS({
         [_ct]: input[_CT],
         [_xacs__]: input[_CS],
         [_xacsim]: input[_CSIM],
-        [_xacsims]: [() => isSerializableHeaderValue(input[_CSIMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIMS]).toString()],
+        [_xacsims]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CSIMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIMS]).toString()],
         [_xacsinm]: input[_CSINM],
-        [_xacsius]: [() => isSerializableHeaderValue(input[_CSIUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIUS]).toString()],
-        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
+        [_xacsius]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CSIUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIUS]).toString()],
+        [_e]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_xagfc]: input[_GFC],
         [_xagr]: input[_GR],
         [_xagra]: input[_GRACP],
@@ -40576,14 +40579,14 @@ var require_dist_cjs71 = __commonJS({
         [_xasseckm]: input[_SSECKMD],
         [_xasseakki]: input[_SSEKMSKI],
         [_xassec]: input[_SSEKMSEC],
-        [_xassebke]: [() => isSerializableHeaderValue(input[_BKE]), () => input[_BKE].toString()],
+        [_xassebke]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BKE]), () => input[_BKE].toString()],
         [_xacssseca]: input[_CSSSECA],
         [_xacssseck]: input[_CSSSECK],
         [_xacssseckm]: input[_CSSSECKMD],
         [_xarp]: input[_RP],
         [_xat]: input[_T],
         [_xaolm]: input[_OLM],
-        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
+        [_xaolrud]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
         [_xaollh]: input[_OLLHS],
         [_xaebo]: input[_EBO],
         [_xasebo]: input[_ESBO],
@@ -40604,7 +40607,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CopyObjectCommand");
     var se_CreateBucketCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaa]: input[_ACL],
         [_xagfc]: input[_GFC],
@@ -40612,7 +40615,7 @@ var require_dist_cjs71 = __commonJS({
         [_xagra]: input[_GRACP],
         [_xagw]: input[_GW],
         [_xagwa]: input[_GWACP],
-        [_xabole]: [() => isSerializableHeaderValue(input[_OLEFB]), () => input[_OLEFB].toString()],
+        [_xabole]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OLEFB]), () => input[_OLEFB].toString()],
         [_xaoo]: input[_OO]
       });
       b.bp("/");
@@ -40630,14 +40633,14 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CreateBucketCommand");
     var se_CreateMultipartUploadCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaa]: input[_ACL],
         [_cc]: input[_CC],
         [_cd]: input[_CD],
         [_ce]: input[_CE],
         [_cl]: input[_CL],
         [_ct]: input[_CT],
-        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
+        [_e]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_xagfc]: input[_GFC],
         [_xagr]: input[_GR],
         [_xagra]: input[_GRACP],
@@ -40650,11 +40653,11 @@ var require_dist_cjs71 = __commonJS({
         [_xasseckm]: input[_SSECKMD],
         [_xasseakki]: input[_SSEKMSKI],
         [_xassec]: input[_SSEKMSEC],
-        [_xassebke]: [() => isSerializableHeaderValue(input[_BKE]), () => input[_BKE].toString()],
+        [_xassebke]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BKE]), () => input[_BKE].toString()],
         [_xarp]: input[_RP],
         [_xat]: input[_T],
         [_xaolm]: input[_OLM],
-        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
+        [_xaolrud]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
         [_xaollh]: input[_OLLHS],
         [_xaebo]: input[_EBO],
         [_xaca]: input[_CA],
@@ -40675,12 +40678,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CreateMultipartUploadCommand");
     var se_CreateSessionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xacsm]: input[_SM],
         [_xasse]: input[_SSE],
         [_xasseakki]: input[_SSEKMSKI],
         [_xassec]: input[_SSEKMSEC],
-        [_xassebke]: [() => isSerializableHeaderValue(input[_BKE]), () => input[_BKE].toString()]
+        [_xassebke]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BKE]), () => input[_BKE].toString()]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
@@ -40693,7 +40696,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_CreateSessionCommand");
     var se_DeleteBucketCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40704,7 +40707,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketCommand");
     var se_DeleteBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40719,7 +40722,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketAnalyticsConfigurationCommand");
     var se_DeleteBucketCorsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40733,7 +40736,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketCorsCommand");
     var se_DeleteBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40760,7 +40763,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketIntelligentTieringConfigurationCommand");
     var se_DeleteBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40775,7 +40778,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketInventoryConfigurationCommand");
     var se_DeleteBucketLifecycleCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40789,7 +40792,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketLifecycleCommand");
     var se_DeleteBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40804,7 +40807,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketMetricsConfigurationCommand");
     var se_DeleteBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40818,7 +40821,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketOwnershipControlsCommand");
     var se_DeleteBucketPolicyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40832,7 +40835,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketPolicyCommand");
     var se_DeleteBucketReplicationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40846,7 +40849,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketReplicationCommand");
     var se_DeleteBucketTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40860,7 +40863,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketTaggingCommand");
     var se_DeleteBucketWebsiteCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40874,10 +40877,10 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteBucketWebsiteCommand");
     var se_DeleteObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xam]: input[_MFA],
         [_xarp]: input[_RP],
-        [_xabgr]: [() => isSerializableHeaderValue(input[_BGR]), () => input[_BGR].toString()],
+        [_xabgr]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BGR]), () => input[_BGR].toString()],
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
@@ -40893,11 +40896,11 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteObjectCommand");
     var se_DeleteObjectsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xam]: input[_MFA],
         [_xarp]: input[_RP],
-        [_xabgr]: [() => isSerializableHeaderValue(input[_BGR]), () => input[_BGR].toString()],
+        [_xabgr]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BGR]), () => input[_BGR].toString()],
         [_xaebo]: input[_EBO],
         [_xasca]: input[_CA]
       });
@@ -40919,7 +40922,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteObjectsCommand");
     var se_DeleteObjectTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/{Key+}");
@@ -40935,7 +40938,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeleteObjectTaggingCommand");
     var se_DeletePublicAccessBlockCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40949,7 +40952,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_DeletePublicAccessBlockCommand");
     var se_GetBucketAccelerateConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP]
       });
@@ -40964,7 +40967,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketAccelerateConfigurationCommand");
     var se_GetBucketAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40978,7 +40981,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketAclCommand");
     var se_GetBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -40994,7 +40997,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketAnalyticsConfigurationCommand");
     var se_GetBucketCorsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41008,7 +41011,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketCorsCommand");
     var se_GetBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41036,7 +41039,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketIntelligentTieringConfigurationCommand");
     var se_GetBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41052,7 +41055,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketInventoryConfigurationCommand");
     var se_GetBucketLifecycleConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41066,7 +41069,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketLifecycleConfigurationCommand");
     var se_GetBucketLocationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41080,7 +41083,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketLocationCommand");
     var se_GetBucketLoggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41094,7 +41097,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketLoggingCommand");
     var se_GetBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41110,7 +41113,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketMetricsConfigurationCommand");
     var se_GetBucketNotificationConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41124,7 +41127,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketNotificationConfigurationCommand");
     var se_GetBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41138,7 +41141,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketOwnershipControlsCommand");
     var se_GetBucketPolicyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41152,7 +41155,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketPolicyCommand");
     var se_GetBucketPolicyStatusCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41166,7 +41169,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketPolicyStatusCommand");
     var se_GetBucketReplicationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41180,7 +41183,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketReplicationCommand");
     var se_GetBucketRequestPaymentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41194,7 +41197,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketRequestPaymentCommand");
     var se_GetBucketTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41208,7 +41211,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketTaggingCommand");
     var se_GetBucketVersioningCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41222,7 +41225,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketVersioningCommand");
     var se_GetBucketWebsiteCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41236,11 +41239,11 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetBucketWebsiteCommand");
     var se_GetObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_im]: input[_IM],
-        [_ims]: [() => isSerializableHeaderValue(input[_IMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IMS]).toString()],
+        [_ims]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_IMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IMS]).toString()],
         [_inm]: input[_INM],
-        [_ius]: [() => isSerializableHeaderValue(input[_IUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IUS]).toString()],
+        [_ius]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_IUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IUS]).toString()],
         [_ra]: input[_R],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -41269,7 +41272,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectCommand");
     var se_GetObjectAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
@@ -41286,18 +41289,15 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectAclCommand");
     var se_GetObjectAttributesCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
-        [_xamp]: [() => isSerializableHeaderValue(input[_MP]), () => input[_MP].toString()],
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
+        [_xamp]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_MP]), () => input[_MP].toString()],
         [_xapnm]: input[_PNM],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
         [_xasseckm]: input[_SSECKMD],
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
-        [_xaoa]: [
-          () => isSerializableHeaderValue(input[_OA]),
-          () => (input[_OA] || []).map((_entry) => _entry).join(", ")
-        ]
+        [_xaoa]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OA]), () => (input[_OA] || []).join(", ")]
       });
       b.bp("/{Key+}");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
@@ -41312,7 +41312,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectAttributesCommand");
     var se_GetObjectLegalHoldCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
@@ -41329,7 +41329,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectLegalHoldCommand");
     var se_GetObjectLockConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41343,7 +41343,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectLockConfigurationCommand");
     var se_GetObjectRetentionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
@@ -41360,7 +41360,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectRetentionCommand");
     var se_GetObjectTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP]
       });
@@ -41377,7 +41377,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectTaggingCommand");
     var se_GetObjectTorrentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO]
       });
@@ -41393,7 +41393,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetObjectTorrentCommand");
     var se_GetPublicAccessBlockCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41407,7 +41407,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_GetPublicAccessBlockCommand");
     var se_HeadBucketCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41418,11 +41418,11 @@ var require_dist_cjs71 = __commonJS({
     }, "se_HeadBucketCommand");
     var se_HeadObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_im]: input[_IM],
-        [_ims]: [() => isSerializableHeaderValue(input[_IMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IMS]).toString()],
+        [_ims]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_IMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IMS]).toString()],
         [_inm]: input[_INM],
-        [_ius]: [() => isSerializableHeaderValue(input[_IUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IUS]).toString()],
+        [_ius]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_IUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_IUS]).toString()],
         [_ra]: input[_R],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -41450,7 +41450,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_HeadObjectCommand");
     var se_ListBucketAnalyticsConfigurationsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41480,7 +41480,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListBucketIntelligentTieringConfigurationsCommand");
     var se_ListBucketInventoryConfigurationsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41496,7 +41496,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListBucketInventoryConfigurationsCommand");
     var se_ListBucketMetricsConfigurationsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41538,7 +41538,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListDirectoryBucketsCommand");
     var se_ListMultipartUploadsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP]
       });
@@ -41559,13 +41559,10 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListMultipartUploadsCommand");
     var se_ListObjectsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
-        [_xaooa]: [
-          () => isSerializableHeaderValue(input[_OOA]),
-          () => (input[_OOA] || []).map((_entry) => _entry).join(", ")
-        ]
+        [_xaooa]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OOA]), () => (input[_OOA] || []).join(", ")]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
@@ -41582,13 +41579,10 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListObjectsCommand");
     var se_ListObjectsV2Command = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
-        [_xaooa]: [
-          () => isSerializableHeaderValue(input[_OOA]),
-          () => (input[_OOA] || []).map((_entry) => _entry).join(", ")
-        ]
+        [_xaooa]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OOA]), () => (input[_OOA] || []).join(", ")]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
@@ -41608,13 +41602,10 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListObjectsV2Command");
     var se_ListObjectVersionsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xaebo]: input[_EBO],
         [_xarp]: input[_RP],
-        [_xaooa]: [
-          () => isSerializableHeaderValue(input[_OOA]),
-          () => (input[_OOA] || []).map((_entry) => _entry).join(", ")
-        ]
+        [_xaooa]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OOA]), () => (input[_OOA] || []).join(", ")]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
@@ -41633,7 +41624,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListObjectVersionsCommand");
     var se_ListPartsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
         [_xasseca]: input[_SSECA],
@@ -41655,7 +41646,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_ListPartsCommand");
     var se_PutBucketAccelerateConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO],
         [_xasca]: input[_CA]
@@ -41678,7 +41669,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketAccelerateConfigurationCommand");
     var se_PutBucketAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaa]: input[_ACL],
         [_cm]: input[_CMD],
@@ -41708,7 +41699,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketAclCommand");
     var se_PutBucketAnalyticsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO]
       });
@@ -41731,7 +41722,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketAnalyticsConfigurationCommand");
     var se_PutBucketCorsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41755,7 +41746,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketCorsCommand");
     var se_PutBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41801,7 +41792,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketIntelligentTieringConfigurationCommand");
     var se_PutBucketInventoryConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO]
       });
@@ -41824,7 +41815,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketInventoryConfigurationCommand");
     var se_PutBucketLifecycleConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xasca]: input[_CA],
         [_xaebo]: input[_EBO]
@@ -41848,7 +41839,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketLifecycleConfigurationCommand");
     var se_PutBucketLoggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41872,7 +41863,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketLoggingCommand");
     var se_PutBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO]
       });
@@ -41895,10 +41886,10 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketMetricsConfigurationCommand");
     var se_PutBucketNotificationConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaebo]: input[_EBO],
-        [_xasdv]: [() => isSerializableHeaderValue(input[_SDV]), () => input[_SDV].toString()]
+        [_xasdv]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_SDV]), () => input[_SDV].toString()]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
@@ -41918,7 +41909,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketNotificationConfigurationCommand");
     var se_PutBucketOwnershipControlsCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xaebo]: input[_EBO]
@@ -41941,11 +41932,11 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketOwnershipControlsCommand");
     var se_PutBucketPolicyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "text/plain",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
-        [_xacrsba]: [() => isSerializableHeaderValue(input[_CRSBA]), () => input[_CRSBA].toString()],
+        [_xacrsba]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CRSBA]), () => input[_CRSBA].toString()],
         [_xaebo]: input[_EBO]
       });
       b.bp("/");
@@ -41964,7 +41955,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketPolicyCommand");
     var se_PutBucketReplicationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -41989,7 +41980,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketReplicationCommand");
     var se_PutBucketRequestPaymentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42013,7 +42004,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketRequestPaymentCommand");
     var se_PutBucketTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42037,7 +42028,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketTaggingCommand");
     var se_PutBucketVersioningCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42062,7 +42053,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketVersioningCommand");
     var se_PutBucketWebsiteCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42086,21 +42077,21 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutBucketWebsiteCommand");
     var se_PutObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_ct]: input[_CT] || "application/octet-stream",
         [_xaa]: input[_ACL],
         [_cc]: input[_CC],
         [_cd]: input[_CD],
         [_ce]: input[_CE],
         [_cl]: input[_CL],
-        [_cl_]: [() => isSerializableHeaderValue(input[_CLo]), () => input[_CLo].toString()],
+        [_cl_]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CLo]), () => input[_CLo].toString()],
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
         [_xacc]: input[_CCRC],
         [_xacc_]: input[_CCRCC],
         [_xacs]: input[_CSHA],
         [_xacs_]: input[_CSHAh],
-        [_e]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
+        [_e]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_inm]: input[_INM],
         [_xagfc]: input[_GFC],
         [_xagr]: input[_GR],
@@ -42114,11 +42105,11 @@ var require_dist_cjs71 = __commonJS({
         [_xasseckm]: input[_SSECKMD],
         [_xasseakki]: input[_SSEKMSKI],
         [_xassec]: input[_SSEKMSEC],
-        [_xassebke]: [() => isSerializableHeaderValue(input[_BKE]), () => input[_BKE].toString()],
+        [_xassebke]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BKE]), () => input[_BKE].toString()],
         [_xarp]: input[_RP],
         [_xat]: input[_T],
         [_xaolm]: input[_OLM],
-        [_xaolrud]: [() => isSerializableHeaderValue(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
+        [_xaolrud]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OLRUD]), () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()],
         [_xaollh]: input[_OLLHS],
         [_xaebo]: input[_EBO],
         ...input.Metadata !== void 0 && Object.keys(input.Metadata).reduce((acc, suffix) => {
@@ -42143,7 +42134,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectCommand");
     var se_PutObjectAclCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xaa]: input[_ACL],
         [_cm]: input[_CMD],
@@ -42176,7 +42167,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectAclCommand");
     var se_PutObjectLegalHoldCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
         [_cm]: input[_CMD],
@@ -42204,7 +42195,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectLegalHoldCommand");
     var se_PutObjectLockConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
         [_xabolt]: input[_To],
@@ -42230,10 +42221,10 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectLockConfigurationCommand");
     var se_PutObjectRetentionCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
-        [_xabgr]: [() => isSerializableHeaderValue(input[_BGR]), () => input[_BGR].toString()],
+        [_xabgr]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BGR]), () => input[_BGR].toString()],
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
         [_xaebo]: input[_EBO]
@@ -42259,7 +42250,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectRetentionCommand");
     var se_PutObjectTaggingCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42286,7 +42277,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutObjectTaggingCommand");
     var se_PutPublicAccessBlockCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
@@ -42310,7 +42301,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_PutPublicAccessBlockCommand");
     var se_RestoreObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xarp]: input[_RP],
         [_xasca]: input[_CA],
@@ -42336,7 +42327,7 @@ var require_dist_cjs71 = __commonJS({
     }, "se_RestoreObjectCommand");
     var se_SelectObjectContentCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -42374,9 +42365,9 @@ var require_dist_cjs71 = __commonJS({
     }, "se_SelectObjectContentCommand");
     var se_UploadPartCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/octet-stream",
-        [_cl_]: [() => isSerializableHeaderValue(input[_CLo]), () => input[_CLo].toString()],
+        [_cl_]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CLo]), () => input[_CLo].toString()],
         [_cm]: input[_CMD],
         [_xasca]: input[_CA],
         [_xacc]: input[_CCRC],
@@ -42408,12 +42399,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_UploadPartCommand");
     var se_UploadPartCopyCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         [_xacs__]: input[_CS],
         [_xacsim]: input[_CSIM],
-        [_xacsims]: [() => isSerializableHeaderValue(input[_CSIMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIMS]).toString()],
+        [_xacsims]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CSIMS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIMS]).toString()],
         [_xacsinm]: input[_CSINM],
-        [_xacsius]: [() => isSerializableHeaderValue(input[_CSIUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIUS]).toString()],
+        [_xacsius]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CSIUS]), () => (0, import_smithy_client5.dateToUtcString)(input[_CSIUS]).toString()],
         [_xacsr]: input[_CSR],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -42439,12 +42430,12 @@ var require_dist_cjs71 = __commonJS({
     }, "se_UploadPartCopyCommand");
     var se_WriteGetObjectResponseCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
-      const headers = (0, import_smithy_client5.map)({}, isSerializableHeaderValue, {
+      const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "x-amz-content-sha256": "UNSIGNED-PAYLOAD",
         "content-type": "application/octet-stream",
         [_xarr]: input[_RR],
         [_xart]: input[_RT],
-        [_xafs]: [() => isSerializableHeaderValue(input[_SCt]), () => input[_SCt].toString()],
+        [_xafs]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_SCt]), () => input[_SCt].toString()],
         [_xafec]: input[_EC],
         [_xafem]: input[_EM],
         [_xafhar]: input[_AR],
@@ -42452,26 +42443,26 @@ var require_dist_cjs71 = __commonJS({
         [_xafhcd]: input[_CD],
         [_xafhce]: input[_CE],
         [_xafhcl]: input[_CL],
-        [_cl_]: [() => isSerializableHeaderValue(input[_CLo]), () => input[_CLo].toString()],
+        [_cl_]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_CLo]), () => input[_CLo].toString()],
         [_xafhcr]: input[_CR],
         [_xafhct]: input[_CT],
         [_xafhxacc]: input[_CCRC],
         [_xafhxacc_]: input[_CCRCC],
         [_xafhxacs]: input[_CSHA],
         [_xafhxacs_]: input[_CSHAh],
-        [_xafhxadm]: [() => isSerializableHeaderValue(input[_DM]), () => input[_DM].toString()],
+        [_xafhxadm]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_DM]), () => input[_DM].toString()],
         [_xafhe]: input[_ETa],
-        [_xafhe_]: [() => isSerializableHeaderValue(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
+        [_xafhe_]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_E]), () => (0, import_smithy_client5.dateToUtcString)(input[_E]).toString()],
         [_xafhxae]: input[_Exp],
-        [_xafhlm]: [() => isSerializableHeaderValue(input[_LM]), () => (0, import_smithy_client5.dateToUtcString)(input[_LM]).toString()],
-        [_xafhxamm]: [() => isSerializableHeaderValue(input[_MM]), () => input[_MM].toString()],
+        [_xafhlm]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_LM]), () => (0, import_smithy_client5.dateToUtcString)(input[_LM]).toString()],
+        [_xafhxamm]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_MM]), () => input[_MM].toString()],
         [_xafhxaolm]: input[_OLM],
         [_xafhxaollh]: input[_OLLHS],
         [_xafhxaolrud]: [
-          () => isSerializableHeaderValue(input[_OLRUD]),
+          () => (0, import_smithy_client5.isSerializableHeaderValue)(input[_OLRUD]),
           () => (0, import_smithy_client5.serializeDateTime)(input[_OLRUD]).toString()
         ],
-        [_xafhxampc]: [() => isSerializableHeaderValue(input[_PC]), () => input[_PC].toString()],
+        [_xafhxampc]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_PC]), () => input[_PC].toString()],
         [_xafhxars]: input[_RS],
         [_xafhxarc]: input[_RC],
         [_xafhxar]: input[_Re],
@@ -42480,9 +42471,9 @@ var require_dist_cjs71 = __commonJS({
         [_xafhxasseakki]: input[_SSEKMSKI],
         [_xafhxasseckm]: input[_SSECKMD],
         [_xafhxasc]: input[_SC],
-        [_xafhxatc]: [() => isSerializableHeaderValue(input[_TC]), () => input[_TC].toString()],
+        [_xafhxatc]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_TC]), () => input[_TC].toString()],
         [_xafhxavi]: input[_VI],
-        [_xafhxassebke]: [() => isSerializableHeaderValue(input[_BKE]), () => input[_BKE].toString()],
+        [_xafhxassebke]: [() => (0, import_smithy_client5.isSerializableHeaderValue)(input[_BKE]), () => input[_BKE].toString()],
         ...input.Metadata !== void 0 && Object.keys(input.Metadata).reduce((acc, suffix) => {
           acc[`x-amz-meta-${suffix.toLowerCase()}`] = input.Metadata[suffix];
           return acc;
@@ -47120,7 +47111,6 @@ var require_dist_cjs71 = __commonJS({
       cfId: output.headers["x-amz-cf-id"]
     }), "deserializeMetadata");
     var collectBodyString2 = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client5.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
-    var isSerializableHeaderValue = /* @__PURE__ */ __name((value) => value !== void 0 && value !== null && value !== "" && (!Object.getOwnPropertyNames(value).includes("length") || value.length != 0) && (!Object.getOwnPropertyNames(value).includes("size") || value.size != 0), "isSerializableHeaderValue");
     var _A = "And";
     var _AAO = "AnalyticsAndOperator";
     var _AC = "AnalyticsConfiguration";
