@@ -22414,11 +22414,13 @@ var require_dist_cjs23 = __commonJS({
       parseRfc3339DateTime: () => parseRfc3339DateTime,
       parseRfc3339DateTimeWithOffset: () => parseRfc3339DateTimeWithOffset,
       parseRfc7231DateTime: () => parseRfc7231DateTime,
+      quoteHeader: () => quoteHeader,
       resolveDefaultRuntimeConfig: () => resolveDefaultRuntimeConfig,
       resolvedPath: () => resolvedPath2,
       serializeDateTime: () => serializeDateTime,
       serializeFloat: () => serializeFloat,
       splitEvery: () => splitEvery,
+      splitHeader: () => splitHeader,
       strictParseByte: () => strictParseByte,
       strictParseDouble: () => strictParseDouble,
       strictParseFloat: () => strictParseFloat,
@@ -23434,6 +23436,13 @@ var require_dist_cjs23 = __commonJS({
     }, "applyInstruction");
     var nonNullish = /* @__PURE__ */ __name((_) => _ != null, "nonNullish");
     var pass = /* @__PURE__ */ __name((_) => _, "pass");
+    function quoteHeader(part) {
+      if (part.includes(",") || part.includes('"')) {
+        part = `"${part.replace(/"/g, '\\"')}"`;
+      }
+      return part;
+    }
+    __name(quoteHeader, "quoteHeader");
     var resolvedPath2 = /* @__PURE__ */ __name((resolvedPath22, input, memberName, labelValueProvider, uriLabel, isGreedyLabel) => {
       if (input != null && input[memberName] !== void 0) {
         const labelValue = labelValueProvider();
@@ -23509,6 +23518,43 @@ var require_dist_cjs23 = __commonJS({
       return compoundSegments;
     }
     __name(splitEvery, "splitEvery");
+    var splitHeader = /* @__PURE__ */ __name((value) => {
+      const z = value.length;
+      const values = [];
+      let withinQuotes = false;
+      let prevChar = void 0;
+      let anchor = 0;
+      for (let i = 0; i < z; ++i) {
+        const char = value[i];
+        switch (char) {
+          case `"`:
+            if (prevChar !== "\\") {
+              withinQuotes = !withinQuotes;
+            }
+            break;
+          case ",":
+            if (!withinQuotes) {
+              values.push(value.slice(anchor, i));
+              anchor = i + 1;
+            }
+            break;
+          default:
+        }
+        prevChar = char;
+      }
+      values.push(value.slice(anchor));
+      return values.map((v) => {
+        v = v.trim();
+        const z2 = v.length;
+        if (z2 < 2) {
+          return v;
+        }
+        if (v[0] === `"` && v[z2 - 1] === `"`) {
+          v = v.slice(1, z2 - 1);
+        }
+        return v.replace(/\\"/g, '"');
+      });
+    }, "splitHeader");
   }
 });
 
@@ -23820,11 +23866,11 @@ var require_dist_cjs24 = __commonJS({
     }, "hasHeader");
     var import_protocol_http8 = require_dist_cjs2();
     var moveHeadersToQuery = /* @__PURE__ */ __name((request, options = {}) => {
-      var _a;
+      var _a, _b;
       const { headers, query = {} } = import_protocol_http8.HttpRequest.clone(request);
       for (const name of Object.keys(headers)) {
         const lname = name.toLowerCase();
-        if (lname.slice(0, 6) === "x-amz-" && !((_a = options.unhoistableHeaders) == null ? void 0 : _a.has(lname))) {
+        if (lname.slice(0, 6) === "x-amz-" && !((_a = options.unhoistableHeaders) == null ? void 0 : _a.has(lname)) || ((_b = options.hoistableHeaders) == null ? void 0 : _b.has(lname))) {
           query[name] = headers[name];
           delete headers[name];
         }
@@ -23881,6 +23927,7 @@ var require_dist_cjs24 = __commonJS({
           unsignableHeaders,
           unhoistableHeaders,
           signableHeaders,
+          hoistableHeaders,
           signingRegion,
           signingService
         } = options;
@@ -23894,7 +23941,7 @@ var require_dist_cjs24 = __commonJS({
           );
         }
         const scope = createScope(shortDate, region, signingService ?? this.service);
-        const request = moveHeadersToQuery(prepareRequest(originalRequest), { unhoistableHeaders });
+        const request = moveHeadersToQuery(prepareRequest(originalRequest), { unhoistableHeaders, hoistableHeaders });
         if (credentials.sessionToken) {
           request.query[TOKEN_QUERY_PARAM] = credentials.sessionToken;
         }
@@ -28290,16 +28337,40 @@ var require_dist_cjs40 = __commonJS({
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
     var src_exports = {};
     __export2(src_exports, {
+      DEFAULT_UA_APP_ID: () => DEFAULT_UA_APP_ID,
       getUserAgentMiddlewareOptions: () => getUserAgentMiddlewareOptions,
       getUserAgentPlugin: () => getUserAgentPlugin,
       resolveUserAgentConfig: () => resolveUserAgentConfig,
       userAgentMiddleware: () => userAgentMiddleware
     });
     module2.exports = __toCommonJS2(src_exports);
+    var import_core3 = (init_dist_es(), __toCommonJS(dist_es_exports));
+    var DEFAULT_UA_APP_ID = void 0;
+    function isValidUserAgentAppId(appId) {
+      if (appId === void 0) {
+        return true;
+      }
+      return typeof appId === "string" && appId.length <= 50;
+    }
+    __name(isValidUserAgentAppId, "isValidUserAgentAppId");
     function resolveUserAgentConfig(input) {
+      const normalizedAppIdProvider = (0, import_core3.normalizeProvider)(input.userAgentAppId ?? DEFAULT_UA_APP_ID);
       return {
         ...input,
-        customUserAgent: typeof input.customUserAgent === "string" ? [[input.customUserAgent]] : input.customUserAgent
+        customUserAgent: typeof input.customUserAgent === "string" ? [[input.customUserAgent]] : input.customUserAgent,
+        userAgentAppId: async () => {
+          var _a, _b;
+          const appId = await normalizedAppIdProvider();
+          if (!isValidUserAgentAppId(appId)) {
+            const logger = ((_b = (_a = input.logger) == null ? void 0 : _a.constructor) == null ? void 0 : _b.name) === "NoOpLogger" || !input.logger ? console : input.logger;
+            if (typeof appId !== "string") {
+              logger == null ? void 0 : logger.warn("userAgentAppId must be a string or undefined.");
+            } else if (appId.length > 50) {
+              logger == null ? void 0 : logger.warn("The provided userAgentAppId exceeds the maximum length of 50 characters.");
+            }
+          }
+          return appId;
+        }
       };
     }
     __name(resolveUserAgentConfig, "resolveUserAgentConfig");
@@ -28312,15 +28383,44 @@ var require_dist_cjs40 = __commonJS({
     var UA_NAME_ESCAPE_REGEX = /[^\!\$\%\&\'\*\+\-\.\^\_\`\|\~\d\w]/g;
     var UA_VALUE_ESCAPE_REGEX = /[^\!\$\%\&\'\*\+\-\.\^\_\`\|\~\d\w\#]/g;
     var UA_ESCAPE_CHAR = "-";
+    var BYTE_LIMIT = 1024;
+    function encodeFeatures(features) {
+      let buffer = "";
+      for (const key in features) {
+        const val2 = features[key];
+        if (buffer.length + val2.length + 1 <= BYTE_LIMIT) {
+          if (buffer.length) {
+            buffer += "," + val2;
+          } else {
+            buffer += val2;
+          }
+          continue;
+        }
+        break;
+      }
+      return buffer;
+    }
+    __name(encodeFeatures, "encodeFeatures");
     var userAgentMiddleware = /* @__PURE__ */ __name((options) => (next, context) => async (args) => {
-      var _a, _b;
+      var _a, _b, _c, _d;
       const { request } = args;
-      if (!import_protocol_http8.HttpRequest.isInstance(request))
+      if (!import_protocol_http8.HttpRequest.isInstance(request)) {
         return next(args);
+      }
       const { headers } = request;
       const userAgent = ((_a = context == null ? void 0 : context.userAgent) == null ? void 0 : _a.map(escapeUserAgent)) || [];
       const defaultUserAgent = (await options.defaultUserAgentProvider()).map(escapeUserAgent);
-      const customUserAgent = ((_b = options == null ? void 0 : options.customUserAgent) == null ? void 0 : _b.map(escapeUserAgent)) || [];
+      const awsContext = context;
+      defaultUserAgent.push(
+        `m/${encodeFeatures(
+          Object.assign({}, (_b = context.__smithy_context) == null ? void 0 : _b.features, (_c = awsContext.__aws_sdk_context) == null ? void 0 : _c.features)
+        )}`
+      );
+      const customUserAgent = ((_d = options == null ? void 0 : options.customUserAgent) == null ? void 0 : _d.map(escapeUserAgent)) || [];
+      const appId = await options.userAgentAppId();
+      if (appId) {
+        defaultUserAgent.push(escapeUserAgent([`app/${appId}`]));
+      }
       const prefix = (0, import_util_endpoints.getUserAgentPrefix)();
       const sdkUserAgentValue = (prefix ? [prefix] : []).concat([...defaultUserAgent, ...userAgent, ...customUserAgent]).join(SPACE);
       const normalUAValue = [
@@ -28682,10 +28782,27 @@ More information can be found at: https://a.co/74kJMmI`);
   }
 });
 
+// ../../node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js
+function setFeature(context, feature, value) {
+  if (!context.__aws_sdk_context) {
+    context.__aws_sdk_context = {
+      features: {}
+    };
+  } else if (!context.__aws_sdk_context.features) {
+    context.__aws_sdk_context.features = {};
+  }
+  context.__aws_sdk_context.features[feature] = value;
+}
+var init_setFeature = __esm({
+  "../../node_modules/@aws-sdk/core/dist-es/submodules/client/setFeature.js"() {
+  }
+});
+
 // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/index.js
 var init_client = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
     init_emitWarningIfUnsupportedVersion();
+    init_setFeature();
   }
 });
 
@@ -30858,6 +30975,7 @@ __export(dist_es_exports2, {
   resolveAWSSDKSigV4Config: () => resolveAWSSDKSigV4Config,
   resolveAwsSdkSigV4AConfig: () => resolveAwsSdkSigV4AConfig,
   resolveAwsSdkSigV4Config: () => resolveAwsSdkSigV4Config,
+  setFeature: () => setFeature,
   validateSigningProperties: () => validateSigningProperties
 });
 var init_dist_es2 = __esm({
@@ -31486,7 +31604,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.658.1",
+      version: "3.665.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -31511,64 +31629,64 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "5.2.0",
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.658.1",
-        "@aws-sdk/client-sts": "3.658.1",
-        "@aws-sdk/core": "3.658.1",
-        "@aws-sdk/credential-provider-node": "3.658.1",
-        "@aws-sdk/middleware-bucket-endpoint": "3.654.0",
-        "@aws-sdk/middleware-expect-continue": "3.654.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.658.1",
-        "@aws-sdk/middleware-host-header": "3.654.0",
-        "@aws-sdk/middleware-location-constraint": "3.654.0",
-        "@aws-sdk/middleware-logger": "3.654.0",
-        "@aws-sdk/middleware-recursion-detection": "3.654.0",
-        "@aws-sdk/middleware-sdk-s3": "3.658.1",
-        "@aws-sdk/middleware-ssec": "3.654.0",
-        "@aws-sdk/middleware-user-agent": "3.654.0",
-        "@aws-sdk/region-config-resolver": "3.654.0",
-        "@aws-sdk/signature-v4-multi-region": "3.658.1",
-        "@aws-sdk/types": "3.654.0",
-        "@aws-sdk/util-endpoints": "3.654.0",
-        "@aws-sdk/util-user-agent-browser": "3.654.0",
-        "@aws-sdk/util-user-agent-node": "3.654.0",
-        "@aws-sdk/xml-builder": "3.654.0",
-        "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.6",
-        "@smithy/eventstream-serde-browser": "^3.0.9",
-        "@smithy/eventstream-serde-config-resolver": "^3.0.6",
-        "@smithy/eventstream-serde-node": "^3.0.8",
-        "@smithy/fetch-http-handler": "^3.2.8",
-        "@smithy/hash-blob-browser": "^3.1.5",
-        "@smithy/hash-node": "^3.0.6",
-        "@smithy/hash-stream-node": "^3.1.5",
-        "@smithy/invalid-dependency": "^3.0.6",
-        "@smithy/md5-js": "^3.0.6",
-        "@smithy/middleware-content-length": "^3.0.8",
-        "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.21",
-        "@smithy/middleware-serde": "^3.0.6",
-        "@smithy/middleware-stack": "^3.0.6",
-        "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.3",
-        "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.5",
-        "@smithy/types": "^3.4.2",
-        "@smithy/url-parser": "^3.0.6",
+        "@aws-sdk/client-sso-oidc": "3.665.0",
+        "@aws-sdk/client-sts": "3.665.0",
+        "@aws-sdk/core": "3.665.0",
+        "@aws-sdk/credential-provider-node": "3.665.0",
+        "@aws-sdk/middleware-bucket-endpoint": "3.664.0",
+        "@aws-sdk/middleware-expect-continue": "3.664.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.664.0",
+        "@aws-sdk/middleware-host-header": "3.664.0",
+        "@aws-sdk/middleware-location-constraint": "3.664.0",
+        "@aws-sdk/middleware-logger": "3.664.0",
+        "@aws-sdk/middleware-recursion-detection": "3.664.0",
+        "@aws-sdk/middleware-sdk-s3": "3.665.0",
+        "@aws-sdk/middleware-ssec": "3.664.0",
+        "@aws-sdk/middleware-user-agent": "3.664.0",
+        "@aws-sdk/region-config-resolver": "3.664.0",
+        "@aws-sdk/signature-v4-multi-region": "3.665.0",
+        "@aws-sdk/types": "3.664.0",
+        "@aws-sdk/util-endpoints": "3.664.0",
+        "@aws-sdk/util-user-agent-browser": "3.664.0",
+        "@aws-sdk/util-user-agent-node": "3.664.0",
+        "@aws-sdk/xml-builder": "3.662.0",
+        "@smithy/config-resolver": "^3.0.9",
+        "@smithy/core": "^2.4.7",
+        "@smithy/eventstream-serde-browser": "^3.0.10",
+        "@smithy/eventstream-serde-config-resolver": "^3.0.7",
+        "@smithy/eventstream-serde-node": "^3.0.9",
+        "@smithy/fetch-http-handler": "^3.2.9",
+        "@smithy/hash-blob-browser": "^3.1.6",
+        "@smithy/hash-node": "^3.0.7",
+        "@smithy/hash-stream-node": "^3.1.6",
+        "@smithy/invalid-dependency": "^3.0.7",
+        "@smithy/md5-js": "^3.0.7",
+        "@smithy/middleware-content-length": "^3.0.9",
+        "@smithy/middleware-endpoint": "^3.1.4",
+        "@smithy/middleware-retry": "^3.0.22",
+        "@smithy/middleware-serde": "^3.0.7",
+        "@smithy/middleware-stack": "^3.0.7",
+        "@smithy/node-config-provider": "^3.1.8",
+        "@smithy/node-http-handler": "^3.2.4",
+        "@smithy/protocol-http": "^4.1.4",
+        "@smithy/smithy-client": "^3.3.6",
+        "@smithy/types": "^3.5.0",
+        "@smithy/url-parser": "^3.0.7",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.21",
-        "@smithy/util-defaults-mode-node": "^3.0.21",
-        "@smithy/util-endpoints": "^2.1.2",
-        "@smithy/util-middleware": "^3.0.6",
-        "@smithy/util-retry": "^3.0.6",
-        "@smithy/util-stream": "^3.1.8",
+        "@smithy/util-defaults-mode-browser": "^3.0.22",
+        "@smithy/util-defaults-mode-node": "^3.0.22",
+        "@smithy/util-endpoints": "^2.1.3",
+        "@smithy/util-middleware": "^3.0.7",
+        "@smithy/util-retry": "^3.0.7",
+        "@smithy/util-stream": "^3.1.9",
         "@smithy/util-utf8": "^3.0.0",
-        "@smithy/util-waiter": "^3.1.5",
+        "@smithy/util-waiter": "^3.1.6",
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.658.1",
+        "@aws-sdk/signature-v4-crt": "3.665.0",
         "@tsconfig/node16": "16.1.3",
         "@types/chai": "^4.2.11",
         "@types/mocha": "^8.0.4",
@@ -32353,7 +32471,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.658.1",
+      version: "3.665.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -32372,40 +32490,40 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.658.1",
-        "@aws-sdk/middleware-host-header": "3.654.0",
-        "@aws-sdk/middleware-logger": "3.654.0",
-        "@aws-sdk/middleware-recursion-detection": "3.654.0",
-        "@aws-sdk/middleware-user-agent": "3.654.0",
-        "@aws-sdk/region-config-resolver": "3.654.0",
-        "@aws-sdk/types": "3.654.0",
-        "@aws-sdk/util-endpoints": "3.654.0",
-        "@aws-sdk/util-user-agent-browser": "3.654.0",
-        "@aws-sdk/util-user-agent-node": "3.654.0",
-        "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.6",
-        "@smithy/fetch-http-handler": "^3.2.8",
-        "@smithy/hash-node": "^3.0.6",
-        "@smithy/invalid-dependency": "^3.0.6",
-        "@smithy/middleware-content-length": "^3.0.8",
-        "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.21",
-        "@smithy/middleware-serde": "^3.0.6",
-        "@smithy/middleware-stack": "^3.0.6",
-        "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.3",
-        "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.5",
-        "@smithy/types": "^3.4.2",
-        "@smithy/url-parser": "^3.0.6",
+        "@aws-sdk/core": "3.665.0",
+        "@aws-sdk/middleware-host-header": "3.664.0",
+        "@aws-sdk/middleware-logger": "3.664.0",
+        "@aws-sdk/middleware-recursion-detection": "3.664.0",
+        "@aws-sdk/middleware-user-agent": "3.664.0",
+        "@aws-sdk/region-config-resolver": "3.664.0",
+        "@aws-sdk/types": "3.664.0",
+        "@aws-sdk/util-endpoints": "3.664.0",
+        "@aws-sdk/util-user-agent-browser": "3.664.0",
+        "@aws-sdk/util-user-agent-node": "3.664.0",
+        "@smithy/config-resolver": "^3.0.9",
+        "@smithy/core": "^2.4.7",
+        "@smithy/fetch-http-handler": "^3.2.9",
+        "@smithy/hash-node": "^3.0.7",
+        "@smithy/invalid-dependency": "^3.0.7",
+        "@smithy/middleware-content-length": "^3.0.9",
+        "@smithy/middleware-endpoint": "^3.1.4",
+        "@smithy/middleware-retry": "^3.0.22",
+        "@smithy/middleware-serde": "^3.0.7",
+        "@smithy/middleware-stack": "^3.0.7",
+        "@smithy/node-config-provider": "^3.1.8",
+        "@smithy/node-http-handler": "^3.2.4",
+        "@smithy/protocol-http": "^4.1.4",
+        "@smithy/smithy-client": "^3.3.6",
+        "@smithy/types": "^3.5.0",
+        "@smithy/url-parser": "^3.0.7",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.21",
-        "@smithy/util-defaults-mode-node": "^3.0.21",
-        "@smithy/util-endpoints": "^2.1.2",
-        "@smithy/util-middleware": "^3.0.6",
-        "@smithy/util-retry": "^3.0.6",
+        "@smithy/util-defaults-mode-browser": "^3.0.22",
+        "@smithy/util-defaults-mode-node": "^3.0.22",
+        "@smithy/util-endpoints": "^2.1.3",
+        "@smithy/util-middleware": "^3.0.7",
+        "@smithy/util-retry": "^3.0.7",
         "@smithy/util-utf8": "^3.0.0",
         tslib: "^2.6.2"
       },
@@ -32475,13 +32593,14 @@ var require_dist_cjs49 = __commonJS({
     var __toCommonJS2 = (mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod);
     var src_exports = {};
     __export2(src_exports, {
+      NODE_APP_ID_CONFIG_OPTIONS: () => NODE_APP_ID_CONFIG_OPTIONS,
       UA_APP_ID_ENV_NAME: () => UA_APP_ID_ENV_NAME,
       UA_APP_ID_INI_NAME: () => UA_APP_ID_INI_NAME,
+      createDefaultUserAgentProvider: () => createDefaultUserAgentProvider,
       crtAvailability: () => crtAvailability,
       defaultUserAgent: () => defaultUserAgent
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_node_config_provider = require_dist_cjs28();
     var import_os = require("os");
     var import_process = require("process");
     var crtAvailability = {
@@ -32493,45 +32612,45 @@ var require_dist_cjs49 = __commonJS({
       }
       return null;
     }, "isCrtAvailable");
-    var UA_APP_ID_ENV_NAME = "AWS_SDK_UA_APP_ID";
-    var UA_APP_ID_INI_NAME = "sdk-ua-app-id";
-    var defaultUserAgent = /* @__PURE__ */ __name(({ serviceId, clientVersion }) => {
-      const sections = [
-        // sdk-metadata
-        ["aws-sdk-js", clientVersion],
-        // ua-metadata
-        ["ua", "2.0"],
-        // os-metadata
-        [`os/${(0, import_os.platform)()}`, (0, import_os.release)()],
-        // language-metadata
-        // ECMAScript edition doesn't matter in JS, so no version needed.
-        ["lang/js"],
-        ["md/nodejs", `${import_process.versions.node}`]
-      ];
-      const crtAvailable = isCrtAvailable();
-      if (crtAvailable) {
-        sections.push(crtAvailable);
-      }
-      if (serviceId) {
-        sections.push([`api/${serviceId}`, clientVersion]);
-      }
-      if (import_process.env.AWS_EXECUTION_ENV) {
-        sections.push([`exec-env/${import_process.env.AWS_EXECUTION_ENV}`]);
-      }
-      const appIdPromise = (0, import_node_config_provider.loadConfig)({
-        environmentVariableSelector: (env2) => env2[UA_APP_ID_ENV_NAME],
-        configFileSelector: (profile) => profile[UA_APP_ID_INI_NAME],
-        default: void 0
-      })();
-      let resolvedUserAgent = void 0;
-      return async () => {
-        if (!resolvedUserAgent) {
-          const appId = await appIdPromise;
-          resolvedUserAgent = appId ? [...sections, [`app/${appId}`]] : [...sections];
+    var createDefaultUserAgentProvider = /* @__PURE__ */ __name(({ serviceId, clientVersion }) => {
+      return async (config) => {
+        var _a;
+        const sections = [
+          // sdk-metadata
+          ["aws-sdk-js", clientVersion],
+          // ua-metadata
+          ["ua", "2.1"],
+          // os-metadata
+          [`os/${(0, import_os.platform)()}`, (0, import_os.release)()],
+          // language-metadata
+          // ECMAScript edition doesn't matter in JS, so no version needed.
+          ["lang/js"],
+          ["md/nodejs", `${import_process.versions.node}`]
+        ];
+        const crtAvailable = isCrtAvailable();
+        if (crtAvailable) {
+          sections.push(crtAvailable);
         }
+        if (serviceId) {
+          sections.push([`api/${serviceId}`, clientVersion]);
+        }
+        if (import_process.env.AWS_EXECUTION_ENV) {
+          sections.push([`exec-env/${import_process.env.AWS_EXECUTION_ENV}`]);
+        }
+        const appId = await ((_a = config == null ? void 0 : config.userAgentAppId) == null ? void 0 : _a.call(config));
+        const resolvedUserAgent = appId ? [...sections, [`app/${appId}`]] : [...sections];
         return resolvedUserAgent;
       };
-    }, "defaultUserAgent");
+    }, "createDefaultUserAgentProvider");
+    var defaultUserAgent = createDefaultUserAgentProvider;
+    var import_middleware_user_agent = require_dist_cjs40();
+    var UA_APP_ID_ENV_NAME = "AWS_SDK_UA_APP_ID";
+    var UA_APP_ID_INI_NAME = "sdk-ua-app-id";
+    var NODE_APP_ID_CONFIG_OPTIONS = {
+      environmentVariableSelector: (env2) => env2[UA_APP_ID_ENV_NAME],
+      configFileSelector: (profile) => profile[UA_APP_ID_INI_NAME],
+      default: import_middleware_user_agent.DEFAULT_UA_APP_ID
+    };
   }
 });
 
@@ -32906,7 +33025,8 @@ var require_runtimeConfig = __commonJS({
         sha256: config?.sha256 ?? hash_node_1.Hash.bind(null, "sha256"),
         streamCollector: config?.streamCollector ?? node_http_handler_1.streamCollector,
         useDualstackEndpoint: config?.useDualstackEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS),
-        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS)
+        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS),
+        userAgentAppId: config?.userAgentAppId ?? (0, node_config_provider_1.loadConfig)(util_user_agent_node_1.NODE_APP_ID_CONFIG_OPTIONS)
       };
     };
     exports2.getRuntimeConfig = getRuntimeConfig;
@@ -33616,7 +33736,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.658.1",
+      version: "3.665.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -33635,41 +33755,41 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.658.1",
-        "@aws-sdk/credential-provider-node": "3.658.1",
-        "@aws-sdk/middleware-host-header": "3.654.0",
-        "@aws-sdk/middleware-logger": "3.654.0",
-        "@aws-sdk/middleware-recursion-detection": "3.654.0",
-        "@aws-sdk/middleware-user-agent": "3.654.0",
-        "@aws-sdk/region-config-resolver": "3.654.0",
-        "@aws-sdk/types": "3.654.0",
-        "@aws-sdk/util-endpoints": "3.654.0",
-        "@aws-sdk/util-user-agent-browser": "3.654.0",
-        "@aws-sdk/util-user-agent-node": "3.654.0",
-        "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.6",
-        "@smithy/fetch-http-handler": "^3.2.8",
-        "@smithy/hash-node": "^3.0.6",
-        "@smithy/invalid-dependency": "^3.0.6",
-        "@smithy/middleware-content-length": "^3.0.8",
-        "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.21",
-        "@smithy/middleware-serde": "^3.0.6",
-        "@smithy/middleware-stack": "^3.0.6",
-        "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.3",
-        "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.5",
-        "@smithy/types": "^3.4.2",
-        "@smithy/url-parser": "^3.0.6",
+        "@aws-sdk/core": "3.665.0",
+        "@aws-sdk/credential-provider-node": "3.665.0",
+        "@aws-sdk/middleware-host-header": "3.664.0",
+        "@aws-sdk/middleware-logger": "3.664.0",
+        "@aws-sdk/middleware-recursion-detection": "3.664.0",
+        "@aws-sdk/middleware-user-agent": "3.664.0",
+        "@aws-sdk/region-config-resolver": "3.664.0",
+        "@aws-sdk/types": "3.664.0",
+        "@aws-sdk/util-endpoints": "3.664.0",
+        "@aws-sdk/util-user-agent-browser": "3.664.0",
+        "@aws-sdk/util-user-agent-node": "3.664.0",
+        "@smithy/config-resolver": "^3.0.9",
+        "@smithy/core": "^2.4.7",
+        "@smithy/fetch-http-handler": "^3.2.9",
+        "@smithy/hash-node": "^3.0.7",
+        "@smithy/invalid-dependency": "^3.0.7",
+        "@smithy/middleware-content-length": "^3.0.9",
+        "@smithy/middleware-endpoint": "^3.1.4",
+        "@smithy/middleware-retry": "^3.0.22",
+        "@smithy/middleware-serde": "^3.0.7",
+        "@smithy/middleware-stack": "^3.0.7",
+        "@smithy/node-config-provider": "^3.1.8",
+        "@smithy/node-http-handler": "^3.2.4",
+        "@smithy/protocol-http": "^4.1.4",
+        "@smithy/smithy-client": "^3.3.6",
+        "@smithy/types": "^3.5.0",
+        "@smithy/url-parser": "^3.0.7",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.21",
-        "@smithy/util-defaults-mode-node": "^3.0.21",
-        "@smithy/util-endpoints": "^2.1.2",
-        "@smithy/util-middleware": "^3.0.6",
-        "@smithy/util-retry": "^3.0.6",
+        "@smithy/util-defaults-mode-browser": "^3.0.22",
+        "@smithy/util-defaults-mode-node": "^3.0.22",
+        "@smithy/util-endpoints": "^2.1.3",
+        "@smithy/util-middleware": "^3.0.7",
+        "@smithy/util-retry": "^3.0.7",
         "@smithy/util-utf8": "^3.0.0",
         tslib: "^2.6.2"
       },
@@ -33700,7 +33820,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/client-sts": "^3.658.1"
+        "@aws-sdk/client-sts": "^3.665.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -33869,7 +33989,8 @@ var require_runtimeConfig2 = __commonJS({
         sha256: config?.sha256 ?? hash_node_1.Hash.bind(null, "sha256"),
         streamCollector: config?.streamCollector ?? node_http_handler_1.streamCollector,
         useDualstackEndpoint: config?.useDualstackEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS),
-        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS)
+        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS),
+        userAgentAppId: config?.userAgentAppId ?? (0, node_config_provider_1.loadConfig)(util_user_agent_node_1.NODE_APP_ID_CONFIG_OPTIONS)
       };
     };
     exports2.getRuntimeConfig = getRuntimeConfig;
@@ -35344,7 +35465,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.658.1",
+      version: "3.665.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -35365,42 +35486,42 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.658.1",
-        "@aws-sdk/core": "3.658.1",
-        "@aws-sdk/credential-provider-node": "3.658.1",
-        "@aws-sdk/middleware-host-header": "3.654.0",
-        "@aws-sdk/middleware-logger": "3.654.0",
-        "@aws-sdk/middleware-recursion-detection": "3.654.0",
-        "@aws-sdk/middleware-user-agent": "3.654.0",
-        "@aws-sdk/region-config-resolver": "3.654.0",
-        "@aws-sdk/types": "3.654.0",
-        "@aws-sdk/util-endpoints": "3.654.0",
-        "@aws-sdk/util-user-agent-browser": "3.654.0",
-        "@aws-sdk/util-user-agent-node": "3.654.0",
-        "@smithy/config-resolver": "^3.0.8",
-        "@smithy/core": "^2.4.6",
-        "@smithy/fetch-http-handler": "^3.2.8",
-        "@smithy/hash-node": "^3.0.6",
-        "@smithy/invalid-dependency": "^3.0.6",
-        "@smithy/middleware-content-length": "^3.0.8",
-        "@smithy/middleware-endpoint": "^3.1.3",
-        "@smithy/middleware-retry": "^3.0.21",
-        "@smithy/middleware-serde": "^3.0.6",
-        "@smithy/middleware-stack": "^3.0.6",
-        "@smithy/node-config-provider": "^3.1.7",
-        "@smithy/node-http-handler": "^3.2.3",
-        "@smithy/protocol-http": "^4.1.3",
-        "@smithy/smithy-client": "^3.3.5",
-        "@smithy/types": "^3.4.2",
-        "@smithy/url-parser": "^3.0.6",
+        "@aws-sdk/client-sso-oidc": "3.665.0",
+        "@aws-sdk/core": "3.665.0",
+        "@aws-sdk/credential-provider-node": "3.665.0",
+        "@aws-sdk/middleware-host-header": "3.664.0",
+        "@aws-sdk/middleware-logger": "3.664.0",
+        "@aws-sdk/middleware-recursion-detection": "3.664.0",
+        "@aws-sdk/middleware-user-agent": "3.664.0",
+        "@aws-sdk/region-config-resolver": "3.664.0",
+        "@aws-sdk/types": "3.664.0",
+        "@aws-sdk/util-endpoints": "3.664.0",
+        "@aws-sdk/util-user-agent-browser": "3.664.0",
+        "@aws-sdk/util-user-agent-node": "3.664.0",
+        "@smithy/config-resolver": "^3.0.9",
+        "@smithy/core": "^2.4.7",
+        "@smithy/fetch-http-handler": "^3.2.9",
+        "@smithy/hash-node": "^3.0.7",
+        "@smithy/invalid-dependency": "^3.0.7",
+        "@smithy/middleware-content-length": "^3.0.9",
+        "@smithy/middleware-endpoint": "^3.1.4",
+        "@smithy/middleware-retry": "^3.0.22",
+        "@smithy/middleware-serde": "^3.0.7",
+        "@smithy/middleware-stack": "^3.0.7",
+        "@smithy/node-config-provider": "^3.1.8",
+        "@smithy/node-http-handler": "^3.2.4",
+        "@smithy/protocol-http": "^4.1.4",
+        "@smithy/smithy-client": "^3.3.6",
+        "@smithy/types": "^3.5.0",
+        "@smithy/url-parser": "^3.0.7",
         "@smithy/util-base64": "^3.0.0",
         "@smithy/util-body-length-browser": "^3.0.0",
         "@smithy/util-body-length-node": "^3.0.0",
-        "@smithy/util-defaults-mode-browser": "^3.0.21",
-        "@smithy/util-defaults-mode-node": "^3.0.21",
-        "@smithy/util-endpoints": "^2.1.2",
-        "@smithy/util-middleware": "^3.0.6",
-        "@smithy/util-retry": "^3.0.6",
+        "@smithy/util-defaults-mode-browser": "^3.0.22",
+        "@smithy/util-defaults-mode-node": "^3.0.22",
+        "@smithy/util-endpoints": "^2.1.3",
+        "@smithy/util-middleware": "^3.0.7",
+        "@smithy/util-retry": "^3.0.7",
         "@smithy/util-utf8": "^3.0.0",
         tslib: "^2.6.2"
       },
@@ -35622,7 +35743,8 @@ var require_runtimeConfig3 = __commonJS({
         sha256: config?.sha256 ?? hash_node_1.Hash.bind(null, "sha256"),
         streamCollector: config?.streamCollector ?? node_http_handler_1.streamCollector,
         useDualstackEndpoint: config?.useDualstackEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS),
-        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS)
+        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS),
+        userAgentAppId: config?.userAgentAppId ?? (0, node_config_provider_1.loadConfig)(util_user_agent_node_1.NODE_APP_ID_CONFIG_OPTIONS)
       };
     };
     exports2.getRuntimeConfig = getRuntimeConfig;
@@ -39067,7 +39189,8 @@ var require_runtimeConfig4 = __commonJS({
         streamHasher: config?.streamHasher ?? hash_stream_node_1.readableStreamHasher,
         useArnRegion: config?.useArnRegion ?? (0, node_config_provider_1.loadConfig)(middleware_bucket_endpoint_1.NODE_USE_ARN_REGION_CONFIG_OPTIONS),
         useDualstackEndpoint: config?.useDualstackEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_DUALSTACK_ENDPOINT_CONFIG_OPTIONS),
-        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS)
+        useFipsEndpoint: config?.useFipsEndpoint ?? (0, node_config_provider_1.loadConfig)(config_resolver_1.NODE_USE_FIPS_ENDPOINT_CONFIG_OPTIONS),
+        userAgentAppId: config?.userAgentAppId ?? (0, node_config_provider_1.loadConfig)(util_user_agent_node_1.NODE_APP_ID_CONFIG_OPTIONS)
       };
     };
     exports2.getRuntimeConfig = getRuntimeConfig;
@@ -39618,6 +39741,7 @@ var require_dist_cjs71 = __commonJS({
       StorageClassAnalysisSchemaVersion: () => StorageClassAnalysisSchemaVersion,
       TaggingDirective: () => TaggingDirective,
       Tier: () => Tier,
+      TransitionDefaultMinimumObjectSize: () => TransitionDefaultMinimumObjectSize,
       TransitionStorageClass: () => TransitionStorageClass,
       Type: () => Type,
       UploadPartCommand: () => UploadPartCommand,
@@ -39991,6 +40115,10 @@ var require_dist_cjs71 = __commonJS({
     var ExpirationStatus = {
       Disabled: "Disabled",
       Enabled: "Enabled"
+    };
+    var TransitionDefaultMinimumObjectSize = {
+      all_storage_classes_128K: "all_storage_classes_128K",
+      varies_by_storage_class: "varies_by_storage_class"
     };
     var BucketLogsPermission = {
       FULL_CONTROL: "FULL_CONTROL",
@@ -41818,7 +41946,8 @@ var require_dist_cjs71 = __commonJS({
       const headers = (0, import_smithy_client5.map)({}, import_smithy_client5.isSerializableHeaderValue, {
         "content-type": "application/xml",
         [_xasca]: input[_CA],
-        [_xaebo]: input[_EBO]
+        [_xaebo]: input[_EBO],
+        [_xatdmos]: input[_TDMOS]
       });
       b.bp("/");
       b.p("Bucket", () => input.Bucket, "{Bucket}", false);
@@ -42914,7 +43043,8 @@ var require_dist_cjs71 = __commonJS({
         return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client5.map)({
-        $metadata: deserializeMetadata(output)
+        $metadata: deserializeMetadata(output),
+        [_TDMOS]: [, output.headers[_xatdmos]]
       });
       const data = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.expectObject)(await (0, import_core4.parseXmlBody)(output.body, context)), "body");
       if (data.Rule === "") {
@@ -43814,7 +43944,8 @@ var require_dist_cjs71 = __commonJS({
         return de_CommandError(output, context);
       }
       const contents = (0, import_smithy_client5.map)({
-        $metadata: deserializeMetadata(output)
+        $metadata: deserializeMetadata(output),
+        [_TDMOS]: [, output.headers[_xatdmos]]
       });
       await (0, import_smithy_client5.collectBody)(output.body, context);
       return contents;
@@ -47535,6 +47666,7 @@ var require_dist_cjs71 = __commonJS({
     var _TCo = "TopicConfiguration";
     var _TCop = "TopicConfigurations";
     var _TD = "TaggingDirective";
+    var _TDMOS = "TransitionDefaultMinimumObjectSize";
     var _TG = "TargetGrants";
     var _TGa = "TargetGrant";
     var _TOKF = "TargetObjectKeyFormat";
@@ -47755,6 +47887,7 @@ var require_dist_cjs71 = __commonJS({
     var _xat = "x-amz-tagging";
     var _xatc = "x-amz-tagging-count";
     var _xatd = "x-amz-tagging-directive";
+    var _xatdmos = "x-amz-transition-default-minimum-object-size";
     var _xavi = "x-amz-version-id";
     var _xawrl = "x-amz-website-redirect-location";
     var _xi = "x-id";
@@ -48928,6 +49061,7 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketInventoryConfigurationCommand, "PutBucketInventoryConfigurationCommand");
     var PutBucketInventoryConfigurationCommand = _PutBucketInventoryConfigurationCommand;
+    var import_middleware_sdk_s352 = require_dist_cjs37();
     var _PutBucketLifecycleConfigurationCommand = class _PutBucketLifecycleConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
@@ -48940,7 +49074,8 @@ var require_dist_cjs71 = __commonJS({
           input: this.input,
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
-        })
+        }),
+        (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutBucketLifecycleConfiguration", {}).n("S3Client", "PutBucketLifecycleConfigurationCommand").f(void 0, void 0).ser(se_PutBucketLifecycleConfigurationCommand).de(de_PutBucketLifecycleConfigurationCommand).build() {
     };
@@ -49115,7 +49250,7 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutBucketWebsiteCommand, "PutBucketWebsiteCommand");
     var PutBucketWebsiteCommand = _PutBucketWebsiteCommand;
-    var import_middleware_sdk_s352 = require_dist_cjs37();
+    var import_middleware_sdk_s353 = require_dist_cjs37();
     var _PutObjectAclCommand = class _PutObjectAclCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -49129,13 +49264,13 @@ var require_dist_cjs71 = __commonJS({
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: true
         }),
-        (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectAcl", {}).n("S3Client", "PutObjectAclCommand").f(void 0, void 0).ser(se_PutObjectAclCommand).de(de_PutObjectAclCommand).build() {
     };
     __name(_PutObjectAclCommand, "PutObjectAclCommand");
     var PutObjectAclCommand = _PutObjectAclCommand;
-    var import_middleware_sdk_s353 = require_dist_cjs37();
+    var import_middleware_sdk_s354 = require_dist_cjs37();
     var _PutObjectCommand = class _PutObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -49149,35 +49284,16 @@ var require_dist_cjs71 = __commonJS({
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: false
         }),
-        (0, import_middleware_sdk_s353.getCheckContentLengthHeaderPlugin)(config),
-        (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s354.getCheckContentLengthHeaderPlugin)(config),
+        (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "PutObject", {}).n("S3Client", "PutObjectCommand").f(PutObjectRequestFilterSensitiveLog, PutObjectOutputFilterSensitiveLog).ser(se_PutObjectCommand).de(de_PutObjectCommand).build() {
     };
     __name(_PutObjectCommand, "PutObjectCommand");
     var PutObjectCommand = _PutObjectCommand;
-    var import_middleware_sdk_s354 = require_dist_cjs37();
-    var _PutObjectLegalHoldCommand = class _PutObjectLegalHoldCommand extends import_smithy_client5.Command.classBuilder().ep({
-      ...commonParams,
-      Bucket: { type: "contextParams", name: "Bucket" }
-    }).m(function(Command, cs, config, o) {
-      return [
-        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
-          input: this.input,
-          requestAlgorithmMember: "ChecksumAlgorithm",
-          requestChecksumRequired: true
-        }),
-        (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config)
-      ];
-    }).s("AmazonS3", "PutObjectLegalHold", {}).n("S3Client", "PutObjectLegalHoldCommand").f(void 0, void 0).ser(se_PutObjectLegalHoldCommand).de(de_PutObjectLegalHoldCommand).build() {
-    };
-    __name(_PutObjectLegalHoldCommand, "PutObjectLegalHoldCommand");
-    var PutObjectLegalHoldCommand = _PutObjectLegalHoldCommand;
     var import_middleware_sdk_s355 = require_dist_cjs37();
-    var _PutObjectLockConfigurationCommand = class _PutObjectLockConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
+    var _PutObjectLegalHoldCommand = class _PutObjectLegalHoldCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
@@ -49191,12 +49307,12 @@ var require_dist_cjs71 = __commonJS({
         }),
         (0, import_middleware_sdk_s355.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "PutObjectLockConfiguration", {}).n("S3Client", "PutObjectLockConfigurationCommand").f(void 0, void 0).ser(se_PutObjectLockConfigurationCommand).de(de_PutObjectLockConfigurationCommand).build() {
+    }).s("AmazonS3", "PutObjectLegalHold", {}).n("S3Client", "PutObjectLegalHoldCommand").f(void 0, void 0).ser(se_PutObjectLegalHoldCommand).de(de_PutObjectLegalHoldCommand).build() {
     };
-    __name(_PutObjectLockConfigurationCommand, "PutObjectLockConfigurationCommand");
-    var PutObjectLockConfigurationCommand = _PutObjectLockConfigurationCommand;
+    __name(_PutObjectLegalHoldCommand, "PutObjectLegalHoldCommand");
+    var PutObjectLegalHoldCommand = _PutObjectLegalHoldCommand;
     var import_middleware_sdk_s356 = require_dist_cjs37();
-    var _PutObjectRetentionCommand = class _PutObjectRetentionCommand extends import_smithy_client5.Command.classBuilder().ep({
+    var _PutObjectLockConfigurationCommand = class _PutObjectLockConfigurationCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
@@ -49210,12 +49326,12 @@ var require_dist_cjs71 = __commonJS({
         }),
         (0, import_middleware_sdk_s356.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "PutObjectRetention", {}).n("S3Client", "PutObjectRetentionCommand").f(void 0, void 0).ser(se_PutObjectRetentionCommand).de(de_PutObjectRetentionCommand).build() {
+    }).s("AmazonS3", "PutObjectLockConfiguration", {}).n("S3Client", "PutObjectLockConfigurationCommand").f(void 0, void 0).ser(se_PutObjectLockConfigurationCommand).de(de_PutObjectLockConfigurationCommand).build() {
     };
-    __name(_PutObjectRetentionCommand, "PutObjectRetentionCommand");
-    var PutObjectRetentionCommand = _PutObjectRetentionCommand;
+    __name(_PutObjectLockConfigurationCommand, "PutObjectLockConfigurationCommand");
+    var PutObjectLockConfigurationCommand = _PutObjectLockConfigurationCommand;
     var import_middleware_sdk_s357 = require_dist_cjs37();
-    var _PutObjectTaggingCommand = class _PutObjectTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
+    var _PutObjectRetentionCommand = class _PutObjectRetentionCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
@@ -49228,6 +49344,25 @@ var require_dist_cjs71 = __commonJS({
           requestChecksumRequired: true
         }),
         (0, import_middleware_sdk_s357.getThrow200ExceptionsPlugin)(config)
+      ];
+    }).s("AmazonS3", "PutObjectRetention", {}).n("S3Client", "PutObjectRetentionCommand").f(void 0, void 0).ser(se_PutObjectRetentionCommand).de(de_PutObjectRetentionCommand).build() {
+    };
+    __name(_PutObjectRetentionCommand, "PutObjectRetentionCommand");
+    var PutObjectRetentionCommand = _PutObjectRetentionCommand;
+    var import_middleware_sdk_s358 = require_dist_cjs37();
+    var _PutObjectTaggingCommand = class _PutObjectTaggingCommand extends import_smithy_client5.Command.classBuilder().ep({
+      ...commonParams,
+      Bucket: { type: "contextParams", name: "Bucket" }
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
+          input: this.input,
+          requestAlgorithmMember: "ChecksumAlgorithm",
+          requestChecksumRequired: true
+        }),
+        (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectTagging", {}).n("S3Client", "PutObjectTaggingCommand").f(void 0, void 0).ser(se_PutObjectTaggingCommand).de(de_PutObjectTaggingCommand).build() {
     };
@@ -49251,7 +49386,7 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_PutPublicAccessBlockCommand, "PutPublicAccessBlockCommand");
     var PutPublicAccessBlockCommand = _PutPublicAccessBlockCommand;
-    var import_middleware_sdk_s358 = require_dist_cjs37();
+    var import_middleware_sdk_s359 = require_dist_cjs37();
     var _RestoreObjectCommand = class _RestoreObjectCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -49264,13 +49399,13 @@ var require_dist_cjs71 = __commonJS({
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: false
         }),
-        (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s359.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "RestoreObject", {}).n("S3Client", "RestoreObjectCommand").f(RestoreObjectRequestFilterSensitiveLog, void 0).ser(se_RestoreObjectCommand).de(de_RestoreObjectCommand).build() {
     };
     __name(_RestoreObjectCommand, "RestoreObjectCommand");
     var RestoreObjectCommand = _RestoreObjectCommand;
-    var import_middleware_sdk_s359 = require_dist_cjs37();
+    var import_middleware_sdk_s360 = require_dist_cjs37();
     var _SelectObjectContentCommand = class _SelectObjectContentCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -49278,7 +49413,7 @@ var require_dist_cjs71 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s359.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "SelectObjectContent", {
@@ -49292,7 +49427,7 @@ var require_dist_cjs71 = __commonJS({
     };
     __name(_SelectObjectContentCommand, "SelectObjectContentCommand");
     var SelectObjectContentCommand = _SelectObjectContentCommand;
-    var import_middleware_sdk_s360 = require_dist_cjs37();
+    var import_middleware_sdk_s361 = require_dist_cjs37();
     var _UploadPartCommand = class _UploadPartCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -49306,14 +49441,14 @@ var require_dist_cjs71 = __commonJS({
           requestAlgorithmMember: "ChecksumAlgorithm",
           requestChecksumRequired: false
         }),
-        (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s361.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "UploadPart", {}).n("S3Client", "UploadPartCommand").f(UploadPartRequestFilterSensitiveLog, UploadPartOutputFilterSensitiveLog).ser(se_UploadPartCommand).de(de_UploadPartCommand).build() {
     };
     __name(_UploadPartCommand, "UploadPartCommand");
     var UploadPartCommand = _UploadPartCommand;
-    var import_middleware_sdk_s361 = require_dist_cjs37();
+    var import_middleware_sdk_s362 = require_dist_cjs37();
     var _UploadPartCopyCommand = class _UploadPartCopyCommand extends import_smithy_client5.Command.classBuilder().ep({
       ...commonParams,
       DisableS3ExpressSessionAuth: { type: "staticContextParams", value: true },
@@ -49322,7 +49457,7 @@ var require_dist_cjs71 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint2.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s361.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s362.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "UploadPartCopy", {}).n("S3Client", "UploadPartCopyCommand").f(UploadPartCopyRequestFilterSensitiveLog, UploadPartCopyOutputFilterSensitiveLog).ser(se_UploadPartCopyCommand).de(de_UploadPartCopyCommand).build() {
