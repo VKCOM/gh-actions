@@ -23673,12 +23673,12 @@ function parseChanges(text) {
       const match = componentMatch || componentWithLinkMatch;
       if (match) {
         const component = match[1];
-        const description = match[2].trim();
+        const description = match[2] || "";
         currentChange = {
           type: "component",
           subInfo: false,
           component,
-          description,
+          description: description.trim(),
           additionalInfo: ""
         };
         changes.push(currentChange);
