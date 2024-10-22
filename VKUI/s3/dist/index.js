@@ -30061,23 +30061,24 @@ var require_dist_cjs37 = __commonJS({
     };
     function regionRedirectMiddleware(clientConfig) {
       return (next, context) => async (args) => {
-        var _a, _b;
+        var _a, _b, _c;
         try {
           return await next(args);
         } catch (err) {
-          if (clientConfig.followRegionRedirects && // err.name === "PermanentRedirect" && --> removing the error name check, as that allows for HEAD operations (which have the 301 status code, but not the same error name) to be covered for region redirection as well
-          ((_a = err == null ? void 0 : err.$metadata) == null ? void 0 : _a.httpStatusCode) === 301) {
-            try {
-              const actualRegion = err.$response.headers["x-amz-bucket-region"];
-              (_b = context.logger) == null ? void 0 : _b.debug(`Redirecting from ${await clientConfig.region()} to ${actualRegion}`);
-              context.__s3RegionRedirect = actualRegion;
-            } catch (e) {
-              throw new Error("Region redirect failed: " + e);
+          if (clientConfig.followRegionRedirects) {
+            if (((_a = err == null ? void 0 : err.$metadata) == null ? void 0 : _a.httpStatusCode) === 301 || // err.name === "PermanentRedirect" && --> removing the error name check, as that allows for HEAD operations (which have the 301 status code, but not the same error name) to be covered for region redirection as well
+            ((_b = err == null ? void 0 : err.$metadata) == null ? void 0 : _b.httpStatusCode) === 400 && (err == null ? void 0 : err.name) === "IllegalLocationConstraintException") {
+              try {
+                const actualRegion = err.$response.headers["x-amz-bucket-region"];
+                (_c = context.logger) == null ? void 0 : _c.debug(`Redirecting from ${await clientConfig.region()} to ${actualRegion}`);
+                context.__s3RegionRedirect = actualRegion;
+              } catch (e) {
+                throw new Error("Region redirect failed: " + e);
+              }
+              return next(args);
             }
-            return next(args);
-          } else {
-            throw err;
           }
+          throw err;
         }
       };
     }
@@ -32510,7 +32511,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.670.0",
+      version: "3.675.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -32535,10 +32536,10 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "5.2.0",
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.670.0",
-        "@aws-sdk/client-sts": "3.670.0",
+        "@aws-sdk/client-sso-oidc": "3.675.0",
+        "@aws-sdk/client-sts": "3.675.0",
         "@aws-sdk/core": "3.667.0",
-        "@aws-sdk/credential-provider-node": "3.670.0",
+        "@aws-sdk/credential-provider-node": "3.675.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.667.0",
         "@aws-sdk/middleware-expect-continue": "3.667.0",
         "@aws-sdk/middleware-flexible-checksums": "3.669.0",
@@ -32546,14 +32547,14 @@ var require_package = __commonJS({
         "@aws-sdk/middleware-location-constraint": "3.667.0",
         "@aws-sdk/middleware-logger": "3.667.0",
         "@aws-sdk/middleware-recursion-detection": "3.667.0",
-        "@aws-sdk/middleware-sdk-s3": "3.669.0",
+        "@aws-sdk/middleware-sdk-s3": "3.674.0",
         "@aws-sdk/middleware-ssec": "3.667.0",
         "@aws-sdk/middleware-user-agent": "3.669.0",
         "@aws-sdk/region-config-resolver": "3.667.0",
-        "@aws-sdk/signature-v4-multi-region": "3.669.0",
+        "@aws-sdk/signature-v4-multi-region": "3.674.0",
         "@aws-sdk/types": "3.667.0",
         "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.670.0",
+        "@aws-sdk/util-user-agent-browser": "3.675.0",
         "@aws-sdk/util-user-agent-node": "3.669.0",
         "@aws-sdk/xml-builder": "3.662.0",
         "@smithy/config-resolver": "^3.0.9",
@@ -32592,7 +32593,7 @@ var require_package = __commonJS({
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.669.0",
+        "@aws-sdk/signature-v4-crt": "3.674.0",
         "@tsconfig/node16": "16.1.3",
         "@types/chai": "^4.2.11",
         "@types/mocha": "^8.0.4",
@@ -33381,7 +33382,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.670.0",
+      version: "3.675.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -33408,7 +33409,7 @@ var require_package2 = __commonJS({
         "@aws-sdk/region-config-resolver": "3.667.0",
         "@aws-sdk/types": "3.667.0",
         "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.670.0",
+        "@aws-sdk/util-user-agent-browser": "3.675.0",
         "@aws-sdk/util-user-agent-node": "3.669.0",
         "@smithy/config-resolver": "^3.0.9",
         "@smithy/core": "^2.4.8",
@@ -34646,7 +34647,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.670.0",
+      version: "3.675.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -34666,7 +34667,7 @@ var require_package3 = __commonJS({
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
         "@aws-sdk/core": "3.667.0",
-        "@aws-sdk/credential-provider-node": "3.670.0",
+        "@aws-sdk/credential-provider-node": "3.675.0",
         "@aws-sdk/middleware-host-header": "3.667.0",
         "@aws-sdk/middleware-logger": "3.667.0",
         "@aws-sdk/middleware-recursion-detection": "3.667.0",
@@ -34674,7 +34675,7 @@ var require_package3 = __commonJS({
         "@aws-sdk/region-config-resolver": "3.667.0",
         "@aws-sdk/types": "3.667.0",
         "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.670.0",
+        "@aws-sdk/util-user-agent-browser": "3.675.0",
         "@aws-sdk/util-user-agent-node": "3.669.0",
         "@smithy/config-resolver": "^3.0.9",
         "@smithy/core": "^2.4.8",
@@ -34730,7 +34731,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/client-sts": "^3.670.0"
+        "@aws-sdk/client-sts": "^3.675.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -36382,7 +36383,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.670.0",
+      version: "3.675.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -36403,9 +36404,9 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.670.0",
+        "@aws-sdk/client-sso-oidc": "3.675.0",
         "@aws-sdk/core": "3.667.0",
-        "@aws-sdk/credential-provider-node": "3.670.0",
+        "@aws-sdk/credential-provider-node": "3.675.0",
         "@aws-sdk/middleware-host-header": "3.667.0",
         "@aws-sdk/middleware-logger": "3.667.0",
         "@aws-sdk/middleware-recursion-detection": "3.667.0",
@@ -36413,7 +36414,7 @@ var require_package4 = __commonJS({
         "@aws-sdk/region-config-resolver": "3.667.0",
         "@aws-sdk/types": "3.667.0",
         "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.670.0",
+        "@aws-sdk/util-user-agent-browser": "3.675.0",
         "@aws-sdk/util-user-agent-node": "3.669.0",
         "@smithy/config-resolver": "^3.0.9",
         "@smithy/core": "^2.4.8",
@@ -42559,7 +42560,9 @@ var require_dist_cjs71 = __commonJS({
       const query = (0, import_smithy_client5.map)({
         [_xi]: [, "ListBuckets"],
         [_mb]: [() => input.MaxBuckets !== void 0, () => input[_MB].toString()],
-        [_ct_]: [, input[_CTo]]
+        [_ct_]: [, input[_CTo]],
+        [_pr]: [, input[_P]],
+        [_br]: [, input[_BR]]
       });
       let body;
       b.m("GET").h(headers).q(query).b(body);
@@ -44505,6 +44508,9 @@ var require_dist_cjs71 = __commonJS({
       }
       if (data[_O] != null) {
         contents[_O] = de_Owner(data[_O], context);
+      }
+      if (data[_P] != null) {
+        contents[_P] = (0, import_smithy_client5.expectString)(data[_P]);
       }
       return contents;
     }, "de_ListBucketsCommand");
@@ -46694,6 +46700,9 @@ var require_dist_cjs71 = __commonJS({
       if (output[_CDr] != null) {
         contents[_CDr] = (0, import_smithy_client5.expectNonNull)((0, import_smithy_client5.parseRfc3339DateTimeWithOffset)(output[_CDr]));
       }
+      if (output[_BR] != null) {
+        contents[_BR] = (0, import_smithy_client5.expectString)(output[_BR]);
+      }
       return contents;
     }, "de_Bucket");
     var de_Buckets = /* @__PURE__ */ __name((output, context) => {
@@ -48568,6 +48577,7 @@ var require_dist_cjs71 = __commonJS({
     var _acl = "acl";
     var _ar = "accept-ranges";
     var _at = "attributes";
+    var _br = "bucket-region";
     var _c = "cors";
     var _cc = "cache-control";
     var _cd = "content-disposition";
