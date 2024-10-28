@@ -653,24 +653,24 @@ describe('run updateReleaseNotes', () => {
 - Новый компонент с название COMPONENT3 (#1234, спасибо @other)\r
 \r
 ## Улучшения\r
-- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0/#/ChipsSelect):\r
+- [ChipsSelect](https://vkcom.github.io/VKUI/6.6.0-beta.0/#/ChipsSelect):\r
   - Улучшение компонента ChipsSelect (#7023)\r
   - Улучшение компонента ChipsSelect 2 (#1234, спасибо @other)\r
     Немного подробнее об этом. Можно приложить картинку\r
-- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234, спасибо @other)\r
+- [ChipsInput](https://vkcom.github.io/VKUI/6.6.0-beta.0/#/ChipsInput): Улучшение компонента ChipsInput (#1234, спасибо @other)\r
 \r
 ## Исправления\r
-- [List](https://vkcom.github.io/VKUI/6.6.0/#/List):\r
+- [List](https://vkcom.github.io/VKUI/6.6.0-beta.0/#/List):\r
   - Исправление компонента List (#7094)\r
   - Исправление компонента List 2 (#1234, спасибо @other)\r
-- [Flex](https://vkcom.github.io/VKUI/6.6.0/#/Flex): Исправление компонента Flex (#1234, спасибо @other)\r
+- [Flex](https://vkcom.github.io/VKUI/6.6.0-beta.0/#/Flex): Исправление компонента Flex (#1234, спасибо @other)\r
 \r
 ## Зависимости\r
 - Обновлена какая-то зависимость 1\r
 - Обновлена какая-то зависимость 2 (#1234, спасибо @other)\r
 \r
 ## Документация\r
-- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0/#/CustomScrollView): Обновлена документация CustomScrollView\r
+- [CustomScrollView](https://vkcom.github.io/VKUI/6.6.0-beta.0/#/CustomScrollView): Обновлена документация CustomScrollView\r
 - Поправлены баги в документации (#1234, спасибо @other)\r
 \r
 `,

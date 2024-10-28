@@ -33,7 +33,6 @@ export function parseChanges(text: string): ChangeData[] {
     const codeBlockEndMatch: RegExpMatchArray | null = codeBlockStarted
       ? line.match(CODE_BLOCK_END_REGEX)
       : null;
-    // '  Большой заголовок'
     const addToAdditionalInfo = () => {
       if (currentChange) {
         const subInfo = currentChange.type === 'component' && currentChange.subInfo;
