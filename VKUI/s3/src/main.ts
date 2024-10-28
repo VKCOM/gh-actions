@@ -3,7 +3,10 @@ import path from 'path';
 
 import * as core from '@actions/core';
 import { S3, S3ClientConfig } from '@aws-sdk/client-s3';
+import lodash from 'lodash';
 import { lookup } from 'mime-types';
+
+const maxConcurrentUploadFiles = 10;
 
 const req = {
   required: true,
@@ -61,7 +64,8 @@ class Action {
     const files = getFilesFromFolder(sourceDir);
 
     core.debug(`length ${files.length}`);
-    await Promise.all(
+
+    const uploadTasks = lodash.chunk(
       files.map((file) => {
         core.debug(`file: ${file}`);
         const fileStream = fs.createReadStream(file);
@@ -76,7 +80,12 @@ class Action {
           ContentType: lookup(file) || 'text/plain',
         });
       }),
+      maxConcurrentUploadFiles,
     );
+
+    for (const tasks of uploadTasks) {
+      await Promise.all(tasks);
+    }
   }
 
   private async delete(prefix: string) {
