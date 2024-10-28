@@ -24605,8 +24605,9 @@ function releaseNotesUpdater(currentBody) {
     const matches = body.matchAll(sectionRegex);
     for (const match of matches) {
       const [, header, content] = match;
+      const trimmedHeader = header.trim();
       const trimmedContent = content.trim();
-      const typeByHeader = getSectionTypeByHeader(header);
+      const typeByHeader = getSectionTypeByHeader(trimmedHeader);
       if (!typeByHeader) {
         continue;
       }
@@ -24623,6 +24624,12 @@ function releaseNotesUpdater(currentBody) {
     let currentContent = body.substring(startIndex, endIndex).trim();
     currentContent = calculateNewContent(currentContent);
     body = body.slice(0, startIndex) + "\r\n" + currentContent + "\r\n" + body.slice(endIndex);
+  };
+  const addSectionWithContent = (header, content) => {
+    body += `\r
+## ${header}\r
+`;
+    body += content;
   };
   const addNotes = ({
     noteData,
@@ -24641,24 +24648,22 @@ function releaseNotesUpdater(currentBody) {
         return convertChangesToString(currentSectionContentData, version, author || "");
       });
     } else {
-      body += `\r
-## ${getHeaderBySectionType(noteData.type)}\r
-`;
-      body += convertChangesToString(noteData.data, version, author || "");
+      addSectionWithContent(
+        headerByType,
+        convertChangesToString(noteData.data, version, author || "")
+      );
     }
   };
   const addUndescribedPRNumber = (prNumber) => {
-    if (body.includes(NEED_TO_DESCRIBE_HEADER)) {
+    const header = `## ${NEED_TO_DESCRIBE_HEADER}`;
+    if (body.includes(header)) {
       insertContentInSection(NEED_TO_DESCRIBE_HEADER, (currentContent) => {
         currentContent += `\r
 #${prNumber}`;
         return currentContent;
       });
     } else {
-      body += `\r
-## ${NEED_TO_DESCRIBE_HEADER}\r
-`;
-      body += `#${prNumber}`;
+      addSectionWithContent(NEED_TO_DESCRIBE_HEADER, `#${prNumber}`);
     }
   };
   return {
@@ -24758,7 +24763,7 @@ function getNextReleaseVersion(lastVKUIVersion, updateType) {
 
 // src/calculateReleaseVersion.ts
 var parseReleaseVersion = (releaseVersion) => {
-  const match = releaseVersion.match(/v(\d+\.\d+\.\d+)/);
+  const match = releaseVersion.match(/v(\d+\.\d+\.\d+(-beta\.\d+)?)/);
   return match?.[1] || null;
 };
 async function calculateReleaseVersion({
