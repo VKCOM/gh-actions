@@ -18,8 +18,9 @@ export function releaseNotesUpdater(currentBody: string) {
     const matches = body.matchAll(sectionRegex);
     for (const match of matches) {
       const [, header, content] = match;
+      const trimmedHeader = header.trim();
       const trimmedContent = content.trim();
-      const typeByHeader = getSectionTypeByHeader(header);
+      const typeByHeader = getSectionTypeByHeader(trimmedHeader);
       if (!typeByHeader) {
         continue;
       }
@@ -44,6 +45,11 @@ export function releaseNotesUpdater(currentBody: string) {
     body = body.slice(0, startIndex) + '\r\n' + currentContent + '\r\n' + body.slice(endIndex);
   };
 
+  const addSectionWithContent = (header: string, content: string) => {
+    body += `\r\n## ${header}\r\n`;
+    body += content;
+  };
+
   const addNotes = ({
     noteData,
     version,
@@ -65,20 +71,22 @@ export function releaseNotesUpdater(currentBody: string) {
         return convertChangesToString(currentSectionContentData, version, author || '');
       });
     } else {
-      body += `\r\n## ${getHeaderBySectionType(noteData.type)}\r\n`;
-      body += convertChangesToString(noteData.data, version, author || '');
+      addSectionWithContent(
+        headerByType,
+        convertChangesToString(noteData.data, version, author || ''),
+      );
     }
   };
 
   const addUndescribedPRNumber = (prNumber: number) => {
-    if (body.includes(NEED_TO_DESCRIBE_HEADER)) {
+    const header = `## ${NEED_TO_DESCRIBE_HEADER}`;
+    if (body.includes(header)) {
       insertContentInSection(NEED_TO_DESCRIBE_HEADER, (currentContent) => {
         currentContent += `\r\n#${prNumber}`;
         return currentContent;
       });
     } else {
-      body += `\r\n## ${NEED_TO_DESCRIBE_HEADER}\r\n`;
-      body += `#${prNumber}`;
+      addSectionWithContent(NEED_TO_DESCRIBE_HEADER, `#${prNumber}`);
     }
   };
 

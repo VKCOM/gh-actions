@@ -7,7 +7,7 @@ type ReleaseData = {
 };
 
 const parseReleaseVersion = (releaseVersion: string): string | null => {
-  const match = releaseVersion.match(/v(\d+\.\d+\.\d+)/);
+  const match = releaseVersion.match(/v(\d+\.\d+\.\d+(-beta\.\d+)?)/);
   return match?.[1] || null;
 };
 
