@@ -907,8 +907,8 @@ var require_util = __commonJS({
       if (body == null) {
         return 0;
       } else if (isStream(body)) {
-        const state = body._readableState;
-        return state && state.objectMode === false && state.ended === true && Number.isFinite(state.length) ? state.length : null;
+        const state2 = body._readableState;
+        return state2 && state2.objectMode === false && state2.ended === true && Number.isFinite(state2.length) ? state2.length : null;
       } else if (isBlobLike(body)) {
         return body.size != null ? body.size : null;
       } else if (isBuffer(body)) {
@@ -920,8 +920,8 @@ var require_util = __commonJS({
       return !stream2 || !!(stream2.destroyed || stream2[kDestroyed]);
     }
     function isReadableAborted(stream2) {
-      const state = stream2 && stream2._readableState;
-      return isDestroyed(stream2) && state && !state.endEmitted;
+      const state2 = stream2 && stream2._readableState;
+      return isDestroyed(stream2) && state2 && !state2.endEmitted;
     }
     function destroy(stream2, err) {
       if (!isStream(stream2) || isDestroyed(stream2)) {
@@ -1800,7 +1800,7 @@ var require_parseParams = __commonJS({
     }
     function parseParams(str) {
       const res = [];
-      let state = "key";
+      let state2 = "key";
       let charset = "";
       let inquote = false;
       let escaping = false;
@@ -1819,7 +1819,7 @@ var require_parseParams = __commonJS({
           if (!escaping) {
             if (inquote) {
               inquote = false;
-              state = "key";
+              state2 = "key";
             } else {
               inquote = true;
             }
@@ -1832,26 +1832,26 @@ var require_parseParams = __commonJS({
             tmp += "\\";
           }
           escaping = false;
-          if ((state === "charset" || state === "lang") && char === "'") {
-            if (state === "charset") {
-              state = "lang";
+          if ((state2 === "charset" || state2 === "lang") && char === "'") {
+            if (state2 === "charset") {
+              state2 = "lang";
               charset = tmp.substring(1);
             } else {
-              state = "value";
+              state2 = "value";
             }
             tmp = "";
             continue;
-          } else if (state === "key" && (char === "*" || char === "=") && res.length) {
+          } else if (state2 === "key" && (char === "*" || char === "=") && res.length) {
             if (char === "*") {
-              state = "charset";
+              state2 = "charset";
             } else {
-              state = "value";
+              state2 = "value";
             }
             res[p] = [tmp, void 0];
             tmp = "";
             continue;
           } else if (!inquote && char === ";") {
-            state = "key";
+            state2 = "key";
             if (charset) {
               if (tmp.length) {
                 tmp = decodeText(
@@ -4650,8 +4650,8 @@ Content-Type: ${value.type || "application/octet-stream"}\r
         }
       }
     }
-    function throwIfAborted(state) {
-      if (state.aborted) {
+    function throwIfAborted(state2) {
+      if (state2.aborted) {
         throw new DOMException2("The operation was aborted.", "AbortError");
       }
     }
@@ -8516,11 +8516,11 @@ var require_readable = __commonJS({
       if (consume2.body === null) {
         return;
       }
-      const { _readableState: state } = consume2.stream;
-      for (const chunk of state.buffer) {
+      const { _readableState: state2 } = consume2.stream;
+      for (const chunk of state2.buffer) {
         consumePush(consume2, chunk);
       }
-      if (state.endEmitted) {
+      if (state2.endEmitted) {
         consumeEnd(this[kConsume]);
       } else {
         consume2.stream.on("end", function() {
@@ -10981,17 +10981,17 @@ var require_response = __commonJS({
         aborted: reason && reason.name === "AbortError"
       });
     }
-    function makeFilteredResponse(response, state) {
-      state = {
+    function makeFilteredResponse(response, state2) {
+      state2 = {
         internalResponse: response,
-        ...state
+        ...state2
       };
       return new Proxy(response, {
         get(target, p) {
-          return p in state ? state[p] : target[p];
+          return p in state2 ? state2[p] : target[p];
         },
         set(target, p, value) {
-          assert(!(p in state));
+          assert(!(p in state2));
           target[p] = value;
           return true;
         }
@@ -17985,8 +17985,8 @@ var require_toolrunner = __commonJS({
             if (!optionsNonNull.silent && optionsNonNull.outStream) {
               optionsNonNull.outStream.write(this._getCommandString(optionsNonNull) + os.EOL);
             }
-            const state = new ExecState(optionsNonNull, this.toolPath);
-            state.on("debug", (message) => {
+            const state2 = new ExecState(optionsNonNull, this.toolPath);
+            state2.on("debug", (message) => {
               this._debug(message);
             });
             if (this.options.cwd && !(yield ioUtil.exists(this.options.cwd))) {
@@ -18013,7 +18013,7 @@ var require_toolrunner = __commonJS({
             let errbuffer = "";
             if (cp.stderr) {
               cp.stderr.on("data", (data) => {
-                state.processStderr = true;
+                state2.processStderr = true;
                 if (this.options.listeners && this.options.listeners.stderr) {
                   this.options.listeners.stderr(data);
                 }
@@ -18029,25 +18029,25 @@ var require_toolrunner = __commonJS({
               });
             }
             cp.on("error", (err) => {
-              state.processError = err.message;
-              state.processExited = true;
-              state.processClosed = true;
-              state.CheckComplete();
+              state2.processError = err.message;
+              state2.processExited = true;
+              state2.processClosed = true;
+              state2.CheckComplete();
             });
             cp.on("exit", (code) => {
-              state.processExitCode = code;
-              state.processExited = true;
+              state2.processExitCode = code;
+              state2.processExited = true;
               this._debug(`Exit code ${code} received from tool '${this.toolPath}'`);
-              state.CheckComplete();
+              state2.CheckComplete();
             });
             cp.on("close", (code) => {
-              state.processExitCode = code;
-              state.processExited = true;
-              state.processClosed = true;
+              state2.processExitCode = code;
+              state2.processExited = true;
+              state2.processClosed = true;
               this._debug(`STDIO streams have closed for tool '${this.toolPath}'`);
-              state.CheckComplete();
+              state2.CheckComplete();
             });
-            state.on("done", (error2, exitCode) => {
+            state2.on("done", (error2, exitCode) => {
               if (stdbuffer.length > 0) {
                 this.emit("stdline", stdbuffer);
               }
@@ -18168,15 +18168,15 @@ var require_toolrunner = __commonJS({
         this.done = true;
         this.emit("done", error2, this.processExitCode);
       }
-      static HandleTimeout(state) {
-        if (state.done) {
+      static HandleTimeout(state2) {
+        if (state2.done) {
           return;
         }
-        if (!state.processClosed && state.processExited) {
-          const message = `The STDIO streams did not close within ${state.delay / 1e3} seconds of the exit event from process '${state.toolPath}'. This may indicate a child process inherited the STDIO streams and has not yet exited.`;
-          state._debug(message);
+        if (!state2.processClosed && state2.processExited) {
+          const message = `The STDIO streams did not close within ${state2.delay / 1e3} seconds of the exit event from process '${state2.toolPath}'. This may indicate a child process inherited the STDIO streams and has not yet exited.`;
+          state2._debug(message);
         }
-        state._setResult();
+        state2._setResult();
       }
     };
   }
@@ -19059,13 +19059,15 @@ var require_dist_cjs3 = __commonJS({
 });
 
 // ../../node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js
-var warningEmitted, emitWarningIfUnsupportedVersion;
+var state, emitWarningIfUnsupportedVersion;
 var init_emitWarningIfUnsupportedVersion = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/client/emitWarningIfUnsupportedVersion.js"() {
-    warningEmitted = false;
+    state = {
+      warningEmitted: false
+    };
     emitWarningIfUnsupportedVersion = (version2) => {
-      if (version2 && !warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 18) {
-        warningEmitted = true;
+      if (version2 && !state.warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 18) {
+        state.warningEmitted = true;
         process.emitWarning(`NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
 no longer support Node.js 16.x on January 6, 2025.
 
@@ -19112,7 +19114,8 @@ var client_exports = {};
 __export(client_exports, {
   emitWarningIfUnsupportedVersion: () => emitWarningIfUnsupportedVersion,
   setCredentialFeature: () => setCredentialFeature,
-  setFeature: () => setFeature
+  setFeature: () => setFeature,
+  state: () => state
 });
 var init_client = __esm({
   "../../node_modules/@aws-sdk/core/dist-es/submodules/client/index.js"() {
@@ -24101,10 +24104,10 @@ var require_dist_cjs25 = __commonJS({
           return {};
       }
     }, "loadConfigsForDefaultMode");
-    var warningEmitted2 = false;
+    var warningEmitted = false;
     var emitWarningIfUnsupportedVersion2 = /* @__PURE__ */ __name((version2) => {
-      if (version2 && !warningEmitted2 && parseInt(version2.substring(1, version2.indexOf("."))) < 16) {
-        warningEmitted2 = true;
+      if (version2 && !warningEmitted && parseInt(version2.substring(1, version2.indexOf("."))) < 16) {
+        warningEmitted = true;
       }
     }, "emitWarningIfUnsupportedVersion");
     function extendedEncodeURIComponent(str) {
@@ -27779,6 +27782,7 @@ __export(dist_es_exports2, {
   resolveAwsSdkSigV4Config: () => resolveAwsSdkSigV4Config,
   setCredentialFeature: () => setCredentialFeature,
   setFeature: () => setFeature,
+  state: () => state,
   validateSigningProperties: () => validateSigningProperties
 });
 var init_dist_es2 = __esm({
@@ -28141,20 +28145,20 @@ function __importStar(mod) {
 function __importDefault(mod) {
   return mod && mod.__esModule ? mod : { default: mod };
 }
-function __classPrivateFieldGet(receiver, state, kind, f) {
+function __classPrivateFieldGet(receiver, state2, kind, f) {
   if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+  if (typeof state2 === "function" ? receiver !== state2 || !f : !state2.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+  return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state2.get(receiver);
 }
-function __classPrivateFieldSet(receiver, state, value, kind, f) {
+function __classPrivateFieldSet(receiver, state2, value, kind, f) {
   if (kind === "m") throw new TypeError("Private method is not writable");
   if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
-  if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
-  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+  if (typeof state2 === "function" ? receiver !== state2 || !f : !state2.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+  return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state2.set(receiver, value), value;
 }
-function __classPrivateFieldIn(state, receiver) {
+function __classPrivateFieldIn(state2, receiver) {
   if (receiver === null || typeof receiver !== "object" && typeof receiver !== "function") throw new TypeError("Cannot use 'in' operator on non-object");
-  return typeof state === "function" ? receiver === state : state.has(receiver);
+  return typeof state2 === "function" ? receiver === state2 : state2.has(receiver);
 }
 function __addDisposableResource(env, value, async) {
   if (value !== null && value !== void 0) {
@@ -29874,6 +29878,7 @@ var require_dist_cjs35 = __commonJS({
 // ../../node_modules/@aws-sdk/util-arn-parser/dist-cjs/index.js
 var require_dist_cjs36 = __commonJS({
   "../../node_modules/@aws-sdk/util-arn-parser/dist-cjs/index.js"(exports2, module2) {
+    "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -32511,7 +32516,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.675.0",
+      version: "3.679.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -32522,11 +32527,12 @@ var require_package = __commonJS({
         clean: "rimraf ./dist-* && rimraf *.tsbuildinfo",
         "extract:docs": "api-extractor run --local",
         "generate:client": "node ../../scripts/generate-clients/single-service --solo s3",
-        test: "yarn test:unit",
-        "test:e2e": "yarn test:e2e:node && yarn test:e2e:browser",
-        "test:e2e:browser": "ts-mocha test/**/*.browser.ispec.ts && karma start karma.conf.js",
-        "test:e2e:node": "jest --c jest.config.e2e.js",
-        "test:unit": "ts-mocha test/unit/**/*.spec.ts"
+        test: "vitest run",
+        "test:watch": "vitest watch",
+        "test:e2e": "vitest run -c vitest.config.e2e.ts && yarn test:browser",
+        "test:e2e:watch": "vitest watch -c vitest.config.e2e.ts",
+        "test:browser": "node ./test/browser-build/esbuild && vitest run -c vitest.config.browser.ts",
+        "test:browser:watch": "node ./test/browser-build/esbuild && vitest watch -c vitest.config.browser.ts"
       },
       main: "./dist-cjs/index.js",
       types: "./dist-types/index.d.ts",
@@ -32536,27 +32542,27 @@ var require_package = __commonJS({
         "@aws-crypto/sha1-browser": "5.2.0",
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.675.0",
-        "@aws-sdk/client-sts": "3.675.0",
-        "@aws-sdk/core": "3.667.0",
-        "@aws-sdk/credential-provider-node": "3.675.0",
-        "@aws-sdk/middleware-bucket-endpoint": "3.667.0",
-        "@aws-sdk/middleware-expect-continue": "3.667.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.669.0",
-        "@aws-sdk/middleware-host-header": "3.667.0",
-        "@aws-sdk/middleware-location-constraint": "3.667.0",
-        "@aws-sdk/middleware-logger": "3.667.0",
-        "@aws-sdk/middleware-recursion-detection": "3.667.0",
-        "@aws-sdk/middleware-sdk-s3": "3.674.0",
-        "@aws-sdk/middleware-ssec": "3.667.0",
-        "@aws-sdk/middleware-user-agent": "3.669.0",
-        "@aws-sdk/region-config-resolver": "3.667.0",
-        "@aws-sdk/signature-v4-multi-region": "3.674.0",
-        "@aws-sdk/types": "3.667.0",
-        "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.675.0",
-        "@aws-sdk/util-user-agent-node": "3.669.0",
-        "@aws-sdk/xml-builder": "3.662.0",
+        "@aws-sdk/client-sso-oidc": "3.679.0",
+        "@aws-sdk/client-sts": "3.679.0",
+        "@aws-sdk/core": "3.679.0",
+        "@aws-sdk/credential-provider-node": "3.679.0",
+        "@aws-sdk/middleware-bucket-endpoint": "3.679.0",
+        "@aws-sdk/middleware-expect-continue": "3.679.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.679.0",
+        "@aws-sdk/middleware-host-header": "3.679.0",
+        "@aws-sdk/middleware-location-constraint": "3.679.0",
+        "@aws-sdk/middleware-logger": "3.679.0",
+        "@aws-sdk/middleware-recursion-detection": "3.679.0",
+        "@aws-sdk/middleware-sdk-s3": "3.679.0",
+        "@aws-sdk/middleware-ssec": "3.679.0",
+        "@aws-sdk/middleware-user-agent": "3.679.0",
+        "@aws-sdk/region-config-resolver": "3.679.0",
+        "@aws-sdk/signature-v4-multi-region": "3.679.0",
+        "@aws-sdk/types": "3.679.0",
+        "@aws-sdk/util-endpoints": "3.679.0",
+        "@aws-sdk/util-user-agent-browser": "3.679.0",
+        "@aws-sdk/util-user-agent-node": "3.679.0",
+        "@aws-sdk/xml-builder": "3.679.0",
         "@smithy/config-resolver": "^3.0.9",
         "@smithy/core": "^2.4.8",
         "@smithy/eventstream-serde-browser": "^3.0.10",
@@ -32593,7 +32599,7 @@ var require_package = __commonJS({
         tslib: "^2.6.2"
       },
       devDependencies: {
-        "@aws-sdk/signature-v4-crt": "3.674.0",
+        "@aws-sdk/signature-v4-crt": "3.679.0",
         "@tsconfig/node16": "16.1.3",
         "@types/chai": "^4.2.11",
         "@types/mocha": "^8.0.4",
@@ -33382,7 +33388,7 @@ var require_package2 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso",
       description: "AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native",
-      version: "3.675.0",
+      version: "3.679.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso",
@@ -33401,16 +33407,16 @@ var require_package2 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.667.0",
-        "@aws-sdk/middleware-host-header": "3.667.0",
-        "@aws-sdk/middleware-logger": "3.667.0",
-        "@aws-sdk/middleware-recursion-detection": "3.667.0",
-        "@aws-sdk/middleware-user-agent": "3.669.0",
-        "@aws-sdk/region-config-resolver": "3.667.0",
-        "@aws-sdk/types": "3.667.0",
-        "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.675.0",
-        "@aws-sdk/util-user-agent-node": "3.669.0",
+        "@aws-sdk/core": "3.679.0",
+        "@aws-sdk/middleware-host-header": "3.679.0",
+        "@aws-sdk/middleware-logger": "3.679.0",
+        "@aws-sdk/middleware-recursion-detection": "3.679.0",
+        "@aws-sdk/middleware-user-agent": "3.679.0",
+        "@aws-sdk/region-config-resolver": "3.679.0",
+        "@aws-sdk/types": "3.679.0",
+        "@aws-sdk/util-endpoints": "3.679.0",
+        "@aws-sdk/util-user-agent-browser": "3.679.0",
+        "@aws-sdk/util-user-agent-node": "3.679.0",
         "@smithy/config-resolver": "^3.0.9",
         "@smithy/core": "^2.4.8",
         "@smithy/fetch-http-handler": "^3.2.9",
@@ -34647,7 +34653,7 @@ var require_package3 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sso-oidc",
       description: "AWS SDK for JavaScript Sso Oidc Client for Node.js, Browser and React Native",
-      version: "3.675.0",
+      version: "3.679.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sso-oidc",
@@ -34666,17 +34672,17 @@ var require_package3 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/core": "3.667.0",
-        "@aws-sdk/credential-provider-node": "3.675.0",
-        "@aws-sdk/middleware-host-header": "3.667.0",
-        "@aws-sdk/middleware-logger": "3.667.0",
-        "@aws-sdk/middleware-recursion-detection": "3.667.0",
-        "@aws-sdk/middleware-user-agent": "3.669.0",
-        "@aws-sdk/region-config-resolver": "3.667.0",
-        "@aws-sdk/types": "3.667.0",
-        "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.675.0",
-        "@aws-sdk/util-user-agent-node": "3.669.0",
+        "@aws-sdk/core": "3.679.0",
+        "@aws-sdk/credential-provider-node": "3.679.0",
+        "@aws-sdk/middleware-host-header": "3.679.0",
+        "@aws-sdk/middleware-logger": "3.679.0",
+        "@aws-sdk/middleware-recursion-detection": "3.679.0",
+        "@aws-sdk/middleware-user-agent": "3.679.0",
+        "@aws-sdk/region-config-resolver": "3.679.0",
+        "@aws-sdk/types": "3.679.0",
+        "@aws-sdk/util-endpoints": "3.679.0",
+        "@aws-sdk/util-user-agent-browser": "3.679.0",
+        "@aws-sdk/util-user-agent-node": "3.679.0",
         "@smithy/config-resolver": "^3.0.9",
         "@smithy/core": "^2.4.8",
         "@smithy/fetch-http-handler": "^3.2.9",
@@ -34731,7 +34737,7 @@ var require_package3 = __commonJS({
       },
       license: "Apache-2.0",
       peerDependencies: {
-        "@aws-sdk/client-sts": "^3.675.0"
+        "@aws-sdk/client-sts": "^3.679.0"
       },
       browser: {
         "./dist-es/runtimeConfig": "./dist-es/runtimeConfig.browser"
@@ -36383,7 +36389,7 @@ var require_package4 = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-sts",
       description: "AWS SDK for JavaScript Sts Client for Node.js, Browser and React Native",
-      version: "3.675.0",
+      version: "3.679.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-sts",
@@ -36394,8 +36400,8 @@ var require_package4 = __commonJS({
         clean: "rimraf ./dist-* && rimraf *.tsbuildinfo",
         "extract:docs": "api-extractor run --local",
         "generate:client": "node ../../scripts/generate-clients/single-service --solo sts",
-        test: "yarn test:unit",
-        "test:unit": "jest"
+        test: "vitest run",
+        "test:watch": "vitest watch"
       },
       main: "./dist-cjs/index.js",
       types: "./dist-types/index.d.ts",
@@ -36404,18 +36410,18 @@ var require_package4 = __commonJS({
       dependencies: {
         "@aws-crypto/sha256-browser": "5.2.0",
         "@aws-crypto/sha256-js": "5.2.0",
-        "@aws-sdk/client-sso-oidc": "3.675.0",
-        "@aws-sdk/core": "3.667.0",
-        "@aws-sdk/credential-provider-node": "3.675.0",
-        "@aws-sdk/middleware-host-header": "3.667.0",
-        "@aws-sdk/middleware-logger": "3.667.0",
-        "@aws-sdk/middleware-recursion-detection": "3.667.0",
-        "@aws-sdk/middleware-user-agent": "3.669.0",
-        "@aws-sdk/region-config-resolver": "3.667.0",
-        "@aws-sdk/types": "3.667.0",
-        "@aws-sdk/util-endpoints": "3.667.0",
-        "@aws-sdk/util-user-agent-browser": "3.675.0",
-        "@aws-sdk/util-user-agent-node": "3.669.0",
+        "@aws-sdk/client-sso-oidc": "3.679.0",
+        "@aws-sdk/core": "3.679.0",
+        "@aws-sdk/credential-provider-node": "3.679.0",
+        "@aws-sdk/middleware-host-header": "3.679.0",
+        "@aws-sdk/middleware-logger": "3.679.0",
+        "@aws-sdk/middleware-recursion-detection": "3.679.0",
+        "@aws-sdk/middleware-user-agent": "3.679.0",
+        "@aws-sdk/region-config-resolver": "3.679.0",
+        "@aws-sdk/types": "3.679.0",
+        "@aws-sdk/util-endpoints": "3.679.0",
+        "@aws-sdk/util-user-agent-browser": "3.679.0",
+        "@aws-sdk/util-user-agent-node": "3.679.0",
         "@smithy/config-resolver": "^3.0.9",
         "@smithy/core": "^2.4.8",
         "@smithy/fetch-http-handler": "^3.2.9",
@@ -40375,9 +40381,9 @@ var require_dist_cjs70 = __commonJS({
     var randomInRange = /* @__PURE__ */ __name((min, max) => min + Math.random() * (max - min), "randomInRange");
     var runPolling = /* @__PURE__ */ __name(async ({ minDelay, maxDelay, maxWaitTime, abortController, client, abortSignal }, input, acceptorChecks) => {
       var _a;
-      const { state, reason } = await acceptorChecks(client, input);
-      if (state !== "RETRY") {
-        return { state, reason };
+      const { state: state2, reason } = await acceptorChecks(client, input);
+      if (state2 !== "RETRY") {
+        return { state: state2, reason };
       }
       let currentAttempt = 1;
       const waitUntil = Date.now() + maxWaitTime * 1e3;
@@ -40397,9 +40403,9 @@ var require_dist_cjs70 = __commonJS({
           };
         }
         await sleep(delay);
-        const { state: state2, reason: reason2 } = await acceptorChecks(client, input);
-        if (state2 !== "RETRY") {
-          return { state: state2, reason: reason2 };
+        const { state: state22, reason: reason2 } = await acceptorChecks(client, input);
+        if (state22 !== "RETRY") {
+          return { state: state22, reason: reason2 };
         }
         currentAttempt += 1;
       }
