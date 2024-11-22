@@ -9,20 +9,21 @@
     ]
   },
   "scripts": {
-    "build": "yarn workspaces run build",
-    "test": "yarn workspaces run test",
+    "build": "yarn workspaces foreach -p -A run build",
+    "test": "yarn workspaces foreach -p -A run test",
     "lint": "concurrently 'yarn:lint:*'",
     "lint:es": "eslint . --ext .jsx,.js,.ts,.tsx --cache --cache-location .cache/.eslintcache",
     "lint:types": "tsc --incremental --tsBuildInfoFile .cache/.tsbuildinfo",
-    "prepare": "husky install",
-    "pre-commit": "lint-staged",
-    "deduplicate": "yarn-deduplicate --list && yarn-deduplicate --fail"
+    "prepare": "husky",
+    "pre-commit": "lint-staged"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@swc/core": "^1.9.2",
     "@swc/jest": "^0.2.37",
     "@types/node": "^22.9.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
     "@vkontakte/eslint-plugin": "^2.0.0",
     "@vkontakte/prettier-config": "^0.2.1",
     "concurrently": "^9.1.0",
@@ -47,12 +48,9 @@
       "eslint"
     ]
   },
-  "engines": {
-    "yarn": "^1.21.1"
-  },
   "resolutions": {
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@4.5.2+sha512.570504f67349ef26d2d86a768dc5ec976ead977aa086b0bb4237e97d5db7ae5c620f9f0e0edf3ea5047205063faff102bf2a2d778664a94eaaa1085ad483fe2e"
 }
