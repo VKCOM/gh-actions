@@ -1,0 +1,26 @@
+name: 'Corepack up PR'
+description: 'Create PR with corepack up'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run corepack up
+      run: corepack up
+      shell: bash
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        title: Corepack up
+        branch: github-actions/build/tools/corepack-up
+        commit-message: 'build(tools): corepack up'
+        body: |
+          Automated corepack up
+
+          ## Release notes
+          -
+        token: ${{ inputs.token }}
