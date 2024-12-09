@@ -33547,183 +33547,187 @@ var require_ruleset = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.ruleSet = void 0;
-    var ce = "required";
-    var cf = "type";
-    var cg = "conditions";
-    var ch = "fn";
-    var ci = "argv";
-    var cj = "ref";
-    var ck = "assign";
-    var cl = "url";
-    var cm = "properties";
-    var cn = "backend";
-    var co = "authSchemes";
-    var cp = "disableDoubleEncoding";
-    var cq = "signingName";
-    var cr = "signingRegion";
-    var cs = "headers";
-    var ct = "signingRegionSet";
-    var a = false;
-    var b = true;
-    var c = "isSet";
-    var d = "booleanEquals";
-    var e = "error";
-    var f = "aws.partition";
-    var g = "stringEquals";
-    var h = "getAttr";
-    var i = "name";
-    var j = "substring";
-    var k = "bucketSuffix";
-    var l = "parseURL";
-    var m = "{url#scheme}://{url#authority}/{uri_encoded_bucket}{url#path}";
-    var n = "endpoint";
-    var o = "tree";
-    var p = "aws.isVirtualHostableS3Bucket";
-    var q = "{url#scheme}://{Bucket}.{url#authority}{url#path}";
-    var r = "not";
-    var s = "{url#scheme}://{url#authority}{url#path}";
-    var t = "hardwareType";
-    var u = "regionPrefix";
-    var v = "bucketAliasSuffix";
-    var w = "outpostId";
-    var x = "isValidHostLabel";
-    var y = "sigv4a";
-    var z = "s3-outposts";
-    var A = "s3";
-    var B = "{url#scheme}://{url#authority}{url#normalizedPath}{Bucket}";
-    var C = "https://{Bucket}.s3-accelerate.{partitionResult#dnsSuffix}";
-    var D = "https://{Bucket}.s3.{partitionResult#dnsSuffix}";
-    var E = "aws.parseArn";
-    var F = "bucketArn";
-    var G = "arnType";
-    var H = "";
-    var I = "s3-object-lambda";
-    var J = "accesspoint";
-    var K = "accessPointName";
-    var L = "{url#scheme}://{accessPointName}-{bucketArn#accountId}.{url#authority}{url#path}";
-    var M = "mrapPartition";
-    var N = "outpostType";
-    var O = "arnPrefix";
-    var P = "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}";
-    var Q = "https://s3.{partitionResult#dnsSuffix}/{uri_encoded_bucket}";
-    var R = "https://s3.{partitionResult#dnsSuffix}";
-    var S = { [ce]: false, [cf]: "String" };
-    var T = { [ce]: true, "default": false, [cf]: "Boolean" };
-    var U = { [ce]: false, [cf]: "Boolean" };
-    var V = { [ch]: d, [ci]: [{ [cj]: "Accelerate" }, true] };
-    var W = { [ch]: d, [ci]: [{ [cj]: "UseFIPS" }, true] };
-    var X = { [ch]: d, [ci]: [{ [cj]: "UseDualStack" }, true] };
-    var Y = { [ch]: c, [ci]: [{ [cj]: "Endpoint" }] };
-    var Z = { [ch]: f, [ci]: [{ [cj]: "Region" }], [ck]: "partitionResult" };
-    var aa = { [ch]: g, [ci]: [{ [ch]: h, [ci]: [{ [cj]: "partitionResult" }, i] }, "aws-cn"] };
-    var ab = { [ch]: c, [ci]: [{ [cj]: "Bucket" }] };
-    var ac = { [cj]: "Bucket" };
-    var ad = { [ch]: l, [ci]: [{ [cj]: "Endpoint" }], [ck]: "url" };
-    var ae = { [ch]: d, [ci]: [{ [ch]: h, [ci]: [{ [cj]: "url" }, "isIp"] }, true] };
-    var af = { [cj]: "url" };
-    var ag = { [ch]: "uriEncode", [ci]: [ac], [ck]: "uri_encoded_bucket" };
-    var ah = { [cn]: "S3Express", [co]: [{ [cp]: true, [i]: "sigv4", [cq]: "s3express", [cr]: "{Region}" }] };
-    var ai = {};
-    var aj = { [ch]: p, [ci]: [ac, false] };
-    var ak = { [e]: "S3Express bucket name is not a valid virtual hostable name.", [cf]: e };
-    var al = { [cn]: "S3Express", [co]: [{ [cp]: true, [i]: "sigv4-s3express", [cq]: "s3express", [cr]: "{Region}" }] };
-    var am = { [ch]: c, [ci]: [{ [cj]: "UseS3ExpressControlEndpoint" }] };
-    var an = { [ch]: d, [ci]: [{ [cj]: "UseS3ExpressControlEndpoint" }, true] };
-    var ao = { [ch]: r, [ci]: [Y] };
-    var ap = { [e]: "Unrecognized S3Express bucket name format.", [cf]: e };
-    var aq = { [ch]: r, [ci]: [ab] };
-    var ar = { [cj]: t };
-    var as = { [cg]: [ao], [e]: "Expected a endpoint to be specified but no endpoint was found", [cf]: e };
-    var at = { [co]: [{ [cp]: true, [i]: y, [cq]: z, [ct]: ["*"] }, { [cp]: true, [i]: "sigv4", [cq]: z, [cr]: "{Region}" }] };
-    var au = { [ch]: d, [ci]: [{ [cj]: "ForcePathStyle" }, false] };
-    var av = { [cj]: "ForcePathStyle" };
-    var aw = { [ch]: d, [ci]: [{ [cj]: "Accelerate" }, false] };
-    var ax = { [ch]: g, [ci]: [{ [cj]: "Region" }, "aws-global"] };
-    var ay = { [co]: [{ [cp]: true, [i]: "sigv4", [cq]: A, [cr]: "us-east-1" }] };
-    var az = { [ch]: r, [ci]: [ax] };
-    var aA = { [ch]: d, [ci]: [{ [cj]: "UseGlobalEndpoint" }, true] };
-    var aB = { [cl]: "https://{Bucket}.s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [cm]: { [co]: [{ [cp]: true, [i]: "sigv4", [cq]: A, [cr]: "{Region}" }] }, [cs]: {} };
-    var aC = { [co]: [{ [cp]: true, [i]: "sigv4", [cq]: A, [cr]: "{Region}" }] };
-    var aD = { [ch]: d, [ci]: [{ [cj]: "UseGlobalEndpoint" }, false] };
-    var aE = { [ch]: d, [ci]: [{ [cj]: "UseDualStack" }, false] };
-    var aF = { [cl]: "https://{Bucket}.s3-fips.{Region}.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var aG = { [ch]: d, [ci]: [{ [cj]: "UseFIPS" }, false] };
-    var aH = { [cl]: "https://{Bucket}.s3-accelerate.dualstack.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var aI = { [cl]: "https://{Bucket}.s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var aJ = { [ch]: d, [ci]: [{ [ch]: h, [ci]: [af, "isIp"] }, false] };
-    var aK = { [cl]: B, [cm]: aC, [cs]: {} };
-    var aL = { [cl]: q, [cm]: aC, [cs]: {} };
-    var aM = { [n]: aL, [cf]: n };
-    var aN = { [cl]: C, [cm]: aC, [cs]: {} };
-    var aO = { [cl]: "https://{Bucket}.s3.{Region}.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var aP = { [e]: "Invalid region: region was not a valid DNS name.", [cf]: e };
-    var aQ = { [cj]: F };
-    var aR = { [cj]: G };
-    var aS = { [ch]: h, [ci]: [aQ, "service"] };
-    var aT = { [cj]: K };
-    var aU = { [cg]: [X], [e]: "S3 Object Lambda does not support Dual-stack", [cf]: e };
-    var aV = { [cg]: [V], [e]: "S3 Object Lambda does not support S3 Accelerate", [cf]: e };
-    var aW = { [cg]: [{ [ch]: c, [ci]: [{ [cj]: "DisableAccessPoints" }] }, { [ch]: d, [ci]: [{ [cj]: "DisableAccessPoints" }, true] }], [e]: "Access points are not supported for this operation", [cf]: e };
-    var aX = { [cg]: [{ [ch]: c, [ci]: [{ [cj]: "UseArnRegion" }] }, { [ch]: d, [ci]: [{ [cj]: "UseArnRegion" }, false] }, { [ch]: r, [ci]: [{ [ch]: g, [ci]: [{ [ch]: h, [ci]: [aQ, "region"] }, "{Region}"] }] }], [e]: "Invalid configuration: region from ARN `{bucketArn#region}` does not match client region `{Region}` and UseArnRegion is `false`", [cf]: e };
-    var aY = { [ch]: h, [ci]: [{ [cj]: "bucketPartition" }, i] };
-    var aZ = { [ch]: h, [ci]: [aQ, "accountId"] };
-    var ba = { [co]: [{ [cp]: true, [i]: "sigv4", [cq]: I, [cr]: "{bucketArn#region}" }] };
-    var bb = { [e]: "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `{accessPointName}`", [cf]: e };
-    var bc = { [e]: "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: `{bucketArn#accountId}`", [cf]: e };
-    var bd = { [e]: "Invalid region in ARN: `{bucketArn#region}` (invalid DNS name)", [cf]: e };
-    var be = { [e]: "Client was configured for partition `{partitionResult#name}` but ARN (`{Bucket}`) has `{bucketPartition#name}`", [cf]: e };
-    var bf = { [e]: "Invalid ARN: The ARN may only contain a single resource component after `accesspoint`.", [cf]: e };
-    var bg = { [e]: "Invalid ARN: Expected a resource of the format `accesspoint:<accesspoint name>` but no name was provided", [cf]: e };
-    var bh = { [co]: [{ [cp]: true, [i]: "sigv4", [cq]: A, [cr]: "{bucketArn#region}" }] };
-    var bi = { [co]: [{ [cp]: true, [i]: y, [cq]: z, [ct]: ["*"] }, { [cp]: true, [i]: "sigv4", [cq]: z, [cr]: "{bucketArn#region}" }] };
-    var bj = { [ch]: E, [ci]: [ac] };
-    var bk = { [cl]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: aC, [cs]: {} };
-    var bl = { [cl]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: aC, [cs]: {} };
-    var bm = { [cl]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: aC, [cs]: {} };
-    var bn = { [cl]: P, [cm]: aC, [cs]: {} };
-    var bo = { [cl]: "https://s3.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: aC, [cs]: {} };
-    var bp = { [cj]: "UseObjectLambdaEndpoint" };
-    var bq = { [co]: [{ [cp]: true, [i]: "sigv4", [cq]: I, [cr]: "{Region}" }] };
-    var br = { [cl]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var bs = { [cl]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var bt = { [cl]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var bu = { [cl]: s, [cm]: aC, [cs]: {} };
-    var bv = { [cl]: "https://s3.{Region}.{partitionResult#dnsSuffix}", [cm]: aC, [cs]: {} };
-    var bw = [{ [cj]: "Region" }];
-    var bx = [{ [cj]: "Endpoint" }];
-    var by = [ac];
-    var bz = [X];
-    var bA = [V];
-    var bB = [Y, ad];
-    var bC = [{ [ch]: c, [ci]: [{ [cj]: "DisableS3ExpressSessionAuth" }] }, { [ch]: d, [ci]: [{ [cj]: "DisableS3ExpressSessionAuth" }, true] }];
-    var bD = [ae];
-    var bE = [ag];
-    var bF = [aj];
-    var bG = [W];
-    var bH = [{ [ch]: j, [ci]: [ac, 6, 14, true], [ck]: "s3expressAvailabilityZoneId" }, { [ch]: j, [ci]: [ac, 14, 16, true], [ck]: "s3expressAvailabilityZoneDelim" }, { [ch]: g, [ci]: [{ [cj]: "s3expressAvailabilityZoneDelim" }, "--"] }];
-    var bI = [{ [cg]: [W], [n]: { [cl]: "https://{Bucket}.s3express-fips-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cm]: ah, [cs]: {} }, [cf]: n }, { [n]: { [cl]: "https://{Bucket}.s3express-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cm]: ah, [cs]: {} }, [cf]: n }];
-    var bJ = [{ [ch]: j, [ci]: [ac, 6, 15, true], [ck]: "s3expressAvailabilityZoneId" }, { [ch]: j, [ci]: [ac, 15, 17, true], [ck]: "s3expressAvailabilityZoneDelim" }, { [ch]: g, [ci]: [{ [cj]: "s3expressAvailabilityZoneDelim" }, "--"] }];
-    var bK = [{ [cg]: [W], [n]: { [cl]: "https://{Bucket}.s3express-fips-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cm]: al, [cs]: {} }, [cf]: n }, { [n]: { [cl]: "https://{Bucket}.s3express-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cm]: al, [cs]: {} }, [cf]: n }];
-    var bL = [ab];
-    var bM = [{ [ch]: x, [ci]: [{ [cj]: w }, false] }];
-    var bN = [{ [ch]: g, [ci]: [{ [cj]: u }, "beta"] }];
-    var bO = ["*"];
-    var bP = [Z];
-    var bQ = [{ [ch]: x, [ci]: [{ [cj]: "Region" }, false] }];
-    var bR = [{ [ch]: g, [ci]: [{ [cj]: "Region" }, "us-east-1"] }];
-    var bS = [{ [ch]: g, [ci]: [aR, J] }];
-    var bT = [{ [ch]: h, [ci]: [aQ, "resourceId[1]"], [ck]: K }, { [ch]: r, [ci]: [{ [ch]: g, [ci]: [aT, H] }] }];
-    var bU = [aQ, "resourceId[1]"];
-    var bV = [{ [ch]: r, [ci]: [{ [ch]: g, [ci]: [{ [ch]: h, [ci]: [aQ, "region"] }, H] }] }];
-    var bW = [{ [ch]: r, [ci]: [{ [ch]: c, [ci]: [{ [ch]: h, [ci]: [aQ, "resourceId[2]"] }] }] }];
-    var bX = [aQ, "resourceId[2]"];
-    var bY = [{ [ch]: f, [ci]: [{ [ch]: h, [ci]: [aQ, "region"] }], [ck]: "bucketPartition" }];
-    var bZ = [{ [ch]: g, [ci]: [aY, { [ch]: h, [ci]: [{ [cj]: "partitionResult" }, i] }] }];
-    var ca = [{ [ch]: x, [ci]: [{ [ch]: h, [ci]: [aQ, "region"] }, true] }];
-    var cb = [{ [ch]: x, [ci]: [aZ, false] }];
-    var cc = [{ [ch]: x, [ci]: [aT, false] }];
-    var cd = [{ [ch]: x, [ci]: [{ [cj]: "Region" }, true] }];
-    var _data = { version: "1.0", parameters: { Bucket: S, Region: S, UseFIPS: T, UseDualStack: T, Endpoint: S, ForcePathStyle: T, Accelerate: T, UseGlobalEndpoint: T, UseObjectLambdaEndpoint: U, Key: S, Prefix: S, CopySource: S, DisableAccessPoints: U, DisableMultiRegionAccessPoints: T, UseArnRegion: U, UseS3ExpressControlEndpoint: U, DisableS3ExpressSessionAuth: U }, rules: [{ [cg]: [{ [ch]: c, [ci]: bw }], rules: [{ [cg]: [V, W], error: "Accelerate cannot be used with FIPS", [cf]: e }, { [cg]: [X, Y], error: "Cannot set dual-stack in combination with a custom endpoint.", [cf]: e }, { [cg]: [Y, W], error: "A custom endpoint cannot be combined with FIPS", [cf]: e }, { [cg]: [Y, V], error: "A custom endpoint cannot be combined with S3 Accelerate", [cf]: e }, { [cg]: [W, Z, aa], error: "Partition does not support FIPS", [cf]: e }, { [cg]: [ab, { [ch]: j, [ci]: [ac, 0, 6, b], [ck]: k }, { [ch]: g, [ci]: [{ [cj]: k }, "--x-s3"] }], rules: [{ [cg]: bz, error: "S3Express does not support Dual-stack.", [cf]: e }, { [cg]: bA, error: "S3Express does not support S3 Accelerate.", [cf]: e }, { [cg]: bB, rules: [{ [cg]: bC, rules: [{ [cg]: bD, rules: [{ [cg]: bE, rules: [{ endpoint: { [cl]: m, [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ endpoint: { [cl]: q, [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }, ak], [cf]: o }, { [cg]: bD, rules: [{ [cg]: bE, rules: [{ endpoint: { [cl]: m, [cm]: al, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ endpoint: { [cl]: q, [cm]: al, [cs]: ai }, [cf]: n }], [cf]: o }, ak], [cf]: o }, { [cg]: [am, an], rules: [{ [cg]: [ag, ao], rules: [{ [cg]: bG, endpoint: { [cl]: "https://s3express-control-fips.{Region}.amazonaws.com/{uri_encoded_bucket}", [cm]: ah, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3express-control.{Region}.amazonaws.com/{uri_encoded_bucket}", [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }], [cf]: o }, { [cg]: bF, rules: [{ [cg]: bC, rules: [{ [cg]: bH, rules: bI, [cf]: o }, { [cg]: bJ, rules: bI, [cf]: o }, ap], [cf]: o }, { [cg]: bH, rules: bK, [cf]: o }, { [cg]: bJ, rules: bK, [cf]: o }, ap], [cf]: o }, ak], [cf]: o }, { [cg]: [aq, am, an], rules: [{ [cg]: bB, endpoint: { [cl]: s, [cm]: ah, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://s3express-control-fips.{Region}.amazonaws.com", [cm]: ah, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3express-control.{Region}.amazonaws.com", [cm]: ah, [cs]: ai }, [cf]: n }], [cf]: o }, { [cg]: [ab, { [ch]: j, [ci]: [ac, 49, 50, b], [ck]: t }, { [ch]: j, [ci]: [ac, 8, 12, b], [ck]: u }, { [ch]: j, [ci]: [ac, 0, 7, b], [ck]: v }, { [ch]: j, [ci]: [ac, 32, 49, b], [ck]: w }, { [ch]: f, [ci]: bw, [ck]: "regionPartition" }, { [ch]: g, [ci]: [{ [cj]: v }, "--op-s3"] }], rules: [{ [cg]: bM, rules: [{ [cg]: [{ [ch]: g, [ci]: [ar, "e"] }], rules: [{ [cg]: bN, rules: [as, { [cg]: bB, endpoint: { [cl]: "https://{Bucket}.ec2.{url#authority}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { endpoint: { [cl]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { [cg]: [{ [ch]: g, [ci]: [ar, "o"] }], rules: [{ [cg]: bN, rules: [as, { [cg]: bB, endpoint: { [cl]: "https://{Bucket}.op-{outpostId}.{url#authority}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { endpoint: { [cl]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cm]: at, [cs]: ai }, [cf]: n }], [cf]: o }, { error: 'Unrecognized hardware type: "Expected hardware type o or e but got {hardwareType}"', [cf]: e }], [cf]: o }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [cf]: e }], [cf]: o }, { [cg]: bL, rules: [{ [cg]: [Y, { [ch]: r, [ci]: [{ [ch]: c, [ci]: [{ [ch]: l, [ci]: bx }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [cf]: e }, { [cg]: [au, aj], rules: [{ [cg]: bP, rules: [{ [cg]: bQ, rules: [{ [cg]: [V, aa], error: "S3 Accelerate cannot be used in this region", [cf]: e }, { [cg]: [X, W, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, W, aw, ao, az, aA], rules: [{ endpoint: aB, [cf]: n }], [cf]: o }, { [cg]: [X, W, aw, ao, az, aD], endpoint: aB, [cf]: n }, { [cg]: [aE, W, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, W, aw, ao, az, aA], rules: [{ endpoint: aF, [cf]: n }], [cf]: o }, { [cg]: [aE, W, aw, ao, az, aD], endpoint: aF, [cf]: n }, { [cg]: [X, aG, V, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, aG, V, ao, az, aA], rules: [{ endpoint: aH, [cf]: n }], [cf]: o }, { [cg]: [X, aG, V, ao, az, aD], endpoint: aH, [cf]: n }, { [cg]: [X, aG, aw, ao, ax], endpoint: { [cl]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, aG, aw, ao, az, aA], rules: [{ endpoint: aI, [cf]: n }], [cf]: o }, { [cg]: [X, aG, aw, ao, az, aD], endpoint: aI, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, ae, ax], endpoint: { [cl]: B, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, aJ, ax], endpoint: { [cl]: q, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, ae, az, aA], rules: [{ [cg]: bR, endpoint: aK, [cf]: n }, { endpoint: aK, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, aw, Y, ad, aJ, az, aA], rules: [{ [cg]: bR, endpoint: aL, [cf]: n }, aM], [cf]: o }, { [cg]: [aE, aG, aw, Y, ad, ae, az, aD], endpoint: aK, [cf]: n }, { [cg]: [aE, aG, aw, Y, ad, aJ, az, aD], endpoint: aL, [cf]: n }, { [cg]: [aE, aG, V, ao, ax], endpoint: { [cl]: C, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, V, ao, az, aA], rules: [{ [cg]: bR, endpoint: aN, [cf]: n }, { endpoint: aN, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, V, ao, az, aD], endpoint: aN, [cf]: n }, { [cg]: [aE, aG, aw, ao, ax], endpoint: { [cl]: D, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, aG, aw, ao, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: D, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: aO, [cf]: n }], [cf]: o }, { [cg]: [aE, aG, aw, ao, az, aD], endpoint: aO, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [Y, ad, { [ch]: g, [ci]: [{ [ch]: h, [ci]: [af, "scheme"] }, "http"] }, { [ch]: p, [ci]: [ac, b] }, au, aG, aE, aw], rules: [{ [cg]: bP, rules: [{ [cg]: bQ, rules: [aM], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [au, { [ch]: E, [ci]: by, [ck]: F }], rules: [{ [cg]: [{ [ch]: h, [ci]: [aQ, "resourceId[0]"], [ck]: G }, { [ch]: r, [ci]: [{ [ch]: g, [ci]: [aR, H] }] }], rules: [{ [cg]: [{ [ch]: g, [ci]: [aS, I] }], rules: [{ [cg]: bS, rules: [{ [cg]: bT, rules: [aU, aV, { [cg]: bV, rules: [aW, { [cg]: bW, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: bZ, rules: [{ [cg]: ca, rules: [{ [cg]: [{ [ch]: g, [ci]: [aZ, H] }], error: "Invalid ARN: Missing account id", [cf]: e }, { [cg]: cb, rules: [{ [cg]: cc, rules: [{ [cg]: bB, endpoint: { [cl]: L, [cm]: ba, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: ba, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: ba, [cs]: ai }, [cf]: n }], [cf]: o }, bb], [cf]: o }, bc], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, bf], [cf]: o }, { error: "Invalid ARN: bucket ARN is missing a region", [cf]: e }], [cf]: o }, bg], [cf]: o }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [cf]: e }], [cf]: o }, { [cg]: bS, rules: [{ [cg]: bT, rules: [{ [cg]: bV, rules: [{ [cg]: bS, rules: [{ [cg]: bV, rules: [aW, { [cg]: bW, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: [{ [ch]: g, [ci]: [aY, "{partitionResult#name}"] }], rules: [{ [cg]: ca, rules: [{ [cg]: [{ [ch]: g, [ci]: [aS, A] }], rules: [{ [cg]: cb, rules: [{ [cg]: cc, rules: [{ [cg]: bA, error: "Access Points do not support S3 Accelerate", [cf]: e }, { [cg]: [W, X], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [W, aE], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, X], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, Y, ad], endpoint: { [cl]: L, [cm]: bh, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE], endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bh, [cs]: ai }, [cf]: n }], [cf]: o }, bb], [cf]: o }, bc], [cf]: o }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [cf]: e }], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, bf], [cf]: o }], [cf]: o }], [cf]: o }, { [cg]: [{ [ch]: x, [ci]: [aT, b] }], rules: [{ [cg]: bz, error: "S3 MRAP does not support dual-stack", [cf]: e }, { [cg]: bG, error: "S3 MRAP does not support FIPS", [cf]: e }, { [cg]: bA, error: "S3 MRAP does not support S3 Accelerate", [cf]: e }, { [cg]: [{ [ch]: d, [ci]: [{ [cj]: "DisableMultiRegionAccessPoints" }, b] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [cf]: e }, { [cg]: [{ [ch]: f, [ci]: bw, [ck]: M }], rules: [{ [cg]: [{ [ch]: g, [ci]: [{ [ch]: h, [ci]: [{ [cj]: M }, i] }, { [ch]: h, [ci]: [aQ, "partition"] }] }], rules: [{ endpoint: { [cl]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [cm]: { [co]: [{ [cp]: b, name: y, [cq]: A, [ct]: bO }] }, [cs]: ai }, [cf]: n }], [cf]: o }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [cf]: e }], [cf]: o }], [cf]: o }, { error: "Invalid Access Point Name", [cf]: e }], [cf]: o }, bg], [cf]: o }, { [cg]: [{ [ch]: g, [ci]: [aS, z] }], rules: [{ [cg]: bz, error: "S3 Outposts does not support Dual-stack", [cf]: e }, { [cg]: bG, error: "S3 Outposts does not support FIPS", [cf]: e }, { [cg]: bA, error: "S3 Outposts does not support S3 Accelerate", [cf]: e }, { [cg]: [{ [ch]: c, [ci]: [{ [ch]: h, [ci]: [aQ, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [cf]: e }, { [cg]: [{ [ch]: h, [ci]: bU, [ck]: w }], rules: [{ [cg]: bM, rules: [aX, { [cg]: bY, rules: [{ [cg]: bP, rules: [{ [cg]: bZ, rules: [{ [cg]: ca, rules: [{ [cg]: cb, rules: [{ [cg]: [{ [ch]: h, [ci]: bX, [ck]: N }], rules: [{ [cg]: [{ [ch]: h, [ci]: [aQ, "resourceId[3]"], [ck]: K }], rules: [{ [cg]: [{ [ch]: g, [ci]: [{ [cj]: N }, J] }], rules: [{ [cg]: bB, endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [cm]: bi, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cm]: bi, [cs]: ai }, [cf]: n }], [cf]: o }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [cf]: e }], [cf]: o }, { error: "Invalid ARN: expected an access point name", [cf]: e }], [cf]: o }, { error: "Invalid ARN: Expected a 4-component resource", [cf]: e }], [cf]: o }, bc], [cf]: o }, bd], [cf]: o }, be], [cf]: o }], [cf]: o }], [cf]: o }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [cf]: e }], [cf]: o }, { error: "Invalid ARN: The Outpost Id was not set", [cf]: e }], [cf]: o }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [cf]: e }], [cf]: o }, { error: "Invalid ARN: No ARN type specified", [cf]: e }], [cf]: o }, { [cg]: [{ [ch]: j, [ci]: [ac, 0, 4, a], [ck]: O }, { [ch]: g, [ci]: [{ [cj]: O }, "arn:"] }, { [ch]: r, [ci]: [{ [ch]: c, [ci]: [bj] }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [cf]: e }, { [cg]: [{ [ch]: d, [ci]: [av, b] }, bj], error: "Path-style addressing cannot be used with ARN buckets", [cf]: e }, { [cg]: bE, rules: [{ [cg]: bP, rules: [{ [cg]: [aw], rules: [{ [cg]: [X, ao, W, ax], endpoint: { [cl]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, ao, W, az, aA], rules: [{ endpoint: bk, [cf]: n }], [cf]: o }, { [cg]: [X, ao, W, az, aD], endpoint: bk, [cf]: n }, { [cg]: [aE, ao, W, ax], endpoint: { [cl]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, ao, W, az, aA], rules: [{ endpoint: bl, [cf]: n }], [cf]: o }, { [cg]: [aE, ao, W, az, aD], endpoint: bl, [cf]: n }, { [cg]: [X, ao, aG, ax], endpoint: { [cl]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [X, ao, aG, az, aA], rules: [{ endpoint: bm, [cf]: n }], [cf]: o }, { [cg]: [X, ao, aG, az, aD], endpoint: bm, [cf]: n }, { [cg]: [aE, Y, ad, aG, ax], endpoint: { [cl]: P, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, Y, ad, aG, az, aA], rules: [{ [cg]: bR, endpoint: bn, [cf]: n }, { endpoint: bn, [cf]: n }], [cf]: o }, { [cg]: [aE, Y, ad, aG, az, aD], endpoint: bn, [cf]: n }, { [cg]: [aE, ao, aG, ax], endpoint: { [cl]: Q, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aE, ao, aG, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: Q, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: bo, [cf]: n }], [cf]: o }, { [cg]: [aE, ao, aG, az, aD], endpoint: bo, [cf]: n }], [cf]: o }, { error: "Path-style addressing cannot be used with S3 Accelerate", [cf]: e }], [cf]: o }], [cf]: o }], [cf]: o }, { [cg]: [{ [ch]: c, [ci]: [bp] }, { [ch]: d, [ci]: [bp, b] }], rules: [{ [cg]: bP, rules: [{ [cg]: cd, rules: [aU, aV, { [cg]: bB, endpoint: { [cl]: s, [cm]: bq, [cs]: ai }, [cf]: n }, { [cg]: bG, endpoint: { [cl]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [cm]: bq, [cs]: ai }, [cf]: n }, { endpoint: { [cl]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [cm]: bq, [cs]: ai }, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }, { [cg]: [aq], rules: [{ [cg]: bP, rules: [{ [cg]: cd, rules: [{ [cg]: [W, X, ao, ax], endpoint: { [cl]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [W, X, ao, az, aA], rules: [{ endpoint: br, [cf]: n }], [cf]: o }, { [cg]: [W, X, ao, az, aD], endpoint: br, [cf]: n }, { [cg]: [W, aE, ao, ax], endpoint: { [cl]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [W, aE, ao, az, aA], rules: [{ endpoint: bs, [cf]: n }], [cf]: o }, { [cg]: [W, aE, ao, az, aD], endpoint: bs, [cf]: n }, { [cg]: [aG, X, ao, ax], endpoint: { [cl]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, X, ao, az, aA], rules: [{ endpoint: bt, [cf]: n }], [cf]: o }, { [cg]: [aG, X, ao, az, aD], endpoint: bt, [cf]: n }, { [cg]: [aG, aE, Y, ad, ax], endpoint: { [cl]: s, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, Y, ad, az, aA], rules: [{ [cg]: bR, endpoint: bu, [cf]: n }, { endpoint: bu, [cf]: n }], [cf]: o }, { [cg]: [aG, aE, Y, ad, az, aD], endpoint: bu, [cf]: n }, { [cg]: [aG, aE, ao, ax], endpoint: { [cl]: R, [cm]: ay, [cs]: ai }, [cf]: n }, { [cg]: [aG, aE, ao, az, aA], rules: [{ [cg]: bR, endpoint: { [cl]: R, [cm]: aC, [cs]: ai }, [cf]: n }, { endpoint: bv, [cf]: n }], [cf]: o }, { [cg]: [aG, aE, ao, az, aD], endpoint: bv, [cf]: n }], [cf]: o }, aP], [cf]: o }], [cf]: o }], [cf]: o }, { error: "A region must be set when sending requests to S3.", [cf]: e }] };
+    var ci = "required";
+    var cj = "type";
+    var ck = "conditions";
+    var cl = "fn";
+    var cm = "argv";
+    var cn = "ref";
+    var co = "assign";
+    var cp = "url";
+    var cq = "properties";
+    var cr = "backend";
+    var cs = "authSchemes";
+    var ct = "disableDoubleEncoding";
+    var cu = "signingName";
+    var cv = "signingRegion";
+    var cw = "headers";
+    var cx = "signingRegionSet";
+    var a = 6;
+    var b = false;
+    var c = true;
+    var d = "isSet";
+    var e = "booleanEquals";
+    var f = "error";
+    var g = "aws.partition";
+    var h = "stringEquals";
+    var i = "getAttr";
+    var j = "name";
+    var k = "substring";
+    var l = "bucketSuffix";
+    var m = "parseURL";
+    var n = "{url#scheme}://{url#authority}/{uri_encoded_bucket}{url#path}";
+    var o = "endpoint";
+    var p = "tree";
+    var q = "aws.isVirtualHostableS3Bucket";
+    var r = "{url#scheme}://{Bucket}.{url#authority}{url#path}";
+    var s = "not";
+    var t = "{url#scheme}://{url#authority}{url#path}";
+    var u = "hardwareType";
+    var v = "regionPrefix";
+    var w = "bucketAliasSuffix";
+    var x = "outpostId";
+    var y = "isValidHostLabel";
+    var z = "sigv4a";
+    var A = "s3-outposts";
+    var B = "s3";
+    var C = "{url#scheme}://{url#authority}{url#normalizedPath}{Bucket}";
+    var D = "https://{Bucket}.s3-accelerate.{partitionResult#dnsSuffix}";
+    var E = "https://{Bucket}.s3.{partitionResult#dnsSuffix}";
+    var F = "aws.parseArn";
+    var G = "bucketArn";
+    var H = "arnType";
+    var I = "";
+    var J = "s3-object-lambda";
+    var K = "accesspoint";
+    var L = "accessPointName";
+    var M = "{url#scheme}://{accessPointName}-{bucketArn#accountId}.{url#authority}{url#path}";
+    var N = "mrapPartition";
+    var O = "outpostType";
+    var P = "arnPrefix";
+    var Q = "{url#scheme}://{url#authority}{url#normalizedPath}{uri_encoded_bucket}";
+    var R = "https://s3.{partitionResult#dnsSuffix}/{uri_encoded_bucket}";
+    var S = "https://s3.{partitionResult#dnsSuffix}";
+    var T = { [ci]: false, [cj]: "String" };
+    var U = { [ci]: true, "default": false, [cj]: "Boolean" };
+    var V = { [ci]: false, [cj]: "Boolean" };
+    var W = { [cl]: e, [cm]: [{ [cn]: "Accelerate" }, true] };
+    var X = { [cl]: e, [cm]: [{ [cn]: "UseFIPS" }, true] };
+    var Y = { [cl]: e, [cm]: [{ [cn]: "UseDualStack" }, true] };
+    var Z = { [cl]: d, [cm]: [{ [cn]: "Endpoint" }] };
+    var aa = { [cl]: g, [cm]: [{ [cn]: "Region" }], [co]: "partitionResult" };
+    var ab = { [cl]: h, [cm]: [{ [cl]: i, [cm]: [{ [cn]: "partitionResult" }, j] }, "aws-cn"] };
+    var ac = { [cl]: d, [cm]: [{ [cn]: "Bucket" }] };
+    var ad = { [cn]: "Bucket" };
+    var ae = { [cl]: m, [cm]: [{ [cn]: "Endpoint" }], [co]: "url" };
+    var af = { [cl]: e, [cm]: [{ [cl]: i, [cm]: [{ [cn]: "url" }, "isIp"] }, true] };
+    var ag = { [cn]: "url" };
+    var ah = { [cl]: "uriEncode", [cm]: [ad], [co]: "uri_encoded_bucket" };
+    var ai = { [cr]: "S3Express", [cs]: [{ [ct]: true, [j]: "sigv4", [cu]: "s3express", [cv]: "{Region}" }] };
+    var aj = {};
+    var ak = { [cl]: q, [cm]: [ad, false] };
+    var al = { [f]: "S3Express bucket name is not a valid virtual hostable name.", [cj]: f };
+    var am = { [cr]: "S3Express", [cs]: [{ [ct]: true, [j]: "sigv4-s3express", [cu]: "s3express", [cv]: "{Region}" }] };
+    var an = { [cl]: d, [cm]: [{ [cn]: "UseS3ExpressControlEndpoint" }] };
+    var ao = { [cl]: e, [cm]: [{ [cn]: "UseS3ExpressControlEndpoint" }, true] };
+    var ap = { [cl]: s, [cm]: [Z] };
+    var aq = { [f]: "Unrecognized S3Express bucket name format.", [cj]: f };
+    var ar = { [cl]: s, [cm]: [ac] };
+    var as = { [cn]: u };
+    var at = { [ck]: [ap], [f]: "Expected a endpoint to be specified but no endpoint was found", [cj]: f };
+    var au = { [cs]: [{ [ct]: true, [j]: z, [cu]: A, [cx]: ["*"] }, { [ct]: true, [j]: "sigv4", [cu]: A, [cv]: "{Region}" }] };
+    var av = { [cl]: e, [cm]: [{ [cn]: "ForcePathStyle" }, false] };
+    var aw = { [cn]: "ForcePathStyle" };
+    var ax = { [cl]: e, [cm]: [{ [cn]: "Accelerate" }, false] };
+    var ay = { [cl]: h, [cm]: [{ [cn]: "Region" }, "aws-global"] };
+    var az = { [cs]: [{ [ct]: true, [j]: "sigv4", [cu]: B, [cv]: "us-east-1" }] };
+    var aA = { [cl]: s, [cm]: [ay] };
+    var aB = { [cl]: e, [cm]: [{ [cn]: "UseGlobalEndpoint" }, true] };
+    var aC = { [cp]: "https://{Bucket}.s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [cq]: { [cs]: [{ [ct]: true, [j]: "sigv4", [cu]: B, [cv]: "{Region}" }] }, [cw]: {} };
+    var aD = { [cs]: [{ [ct]: true, [j]: "sigv4", [cu]: B, [cv]: "{Region}" }] };
+    var aE = { [cl]: e, [cm]: [{ [cn]: "UseGlobalEndpoint" }, false] };
+    var aF = { [cl]: e, [cm]: [{ [cn]: "UseDualStack" }, false] };
+    var aG = { [cp]: "https://{Bucket}.s3-fips.{Region}.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var aH = { [cl]: e, [cm]: [{ [cn]: "UseFIPS" }, false] };
+    var aI = { [cp]: "https://{Bucket}.s3-accelerate.dualstack.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var aJ = { [cp]: "https://{Bucket}.s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var aK = { [cl]: e, [cm]: [{ [cl]: i, [cm]: [ag, "isIp"] }, false] };
+    var aL = { [cp]: C, [cq]: aD, [cw]: {} };
+    var aM = { [cp]: r, [cq]: aD, [cw]: {} };
+    var aN = { [o]: aM, [cj]: o };
+    var aO = { [cp]: D, [cq]: aD, [cw]: {} };
+    var aP = { [cp]: "https://{Bucket}.s3.{Region}.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var aQ = { [f]: "Invalid region: region was not a valid DNS name.", [cj]: f };
+    var aR = { [cn]: G };
+    var aS = { [cn]: H };
+    var aT = { [cl]: i, [cm]: [aR, "service"] };
+    var aU = { [cn]: L };
+    var aV = { [ck]: [Y], [f]: "S3 Object Lambda does not support Dual-stack", [cj]: f };
+    var aW = { [ck]: [W], [f]: "S3 Object Lambda does not support S3 Accelerate", [cj]: f };
+    var aX = { [ck]: [{ [cl]: d, [cm]: [{ [cn]: "DisableAccessPoints" }] }, { [cl]: e, [cm]: [{ [cn]: "DisableAccessPoints" }, true] }], [f]: "Access points are not supported for this operation", [cj]: f };
+    var aY = { [ck]: [{ [cl]: d, [cm]: [{ [cn]: "UseArnRegion" }] }, { [cl]: e, [cm]: [{ [cn]: "UseArnRegion" }, false] }, { [cl]: s, [cm]: [{ [cl]: h, [cm]: [{ [cl]: i, [cm]: [aR, "region"] }, "{Region}"] }] }], [f]: "Invalid configuration: region from ARN `{bucketArn#region}` does not match client region `{Region}` and UseArnRegion is `false`", [cj]: f };
+    var aZ = { [cl]: i, [cm]: [{ [cn]: "bucketPartition" }, j] };
+    var ba = { [cl]: i, [cm]: [aR, "accountId"] };
+    var bb = { [cs]: [{ [ct]: true, [j]: "sigv4", [cu]: J, [cv]: "{bucketArn#region}" }] };
+    var bc = { [f]: "Invalid ARN: The access point name may only contain a-z, A-Z, 0-9 and `-`. Found: `{accessPointName}`", [cj]: f };
+    var bd = { [f]: "Invalid ARN: The account id may only contain a-z, A-Z, 0-9 and `-`. Found: `{bucketArn#accountId}`", [cj]: f };
+    var be = { [f]: "Invalid region in ARN: `{bucketArn#region}` (invalid DNS name)", [cj]: f };
+    var bf = { [f]: "Client was configured for partition `{partitionResult#name}` but ARN (`{Bucket}`) has `{bucketPartition#name}`", [cj]: f };
+    var bg = { [f]: "Invalid ARN: The ARN may only contain a single resource component after `accesspoint`.", [cj]: f };
+    var bh = { [f]: "Invalid ARN: Expected a resource of the format `accesspoint:<accesspoint name>` but no name was provided", [cj]: f };
+    var bi = { [cs]: [{ [ct]: true, [j]: "sigv4", [cu]: B, [cv]: "{bucketArn#region}" }] };
+    var bj = { [cs]: [{ [ct]: true, [j]: z, [cu]: A, [cx]: ["*"] }, { [ct]: true, [j]: "sigv4", [cu]: A, [cv]: "{bucketArn#region}" }] };
+    var bk = { [cl]: F, [cm]: [ad] };
+    var bl = { [cp]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cq]: aD, [cw]: {} };
+    var bm = { [cp]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cq]: aD, [cw]: {} };
+    var bn = { [cp]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cq]: aD, [cw]: {} };
+    var bo = { [cp]: Q, [cq]: aD, [cw]: {} };
+    var bp = { [cp]: "https://s3.{Region}.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cq]: aD, [cw]: {} };
+    var bq = { [cn]: "UseObjectLambdaEndpoint" };
+    var br = { [cs]: [{ [ct]: true, [j]: "sigv4", [cu]: J, [cv]: "{Region}" }] };
+    var bs = { [cp]: "https://s3-fips.dualstack.{Region}.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var bt = { [cp]: "https://s3-fips.{Region}.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var bu = { [cp]: "https://s3.dualstack.{Region}.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var bv = { [cp]: t, [cq]: aD, [cw]: {} };
+    var bw = { [cp]: "https://s3.{Region}.{partitionResult#dnsSuffix}", [cq]: aD, [cw]: {} };
+    var bx = [{ [cn]: "Region" }];
+    var by = [{ [cn]: "Endpoint" }];
+    var bz = [ad];
+    var bA = [Y];
+    var bB = [W];
+    var bC = [Z, ae];
+    var bD = [{ [cl]: d, [cm]: [{ [cn]: "DisableS3ExpressSessionAuth" }] }, { [cl]: e, [cm]: [{ [cn]: "DisableS3ExpressSessionAuth" }, true] }];
+    var bE = [af];
+    var bF = [ah];
+    var bG = [ak];
+    var bH = [X];
+    var bI = [{ [cl]: k, [cm]: [ad, 6, 14, true], [co]: "s3expressAvailabilityZoneId" }, { [cl]: k, [cm]: [ad, 14, 16, true], [co]: "s3expressAvailabilityZoneDelim" }, { [cl]: h, [cm]: [{ [cn]: "s3expressAvailabilityZoneDelim" }, "--"] }];
+    var bJ = [{ [ck]: [X], [o]: { [cp]: "https://{Bucket}.s3express-fips-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cq]: ai, [cw]: {} }, [cj]: o }, { [o]: { [cp]: "https://{Bucket}.s3express-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cq]: ai, [cw]: {} }, [cj]: o }];
+    var bK = [{ [cl]: k, [cm]: [ad, 6, 15, true], [co]: "s3expressAvailabilityZoneId" }, { [cl]: k, [cm]: [ad, 15, 17, true], [co]: "s3expressAvailabilityZoneDelim" }, { [cl]: h, [cm]: [{ [cn]: "s3expressAvailabilityZoneDelim" }, "--"] }];
+    var bL = [{ [cl]: k, [cm]: [ad, 6, 19, true], [co]: "s3expressAvailabilityZoneId" }, { [cl]: k, [cm]: [ad, 19, 21, true], [co]: "s3expressAvailabilityZoneDelim" }, { [cl]: h, [cm]: [{ [cn]: "s3expressAvailabilityZoneDelim" }, "--"] }];
+    var bM = [{ [cl]: k, [cm]: [ad, 6, 20, true], [co]: "s3expressAvailabilityZoneId" }, { [cl]: k, [cm]: [ad, 20, 22, true], [co]: "s3expressAvailabilityZoneDelim" }, { [cl]: h, [cm]: [{ [cn]: "s3expressAvailabilityZoneDelim" }, "--"] }];
+    var bN = [{ [cl]: k, [cm]: [ad, 6, 26, true], [co]: "s3expressAvailabilityZoneId" }, { [cl]: k, [cm]: [ad, 26, 28, true], [co]: "s3expressAvailabilityZoneDelim" }, { [cl]: h, [cm]: [{ [cn]: "s3expressAvailabilityZoneDelim" }, "--"] }];
+    var bO = [{ [ck]: [X], [o]: { [cp]: "https://{Bucket}.s3express-fips-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cq]: am, [cw]: {} }, [cj]: o }, { [o]: { [cp]: "https://{Bucket}.s3express-{s3expressAvailabilityZoneId}.{Region}.amazonaws.com", [cq]: am, [cw]: {} }, [cj]: o }];
+    var bP = [ac];
+    var bQ = [{ [cl]: y, [cm]: [{ [cn]: x }, false] }];
+    var bR = [{ [cl]: h, [cm]: [{ [cn]: v }, "beta"] }];
+    var bS = ["*"];
+    var bT = [aa];
+    var bU = [{ [cl]: y, [cm]: [{ [cn]: "Region" }, false] }];
+    var bV = [{ [cl]: h, [cm]: [{ [cn]: "Region" }, "us-east-1"] }];
+    var bW = [{ [cl]: h, [cm]: [aS, K] }];
+    var bX = [{ [cl]: i, [cm]: [aR, "resourceId[1]"], [co]: L }, { [cl]: s, [cm]: [{ [cl]: h, [cm]: [aU, I] }] }];
+    var bY = [aR, "resourceId[1]"];
+    var bZ = [{ [cl]: s, [cm]: [{ [cl]: h, [cm]: [{ [cl]: i, [cm]: [aR, "region"] }, I] }] }];
+    var ca = [{ [cl]: s, [cm]: [{ [cl]: d, [cm]: [{ [cl]: i, [cm]: [aR, "resourceId[2]"] }] }] }];
+    var cb = [aR, "resourceId[2]"];
+    var cc = [{ [cl]: g, [cm]: [{ [cl]: i, [cm]: [aR, "region"] }], [co]: "bucketPartition" }];
+    var cd = [{ [cl]: h, [cm]: [aZ, { [cl]: i, [cm]: [{ [cn]: "partitionResult" }, j] }] }];
+    var ce = [{ [cl]: y, [cm]: [{ [cl]: i, [cm]: [aR, "region"] }, true] }];
+    var cf = [{ [cl]: y, [cm]: [ba, false] }];
+    var cg = [{ [cl]: y, [cm]: [aU, false] }];
+    var ch = [{ [cl]: y, [cm]: [{ [cn]: "Region" }, true] }];
+    var _data = { version: "1.0", parameters: { Bucket: T, Region: T, UseFIPS: U, UseDualStack: U, Endpoint: T, ForcePathStyle: U, Accelerate: U, UseGlobalEndpoint: U, UseObjectLambdaEndpoint: V, Key: T, Prefix: T, CopySource: T, DisableAccessPoints: V, DisableMultiRegionAccessPoints: U, UseArnRegion: V, UseS3ExpressControlEndpoint: V, DisableS3ExpressSessionAuth: V }, rules: [{ [ck]: [{ [cl]: d, [cm]: bx }], rules: [{ [ck]: [W, X], error: "Accelerate cannot be used with FIPS", [cj]: f }, { [ck]: [Y, Z], error: "Cannot set dual-stack in combination with a custom endpoint.", [cj]: f }, { [ck]: [Z, X], error: "A custom endpoint cannot be combined with FIPS", [cj]: f }, { [ck]: [Z, W], error: "A custom endpoint cannot be combined with S3 Accelerate", [cj]: f }, { [ck]: [X, aa, ab], error: "Partition does not support FIPS", [cj]: f }, { [ck]: [ac, { [cl]: k, [cm]: [ad, 0, a, c], [co]: l }, { [cl]: h, [cm]: [{ [cn]: l }, "--x-s3"] }], rules: [{ [ck]: bA, error: "S3Express does not support Dual-stack.", [cj]: f }, { [ck]: bB, error: "S3Express does not support S3 Accelerate.", [cj]: f }, { [ck]: bC, rules: [{ [ck]: bD, rules: [{ [ck]: bE, rules: [{ [ck]: bF, rules: [{ endpoint: { [cp]: n, [cq]: ai, [cw]: aj }, [cj]: o }], [cj]: p }], [cj]: p }, { [ck]: bG, rules: [{ endpoint: { [cp]: r, [cq]: ai, [cw]: aj }, [cj]: o }], [cj]: p }, al], [cj]: p }, { [ck]: bE, rules: [{ [ck]: bF, rules: [{ endpoint: { [cp]: n, [cq]: am, [cw]: aj }, [cj]: o }], [cj]: p }], [cj]: p }, { [ck]: bG, rules: [{ endpoint: { [cp]: r, [cq]: am, [cw]: aj }, [cj]: o }], [cj]: p }, al], [cj]: p }, { [ck]: [an, ao], rules: [{ [ck]: [ah, ap], rules: [{ [ck]: bH, endpoint: { [cp]: "https://s3express-control-fips.{Region}.amazonaws.com/{uri_encoded_bucket}", [cq]: ai, [cw]: aj }, [cj]: o }, { endpoint: { [cp]: "https://s3express-control.{Region}.amazonaws.com/{uri_encoded_bucket}", [cq]: ai, [cw]: aj }, [cj]: o }], [cj]: p }], [cj]: p }, { [ck]: bG, rules: [{ [ck]: bD, rules: [{ [ck]: bI, rules: bJ, [cj]: p }, { [ck]: bK, rules: bJ, [cj]: p }, { [ck]: bL, rules: bJ, [cj]: p }, { [ck]: bM, rules: bJ, [cj]: p }, { [ck]: bN, rules: bJ, [cj]: p }, aq], [cj]: p }, { [ck]: bI, rules: bO, [cj]: p }, { [ck]: bK, rules: bO, [cj]: p }, { [ck]: bL, rules: bO, [cj]: p }, { [ck]: bM, rules: bO, [cj]: p }, { [ck]: bN, rules: bO, [cj]: p }, aq], [cj]: p }, al], [cj]: p }, { [ck]: [ar, an, ao], rules: [{ [ck]: bC, endpoint: { [cp]: t, [cq]: ai, [cw]: aj }, [cj]: o }, { [ck]: bH, endpoint: { [cp]: "https://s3express-control-fips.{Region}.amazonaws.com", [cq]: ai, [cw]: aj }, [cj]: o }, { endpoint: { [cp]: "https://s3express-control.{Region}.amazonaws.com", [cq]: ai, [cw]: aj }, [cj]: o }], [cj]: p }, { [ck]: [ac, { [cl]: k, [cm]: [ad, 49, 50, c], [co]: u }, { [cl]: k, [cm]: [ad, 8, 12, c], [co]: v }, { [cl]: k, [cm]: [ad, 0, 7, c], [co]: w }, { [cl]: k, [cm]: [ad, 32, 49, c], [co]: x }, { [cl]: g, [cm]: bx, [co]: "regionPartition" }, { [cl]: h, [cm]: [{ [cn]: w }, "--op-s3"] }], rules: [{ [ck]: bQ, rules: [{ [ck]: [{ [cl]: h, [cm]: [as, "e"] }], rules: [{ [ck]: bR, rules: [at, { [ck]: bC, endpoint: { [cp]: "https://{Bucket}.ec2.{url#authority}", [cq]: au, [cw]: aj }, [cj]: o }], [cj]: p }, { endpoint: { [cp]: "https://{Bucket}.ec2.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cq]: au, [cw]: aj }, [cj]: o }], [cj]: p }, { [ck]: [{ [cl]: h, [cm]: [as, "o"] }], rules: [{ [ck]: bR, rules: [at, { [ck]: bC, endpoint: { [cp]: "https://{Bucket}.op-{outpostId}.{url#authority}", [cq]: au, [cw]: aj }, [cj]: o }], [cj]: p }, { endpoint: { [cp]: "https://{Bucket}.op-{outpostId}.s3-outposts.{Region}.{regionPartition#dnsSuffix}", [cq]: au, [cw]: aj }, [cj]: o }], [cj]: p }, { error: 'Unrecognized hardware type: "Expected hardware type o or e but got {hardwareType}"', [cj]: f }], [cj]: p }, { error: "Invalid ARN: The outpost Id must only contain a-z, A-Z, 0-9 and `-`.", [cj]: f }], [cj]: p }, { [ck]: bP, rules: [{ [ck]: [Z, { [cl]: s, [cm]: [{ [cl]: d, [cm]: [{ [cl]: m, [cm]: by }] }] }], error: "Custom endpoint `{Endpoint}` was not a valid URI", [cj]: f }, { [ck]: [av, ak], rules: [{ [ck]: bT, rules: [{ [ck]: bU, rules: [{ [ck]: [W, ab], error: "S3 Accelerate cannot be used in this region", [cj]: f }, { [ck]: [Y, X, ax, ap, ay], endpoint: { [cp]: "https://{Bucket}.s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [Y, X, ax, ap, aA, aB], rules: [{ endpoint: aC, [cj]: o }], [cj]: p }, { [ck]: [Y, X, ax, ap, aA, aE], endpoint: aC, [cj]: o }, { [ck]: [aF, X, ax, ap, ay], endpoint: { [cp]: "https://{Bucket}.s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, X, ax, ap, aA, aB], rules: [{ endpoint: aG, [cj]: o }], [cj]: p }, { [ck]: [aF, X, ax, ap, aA, aE], endpoint: aG, [cj]: o }, { [ck]: [Y, aH, W, ap, ay], endpoint: { [cp]: "https://{Bucket}.s3-accelerate.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [Y, aH, W, ap, aA, aB], rules: [{ endpoint: aI, [cj]: o }], [cj]: p }, { [ck]: [Y, aH, W, ap, aA, aE], endpoint: aI, [cj]: o }, { [ck]: [Y, aH, ax, ap, ay], endpoint: { [cp]: "https://{Bucket}.s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [Y, aH, ax, ap, aA, aB], rules: [{ endpoint: aJ, [cj]: o }], [cj]: p }, { [ck]: [Y, aH, ax, ap, aA, aE], endpoint: aJ, [cj]: o }, { [ck]: [aF, aH, ax, Z, ae, af, ay], endpoint: { [cp]: C, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, aH, ax, Z, ae, aK, ay], endpoint: { [cp]: r, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, aH, ax, Z, ae, af, aA, aB], rules: [{ [ck]: bV, endpoint: aL, [cj]: o }, { endpoint: aL, [cj]: o }], [cj]: p }, { [ck]: [aF, aH, ax, Z, ae, aK, aA, aB], rules: [{ [ck]: bV, endpoint: aM, [cj]: o }, aN], [cj]: p }, { [ck]: [aF, aH, ax, Z, ae, af, aA, aE], endpoint: aL, [cj]: o }, { [ck]: [aF, aH, ax, Z, ae, aK, aA, aE], endpoint: aM, [cj]: o }, { [ck]: [aF, aH, W, ap, ay], endpoint: { [cp]: D, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, aH, W, ap, aA, aB], rules: [{ [ck]: bV, endpoint: aO, [cj]: o }, { endpoint: aO, [cj]: o }], [cj]: p }, { [ck]: [aF, aH, W, ap, aA, aE], endpoint: aO, [cj]: o }, { [ck]: [aF, aH, ax, ap, ay], endpoint: { [cp]: E, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, aH, ax, ap, aA, aB], rules: [{ [ck]: bV, endpoint: { [cp]: E, [cq]: aD, [cw]: aj }, [cj]: o }, { endpoint: aP, [cj]: o }], [cj]: p }, { [ck]: [aF, aH, ax, ap, aA, aE], endpoint: aP, [cj]: o }], [cj]: p }, aQ], [cj]: p }], [cj]: p }, { [ck]: [Z, ae, { [cl]: h, [cm]: [{ [cl]: i, [cm]: [ag, "scheme"] }, "http"] }, { [cl]: q, [cm]: [ad, c] }, av, aH, aF, ax], rules: [{ [ck]: bT, rules: [{ [ck]: bU, rules: [aN], [cj]: p }, aQ], [cj]: p }], [cj]: p }, { [ck]: [av, { [cl]: F, [cm]: bz, [co]: G }], rules: [{ [ck]: [{ [cl]: i, [cm]: [aR, "resourceId[0]"], [co]: H }, { [cl]: s, [cm]: [{ [cl]: h, [cm]: [aS, I] }] }], rules: [{ [ck]: [{ [cl]: h, [cm]: [aT, J] }], rules: [{ [ck]: bW, rules: [{ [ck]: bX, rules: [aV, aW, { [ck]: bZ, rules: [aX, { [ck]: ca, rules: [aY, { [ck]: cc, rules: [{ [ck]: bT, rules: [{ [ck]: cd, rules: [{ [ck]: ce, rules: [{ [ck]: [{ [cl]: h, [cm]: [ba, I] }], error: "Invalid ARN: Missing account id", [cj]: f }, { [ck]: cf, rules: [{ [ck]: cg, rules: [{ [ck]: bC, endpoint: { [cp]: M, [cq]: bb, [cw]: aj }, [cj]: o }, { [ck]: bH, endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cq]: bb, [cw]: aj }, [cj]: o }, { endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.s3-object-lambda.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cq]: bb, [cw]: aj }, [cj]: o }], [cj]: p }, bc], [cj]: p }, bd], [cj]: p }, be], [cj]: p }, bf], [cj]: p }], [cj]: p }], [cj]: p }, bg], [cj]: p }, { error: "Invalid ARN: bucket ARN is missing a region", [cj]: f }], [cj]: p }, bh], [cj]: p }, { error: "Invalid ARN: Object Lambda ARNs only support `accesspoint` arn types, but found: `{arnType}`", [cj]: f }], [cj]: p }, { [ck]: bW, rules: [{ [ck]: bX, rules: [{ [ck]: bZ, rules: [{ [ck]: bW, rules: [{ [ck]: bZ, rules: [aX, { [ck]: ca, rules: [aY, { [ck]: cc, rules: [{ [ck]: bT, rules: [{ [ck]: [{ [cl]: h, [cm]: [aZ, "{partitionResult#name}"] }], rules: [{ [ck]: ce, rules: [{ [ck]: [{ [cl]: h, [cm]: [aT, B] }], rules: [{ [ck]: cf, rules: [{ [ck]: cg, rules: [{ [ck]: bB, error: "Access Points do not support S3 Accelerate", [cj]: f }, { [ck]: [X, Y], endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cq]: bi, [cw]: aj }, [cj]: o }, { [ck]: [X, aF], endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint-fips.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cq]: bi, [cw]: aj }, [cj]: o }, { [ck]: [aH, Y], endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.dualstack.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cq]: bi, [cw]: aj }, [cj]: o }, { [ck]: [aH, aF, Z, ae], endpoint: { [cp]: M, [cq]: bi, [cw]: aj }, [cj]: o }, { [ck]: [aH, aF], endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.s3-accesspoint.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cq]: bi, [cw]: aj }, [cj]: o }], [cj]: p }, bc], [cj]: p }, bd], [cj]: p }, { error: "Invalid ARN: The ARN was not for the S3 service, found: {bucketArn#service}", [cj]: f }], [cj]: p }, be], [cj]: p }, bf], [cj]: p }], [cj]: p }], [cj]: p }, bg], [cj]: p }], [cj]: p }], [cj]: p }, { [ck]: [{ [cl]: y, [cm]: [aU, c] }], rules: [{ [ck]: bA, error: "S3 MRAP does not support dual-stack", [cj]: f }, { [ck]: bH, error: "S3 MRAP does not support FIPS", [cj]: f }, { [ck]: bB, error: "S3 MRAP does not support S3 Accelerate", [cj]: f }, { [ck]: [{ [cl]: e, [cm]: [{ [cn]: "DisableMultiRegionAccessPoints" }, c] }], error: "Invalid configuration: Multi-Region Access Point ARNs are disabled.", [cj]: f }, { [ck]: [{ [cl]: g, [cm]: bx, [co]: N }], rules: [{ [ck]: [{ [cl]: h, [cm]: [{ [cl]: i, [cm]: [{ [cn]: N }, j] }, { [cl]: i, [cm]: [aR, "partition"] }] }], rules: [{ endpoint: { [cp]: "https://{accessPointName}.accesspoint.s3-global.{mrapPartition#dnsSuffix}", [cq]: { [cs]: [{ [ct]: c, name: z, [cu]: B, [cx]: bS }] }, [cw]: aj }, [cj]: o }], [cj]: p }, { error: "Client was configured for partition `{mrapPartition#name}` but bucket referred to partition `{bucketArn#partition}`", [cj]: f }], [cj]: p }], [cj]: p }, { error: "Invalid Access Point Name", [cj]: f }], [cj]: p }, bh], [cj]: p }, { [ck]: [{ [cl]: h, [cm]: [aT, A] }], rules: [{ [ck]: bA, error: "S3 Outposts does not support Dual-stack", [cj]: f }, { [ck]: bH, error: "S3 Outposts does not support FIPS", [cj]: f }, { [ck]: bB, error: "S3 Outposts does not support S3 Accelerate", [cj]: f }, { [ck]: [{ [cl]: d, [cm]: [{ [cl]: i, [cm]: [aR, "resourceId[4]"] }] }], error: "Invalid Arn: Outpost Access Point ARN contains sub resources", [cj]: f }, { [ck]: [{ [cl]: i, [cm]: bY, [co]: x }], rules: [{ [ck]: bQ, rules: [aY, { [ck]: cc, rules: [{ [ck]: bT, rules: [{ [ck]: cd, rules: [{ [ck]: ce, rules: [{ [ck]: cf, rules: [{ [ck]: [{ [cl]: i, [cm]: cb, [co]: O }], rules: [{ [ck]: [{ [cl]: i, [cm]: [aR, "resourceId[3]"], [co]: L }], rules: [{ [ck]: [{ [cl]: h, [cm]: [{ [cn]: O }, K] }], rules: [{ [ck]: bC, endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.{url#authority}", [cq]: bj, [cw]: aj }, [cj]: o }, { endpoint: { [cp]: "https://{accessPointName}-{bucketArn#accountId}.{outpostId}.s3-outposts.{bucketArn#region}.{bucketPartition#dnsSuffix}", [cq]: bj, [cw]: aj }, [cj]: o }], [cj]: p }, { error: "Expected an outpost type `accesspoint`, found {outpostType}", [cj]: f }], [cj]: p }, { error: "Invalid ARN: expected an access point name", [cj]: f }], [cj]: p }, { error: "Invalid ARN: Expected a 4-component resource", [cj]: f }], [cj]: p }, bd], [cj]: p }, be], [cj]: p }, bf], [cj]: p }], [cj]: p }], [cj]: p }, { error: "Invalid ARN: The outpost Id may only contain a-z, A-Z, 0-9 and `-`. Found: `{outpostId}`", [cj]: f }], [cj]: p }, { error: "Invalid ARN: The Outpost Id was not set", [cj]: f }], [cj]: p }, { error: "Invalid ARN: Unrecognized format: {Bucket} (type: {arnType})", [cj]: f }], [cj]: p }, { error: "Invalid ARN: No ARN type specified", [cj]: f }], [cj]: p }, { [ck]: [{ [cl]: k, [cm]: [ad, 0, 4, b], [co]: P }, { [cl]: h, [cm]: [{ [cn]: P }, "arn:"] }, { [cl]: s, [cm]: [{ [cl]: d, [cm]: [bk] }] }], error: "Invalid ARN: `{Bucket}` was not a valid ARN", [cj]: f }, { [ck]: [{ [cl]: e, [cm]: [aw, c] }, bk], error: "Path-style addressing cannot be used with ARN buckets", [cj]: f }, { [ck]: bF, rules: [{ [ck]: bT, rules: [{ [ck]: [ax], rules: [{ [ck]: [Y, ap, X, ay], endpoint: { [cp]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [Y, ap, X, aA, aB], rules: [{ endpoint: bl, [cj]: o }], [cj]: p }, { [ck]: [Y, ap, X, aA, aE], endpoint: bl, [cj]: o }, { [ck]: [aF, ap, X, ay], endpoint: { [cp]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, ap, X, aA, aB], rules: [{ endpoint: bm, [cj]: o }], [cj]: p }, { [ck]: [aF, ap, X, aA, aE], endpoint: bm, [cj]: o }, { [ck]: [Y, ap, aH, ay], endpoint: { [cp]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}/{uri_encoded_bucket}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [Y, ap, aH, aA, aB], rules: [{ endpoint: bn, [cj]: o }], [cj]: p }, { [ck]: [Y, ap, aH, aA, aE], endpoint: bn, [cj]: o }, { [ck]: [aF, Z, ae, aH, ay], endpoint: { [cp]: Q, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, Z, ae, aH, aA, aB], rules: [{ [ck]: bV, endpoint: bo, [cj]: o }, { endpoint: bo, [cj]: o }], [cj]: p }, { [ck]: [aF, Z, ae, aH, aA, aE], endpoint: bo, [cj]: o }, { [ck]: [aF, ap, aH, ay], endpoint: { [cp]: R, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aF, ap, aH, aA, aB], rules: [{ [ck]: bV, endpoint: { [cp]: R, [cq]: aD, [cw]: aj }, [cj]: o }, { endpoint: bp, [cj]: o }], [cj]: p }, { [ck]: [aF, ap, aH, aA, aE], endpoint: bp, [cj]: o }], [cj]: p }, { error: "Path-style addressing cannot be used with S3 Accelerate", [cj]: f }], [cj]: p }], [cj]: p }], [cj]: p }, { [ck]: [{ [cl]: d, [cm]: [bq] }, { [cl]: e, [cm]: [bq, c] }], rules: [{ [ck]: bT, rules: [{ [ck]: ch, rules: [aV, aW, { [ck]: bC, endpoint: { [cp]: t, [cq]: br, [cw]: aj }, [cj]: o }, { [ck]: bH, endpoint: { [cp]: "https://s3-object-lambda-fips.{Region}.{partitionResult#dnsSuffix}", [cq]: br, [cw]: aj }, [cj]: o }, { endpoint: { [cp]: "https://s3-object-lambda.{Region}.{partitionResult#dnsSuffix}", [cq]: br, [cw]: aj }, [cj]: o }], [cj]: p }, aQ], [cj]: p }], [cj]: p }, { [ck]: [ar], rules: [{ [ck]: bT, rules: [{ [ck]: ch, rules: [{ [ck]: [X, Y, ap, ay], endpoint: { [cp]: "https://s3-fips.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [X, Y, ap, aA, aB], rules: [{ endpoint: bs, [cj]: o }], [cj]: p }, { [ck]: [X, Y, ap, aA, aE], endpoint: bs, [cj]: o }, { [ck]: [X, aF, ap, ay], endpoint: { [cp]: "https://s3-fips.us-east-1.{partitionResult#dnsSuffix}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [X, aF, ap, aA, aB], rules: [{ endpoint: bt, [cj]: o }], [cj]: p }, { [ck]: [X, aF, ap, aA, aE], endpoint: bt, [cj]: o }, { [ck]: [aH, Y, ap, ay], endpoint: { [cp]: "https://s3.dualstack.us-east-1.{partitionResult#dnsSuffix}", [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aH, Y, ap, aA, aB], rules: [{ endpoint: bu, [cj]: o }], [cj]: p }, { [ck]: [aH, Y, ap, aA, aE], endpoint: bu, [cj]: o }, { [ck]: [aH, aF, Z, ae, ay], endpoint: { [cp]: t, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aH, aF, Z, ae, aA, aB], rules: [{ [ck]: bV, endpoint: bv, [cj]: o }, { endpoint: bv, [cj]: o }], [cj]: p }, { [ck]: [aH, aF, Z, ae, aA, aE], endpoint: bv, [cj]: o }, { [ck]: [aH, aF, ap, ay], endpoint: { [cp]: S, [cq]: az, [cw]: aj }, [cj]: o }, { [ck]: [aH, aF, ap, aA, aB], rules: [{ [ck]: bV, endpoint: { [cp]: S, [cq]: aD, [cw]: aj }, [cj]: o }, { endpoint: bw, [cj]: o }], [cj]: p }, { [ck]: [aH, aF, ap, aA, aE], endpoint: bw, [cj]: o }], [cj]: p }, aQ], [cj]: p }], [cj]: p }], [cj]: p }, { error: "A region must be set when sending requests to S3.", [cj]: f }] };
     exports2.ruleSet = _data;
   }
 });
@@ -34062,7 +34066,7 @@ var require_package = __commonJS({
     module2.exports = {
       name: "@aws-sdk/client-s3",
       description: "AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native",
-      version: "3.699.0",
+      version: "3.705.0",
       scripts: {
         build: "concurrently 'yarn:build:cjs' 'yarn:build:es' 'yarn:build:types'",
         "build:cjs": "node ../../scripts/compilation/inline client-s3",
@@ -34094,7 +34098,7 @@ var require_package = __commonJS({
         "@aws-sdk/credential-provider-node": "3.699.0",
         "@aws-sdk/middleware-bucket-endpoint": "3.696.0",
         "@aws-sdk/middleware-expect-continue": "3.696.0",
-        "@aws-sdk/middleware-flexible-checksums": "3.697.0",
+        "@aws-sdk/middleware-flexible-checksums": "3.701.0",
         "@aws-sdk/middleware-host-header": "3.696.0",
         "@aws-sdk/middleware-location-constraint": "3.696.0",
         "@aws-sdk/middleware-logger": "3.696.0",
@@ -42125,6 +42129,7 @@ var require_dist_cjs72 = __commonJS({
       CopyObjectOutputFilterSensitiveLog: () => CopyObjectOutputFilterSensitiveLog,
       CopyObjectRequestFilterSensitiveLog: () => CopyObjectRequestFilterSensitiveLog,
       CreateBucketCommand: () => CreateBucketCommand,
+      CreateBucketMetadataTableConfigurationCommand: () => CreateBucketMetadataTableConfigurationCommand,
       CreateMultipartUploadCommand: () => CreateMultipartUploadCommand,
       CreateMultipartUploadOutputFilterSensitiveLog: () => CreateMultipartUploadOutputFilterSensitiveLog,
       CreateMultipartUploadRequestFilterSensitiveLog: () => CreateMultipartUploadRequestFilterSensitiveLog,
@@ -42139,6 +42144,7 @@ var require_dist_cjs72 = __commonJS({
       DeleteBucketIntelligentTieringConfigurationCommand: () => DeleteBucketIntelligentTieringConfigurationCommand,
       DeleteBucketInventoryConfigurationCommand: () => DeleteBucketInventoryConfigurationCommand,
       DeleteBucketLifecycleCommand: () => DeleteBucketLifecycleCommand,
+      DeleteBucketMetadataTableConfigurationCommand: () => DeleteBucketMetadataTableConfigurationCommand,
       DeleteBucketMetricsConfigurationCommand: () => DeleteBucketMetricsConfigurationCommand,
       DeleteBucketOwnershipControlsCommand: () => DeleteBucketOwnershipControlsCommand,
       DeleteBucketPolicyCommand: () => DeleteBucketPolicyCommand,
@@ -42171,6 +42177,7 @@ var require_dist_cjs72 = __commonJS({
       GetBucketLifecycleConfigurationCommand: () => GetBucketLifecycleConfigurationCommand,
       GetBucketLocationCommand: () => GetBucketLocationCommand,
       GetBucketLoggingCommand: () => GetBucketLoggingCommand,
+      GetBucketMetadataTableConfigurationCommand: () => GetBucketMetadataTableConfigurationCommand,
       GetBucketMetricsConfigurationCommand: () => GetBucketMetricsConfigurationCommand,
       GetBucketNotificationConfigurationCommand: () => GetBucketNotificationConfigurationCommand,
       GetBucketOwnershipControlsCommand: () => GetBucketOwnershipControlsCommand,
@@ -42542,13 +42549,15 @@ var require_dist_cjs72 = __commonJS({
       public_read_write: "public-read-write"
     };
     var DataRedundancy = {
-      SingleAvailabilityZone: "SingleAvailabilityZone"
+      SingleAvailabilityZone: "SingleAvailabilityZone",
+      SingleLocalZone: "SingleLocalZone"
     };
     var BucketType = {
       Directory: "Directory"
     };
     var LocationType = {
-      AvailabilityZone: "AvailabilityZone"
+      AvailabilityZone: "AvailabilityZone",
+      LocalZone: "LocalZone"
     };
     var BucketLocationConstraint = {
       EU: "EU",
@@ -43015,20 +43024,6 @@ var require_dist_cjs72 = __commonJS({
       ...obj,
       ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client4.SENSITIVE_STRING }
     }), "ListPartsRequestFilterSensitiveLog");
-    var PutBucketEncryptionRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
-      ...obj,
-      ...obj.ServerSideEncryptionConfiguration && {
-        ServerSideEncryptionConfiguration: ServerSideEncryptionConfigurationFilterSensitiveLog(
-          obj.ServerSideEncryptionConfiguration
-        )
-      }
-    }), "PutBucketEncryptionRequestFilterSensitiveLog");
-    var PutBucketInventoryConfigurationRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
-      ...obj,
-      ...obj.InventoryConfiguration && {
-        InventoryConfiguration: InventoryConfigurationFilterSensitiveLog(obj.InventoryConfiguration)
-      }
-    }), "PutBucketInventoryConfigurationRequestFilterSensitiveLog");
     var import_core4 = (init_dist_es2(), __toCommonJS(dist_es_exports2));
     var import_xml_builder = require_dist_cjs46();
     var import_core22 = (init_dist_es(), __toCommonJS(dist_es_exports));
@@ -43167,6 +43162,20 @@ var require_dist_cjs72 = __commonJS({
         return visitor._(value.$unknown[0], value.$unknown[1]);
       }, "visit");
     })(SelectObjectContentEventStream || (SelectObjectContentEventStream = {}));
+    var PutBucketEncryptionRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.ServerSideEncryptionConfiguration && {
+        ServerSideEncryptionConfiguration: ServerSideEncryptionConfigurationFilterSensitiveLog(
+          obj.ServerSideEncryptionConfiguration
+        )
+      }
+    }), "PutBucketEncryptionRequestFilterSensitiveLog");
+    var PutBucketInventoryConfigurationRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+      ...obj,
+      ...obj.InventoryConfiguration && {
+        InventoryConfiguration: InventoryConfigurationFilterSensitiveLog(obj.InventoryConfiguration)
+      }
+    }), "PutBucketInventoryConfigurationRequestFilterSensitiveLog");
     var PutObjectOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
       ...obj,
       ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client4.SENSITIVE_STRING },
@@ -43269,6 +43278,7 @@ var require_dist_cjs72 = __commonJS({
         [_xacs_]: input[_CSHAh],
         [_xarp]: input[_RP],
         [_xaebo]: input[_EBO],
+        [_im]: input[_IM],
         [_inm]: input[_INM],
         [_xasseca]: input[_SSECA],
         [_xasseck]: input[_SSECK],
@@ -43374,6 +43384,30 @@ var require_dist_cjs72 = __commonJS({
       b.m("PUT").h(headers).b(body);
       return b.build();
     }, "se_CreateBucketCommand");
+    var se_CreateBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const b = (0, import_core22.requestBuilder)(input, context);
+      const headers = (0, import_smithy_client4.map)({}, import_smithy_client4.isSerializableHeaderValue, {
+        "content-type": "application/xml",
+        [_cm]: input[_CMD],
+        [_xasca]: input[_CA],
+        [_xaebo]: input[_EBO]
+      });
+      b.bp("/");
+      b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+      const query = (0, import_smithy_client4.map)({
+        [_mT]: [, ""]
+      });
+      let body;
+      let contents;
+      if (input.MetadataTableConfiguration !== void 0) {
+        contents = se_MetadataTableConfiguration(input.MetadataTableConfiguration, context);
+        body = _ve;
+        contents.a("xmlns", "http://s3.amazonaws.com/doc/2006-03-01/");
+        body += contents.toString();
+      }
+      b.m("POST").h(headers).q(query).b(body);
+      return b.build();
+    }, "se_CreateBucketMetadataTableConfigurationCommand");
     var se_CreateMultipartUploadCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
       const headers = (0, import_smithy_client4.map)({}, import_smithy_client4.isSerializableHeaderValue, {
@@ -43533,6 +43567,20 @@ var require_dist_cjs72 = __commonJS({
       b.m("DELETE").h(headers).q(query).b(body);
       return b.build();
     }, "se_DeleteBucketLifecycleCommand");
+    var se_DeleteBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const b = (0, import_core22.requestBuilder)(input, context);
+      const headers = (0, import_smithy_client4.map)({}, import_smithy_client4.isSerializableHeaderValue, {
+        [_xaebo]: input[_EBO]
+      });
+      b.bp("/");
+      b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+      const query = (0, import_smithy_client4.map)({
+        [_mT]: [, ""]
+      });
+      let body;
+      b.m("DELETE").h(headers).q(query).b(body);
+      return b.build();
+    }, "se_DeleteBucketMetadataTableConfigurationCommand");
     var se_DeleteBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
       const headers = (0, import_smithy_client4.map)({}, import_smithy_client4.isSerializableHeaderValue, {
@@ -43841,6 +43889,20 @@ var require_dist_cjs72 = __commonJS({
       b.m("GET").h(headers).q(query).b(body);
       return b.build();
     }, "se_GetBucketLoggingCommand");
+    var se_GetBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+      const b = (0, import_core22.requestBuilder)(input, context);
+      const headers = (0, import_smithy_client4.map)({}, import_smithy_client4.isSerializableHeaderValue, {
+        [_xaebo]: input[_EBO]
+      });
+      b.bp("/");
+      b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+      const query = (0, import_smithy_client4.map)({
+        [_mT]: [, ""]
+      });
+      let body;
+      b.m("GET").h(headers).q(query).b(body);
+      return b.build();
+    }, "se_GetBucketMetadataTableConfigurationCommand");
     var se_GetBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
       const b = (0, import_core22.requestBuilder)(input, context);
       const headers = (0, import_smithy_client4.map)({}, import_smithy_client4.isSerializableHeaderValue, {
@@ -44841,6 +44903,7 @@ var require_dist_cjs72 = __commonJS({
         [_xacs]: input[_CSHA],
         [_xacs_]: input[_CSHAh],
         [_e]: [() => (0, import_smithy_client4.isSerializableHeaderValue)(input[_E]), () => (0, import_smithy_client4.dateToUtcString)(input[_E]).toString()],
+        [_im]: input[_IM],
         [_inm]: input[_INM],
         [_xagfc]: input[_GFC],
         [_xagr]: input[_GR],
@@ -45334,6 +45397,16 @@ var require_dist_cjs72 = __commonJS({
       await (0, import_smithy_client4.collectBody)(output.body, context);
       return contents;
     }, "de_CreateBucketCommand");
+    var de_CreateBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode !== 200 && output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const contents = (0, import_smithy_client4.map)({
+        $metadata: deserializeMetadata(output)
+      });
+      await (0, import_smithy_client4.collectBody)(output.body, context);
+      return contents;
+    }, "de_CreateBucketMetadataTableConfigurationCommand");
     var de_CreateMultipartUploadCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
@@ -45453,6 +45526,16 @@ var require_dist_cjs72 = __commonJS({
       await (0, import_smithy_client4.collectBody)(output.body, context);
       return contents;
     }, "de_DeleteBucketLifecycleCommand");
+    var de_DeleteBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode !== 204 && output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const contents = (0, import_smithy_client4.map)({
+        $metadata: deserializeMetadata(output)
+      });
+      await (0, import_smithy_client4.collectBody)(output.body, context);
+      return contents;
+    }, "de_DeleteBucketMetadataTableConfigurationCommand");
     var de_DeleteBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 204 && output.statusCode >= 300) {
         return de_CommandError(output, context);
@@ -45701,6 +45784,17 @@ var require_dist_cjs72 = __commonJS({
       }
       return contents;
     }, "de_GetBucketLoggingCommand");
+    var de_GetBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+      if (output.statusCode !== 200 && output.statusCode >= 300) {
+        return de_CommandError(output, context);
+      }
+      const contents = (0, import_smithy_client4.map)({
+        $metadata: deserializeMetadata(output)
+      });
+      const data = (0, import_smithy_client4.expectObject)(await (0, import_core4.parseXmlBody)(output.body, context));
+      contents.GetBucketMetadataTableConfigurationResult = de_GetBucketMetadataTableConfigurationResult(data, context);
+      return contents;
+    }, "de_GetBucketMetadataTableConfigurationCommand");
     var de_GetBucketMetricsConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
       if (output.statusCode !== 200 && output.statusCode >= 300) {
         return de_CommandError(output, context);
@@ -47699,6 +47793,13 @@ var require_dist_cjs72 = __commonJS({
       }
       return bn;
     }, "se_MetadataEntry");
+    var se_MetadataTableConfiguration = /* @__PURE__ */ __name((input, context) => {
+      const bn = new import_xml_builder.XmlNode(_MTC);
+      if (input[_STD] != null) {
+        bn.c(se_S3TablesDestination(input[_STD], context).n(_STD));
+      }
+      return bn;
+    }, "se_MetadataTableConfiguration");
     var se_Metrics = /* @__PURE__ */ __name((input, context) => {
       const bn = new import_xml_builder.XmlNode(_Me);
       if (input[_S] != null) {
@@ -48117,6 +48218,16 @@ var require_dist_cjs72 = __commonJS({
       bn.cc(input, _SC);
       return bn;
     }, "se_S3Location");
+    var se_S3TablesDestination = /* @__PURE__ */ __name((input, context) => {
+      const bn = new import_xml_builder.XmlNode(_STD);
+      if (input[_TBA] != null) {
+        bn.c(import_xml_builder.XmlNode.of(_STBA, input[_TBA]).n(_TBA));
+      }
+      if (input[_TN] != null) {
+        bn.c(import_xml_builder.XmlNode.of(_STN, input[_TN]).n(_TN));
+      }
+      return bn;
+    }, "se_S3TablesDestination");
     var se_ScanRange = /* @__PURE__ */ __name((input, context) => {
       const bn = new import_xml_builder.XmlNode(_SR);
       if (input[_St] != null) {
@@ -48713,6 +48824,16 @@ var require_dist_cjs72 = __commonJS({
       }
       return contents;
     }, "de__Error");
+    var de_ErrorDetails = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_EC] != null) {
+        contents[_EC] = (0, import_smithy_client4.expectString)(output[_EC]);
+      }
+      if (output[_EM] != null) {
+        contents[_EM] = (0, import_smithy_client4.expectString)(output[_EM]);
+      }
+      return contents;
+    }, "de_ErrorDetails");
     var de_ErrorDocument = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_K] != null) {
@@ -48761,6 +48882,19 @@ var require_dist_cjs72 = __commonJS({
         return de_FilterRule(entry, context);
       });
     }, "de_FilterRuleList");
+    var de_GetBucketMetadataTableConfigurationResult = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_MTCR] != null) {
+        contents[_MTCR] = de_MetadataTableConfigurationResult(output[_MTCR], context);
+      }
+      if (output[_S] != null) {
+        contents[_S] = (0, import_smithy_client4.expectString)(output[_S]);
+      }
+      if (output[_Er] != null) {
+        contents[_Er] = de_ErrorDetails(output[_Er], context);
+      }
+      return contents;
+    }, "de_GetBucketMetadataTableConfigurationResult");
     var de_GetObjectAttributesParts = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_PC] != null) {
@@ -49102,6 +49236,13 @@ var require_dist_cjs72 = __commonJS({
       }
       return contents;
     }, "de_LoggingEnabled");
+    var de_MetadataTableConfigurationResult = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_STDR] != null) {
+        contents[_STDR] = de_S3TablesDestinationResult(output[_STDR], context);
+      }
+      return contents;
+    }, "de_MetadataTableConfigurationResult");
     var de_Metrics = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_S] != null) {
@@ -49658,6 +49799,22 @@ var require_dist_cjs72 = __commonJS({
       }
       return contents;
     }, "de_S3KeyFilter");
+    var de_S3TablesDestinationResult = /* @__PURE__ */ __name((output, context) => {
+      const contents = {};
+      if (output[_TBA] != null) {
+        contents[_TBA] = (0, import_smithy_client4.expectString)(output[_TBA]);
+      }
+      if (output[_TN] != null) {
+        contents[_TN] = (0, import_smithy_client4.expectString)(output[_TN]);
+      }
+      if (output[_TAa] != null) {
+        contents[_TAa] = (0, import_smithy_client4.expectString)(output[_TAa]);
+      }
+      if (output[_TNa] != null) {
+        contents[_TNa] = (0, import_smithy_client4.expectString)(output[_TNa]);
+      }
+      return contents;
+    }, "de_S3TablesDestinationResult");
     var de_ServerSideEncryptionByDefault = /* @__PURE__ */ __name((output, context) => {
       const contents = {};
       if (output[_SSEA] != null) {
@@ -50133,6 +50290,8 @@ var require_dist_cjs72 = __commonJS({
     var _MM = "MissingMeta";
     var _MP = "MaxParts";
     var _MS = "MetricsStatus";
+    var _MTC = "MetadataTableConfiguration";
+    var _MTCR = "MetadataTableConfigurationResult";
     var _MU = "MaxUploads";
     var _MV = "MetadataValue";
     var _Me = "Metrics";
@@ -50288,6 +50447,10 @@ var require_dist_cjs72 = __commonJS({
     var _SSER = "ServerSideEncryptionRule";
     var _SSES = "SSES3";
     var _ST = "SessionToken";
+    var _STBA = "S3TablesBucketArn";
+    var _STD = "S3TablesDestination";
+    var _STDR = "S3TablesDestinationResult";
+    var _STN = "S3TablesName";
     var _S_ = "S3";
     var _Sc = "Schedule";
     var _Se = "Setting";
@@ -50296,7 +50459,9 @@ var require_dist_cjs72 = __commonJS({
     var _Su = "Suffix";
     var _T = "Tagging";
     var _TA = "TopicArn";
+    var _TAa = "TableArn";
     var _TB = "TargetBucket";
+    var _TBA = "TableBucketArn";
     var _TC = "TagCount";
     var _TCo = "TopicConfiguration";
     var _TCop = "TopicConfigurations";
@@ -50304,6 +50469,8 @@ var require_dist_cjs72 = __commonJS({
     var _TDMOS = "TransitionDefaultMinimumObjectSize";
     var _TG = "TargetGrants";
     var _TGa = "TargetGrant";
+    var _TN = "TableName";
+    var _TNa = "TableNamespace";
     var _TOKF = "TargetObjectKeyFormat";
     var _TP = "TargetPrefix";
     var _TPC = "TotalPartsCount";
@@ -50376,6 +50543,7 @@ var require_dist_cjs72 = __commonJS({
     var _log = "logging";
     var _lt = "list-type";
     var _m = "metrics";
+    var _mT = "metadataTable";
     var _ma = "marker";
     var _mb = "max-buckets";
     var _mdb = "max-directory-buckets";
@@ -50720,6 +50888,24 @@ var require_dist_cjs72 = __commonJS({
     };
     __name(_CreateBucketCommand, "CreateBucketCommand");
     var CreateBucketCommand = _CreateBucketCommand;
+    var _CreateBucketMetadataTableConfigurationCommand = class _CreateBucketMetadataTableConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+      ...commonParams,
+      UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+      Bucket: { type: "contextParams", name: "Bucket" }
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
+          requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
+          requestChecksumRequired: true
+        })
+      ];
+    }).s("AmazonS3", "CreateBucketMetadataTableConfiguration", {}).n("S3Client", "CreateBucketMetadataTableConfigurationCommand").f(void 0, void 0).ser(se_CreateBucketMetadataTableConfigurationCommand).de(de_CreateBucketMetadataTableConfigurationCommand).build() {
+    };
+    __name(_CreateBucketMetadataTableConfigurationCommand, "CreateBucketMetadataTableConfigurationCommand");
+    var CreateBucketMetadataTableConfigurationCommand = _CreateBucketMetadataTableConfigurationCommand;
     var import_middleware_sdk_s37 = require_dist_cjs29();
     var _CreateMultipartUploadCommand = class _CreateMultipartUploadCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
@@ -50827,6 +51013,19 @@ var require_dist_cjs72 = __commonJS({
     };
     __name(_DeleteBucketLifecycleCommand, "DeleteBucketLifecycleCommand");
     var DeleteBucketLifecycleCommand = _DeleteBucketLifecycleCommand;
+    var _DeleteBucketMetadataTableConfigurationCommand = class _DeleteBucketMetadataTableConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+      ...commonParams,
+      UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+      Bucket: { type: "contextParams", name: "Bucket" }
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+      ];
+    }).s("AmazonS3", "DeleteBucketMetadataTableConfiguration", {}).n("S3Client", "DeleteBucketMetadataTableConfigurationCommand").f(void 0, void 0).ser(se_DeleteBucketMetadataTableConfigurationCommand).de(de_DeleteBucketMetadataTableConfigurationCommand).build() {
+    };
+    __name(_DeleteBucketMetadataTableConfigurationCommand, "DeleteBucketMetadataTableConfigurationCommand");
+    var DeleteBucketMetadataTableConfigurationCommand = _DeleteBucketMetadataTableConfigurationCommand;
     var _DeleteBucketMetricsConfigurationCommand = class _DeleteBucketMetricsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
@@ -50930,6 +51129,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         }),
         (0, import_middleware_sdk_s39.getThrow200ExceptionsPlugin)(config)
@@ -51116,7 +51316,7 @@ var require_dist_cjs72 = __commonJS({
     __name(_GetBucketLoggingCommand, "GetBucketLoggingCommand");
     var GetBucketLoggingCommand = _GetBucketLoggingCommand;
     var import_middleware_sdk_s321 = require_dist_cjs29();
-    var _GetBucketMetricsConfigurationCommand = class _GetBucketMetricsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketMetadataTableConfigurationCommand = class _GetBucketMetadataTableConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51126,12 +51326,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s321.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketMetricsConfiguration", {}).n("S3Client", "GetBucketMetricsConfigurationCommand").f(void 0, void 0).ser(se_GetBucketMetricsConfigurationCommand).de(de_GetBucketMetricsConfigurationCommand).build() {
+    }).s("AmazonS3", "GetBucketMetadataTableConfiguration", {}).n("S3Client", "GetBucketMetadataTableConfigurationCommand").f(void 0, void 0).ser(se_GetBucketMetadataTableConfigurationCommand).de(de_GetBucketMetadataTableConfigurationCommand).build() {
     };
-    __name(_GetBucketMetricsConfigurationCommand, "GetBucketMetricsConfigurationCommand");
-    var GetBucketMetricsConfigurationCommand = _GetBucketMetricsConfigurationCommand;
+    __name(_GetBucketMetadataTableConfigurationCommand, "GetBucketMetadataTableConfigurationCommand");
+    var GetBucketMetadataTableConfigurationCommand = _GetBucketMetadataTableConfigurationCommand;
     var import_middleware_sdk_s322 = require_dist_cjs29();
-    var _GetBucketNotificationConfigurationCommand = class _GetBucketNotificationConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketMetricsConfigurationCommand = class _GetBucketMetricsConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51141,12 +51341,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s322.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketNotificationConfiguration", {}).n("S3Client", "GetBucketNotificationConfigurationCommand").f(void 0, void 0).ser(se_GetBucketNotificationConfigurationCommand).de(de_GetBucketNotificationConfigurationCommand).build() {
+    }).s("AmazonS3", "GetBucketMetricsConfiguration", {}).n("S3Client", "GetBucketMetricsConfigurationCommand").f(void 0, void 0).ser(se_GetBucketMetricsConfigurationCommand).de(de_GetBucketMetricsConfigurationCommand).build() {
     };
-    __name(_GetBucketNotificationConfigurationCommand, "GetBucketNotificationConfigurationCommand");
-    var GetBucketNotificationConfigurationCommand = _GetBucketNotificationConfigurationCommand;
+    __name(_GetBucketMetricsConfigurationCommand, "GetBucketMetricsConfigurationCommand");
+    var GetBucketMetricsConfigurationCommand = _GetBucketMetricsConfigurationCommand;
     var import_middleware_sdk_s323 = require_dist_cjs29();
-    var _GetBucketOwnershipControlsCommand = class _GetBucketOwnershipControlsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketNotificationConfigurationCommand = class _GetBucketNotificationConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51156,12 +51356,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s323.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketOwnershipControls", {}).n("S3Client", "GetBucketOwnershipControlsCommand").f(void 0, void 0).ser(se_GetBucketOwnershipControlsCommand).de(de_GetBucketOwnershipControlsCommand).build() {
+    }).s("AmazonS3", "GetBucketNotificationConfiguration", {}).n("S3Client", "GetBucketNotificationConfigurationCommand").f(void 0, void 0).ser(se_GetBucketNotificationConfigurationCommand).de(de_GetBucketNotificationConfigurationCommand).build() {
     };
-    __name(_GetBucketOwnershipControlsCommand, "GetBucketOwnershipControlsCommand");
-    var GetBucketOwnershipControlsCommand = _GetBucketOwnershipControlsCommand;
+    __name(_GetBucketNotificationConfigurationCommand, "GetBucketNotificationConfigurationCommand");
+    var GetBucketNotificationConfigurationCommand = _GetBucketNotificationConfigurationCommand;
     var import_middleware_sdk_s324 = require_dist_cjs29();
-    var _GetBucketPolicyCommand = class _GetBucketPolicyCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketOwnershipControlsCommand = class _GetBucketOwnershipControlsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51171,12 +51371,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s324.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketPolicy", {}).n("S3Client", "GetBucketPolicyCommand").f(void 0, void 0).ser(se_GetBucketPolicyCommand).de(de_GetBucketPolicyCommand).build() {
+    }).s("AmazonS3", "GetBucketOwnershipControls", {}).n("S3Client", "GetBucketOwnershipControlsCommand").f(void 0, void 0).ser(se_GetBucketOwnershipControlsCommand).de(de_GetBucketOwnershipControlsCommand).build() {
     };
-    __name(_GetBucketPolicyCommand, "GetBucketPolicyCommand");
-    var GetBucketPolicyCommand = _GetBucketPolicyCommand;
+    __name(_GetBucketOwnershipControlsCommand, "GetBucketOwnershipControlsCommand");
+    var GetBucketOwnershipControlsCommand = _GetBucketOwnershipControlsCommand;
     var import_middleware_sdk_s325 = require_dist_cjs29();
-    var _GetBucketPolicyStatusCommand = class _GetBucketPolicyStatusCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketPolicyCommand = class _GetBucketPolicyCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51186,12 +51386,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s325.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketPolicyStatus", {}).n("S3Client", "GetBucketPolicyStatusCommand").f(void 0, void 0).ser(se_GetBucketPolicyStatusCommand).de(de_GetBucketPolicyStatusCommand).build() {
+    }).s("AmazonS3", "GetBucketPolicy", {}).n("S3Client", "GetBucketPolicyCommand").f(void 0, void 0).ser(se_GetBucketPolicyCommand).de(de_GetBucketPolicyCommand).build() {
     };
-    __name(_GetBucketPolicyStatusCommand, "GetBucketPolicyStatusCommand");
-    var GetBucketPolicyStatusCommand = _GetBucketPolicyStatusCommand;
+    __name(_GetBucketPolicyCommand, "GetBucketPolicyCommand");
+    var GetBucketPolicyCommand = _GetBucketPolicyCommand;
     var import_middleware_sdk_s326 = require_dist_cjs29();
-    var _GetBucketReplicationCommand = class _GetBucketReplicationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketPolicyStatusCommand = class _GetBucketPolicyStatusCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51201,12 +51401,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s326.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketReplication", {}).n("S3Client", "GetBucketReplicationCommand").f(void 0, void 0).ser(se_GetBucketReplicationCommand).de(de_GetBucketReplicationCommand).build() {
+    }).s("AmazonS3", "GetBucketPolicyStatus", {}).n("S3Client", "GetBucketPolicyStatusCommand").f(void 0, void 0).ser(se_GetBucketPolicyStatusCommand).de(de_GetBucketPolicyStatusCommand).build() {
     };
-    __name(_GetBucketReplicationCommand, "GetBucketReplicationCommand");
-    var GetBucketReplicationCommand = _GetBucketReplicationCommand;
+    __name(_GetBucketPolicyStatusCommand, "GetBucketPolicyStatusCommand");
+    var GetBucketPolicyStatusCommand = _GetBucketPolicyStatusCommand;
     var import_middleware_sdk_s327 = require_dist_cjs29();
-    var _GetBucketRequestPaymentCommand = class _GetBucketRequestPaymentCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketReplicationCommand = class _GetBucketReplicationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51216,12 +51416,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s327.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketRequestPayment", {}).n("S3Client", "GetBucketRequestPaymentCommand").f(void 0, void 0).ser(se_GetBucketRequestPaymentCommand).de(de_GetBucketRequestPaymentCommand).build() {
+    }).s("AmazonS3", "GetBucketReplication", {}).n("S3Client", "GetBucketReplicationCommand").f(void 0, void 0).ser(se_GetBucketReplicationCommand).de(de_GetBucketReplicationCommand).build() {
     };
-    __name(_GetBucketRequestPaymentCommand, "GetBucketRequestPaymentCommand");
-    var GetBucketRequestPaymentCommand = _GetBucketRequestPaymentCommand;
+    __name(_GetBucketReplicationCommand, "GetBucketReplicationCommand");
+    var GetBucketReplicationCommand = _GetBucketReplicationCommand;
     var import_middleware_sdk_s328 = require_dist_cjs29();
-    var _GetBucketTaggingCommand = class _GetBucketTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketRequestPaymentCommand = class _GetBucketRequestPaymentCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51231,12 +51431,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s328.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketTagging", {}).n("S3Client", "GetBucketTaggingCommand").f(void 0, void 0).ser(se_GetBucketTaggingCommand).de(de_GetBucketTaggingCommand).build() {
+    }).s("AmazonS3", "GetBucketRequestPayment", {}).n("S3Client", "GetBucketRequestPaymentCommand").f(void 0, void 0).ser(se_GetBucketRequestPaymentCommand).de(de_GetBucketRequestPaymentCommand).build() {
     };
-    __name(_GetBucketTaggingCommand, "GetBucketTaggingCommand");
-    var GetBucketTaggingCommand = _GetBucketTaggingCommand;
+    __name(_GetBucketRequestPaymentCommand, "GetBucketRequestPaymentCommand");
+    var GetBucketRequestPaymentCommand = _GetBucketRequestPaymentCommand;
     var import_middleware_sdk_s329 = require_dist_cjs29();
-    var _GetBucketVersioningCommand = class _GetBucketVersioningCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketTaggingCommand = class _GetBucketTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51246,12 +51446,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s329.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetBucketVersioning", {}).n("S3Client", "GetBucketVersioningCommand").f(void 0, void 0).ser(se_GetBucketVersioningCommand).de(de_GetBucketVersioningCommand).build() {
+    }).s("AmazonS3", "GetBucketTagging", {}).n("S3Client", "GetBucketTaggingCommand").f(void 0, void 0).ser(se_GetBucketTaggingCommand).de(de_GetBucketTaggingCommand).build() {
     };
-    __name(_GetBucketVersioningCommand, "GetBucketVersioningCommand");
-    var GetBucketVersioningCommand = _GetBucketVersioningCommand;
+    __name(_GetBucketTaggingCommand, "GetBucketTaggingCommand");
+    var GetBucketTaggingCommand = _GetBucketTaggingCommand;
     var import_middleware_sdk_s330 = require_dist_cjs29();
-    var _GetBucketWebsiteCommand = class _GetBucketWebsiteCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetBucketVersioningCommand = class _GetBucketVersioningCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51261,11 +51461,26 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s330.getThrow200ExceptionsPlugin)(config)
       ];
+    }).s("AmazonS3", "GetBucketVersioning", {}).n("S3Client", "GetBucketVersioningCommand").f(void 0, void 0).ser(se_GetBucketVersioningCommand).de(de_GetBucketVersioningCommand).build() {
+    };
+    __name(_GetBucketVersioningCommand, "GetBucketVersioningCommand");
+    var GetBucketVersioningCommand = _GetBucketVersioningCommand;
+    var import_middleware_sdk_s331 = require_dist_cjs29();
+    var _GetBucketWebsiteCommand = class _GetBucketWebsiteCommand extends import_smithy_client4.Command.classBuilder().ep({
+      ...commonParams,
+      UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+      Bucket: { type: "contextParams", name: "Bucket" }
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_sdk_s331.getThrow200ExceptionsPlugin)(config)
+      ];
     }).s("AmazonS3", "GetBucketWebsite", {}).n("S3Client", "GetBucketWebsiteCommand").f(void 0, void 0).ser(se_GetBucketWebsiteCommand).de(de_GetBucketWebsiteCommand).build() {
     };
     __name(_GetBucketWebsiteCommand, "GetBucketWebsiteCommand");
     var GetBucketWebsiteCommand = _GetBucketWebsiteCommand;
-    var import_middleware_sdk_s331 = require_dist_cjs29();
+    var import_middleware_sdk_s332 = require_dist_cjs29();
     var _GetObjectAclCommand = class _GetObjectAclCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -51274,13 +51489,13 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s331.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s332.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "GetObjectAcl", {}).n("S3Client", "GetObjectAclCommand").f(void 0, void 0).ser(se_GetObjectAclCommand).de(de_GetObjectAclCommand).build() {
     };
     __name(_GetObjectAclCommand, "GetObjectAclCommand");
     var GetObjectAclCommand = _GetObjectAclCommand;
-    var import_middleware_sdk_s332 = require_dist_cjs29();
+    var import_middleware_sdk_s333 = require_dist_cjs29();
     var _GetObjectAttributesCommand = class _GetObjectAttributesCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51288,14 +51503,14 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s332.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s333.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "GetObjectAttributes", {}).n("S3Client", "GetObjectAttributesCommand").f(GetObjectAttributesRequestFilterSensitiveLog, void 0).ser(se_GetObjectAttributesCommand).de(de_GetObjectAttributesCommand).build() {
     };
     __name(_GetObjectAttributesCommand, "GetObjectAttributesCommand");
     var GetObjectAttributesCommand = _GetObjectAttributesCommand;
-    var import_middleware_sdk_s333 = require_dist_cjs29();
+    var import_middleware_sdk_s334 = require_dist_cjs29();
     var _GetObjectCommand = class _GetObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -51310,28 +51525,14 @@ var require_dist_cjs72 = __commonJS({
           responseAlgorithms: ["CRC32", "CRC32C", "SHA256", "SHA1"]
         }),
         (0, import_middleware_ssec.getSsecPlugin)(config),
-        (0, import_middleware_sdk_s333.getS3ExpiresMiddlewarePlugin)(config)
+        (0, import_middleware_sdk_s334.getS3ExpiresMiddlewarePlugin)(config)
       ];
     }).s("AmazonS3", "GetObject", {}).n("S3Client", "GetObjectCommand").f(GetObjectRequestFilterSensitiveLog, GetObjectOutputFilterSensitiveLog).ser(se_GetObjectCommand).de(de_GetObjectCommand).build() {
     };
     __name(_GetObjectCommand, "GetObjectCommand");
     var GetObjectCommand = _GetObjectCommand;
-    var import_middleware_sdk_s334 = require_dist_cjs29();
-    var _GetObjectLegalHoldCommand = class _GetObjectLegalHoldCommand extends import_smithy_client4.Command.classBuilder().ep({
-      ...commonParams,
-      Bucket: { type: "contextParams", name: "Bucket" }
-    }).m(function(Command, cs, config, o) {
-      return [
-        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s334.getThrow200ExceptionsPlugin)(config)
-      ];
-    }).s("AmazonS3", "GetObjectLegalHold", {}).n("S3Client", "GetObjectLegalHoldCommand").f(void 0, void 0).ser(se_GetObjectLegalHoldCommand).de(de_GetObjectLegalHoldCommand).build() {
-    };
-    __name(_GetObjectLegalHoldCommand, "GetObjectLegalHoldCommand");
-    var GetObjectLegalHoldCommand = _GetObjectLegalHoldCommand;
     var import_middleware_sdk_s335 = require_dist_cjs29();
-    var _GetObjectLockConfigurationCommand = class _GetObjectLockConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectLegalHoldCommand = class _GetObjectLegalHoldCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
@@ -51340,12 +51541,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s335.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetObjectLockConfiguration", {}).n("S3Client", "GetObjectLockConfigurationCommand").f(void 0, void 0).ser(se_GetObjectLockConfigurationCommand).de(de_GetObjectLockConfigurationCommand).build() {
+    }).s("AmazonS3", "GetObjectLegalHold", {}).n("S3Client", "GetObjectLegalHoldCommand").f(void 0, void 0).ser(se_GetObjectLegalHoldCommand).de(de_GetObjectLegalHoldCommand).build() {
     };
-    __name(_GetObjectLockConfigurationCommand, "GetObjectLockConfigurationCommand");
-    var GetObjectLockConfigurationCommand = _GetObjectLockConfigurationCommand;
+    __name(_GetObjectLegalHoldCommand, "GetObjectLegalHoldCommand");
+    var GetObjectLegalHoldCommand = _GetObjectLegalHoldCommand;
     var import_middleware_sdk_s336 = require_dist_cjs29();
-    var _GetObjectRetentionCommand = class _GetObjectRetentionCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectLockConfigurationCommand = class _GetObjectLockConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
@@ -51354,12 +51555,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s336.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "GetObjectRetention", {}).n("S3Client", "GetObjectRetentionCommand").f(void 0, void 0).ser(se_GetObjectRetentionCommand).de(de_GetObjectRetentionCommand).build() {
+    }).s("AmazonS3", "GetObjectLockConfiguration", {}).n("S3Client", "GetObjectLockConfigurationCommand").f(void 0, void 0).ser(se_GetObjectLockConfigurationCommand).de(de_GetObjectLockConfigurationCommand).build() {
     };
-    __name(_GetObjectRetentionCommand, "GetObjectRetentionCommand");
-    var GetObjectRetentionCommand = _GetObjectRetentionCommand;
+    __name(_GetObjectLockConfigurationCommand, "GetObjectLockConfigurationCommand");
+    var GetObjectLockConfigurationCommand = _GetObjectLockConfigurationCommand;
     var import_middleware_sdk_s337 = require_dist_cjs29();
-    var _GetObjectTaggingCommand = class _GetObjectTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _GetObjectRetentionCommand = class _GetObjectRetentionCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
@@ -51367,6 +51568,20 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s337.getThrow200ExceptionsPlugin)(config)
+      ];
+    }).s("AmazonS3", "GetObjectRetention", {}).n("S3Client", "GetObjectRetentionCommand").f(void 0, void 0).ser(se_GetObjectRetentionCommand).de(de_GetObjectRetentionCommand).build() {
+    };
+    __name(_GetObjectRetentionCommand, "GetObjectRetentionCommand");
+    var GetObjectRetentionCommand = _GetObjectRetentionCommand;
+    var import_middleware_sdk_s338 = require_dist_cjs29();
+    var _GetObjectTaggingCommand = class _GetObjectTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
+      ...commonParams,
+      Bucket: { type: "contextParams", name: "Bucket" }
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_sdk_s338.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "GetObjectTagging", {}).n("S3Client", "GetObjectTaggingCommand").f(void 0, void 0).ser(se_GetObjectTaggingCommand).de(de_GetObjectTaggingCommand).build() {
     };
@@ -51384,7 +51599,7 @@ var require_dist_cjs72 = __commonJS({
     };
     __name(_GetObjectTorrentCommand, "GetObjectTorrentCommand");
     var GetObjectTorrentCommand = _GetObjectTorrentCommand;
-    var import_middleware_sdk_s338 = require_dist_cjs29();
+    var import_middleware_sdk_s339 = require_dist_cjs29();
     var _GetPublicAccessBlockCommand = class _GetPublicAccessBlockCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
@@ -51393,13 +51608,13 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s338.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s339.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "GetPublicAccessBlock", {}).n("S3Client", "GetPublicAccessBlockCommand").f(void 0, void 0).ser(se_GetPublicAccessBlockCommand).de(de_GetPublicAccessBlockCommand).build() {
     };
     __name(_GetPublicAccessBlockCommand, "GetPublicAccessBlockCommand");
     var GetPublicAccessBlockCommand = _GetPublicAccessBlockCommand;
-    var import_middleware_sdk_s339 = require_dist_cjs29();
+    var import_middleware_sdk_s340 = require_dist_cjs29();
     var _HeadBucketCommand = class _HeadBucketCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51407,13 +51622,13 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s339.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s340.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "HeadBucket", {}).n("S3Client", "HeadBucketCommand").f(void 0, void 0).ser(se_HeadBucketCommand).de(de_HeadBucketCommand).build() {
     };
     __name(_HeadBucketCommand, "HeadBucketCommand");
     var HeadBucketCommand = _HeadBucketCommand;
-    var import_middleware_sdk_s340 = require_dist_cjs29();
+    var import_middleware_sdk_s341 = require_dist_cjs29();
     var _HeadObjectCommand = class _HeadObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -51422,31 +51637,16 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s340.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s341.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config),
-        (0, import_middleware_sdk_s340.getS3ExpiresMiddlewarePlugin)(config)
+        (0, import_middleware_sdk_s341.getS3ExpiresMiddlewarePlugin)(config)
       ];
     }).s("AmazonS3", "HeadObject", {}).n("S3Client", "HeadObjectCommand").f(HeadObjectRequestFilterSensitiveLog, HeadObjectOutputFilterSensitiveLog).ser(se_HeadObjectCommand).de(de_HeadObjectCommand).build() {
     };
     __name(_HeadObjectCommand, "HeadObjectCommand");
     var HeadObjectCommand = _HeadObjectCommand;
-    var import_middleware_sdk_s341 = require_dist_cjs29();
-    var _ListBucketAnalyticsConfigurationsCommand = class _ListBucketAnalyticsConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
-      ...commonParams,
-      UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
-      Bucket: { type: "contextParams", name: "Bucket" }
-    }).m(function(Command, cs, config, o) {
-      return [
-        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s341.getThrow200ExceptionsPlugin)(config)
-      ];
-    }).s("AmazonS3", "ListBucketAnalyticsConfigurations", {}).n("S3Client", "ListBucketAnalyticsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketAnalyticsConfigurationsCommand).de(de_ListBucketAnalyticsConfigurationsCommand).build() {
-    };
-    __name(_ListBucketAnalyticsConfigurationsCommand, "ListBucketAnalyticsConfigurationsCommand");
-    var ListBucketAnalyticsConfigurationsCommand = _ListBucketAnalyticsConfigurationsCommand;
     var import_middleware_sdk_s342 = require_dist_cjs29();
-    var _ListBucketIntelligentTieringConfigurationsCommand = class _ListBucketIntelligentTieringConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketAnalyticsConfigurationsCommand = class _ListBucketAnalyticsConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51456,12 +51656,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s342.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "ListBucketIntelligentTieringConfigurations", {}).n("S3Client", "ListBucketIntelligentTieringConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketIntelligentTieringConfigurationsCommand).de(de_ListBucketIntelligentTieringConfigurationsCommand).build() {
+    }).s("AmazonS3", "ListBucketAnalyticsConfigurations", {}).n("S3Client", "ListBucketAnalyticsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketAnalyticsConfigurationsCommand).de(de_ListBucketAnalyticsConfigurationsCommand).build() {
     };
-    __name(_ListBucketIntelligentTieringConfigurationsCommand, "ListBucketIntelligentTieringConfigurationsCommand");
-    var ListBucketIntelligentTieringConfigurationsCommand = _ListBucketIntelligentTieringConfigurationsCommand;
+    __name(_ListBucketAnalyticsConfigurationsCommand, "ListBucketAnalyticsConfigurationsCommand");
+    var ListBucketAnalyticsConfigurationsCommand = _ListBucketAnalyticsConfigurationsCommand;
     var import_middleware_sdk_s343 = require_dist_cjs29();
-    var _ListBucketInventoryConfigurationsCommand = class _ListBucketInventoryConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketIntelligentTieringConfigurationsCommand = class _ListBucketIntelligentTieringConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51471,13 +51671,14 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s343.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "ListBucketInventoryConfigurations", {}).n("S3Client", "ListBucketInventoryConfigurationsCommand").f(void 0, ListBucketInventoryConfigurationsOutputFilterSensitiveLog).ser(se_ListBucketInventoryConfigurationsCommand).de(de_ListBucketInventoryConfigurationsCommand).build() {
+    }).s("AmazonS3", "ListBucketIntelligentTieringConfigurations", {}).n("S3Client", "ListBucketIntelligentTieringConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketIntelligentTieringConfigurationsCommand).de(de_ListBucketIntelligentTieringConfigurationsCommand).build() {
     };
-    __name(_ListBucketInventoryConfigurationsCommand, "ListBucketInventoryConfigurationsCommand");
-    var ListBucketInventoryConfigurationsCommand = _ListBucketInventoryConfigurationsCommand;
+    __name(_ListBucketIntelligentTieringConfigurationsCommand, "ListBucketIntelligentTieringConfigurationsCommand");
+    var ListBucketIntelligentTieringConfigurationsCommand = _ListBucketIntelligentTieringConfigurationsCommand;
     var import_middleware_sdk_s344 = require_dist_cjs29();
-    var _ListBucketMetricsConfigurationsCommand = class _ListBucketMetricsConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListBucketInventoryConfigurationsCommand = class _ListBucketInventoryConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
+      UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
       Bucket: { type: "contextParams", name: "Bucket" }
     }).m(function(Command, cs, config, o) {
       return [
@@ -51485,22 +51686,36 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s344.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "ListBucketMetricsConfigurations", {}).n("S3Client", "ListBucketMetricsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketMetricsConfigurationsCommand).de(de_ListBucketMetricsConfigurationsCommand).build() {
+    }).s("AmazonS3", "ListBucketInventoryConfigurations", {}).n("S3Client", "ListBucketInventoryConfigurationsCommand").f(void 0, ListBucketInventoryConfigurationsOutputFilterSensitiveLog).ser(se_ListBucketInventoryConfigurationsCommand).de(de_ListBucketInventoryConfigurationsCommand).build() {
     };
-    __name(_ListBucketMetricsConfigurationsCommand, "ListBucketMetricsConfigurationsCommand");
-    var ListBucketMetricsConfigurationsCommand = _ListBucketMetricsConfigurationsCommand;
+    __name(_ListBucketInventoryConfigurationsCommand, "ListBucketInventoryConfigurationsCommand");
+    var ListBucketInventoryConfigurationsCommand = _ListBucketInventoryConfigurationsCommand;
     var import_middleware_sdk_s345 = require_dist_cjs29();
-    var _ListBucketsCommand = class _ListBucketsCommand extends import_smithy_client4.Command.classBuilder().ep(commonParams).m(function(Command, cs, config, o) {
+    var _ListBucketMetricsConfigurationsCommand = class _ListBucketMetricsConfigurationsCommand extends import_smithy_client4.Command.classBuilder().ep({
+      ...commonParams,
+      Bucket: { type: "contextParams", name: "Bucket" }
+    }).m(function(Command, cs, config, o) {
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s345.getThrow200ExceptionsPlugin)(config)
       ];
+    }).s("AmazonS3", "ListBucketMetricsConfigurations", {}).n("S3Client", "ListBucketMetricsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketMetricsConfigurationsCommand).de(de_ListBucketMetricsConfigurationsCommand).build() {
+    };
+    __name(_ListBucketMetricsConfigurationsCommand, "ListBucketMetricsConfigurationsCommand");
+    var ListBucketMetricsConfigurationsCommand = _ListBucketMetricsConfigurationsCommand;
+    var import_middleware_sdk_s346 = require_dist_cjs29();
+    var _ListBucketsCommand = class _ListBucketsCommand extends import_smithy_client4.Command.classBuilder().ep(commonParams).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_sdk_s346.getThrow200ExceptionsPlugin)(config)
+      ];
     }).s("AmazonS3", "ListBuckets", {}).n("S3Client", "ListBucketsCommand").f(void 0, void 0).ser(se_ListBucketsCommand).de(de_ListBucketsCommand).build() {
     };
     __name(_ListBucketsCommand, "ListBucketsCommand");
     var ListBucketsCommand = _ListBucketsCommand;
-    var import_middleware_sdk_s346 = require_dist_cjs29();
+    var import_middleware_sdk_s347 = require_dist_cjs29();
     var _ListDirectoryBucketsCommand = class _ListDirectoryBucketsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true }
@@ -51508,29 +51723,14 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s346.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s347.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "ListDirectoryBuckets", {}).n("S3Client", "ListDirectoryBucketsCommand").f(void 0, void 0).ser(se_ListDirectoryBucketsCommand).de(de_ListDirectoryBucketsCommand).build() {
     };
     __name(_ListDirectoryBucketsCommand, "ListDirectoryBucketsCommand");
     var ListDirectoryBucketsCommand = _ListDirectoryBucketsCommand;
-    var import_middleware_sdk_s347 = require_dist_cjs29();
-    var _ListMultipartUploadsCommand = class _ListMultipartUploadsCommand extends import_smithy_client4.Command.classBuilder().ep({
-      ...commonParams,
-      Bucket: { type: "contextParams", name: "Bucket" },
-      Prefix: { type: "contextParams", name: "Prefix" }
-    }).m(function(Command, cs, config, o) {
-      return [
-        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
-        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s347.getThrow200ExceptionsPlugin)(config)
-      ];
-    }).s("AmazonS3", "ListMultipartUploads", {}).n("S3Client", "ListMultipartUploadsCommand").f(void 0, void 0).ser(se_ListMultipartUploadsCommand).de(de_ListMultipartUploadsCommand).build() {
-    };
-    __name(_ListMultipartUploadsCommand, "ListMultipartUploadsCommand");
-    var ListMultipartUploadsCommand = _ListMultipartUploadsCommand;
     var import_middleware_sdk_s348 = require_dist_cjs29();
-    var _ListObjectsCommand = class _ListObjectsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListMultipartUploadsCommand = class _ListMultipartUploadsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Prefix: { type: "contextParams", name: "Prefix" }
@@ -51540,12 +51740,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s348.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "ListObjects", {}).n("S3Client", "ListObjectsCommand").f(void 0, void 0).ser(se_ListObjectsCommand).de(de_ListObjectsCommand).build() {
+    }).s("AmazonS3", "ListMultipartUploads", {}).n("S3Client", "ListMultipartUploadsCommand").f(void 0, void 0).ser(se_ListMultipartUploadsCommand).de(de_ListMultipartUploadsCommand).build() {
     };
-    __name(_ListObjectsCommand, "ListObjectsCommand");
-    var ListObjectsCommand = _ListObjectsCommand;
+    __name(_ListMultipartUploadsCommand, "ListMultipartUploadsCommand");
+    var ListMultipartUploadsCommand = _ListMultipartUploadsCommand;
     var import_middleware_sdk_s349 = require_dist_cjs29();
-    var _ListObjectsV2Command = class _ListObjectsV2Command extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListObjectsCommand = class _ListObjectsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Prefix: { type: "contextParams", name: "Prefix" }
@@ -51555,12 +51755,12 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s349.getThrow200ExceptionsPlugin)(config)
       ];
-    }).s("AmazonS3", "ListObjectsV2", {}).n("S3Client", "ListObjectsV2Command").f(void 0, void 0).ser(se_ListObjectsV2Command).de(de_ListObjectsV2Command).build() {
+    }).s("AmazonS3", "ListObjects", {}).n("S3Client", "ListObjectsCommand").f(void 0, void 0).ser(se_ListObjectsCommand).de(de_ListObjectsCommand).build() {
     };
-    __name(_ListObjectsV2Command, "ListObjectsV2Command");
-    var ListObjectsV2Command = _ListObjectsV2Command;
+    __name(_ListObjectsCommand, "ListObjectsCommand");
+    var ListObjectsCommand = _ListObjectsCommand;
     var import_middleware_sdk_s350 = require_dist_cjs29();
-    var _ListObjectVersionsCommand = class _ListObjectVersionsCommand extends import_smithy_client4.Command.classBuilder().ep({
+    var _ListObjectsV2Command = class _ListObjectsV2Command extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
       Prefix: { type: "contextParams", name: "Prefix" }
@@ -51570,11 +51770,26 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_sdk_s350.getThrow200ExceptionsPlugin)(config)
       ];
+    }).s("AmazonS3", "ListObjectsV2", {}).n("S3Client", "ListObjectsV2Command").f(void 0, void 0).ser(se_ListObjectsV2Command).de(de_ListObjectsV2Command).build() {
+    };
+    __name(_ListObjectsV2Command, "ListObjectsV2Command");
+    var ListObjectsV2Command = _ListObjectsV2Command;
+    var import_middleware_sdk_s351 = require_dist_cjs29();
+    var _ListObjectVersionsCommand = class _ListObjectVersionsCommand extends import_smithy_client4.Command.classBuilder().ep({
+      ...commonParams,
+      Bucket: { type: "contextParams", name: "Bucket" },
+      Prefix: { type: "contextParams", name: "Prefix" }
+    }).m(function(Command, cs, config, o) {
+      return [
+        (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
+        (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+        (0, import_middleware_sdk_s351.getThrow200ExceptionsPlugin)(config)
+      ];
     }).s("AmazonS3", "ListObjectVersions", {}).n("S3Client", "ListObjectVersionsCommand").f(void 0, void 0).ser(se_ListObjectVersionsCommand).de(de_ListObjectVersionsCommand).build() {
     };
     __name(_ListObjectVersionsCommand, "ListObjectVersionsCommand");
     var ListObjectVersionsCommand = _ListObjectVersionsCommand;
-    var import_middleware_sdk_s351 = require_dist_cjs29();
+    var import_middleware_sdk_s352 = require_dist_cjs29();
     var _ListPartsCommand = class _ListPartsCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -51583,7 +51798,7 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s351.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "ListParts", {}).n("S3Client", "ListPartsCommand").f(ListPartsRequestFilterSensitiveLog, void 0).ser(se_ListPartsCommand).de(de_ListPartsCommand).build() {
@@ -51600,6 +51815,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: false
         })
       ];
@@ -51617,6 +51833,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51647,6 +51864,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51664,6 +51882,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51697,7 +51916,7 @@ var require_dist_cjs72 = __commonJS({
     };
     __name(_PutBucketInventoryConfigurationCommand, "PutBucketInventoryConfigurationCommand");
     var PutBucketInventoryConfigurationCommand = _PutBucketInventoryConfigurationCommand;
-    var import_middleware_sdk_s352 = require_dist_cjs29();
+    var import_middleware_sdk_s353 = require_dist_cjs29();
     var _PutBucketLifecycleConfigurationCommand = class _PutBucketLifecycleConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
@@ -51708,9 +51927,10 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         }),
-        (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutBucketLifecycleConfiguration", {}).n("S3Client", "PutBucketLifecycleConfigurationCommand").f(void 0, void 0).ser(se_PutBucketLifecycleConfigurationCommand).de(de_PutBucketLifecycleConfigurationCommand).build() {
     };
@@ -51726,6 +51946,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51785,6 +52006,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51802,6 +52024,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51819,6 +52042,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51836,6 +52060,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51853,6 +52078,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51870,6 +52096,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -51877,7 +52104,7 @@ var require_dist_cjs72 = __commonJS({
     };
     __name(_PutBucketWebsiteCommand, "PutBucketWebsiteCommand");
     var PutBucketWebsiteCommand = _PutBucketWebsiteCommand;
-    var import_middleware_sdk_s353 = require_dist_cjs29();
+    var import_middleware_sdk_s354 = require_dist_cjs29();
     var _PutObjectAclCommand = class _PutObjectAclCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -51888,15 +52115,16 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         }),
-        (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectAcl", {}).n("S3Client", "PutObjectAclCommand").f(void 0, void 0).ser(se_PutObjectAclCommand).de(de_PutObjectAclCommand).build() {
     };
     __name(_PutObjectAclCommand, "PutObjectAclCommand");
     var PutObjectAclCommand = _PutObjectAclCommand;
-    var import_middleware_sdk_s354 = require_dist_cjs29();
+    var import_middleware_sdk_s355 = require_dist_cjs29();
     var _PutObjectCommand = class _PutObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -51907,17 +52135,18 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: false
         }),
-        (0, import_middleware_sdk_s354.getCheckContentLengthHeaderPlugin)(config),
-        (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s355.getCheckContentLengthHeaderPlugin)(config),
+        (0, import_middleware_sdk_s355.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "PutObject", {}).n("S3Client", "PutObjectCommand").f(PutObjectRequestFilterSensitiveLog, PutObjectOutputFilterSensitiveLog).ser(se_PutObjectCommand).de(de_PutObjectCommand).build() {
     };
     __name(_PutObjectCommand, "PutObjectCommand");
     var PutObjectCommand = _PutObjectCommand;
-    var import_middleware_sdk_s355 = require_dist_cjs29();
+    var import_middleware_sdk_s356 = require_dist_cjs29();
     var _PutObjectLegalHoldCommand = class _PutObjectLegalHoldCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51927,15 +52156,16 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         }),
-        (0, import_middleware_sdk_s355.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s356.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectLegalHold", {}).n("S3Client", "PutObjectLegalHoldCommand").f(void 0, void 0).ser(se_PutObjectLegalHoldCommand).de(de_PutObjectLegalHoldCommand).build() {
     };
     __name(_PutObjectLegalHoldCommand, "PutObjectLegalHoldCommand");
     var PutObjectLegalHoldCommand = _PutObjectLegalHoldCommand;
-    var import_middleware_sdk_s356 = require_dist_cjs29();
+    var import_middleware_sdk_s357 = require_dist_cjs29();
     var _PutObjectLockConfigurationCommand = class _PutObjectLockConfigurationCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51945,15 +52175,16 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         }),
-        (0, import_middleware_sdk_s356.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s357.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectLockConfiguration", {}).n("S3Client", "PutObjectLockConfigurationCommand").f(void 0, void 0).ser(se_PutObjectLockConfigurationCommand).de(de_PutObjectLockConfigurationCommand).build() {
     };
     __name(_PutObjectLockConfigurationCommand, "PutObjectLockConfigurationCommand");
     var PutObjectLockConfigurationCommand = _PutObjectLockConfigurationCommand;
-    var import_middleware_sdk_s357 = require_dist_cjs29();
+    var import_middleware_sdk_s358 = require_dist_cjs29();
     var _PutObjectRetentionCommand = class _PutObjectRetentionCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51963,15 +52194,16 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         }),
-        (0, import_middleware_sdk_s357.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectRetention", {}).n("S3Client", "PutObjectRetentionCommand").f(void 0, void 0).ser(se_PutObjectRetentionCommand).de(de_PutObjectRetentionCommand).build() {
     };
     __name(_PutObjectRetentionCommand, "PutObjectRetentionCommand");
     var PutObjectRetentionCommand = _PutObjectRetentionCommand;
-    var import_middleware_sdk_s358 = require_dist_cjs29();
+    var import_middleware_sdk_s359 = require_dist_cjs29();
     var _PutObjectTaggingCommand = class _PutObjectTaggingCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -51981,9 +52213,10 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         }),
-        (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s359.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "PutObjectTagging", {}).n("S3Client", "PutObjectTaggingCommand").f(void 0, void 0).ser(se_PutObjectTaggingCommand).de(de_PutObjectTaggingCommand).build() {
     };
@@ -51999,6 +52232,7 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: true
         })
       ];
@@ -52006,7 +52240,7 @@ var require_dist_cjs72 = __commonJS({
     };
     __name(_PutPublicAccessBlockCommand, "PutPublicAccessBlockCommand");
     var PutPublicAccessBlockCommand = _PutPublicAccessBlockCommand;
-    var import_middleware_sdk_s359 = require_dist_cjs29();
+    var import_middleware_sdk_s360 = require_dist_cjs29();
     var _RestoreObjectCommand = class _RestoreObjectCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -52016,15 +52250,16 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: false
         }),
-        (0, import_middleware_sdk_s359.getThrow200ExceptionsPlugin)(config)
+        (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config)
       ];
     }).s("AmazonS3", "RestoreObject", {}).n("S3Client", "RestoreObjectCommand").f(RestoreObjectRequestFilterSensitiveLog, void 0).ser(se_RestoreObjectCommand).de(de_RestoreObjectCommand).build() {
     };
     __name(_RestoreObjectCommand, "RestoreObjectCommand");
     var RestoreObjectCommand = _RestoreObjectCommand;
-    var import_middleware_sdk_s360 = require_dist_cjs29();
+    var import_middleware_sdk_s361 = require_dist_cjs29();
     var _SelectObjectContentCommand = class _SelectObjectContentCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" }
@@ -52032,7 +52267,7 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s361.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "SelectObjectContent", {
@@ -52046,7 +52281,7 @@ var require_dist_cjs72 = __commonJS({
     };
     __name(_SelectObjectContentCommand, "SelectObjectContentCommand");
     var SelectObjectContentCommand = _SelectObjectContentCommand;
-    var import_middleware_sdk_s361 = require_dist_cjs29();
+    var import_middleware_sdk_s362 = require_dist_cjs29();
     var _UploadPartCommand = class _UploadPartCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       Bucket: { type: "contextParams", name: "Bucket" },
@@ -52057,16 +52292,17 @@ var require_dist_cjs72 = __commonJS({
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
         (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
           requestAlgorithmMember: "ChecksumAlgorithm",
+          requestAlgorithmMemberHttpHeader: "x-amz-sdk-checksum-algorithm",
           requestChecksumRequired: false
         }),
-        (0, import_middleware_sdk_s361.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s362.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "UploadPart", {}).n("S3Client", "UploadPartCommand").f(UploadPartRequestFilterSensitiveLog, UploadPartOutputFilterSensitiveLog).ser(se_UploadPartCommand).de(de_UploadPartCommand).build() {
     };
     __name(_UploadPartCommand, "UploadPartCommand");
     var UploadPartCommand = _UploadPartCommand;
-    var import_middleware_sdk_s362 = require_dist_cjs29();
+    var import_middleware_sdk_s363 = require_dist_cjs29();
     var _UploadPartCopyCommand = class _UploadPartCopyCommand extends import_smithy_client4.Command.classBuilder().ep({
       ...commonParams,
       DisableS3ExpressSessionAuth: { type: "staticContextParams", value: true },
@@ -52075,7 +52311,7 @@ var require_dist_cjs72 = __commonJS({
       return [
         (0, import_middleware_serde2.getSerdePlugin)(config, this.serialize, this.deserialize),
         (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-        (0, import_middleware_sdk_s362.getThrow200ExceptionsPlugin)(config),
+        (0, import_middleware_sdk_s363.getThrow200ExceptionsPlugin)(config),
         (0, import_middleware_ssec.getSsecPlugin)(config)
       ];
     }).s("AmazonS3", "UploadPartCopy", {}).n("S3Client", "UploadPartCopyCommand").f(UploadPartCopyRequestFilterSensitiveLog, UploadPartCopyOutputFilterSensitiveLog).ser(se_UploadPartCopyCommand).de(de_UploadPartCopyCommand).build() {
@@ -52099,6 +52335,7 @@ var require_dist_cjs72 = __commonJS({
       CompleteMultipartUploadCommand,
       CopyObjectCommand,
       CreateBucketCommand,
+      CreateBucketMetadataTableConfigurationCommand,
       CreateMultipartUploadCommand,
       CreateSessionCommand,
       DeleteBucketCommand,
@@ -52108,6 +52345,7 @@ var require_dist_cjs72 = __commonJS({
       DeleteBucketIntelligentTieringConfigurationCommand,
       DeleteBucketInventoryConfigurationCommand,
       DeleteBucketLifecycleCommand,
+      DeleteBucketMetadataTableConfigurationCommand,
       DeleteBucketMetricsConfigurationCommand,
       DeleteBucketOwnershipControlsCommand,
       DeleteBucketPolicyCommand,
@@ -52128,6 +52366,7 @@ var require_dist_cjs72 = __commonJS({
       GetBucketLifecycleConfigurationCommand,
       GetBucketLocationCommand,
       GetBucketLoggingCommand,
+      GetBucketMetadataTableConfigurationCommand,
       GetBucketMetricsConfigurationCommand,
       GetBucketNotificationConfigurationCommand,
       GetBucketOwnershipControlsCommand,
