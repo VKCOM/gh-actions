@@ -1,0 +1,26 @@
+name: 'Node.js up PR'
+description: 'Create PR with up Node.js version'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run update version
+      run: curl -s https://nodejs.org/dist/index.json | jq 'map(select(.lts != false))|sort_by(.date)[-1].version' -r > .nvmrc
+      shell: bash
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        title: Node.js version update
+        branch: github-actions/build/tools/nvm-up
+        commit-message: 'build(tools): Node.js version up'
+        body: |
+          Automated Node.js version up
+
+          ## Release notes
+          -
+        token: ${{ inputs.token }}
