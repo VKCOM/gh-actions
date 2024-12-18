@@ -65378,6 +65378,10 @@ var Action = class {
     this.s3 = new import_client_s3.S3(configuration());
     this.bucket = core.getInput("awsBucket", req);
   }
+  async putObject(args) {
+    const output = await this.s3.putObject(args);
+    return output;
+  }
   async upload(src, dist) {
     core.info("Command upload");
     const sourceDir = import_path.default.join(process.cwd(), src);
@@ -65389,7 +65393,7 @@ var Action = class {
         const fileStream = import_fs.default.createReadStream(file);
         const bucketPath = import_path.default.join(dist, import_path.default.relative(sourceDir, file));
         core.debug(`put ${files.length}`);
-        return this.s3.putObject({
+        return this.putObject({
           Bucket: this.bucket,
           ACL: "public-read",
           Body: fileStream,
