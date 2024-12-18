@@ -6,7 +6,7 @@ import { S3, S3ClientConfig } from '@aws-sdk/client-s3';
 import lodash from 'lodash';
 import { lookup } from 'mime-types';
 
-const maxConcurrentUploadFiles = 10;
+const maxConcurrentUploadFiles = 2;
 
 const req = {
   required: true,
