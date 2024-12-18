@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import * as core from '@actions/core';
-import { S3, S3ClientConfig } from '@aws-sdk/client-s3';
+import { PutObjectCommandInput, S3, S3ClientConfig } from '@aws-sdk/client-s3';
 import lodash from 'lodash';
 import { lookup } from 'mime-types';
 
@@ -57,6 +57,11 @@ class Action {
     this.bucket = core.getInput('awsBucket', req);
   }
 
+  private async putObject(args: PutObjectCommandInput) {
+    const output = await this.s3.putObject(args);
+    return output;
+  }
+
   private async upload(src: string, dist: string) {
     core.info('Command upload');
 
@@ -72,7 +77,7 @@ class Action {
         const bucketPath = path.join(dist, path.relative(sourceDir, file));
 
         core.debug(`put ${files.length}`);
-        return this.s3.putObject({
+        return this.putObject({
           Bucket: this.bucket,
           ACL: 'public-read',
           Body: fileStream,
