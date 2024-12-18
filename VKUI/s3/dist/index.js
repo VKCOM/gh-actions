@@ -65339,7 +65339,7 @@ var core = __toESM(require_core());
 var import_client_s3 = __toESM(require_dist_cjs71());
 var import_lodash = __toESM(require_lodash());
 var import_mime_types = __toESM(require_mime_types());
-var maxConcurrentUploadFiles = 10;
+var maxConcurrentUploadFiles = 2;
 var req = {
   required: true
 };
