@@ -5,7 +5,7 @@ on:
 
 jobs:
   corepack-up:
-    name: Corepack up
+    name: Tools update
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -18,5 +18,9 @@ jobs:
         uses: ./.github/actions/node-setup
 
       - uses: VKCOM/gh-actions/shared/node/corepack-up-pr@main
+        with:
+          token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
+
+      - uses: VKCOM/gh-actions/shared/node/nvmrc-up-pr@main
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
