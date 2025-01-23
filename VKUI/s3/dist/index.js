@@ -65413,7 +65413,11 @@ function configuration() {
       secretAccessKey
     },
     region,
-    endpoint
+    endpoint,
+    requestHandler: {
+      requestTimeout: 3e4
+      // 30 seconds
+    }
   };
 }
 var Action = class {
