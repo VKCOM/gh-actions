@@ -44,6 +44,9 @@ function configuration(): S3ClientConfig {
     },
     region,
     endpoint,
+    requestHandler: {
+      requestTimeout: 30000, // 30 seconds
+    }
   };
 }
 
