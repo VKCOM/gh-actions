@@ -1,0 +1,9 @@
+name: 'Spell Checker filename'
+description: 'Spell Checker filename'
+inputs:
+  token:
+    required: false
+    description: 'token with access to your repository'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

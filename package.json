@@ -5,7 +5,8 @@
     "packages": [
       "VKUI/*",
       "vkui-tokens/*",
-      "shared/rust/cargo-update-toml"
+      "shared/rust/cargo-update-toml",
+      "shared/*"
     ]
   },
   "scripts": {

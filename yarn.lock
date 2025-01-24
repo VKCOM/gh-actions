@@ -140,6 +140,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@actions-internal/spell-checker-filename@workspace:shared/spell-checker-filename":
+  version: 0.0.0-use.local
+  resolution: "@actions-internal/spell-checker-filename@workspace:shared/spell-checker-filename"
+  dependencies:
+    "@actions/core": "npm:^1.11.1"
+    "@actions/github": "npm:^6.0.0"
+    "@types/node": "npm:^22.10.7"
+    "@types/nspell": "npm:^2.1.6"
+    async-mutex: "npm:^0.5.0"
+    nspell: "npm:^2.1.5"
+    typescript: "npm:^5.7.3"
+  languageName: unknown
+  linkType: soft
+
 "@actions-internal/stable-branch@workspace:VKUI/stable-branch":
   version: 0.0.0-use.local
   resolution: "@actions-internal/stable-branch@workspace:VKUI/stable-branch"
@@ -3045,6 +3059,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/nspell@npm:^2.1.6":
+  version: 2.1.6
+  resolution: "@types/nspell@npm:2.1.6"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/03a0fe59cb5370ed0c199089f006a0d7ea5a8a84517c9bc3ccff46570a91ee86f00f1df1328a08dc5516781e0fc0f1b3932b8797681be45c4802686e5b595463
+  languageName: node
+  linkType: hard
+
 "@types/semver@npm:^7.5.8":
   version: 7.5.8
   resolution: "@types/semver@npm:7.5.8"
@@ -3581,6 +3604,15 @@ __metadata:
     get-intrinsic: "npm:^1.2.6"
     is-array-buffer: "npm:^3.0.4"
   checksum: 10c0/2f2459caa06ae0f7f615003f9104b01f6435cc803e11bd2a655107d52a1781dc040532dc44d93026b694cc18793993246237423e13a5337e86b43ed604932c06
+  languageName: node
+  linkType: hard
+
+"async-mutex@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "async-mutex@npm:0.5.0"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  checksum: 10c0/9096e6ad6b674c894d8ddd5aa4c512b09bb05931b8746ebd634952b05685608b2b0820ed5c406e6569919ff5fe237ab3c491e6f2887d6da6b6ba906db3ee9c32
   languageName: node
   linkType: hard
 
@@ -5738,6 +5770,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-buffer@npm:^2.0.0":
+  version: 2.0.5
+  resolution: "is-buffer@npm:2.0.5"
+  checksum: 10c0/e603f6fced83cf94c53399cff3bda1a9f08e391b872b64a73793b0928be3e5f047f2bcece230edb7632eaea2acdbfcb56c23b33d8a20c820023b230f1485679a
+  languageName: node
+  linkType: hard
+
 "is-callable@npm:^1.1.3, is-callable@npm:^1.1.4, is-callable@npm:^1.2.7":
   version: 1.2.7
   resolution: "is-callable@npm:1.2.7"
@@ -7093,6 +7132,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nspell@npm:^2.1.5":
+  version: 2.1.5
+  resolution: "nspell@npm:2.1.5"
+  dependencies:
+    is-buffer: "npm:^2.0.0"
+  checksum: 10c0/b91f52bbd5bcf9a5ac024942cb9a61481d522ed67044ecbd45f7de70861677137c4eb66e4a9097c73faae717bf25c0ee5fac00f803fdb59203d923f55612b21a
+  languageName: node
+  linkType: hard
+
 "object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
@@ -8388,6 +8436,13 @@ __metadata:
   version: 2.6.2
   resolution: "tslib@npm:2.6.2"
   checksum: 10c0/e03a8a4271152c8b26604ed45535954c0a45296e32445b4b87f8a5abdb2421f40b59b4ca437c4346af0f28179780d604094eb64546bee2019d903d01c6c19bdb
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.0":
+  version: 2.8.1
+  resolution: "tslib@npm:2.8.1"
+  checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
   languageName: node
   linkType: hard
 
