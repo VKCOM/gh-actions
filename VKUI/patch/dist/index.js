@@ -22593,6 +22593,7 @@ var require_re = __commonJS({
     var re = exports2.re = [];
     var safeRe = exports2.safeRe = [];
     var src = exports2.src = [];
+    var safeSrc = exports2.safeSrc = [];
     var t = exports2.t = {};
     var R = 0;
     var LETTERDASHNUMBER = "[a-zA-Z0-9-]";
@@ -22613,6 +22614,7 @@ var require_re = __commonJS({
       debug(name, index, value);
       t[name] = index;
       src[index] = value;
+      safeSrc[index] = safe;
       re[index] = new RegExp(value, isGlobal ? "g" : void 0);
       safeRe[index] = new RegExp(safe, isGlobal ? "g" : void 0);
     };
@@ -22709,7 +22711,7 @@ var require_semver = __commonJS({
   "../../node_modules/semver/classes/semver.js"(exports2, module2) {
     var debug = require_debug();
     var { MAX_LENGTH, MAX_SAFE_INTEGER } = require_constants5();
-    var { safeRe: re, t } = require_re();
+    var { safeRe: re, safeSrc: src, t } = require_re();
     var parseOptions = require_parse_options();
     var { compareIdentifiers } = require_identifiers();
     var SemVer2 = class _SemVer {
@@ -22854,7 +22856,8 @@ var require_semver = __commonJS({
             throw new Error("invalid increment argument: identifier is empty");
           }
           if (identifier) {
-            const match = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE]);
+            const r = new RegExp(`^${this.options.loose ? src[t.PRERELEASELOOSE] : src[t.PRERELEASE]}$`);
+            const match = `-${identifier}`.match(r);
             if (!match || match[1] !== identifier) {
               throw new Error(`invalid identifier: ${identifier}`);
             }
