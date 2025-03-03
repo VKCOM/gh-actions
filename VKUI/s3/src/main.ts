@@ -47,6 +47,7 @@ function configuration(): S3ClientConfig {
     requestHandler: {
       requestTimeout: 30000, // 30 seconds
     },
+    requestChecksumCalculation: 'WHEN_REQUIRED',
   };
 }
 
