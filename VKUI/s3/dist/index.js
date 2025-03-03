@@ -64968,7 +64968,9 @@ function configuration() {
     requestHandler: {
       requestTimeout: 3e4
       // 30 seconds
-    }
+    },
+    requestChecksumCalculation: "WHEN_REQUIRED",
+    responseChecksumValidation: "WHEN_REQUIRED"
   };
 }
 var Action = class {
