@@ -21,10 +21,9 @@ const formatDescription = (description: string): string => {
   formattedDescription =
     formattedDescription.charAt(0).toUpperCase() + formattedDescription.slice(1);
 
-  // Добавляем точку в конце, если её нет
-  const lastChar = formattedDescription.charAt(formattedDescription.length - 1);
-  if (lastChar !== '.' && lastChar !== '!' && lastChar !== '?') {
-    formattedDescription += '.';
+  // Удаляем точку в конце, если она есть
+  if (formattedDescription.endsWith('.')) {
+    formattedDescription = formattedDescription.slice(0, -1);
   }
 
   return formattedDescription;
