@@ -6,6 +6,8 @@ const COMPONENT_SUB_ITEM_REGEX = /\s{2}-\s(.+)/;
 const UNKNOWN_CHANGE_REGEX = /-\s(.+)/;
 const CODE_BLOCK_START_REGEX = /```(diff)?/;
 const CODE_BLOCK_END_REGEX = /```/;
+const PR_NUMBER_REGEX = /^(.+)\(#(\d+)\)$/;
+const PR_WITH_AUTHOR_REGEX = /^(.+)\(#(\d+),\s+спасибо\s+@(\w+)\)$/;
 
 function removeLeadingSpaces(str: string, n: number): string {
   const spaceRegex = /^(\s+)/;
@@ -15,6 +17,36 @@ function removeLeadingSpaces(str: string, n: number): string {
   }
   const leadingSpacesCount = match[1].length;
   return str.slice(Math.min(leadingSpacesCount, n));
+}
+
+function resolveDescription(
+  fullDescription: string,
+): Pick<ChangeData, 'description' | 'pullRequestNumber' | 'author'> {
+  const description = fullDescription.trim();
+  const descriptionWithPrNumberMatch = description.match(PR_NUMBER_REGEX);
+  const descriptionWithAuthorNumberMatch = description.match(PR_WITH_AUTHOR_REGEX);
+
+  if (descriptionWithAuthorNumberMatch) {
+    const descriptionBody = descriptionWithAuthorNumberMatch[1];
+    const prNumber = descriptionWithAuthorNumberMatch[2];
+    const author = descriptionWithAuthorNumberMatch[3];
+    return {
+      description: descriptionBody,
+      pullRequestNumber: Number(prNumber),
+      author,
+    };
+  }
+  if (descriptionWithPrNumberMatch) {
+    const descriptionBody = descriptionWithPrNumberMatch[1];
+    const prNumber = descriptionWithPrNumberMatch[2];
+    return {
+      description: descriptionBody,
+      pullRequestNumber: Number(prNumber),
+    };
+  }
+  return {
+    description,
+  };
 }
 
 export function parseChanges(text: string): ChangeData[] {
@@ -54,29 +86,29 @@ export function parseChanges(text: string): ChangeData[] {
           type: 'component',
           subInfo: false,
           component: component,
-          description: description.trim(),
           additionalInfo: '',
+          ...resolveDescription(description),
         };
         changes.push(currentChange);
       }
     } else if (componentSubItemMatch && currentChange && currentChange.type === 'component') {
       // Описание для текущего компонента
-      const description = componentSubItemMatch[1].trim();
+      const description = componentSubItemMatch[1];
       currentChange = {
         type: 'component',
         subInfo: true,
         component: currentChange.component,
-        description: description,
         additionalInfo: '',
+        ...resolveDescription(description),
       };
       changes.push(currentChange);
     } else if (unknownChangeMatch) {
       // Неизвестное изменение
-      const description = unknownChangeMatch[1].trim();
+      const description = unknownChangeMatch[1];
       currentChange = {
         type: 'unknown',
-        description: description,
         additionalInfo: '',
+        ...resolveDescription(description),
       };
       changes.push(currentChange);
     } else if (currentChange) {

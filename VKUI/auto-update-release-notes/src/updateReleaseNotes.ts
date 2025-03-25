@@ -60,9 +60,12 @@ export const updateReleaseNotes = async ({
     return;
   }
 
+  const isFromForkedRepo = pullRequest.head.repo?.fork;
+  const otherAuthor = isFromForkedRepo ? author : '';
+
   const pullRequestReleaseNotes =
     pullRequestReleaseNotesBody &&
-    parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
+    parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber, otherAuthor);
 
   const releaseData = await calculateReleaseVersion({
     octokit,
@@ -91,14 +94,11 @@ export const updateReleaseNotes = async ({
 
   const releaseUpdater = releaseNotesUpdater(release.body || '');
 
-  const isFromForkedRepo = pullRequest.head.repo?.fork;
-
   if (pullRequestReleaseNotes) {
     pullRequestReleaseNotes.forEach((note) => {
       releaseUpdater.addNotes({
         noteData: note,
         version: releaseVersion,
-        author: isFromForkedRepo ? author : '',
       });
     });
   } else {

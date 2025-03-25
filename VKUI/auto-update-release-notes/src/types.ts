@@ -12,6 +12,7 @@ type ComponentChangeData = {
   component: string;
   description: string;
   pullRequestNumber?: number;
+  author?: string;
   additionalInfo?: string;
 };
 
@@ -19,6 +20,7 @@ type UnknownChangeData = {
   type: 'unknown';
   description: string;
   pullRequestNumber?: number;
+  author?: string;
   additionalInfo?: string;
 };
 
