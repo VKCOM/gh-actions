@@ -24458,6 +24458,8 @@ var COMPONENT_SUB_ITEM_REGEX = /\s{2}-\s(.+)/;
 var UNKNOWN_CHANGE_REGEX = /-\s(.+)/;
 var CODE_BLOCK_START_REGEX = /```(diff)?/;
 var CODE_BLOCK_END_REGEX = /```/;
+var PR_NUMBER_REGEX = /^(.+)\(#(\d+)\)$/;
+var PR_WITH_AUTHOR_REGEX = /^(.+)\(#(\d+),\s+спасибо\s+@(\w+)\)$/;
 function removeLeadingSpaces(str, n) {
   const spaceRegex = /^(\s+)/;
   const match = str.match(spaceRegex);
@@ -24466,6 +24468,32 @@ function removeLeadingSpaces(str, n) {
   }
   const leadingSpacesCount = match[1].length;
   return str.slice(Math.min(leadingSpacesCount, n));
+}
+function resolveDescription(fullDescription) {
+  const description = fullDescription.trim();
+  const descriptionWithPrNumberMatch = description.match(PR_NUMBER_REGEX);
+  const descriptionWithAuthorNumberMatch = description.match(PR_WITH_AUTHOR_REGEX);
+  if (descriptionWithAuthorNumberMatch) {
+    const descriptionBody = descriptionWithAuthorNumberMatch[1];
+    const prNumber = descriptionWithAuthorNumberMatch[2];
+    const author = descriptionWithAuthorNumberMatch[3];
+    return {
+      description: descriptionBody,
+      pullRequestNumber: Number(prNumber),
+      author
+    };
+  }
+  if (descriptionWithPrNumberMatch) {
+    const descriptionBody = descriptionWithPrNumberMatch[1];
+    const prNumber = descriptionWithPrNumberMatch[2];
+    return {
+      description: descriptionBody,
+      pullRequestNumber: Number(prNumber)
+    };
+  }
+  return {
+    description
+  };
 }
 function parseChanges(text) {
   let changes = [];
@@ -24501,27 +24529,27 @@ function parseChanges(text) {
           type: "component",
           subInfo: false,
           component,
-          description: description.trim(),
-          additionalInfo: ""
+          additionalInfo: "",
+          ...resolveDescription(description)
         };
         changes.push(currentChange);
       }
     } else if (componentSubItemMatch && currentChange && currentChange.type === "component") {
-      const description = componentSubItemMatch[1].trim();
+      const description = componentSubItemMatch[1];
       currentChange = {
         type: "component",
         subInfo: true,
         component: currentChange.component,
-        description,
-        additionalInfo: ""
+        additionalInfo: "",
+        ...resolveDescription(description)
       };
       changes.push(currentChange);
     } else if (unknownChangeMatch) {
-      const description = unknownChangeMatch[1].trim();
+      const description = unknownChangeMatch[1];
       currentChange = {
         type: "unknown",
-        description,
-        additionalInfo: ""
+        additionalInfo: "",
+        ...resolveDescription(description)
       };
       changes.push(currentChange);
     } else if (currentChange) {
@@ -24550,10 +24578,21 @@ var prAuthorToString = (author) => {
 var pullRequestNumberToString = (prNumber, author) => {
   return prNumber ? ` (#${prNumber}${prAuthorToString(author)})` : "";
 };
-var changeDescriptionToString = (changeItem, author) => {
-  return ` ${changeItem.description}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
+var formatDescription = (description) => {
+  let formattedDescription = description.trimEnd();
+  if (!description || description.length === 0) {
+    return description;
+  }
+  formattedDescription = formattedDescription.charAt(0).toUpperCase() + formattedDescription.slice(1);
+  if (formattedDescription.endsWith(".")) {
+    formattedDescription = formattedDescription.slice(0, -1);
+  }
+  return formattedDescription;
 };
-var convertChangesToString = (changes, version, author) => {
+var changeDescriptionToString = (changeItem, author) => {
+  return ` ${formatDescription(changeItem.description)}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
+};
+var convertChangesToString = (changes, version) => {
   let result = "";
   const filteredChanges = [];
   const mapComponentToChanges = /* @__PURE__ */ new Map();
@@ -24589,17 +24628,17 @@ var convertChangesToString = (changes, version, author) => {
       if (componentChanges.length > 1) {
         result += "\r\n";
         componentChanges.forEach((changeItem) => {
-          result += `  -${changeDescriptionToString(changeItem, author)}\r
+          result += `  -${changeDescriptionToString(changeItem, changeItem.author)}\r
 `;
           addAdditionalInfo(changeItem, 2);
         });
       } else {
-        result += `${changeDescriptionToString(change, author)}\r
+        result += `${changeDescriptionToString(change, change.author)}\r
 `;
         addAdditionalInfo(change, 1);
       }
     } else {
-      result += `-${changeDescriptionToString(change, author)}\r
+      result += `-${changeDescriptionToString(change, change.author)}\r
 `;
       addAdditionalInfo(change, 1);
     }
@@ -24647,11 +24686,7 @@ function releaseNotesUpdater(currentBody) {
 `;
     body += content;
   };
-  const addNotes = ({
-    noteData,
-    version,
-    author
-  }) => {
+  const addNotes = ({ noteData, version }) => {
     const headerByType = getHeaderBySectionType(noteData.type);
     if (!headerByType) {
       return;
@@ -24661,13 +24696,10 @@ function releaseNotesUpdater(currentBody) {
       insertContentInSection(headerWithFormatting, (currentContent) => {
         const currentSectionContentData = parseChanges(currentContent);
         currentSectionContentData.push(...noteData.data);
-        return convertChangesToString(currentSectionContentData, version, author || "");
+        return convertChangesToString(currentSectionContentData, version);
       });
     } else {
-      addSectionWithContent(
-        headerByType,
-        convertChangesToString(noteData.data, version, author || "")
-      );
+      addSectionWithContent(headerByType, convertChangesToString(noteData.data, version));
     }
   };
   const addUndescribedPRNumber = (prNumber) => {
@@ -24691,13 +24723,14 @@ function releaseNotesUpdater(currentBody) {
 }
 
 // src/parsing/parsePullRequestReleaseNotesBody.ts
-function parsePullRequestReleaseNotesBody(releaseNotesBody, prNumber) {
+function parsePullRequestReleaseNotesBody(releaseNotesBody, pullRequestNumber, author) {
   const updater = releaseNotesUpdater(releaseNotesBody);
   return updater.getReleaseNotesData().map((change) => ({
     ...change,
     data: change.data.map((item) => ({
       ...item,
-      pullRequestNumber: prNumber
+      pullRequestNumber,
+      author
     }))
   }));
 }
@@ -24923,7 +24956,9 @@ var updateReleaseNotes = async ({
   if (!pullRequestReleaseNotesBody && !milestone) {
     return;
   }
-  const pullRequestReleaseNotes = pullRequestReleaseNotesBody && parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber);
+  const isFromForkedRepo = pullRequest.head.repo?.fork;
+  const otherAuthor = isFromForkedRepo ? author : "";
+  const pullRequestReleaseNotes = pullRequestReleaseNotesBody && parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber, otherAuthor);
   const releaseData = await calculateReleaseVersion({
     octokit,
     repo,
@@ -24945,13 +24980,11 @@ var updateReleaseNotes = async ({
     return;
   }
   const releaseUpdater = releaseNotesUpdater(release.body || "");
-  const isFromForkedRepo = pullRequest.head.repo?.fork;
   if (pullRequestReleaseNotes) {
     pullRequestReleaseNotes.forEach((note) => {
       releaseUpdater.addNotes({
         noteData: note,
-        version: releaseVersion,
-        author: isFromForkedRepo ? author : ""
+        version: releaseVersion
       });
     });
   } else {
