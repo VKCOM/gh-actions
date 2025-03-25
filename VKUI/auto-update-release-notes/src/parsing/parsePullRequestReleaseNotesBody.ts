@@ -3,7 +3,8 @@ import { releaseNotesUpdater } from './releaseNotesUpdater';
 
 export function parsePullRequestReleaseNotesBody(
   releaseNotesBody: string,
-  prNumber: number,
+  pullRequestNumber: number,
+  author: string,
 ): ReleaseNoteData[] | null | '' {
   const updater = releaseNotesUpdater(releaseNotesBody);
 
@@ -11,7 +12,8 @@ export function parsePullRequestReleaseNotesBody(
     ...change,
     data: change.data.map((item) => ({
       ...item,
-      pullRequestNumber: prNumber,
+      pullRequestNumber,
+      author,
     })),
   }));
 }

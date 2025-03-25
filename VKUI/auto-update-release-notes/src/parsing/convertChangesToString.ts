@@ -4,23 +4,36 @@ const componentToString = (component: string, version: string) => {
   return `[${component}](https://vkcom.github.io/VKUI/${version}/#/${component})`;
 };
 
-const prAuthorToString = (author: string) => {
+const prAuthorToString = (author?: string) => {
   return author ? `, спасибо @${author}` : '';
 };
 
-const pullRequestNumberToString = (prNumber: number | undefined, author: string) => {
+const pullRequestNumberToString = (prNumber: number | undefined, author?: string) => {
   return prNumber ? ` (#${prNumber}${prAuthorToString(author)})` : '';
 };
 
-const changeDescriptionToString = (changeItem: ChangeData, author: string) => {
-  return ` ${changeItem.description}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
+const formatDescription = (description: string): string => {
+  let formattedDescription = description.trimEnd();
+  if (!description || description.length === 0) {
+    return description;
+  }
+  // Преобразуем первую букву в заглавную
+  formattedDescription =
+    formattedDescription.charAt(0).toUpperCase() + formattedDescription.slice(1);
+
+  // Удаляем точку в конце, если она есть
+  if (formattedDescription.endsWith('.')) {
+    formattedDescription = formattedDescription.slice(0, -1);
+  }
+
+  return formattedDescription;
 };
 
-export const convertChangesToString = (
-  changes: ChangeData[],
-  version: string,
-  author: string,
-): string => {
+const changeDescriptionToString = (changeItem: ChangeData, author?: string) => {
+  return ` ${formatDescription(changeItem.description)}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
+};
+
+export const convertChangesToString = (changes: ChangeData[], version: string): string => {
   let result = '';
   const filteredChanges: ChangeData[] = [];
   const mapComponentToChanges: Map<string, ChangeData[]> = new Map();
@@ -59,15 +72,15 @@ export const convertChangesToString = (
       if (componentChanges.length > 1) {
         result += '\r\n';
         componentChanges.forEach((changeItem) => {
-          result += `  -${changeDescriptionToString(changeItem, author)}\r\n`;
+          result += `  -${changeDescriptionToString(changeItem, changeItem.author)}\r\n`;
           addAdditionalInfo(changeItem, 2);
         });
       } else {
-        result += `${changeDescriptionToString(change, author)}\r\n`;
+        result += `${changeDescriptionToString(change, change.author)}\r\n`;
         addAdditionalInfo(change, 1);
       }
     } else {
-      result += `-${changeDescriptionToString(change, author)}\r\n`;
+      result += `-${changeDescriptionToString(change, change.author)}\r\n`;
       addAdditionalInfo(change, 1);
     }
   });

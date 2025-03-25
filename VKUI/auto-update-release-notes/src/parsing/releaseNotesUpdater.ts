@@ -50,15 +50,7 @@ export function releaseNotesUpdater(currentBody: string) {
     body += content;
   };
 
-  const addNotes = ({
-    noteData,
-    version,
-    author,
-  }: {
-    noteData: ReleaseNoteData;
-    version: string;
-    author?: string;
-  }) => {
+  const addNotes = ({ noteData, version }: { noteData: ReleaseNoteData; version: string }) => {
     const headerByType = getHeaderBySectionType(noteData.type);
     if (!headerByType) {
       return;
@@ -68,13 +60,10 @@ export function releaseNotesUpdater(currentBody: string) {
       insertContentInSection(headerWithFormatting, (currentContent) => {
         const currentSectionContentData = parseChanges(currentContent);
         currentSectionContentData.push(...noteData.data);
-        return convertChangesToString(currentSectionContentData, version, author || '');
+        return convertChangesToString(currentSectionContentData, version);
       });
     } else {
-      addSectionWithContent(
-        headerByType,
-        convertChangesToString(noteData.data, version, author || ''),
-      );
+      addSectionWithContent(headerByType, convertChangesToString(noteData.data, version));
     }
   };
 
