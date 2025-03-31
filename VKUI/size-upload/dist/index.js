@@ -51929,10 +51929,35 @@ var require_db = __commonJS({
       "application/ace+cbor": {
         source: "iana"
       },
+      "application/ace+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/ace-groupcomm+cbor": {
+        source: "iana"
+      },
+      "application/ace-trl+cbor": {
+        source: "iana"
+      },
       "application/activemessage": {
         source: "iana"
       },
       "application/activity+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/aif+cbor": {
+        source: "iana"
+      },
+      "application/aif+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/alto-cdni+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/alto-cdnifilter+json": {
         source: "iana",
         compressible: true
       },
@@ -51976,6 +52001,22 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/alto-propmap+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/alto-propmapparams+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/alto-tips+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/alto-tipsparams+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/alto-updatestreamcontrol+json": {
         source: "iana",
         compressible: true
@@ -51991,12 +52032,24 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["ez"]
       },
+      "application/appinstaller": {
+        compressible: false,
+        extensions: ["appinstaller"]
+      },
       "application/applefile": {
         source: "iana"
       },
       "application/applixware": {
         source: "apache",
         extensions: ["aw"]
+      },
+      "application/appx": {
+        compressible: false,
+        extensions: ["appx"]
+      },
+      "application/appxbundle": {
+        compressible: false,
+        extensions: ["appxbundle"]
       },
       "application/at+jwt": {
         source: "iana"
@@ -52059,6 +52112,16 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/automationml-aml+xml": {
+        source: "iana",
+        compressible: true,
+        extensions: ["aml"]
+      },
+      "application/automationml-amlx+zip": {
+        source: "iana",
+        compressible: false,
+        extensions: ["amlx"]
+      },
       "application/bacnet-xdd+zip": {
         source: "iana",
         compressible: false
@@ -52074,6 +52137,12 @@ var require_db = __commonJS({
         source: "iana",
         charset: "UTF-8",
         compressible: true
+      },
+      "application/bufr": {
+        source: "iana"
+      },
+      "application/c2pa": {
+        source: "iana"
       },
       "application/calendar+json": {
         source: "iana",
@@ -52112,6 +52181,11 @@ var require_db = __commonJS({
         compressible: true,
         extensions: ["ccxml"]
       },
+      "application/cda+xml": {
+        source: "iana",
+        charset: "UTF-8",
+        compressible: true
+      },
       "application/cdfx+xml": {
         source: "iana",
         compressible: true,
@@ -52140,6 +52214,9 @@ var require_db = __commonJS({
       "application/cdni": {
         source: "iana"
       },
+      "application/ce+cbor": {
+        source: "iana"
+      },
       "application/cea": {
         source: "iana"
       },
@@ -52154,9 +52231,15 @@ var require_db = __commonJS({
       "application/cfw": {
         source: "iana"
       },
+      "application/cid-edhoc+cbor-seq": {
+        source: "iana"
+      },
       "application/city+json": {
         source: "iana",
         compressible: true
+      },
+      "application/city+json-seq": {
+        source: "iana"
       },
       "application/clr": {
         source: "iana"
@@ -52176,6 +52259,9 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/coap-eap": {
+        source: "iana"
+      },
       "application/coap-group+json": {
         source: "iana",
         compressible: true
@@ -52184,6 +52270,9 @@ var require_db = __commonJS({
         source: "iana"
       },
       "application/commonground": {
+        source: "iana"
+      },
+      "application/concise-problem-details+cbor": {
         source: "iana"
       },
       "application/conference-info+xml": {
@@ -52197,6 +52286,9 @@ var require_db = __commonJS({
         source: "iana"
       },
       "application/cose-key-set": {
+        source: "iana"
+      },
+      "application/cose-x509": {
         source: "iana"
       },
       "application/cpl+xml": {
@@ -52222,6 +52314,17 @@ var require_db = __commonJS({
       "application/cu-seeme": {
         source: "apache",
         extensions: ["cu"]
+      },
+      "application/cwl": {
+        source: "iana",
+        extensions: ["cwl"]
+      },
+      "application/cwl+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/cwl+yaml": {
+        source: "iana"
       },
       "application/cwt": {
         source: "iana"
@@ -52264,7 +52367,8 @@ var require_db = __commonJS({
         compressible: true
       },
       "application/dicom": {
-        source: "iana"
+        source: "iana",
+        extensions: ["dcm"]
       },
       "application/dicom+json": {
         source: "iana",
@@ -52298,6 +52402,9 @@ var require_db = __commonJS({
       "application/dots+cbor": {
         source: "iana"
       },
+      "application/dpop+jwt": {
+        source: "iana"
+      },
       "application/dskpp+xml": {
         source: "iana",
         compressible: true
@@ -52314,10 +52421,33 @@ var require_db = __commonJS({
       "application/dvcs": {
         source: "iana"
       },
-      "application/ecmascript": {
+      "application/eat+cwt": {
+        source: "iana"
+      },
+      "application/eat+jwt": {
+        source: "iana"
+      },
+      "application/eat-bun+cbor": {
+        source: "iana"
+      },
+      "application/eat-bun+json": {
         source: "iana",
+        compressible: true
+      },
+      "application/eat-ucs+cbor": {
+        source: "iana"
+      },
+      "application/eat-ucs+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/ecmascript": {
+        source: "apache",
         compressible: true,
-        extensions: ["es", "ecma"]
+        extensions: ["ecma"]
+      },
+      "application/edhoc+cbor-seq": {
+        source: "iana"
       },
       "application/edi-consent": {
         source: "iana"
@@ -52362,6 +52492,10 @@ var require_db = __commonJS({
       "application/emergencycalldata.ecall.msd": {
         source: "iana"
       },
+      "application/emergencycalldata.legacyesn+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/emergencycalldata.providerinfo+xml": {
         source: "iana",
         compressible: true
@@ -52389,6 +52523,9 @@ var require_db = __commonJS({
         extensions: ["emotionml"]
       },
       "application/encaprtp": {
+        source: "iana"
+      },
+      "application/entity-statement+jwt": {
         source: "iana"
       },
       "application/epp+xml": {
@@ -52420,6 +52557,10 @@ var require_db = __commonJS({
       },
       "application/fastsoap": {
         source: "iana"
+      },
+      "application/fdf": {
+        source: "iana",
+        extensions: ["fdf"]
       },
       "application/fdt+xml": {
         source: "iana",
@@ -52471,6 +52612,14 @@ var require_db = __commonJS({
       "application/geopackage+sqlite3": {
         source: "iana"
       },
+      "application/geopose+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/geoxacml+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/geoxacml+xml": {
         source: "iana",
         compressible: true
@@ -52483,10 +52632,25 @@ var require_db = __commonJS({
         compressible: true,
         extensions: ["gml"]
       },
+      "application/gnap-binding-jws": {
+        source: "iana"
+      },
+      "application/gnap-binding-jwsd": {
+        source: "iana"
+      },
+      "application/gnap-binding-rotation-jws": {
+        source: "iana"
+      },
+      "application/gnap-binding-rotation-jwsd": {
+        source: "iana"
+      },
       "application/gpx+xml": {
         source: "apache",
         compressible: true,
         extensions: ["gpx"]
+      },
+      "application/grib": {
+        source: "iana"
       },
       "application/gxf": {
         source: "apache",
@@ -52506,6 +52670,11 @@ var require_db = __commonJS({
       },
       "application/hjson": {
         extensions: ["hjson"]
+      },
+      "application/hl7v2+xml": {
+        source: "iana",
+        charset: "UTF-8",
+        compressible: true
       },
       "application/http": {
         source: "iana"
@@ -52572,7 +52741,7 @@ var require_db = __commonJS({
         extensions: ["its"]
       },
       "application/java-archive": {
-        source: "apache",
+        source: "iana",
         compressible: false,
         extensions: ["jar", "war", "ear"]
       },
@@ -52587,10 +52756,10 @@ var require_db = __commonJS({
         extensions: ["class"]
       },
       "application/javascript": {
-        source: "iana",
+        source: "apache",
         charset: "UTF-8",
         compressible: true,
-        extensions: ["js", "mjs"]
+        extensions: ["js"]
       },
       "application/jf2feed+json": {
         source: "iana",
@@ -52608,6 +52777,10 @@ var require_db = __commonJS({
         compressible: true
       },
       "application/jscalendar+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/jscontact+json": {
         source: "iana",
         compressible: true
       },
@@ -52632,6 +52805,9 @@ var require_db = __commonJS({
         compressible: true,
         extensions: ["jsonml"]
       },
+      "application/jsonpath": {
+        source: "iana"
+      },
       "application/jwk+json": {
         source: "iana",
         compressible: true
@@ -52639,6 +52815,9 @@ var require_db = __commonJS({
       "application/jwk-set+json": {
         source: "iana",
         compressible: true
+      },
+      "application/jwk-set+jwt": {
+        source: "iana"
       },
       "application/jwt": {
         source: "iana"
@@ -52664,9 +52843,19 @@ var require_db = __commonJS({
       "application/link-format": {
         source: "iana"
       },
+      "application/linkset": {
+        source: "iana"
+      },
+      "application/linkset+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/load-control+xml": {
         source: "iana",
         compressible: true
+      },
+      "application/logout+jwt": {
+        source: "iana"
       },
       "application/lost+xml": {
         source: "iana",
@@ -52858,7 +53047,7 @@ var require_db = __commonJS({
       },
       "application/mp4": {
         source: "iana",
-        extensions: ["mp4s", "m4p"]
+        extensions: ["mp4", "mpg4", "mp4s", "m4p"]
       },
       "application/mpeg4-generic": {
         source: "iana"
@@ -52886,6 +53075,14 @@ var require_db = __commonJS({
         source: "iana",
         charset: "UTF-8",
         compressible: true
+      },
+      "application/msix": {
+        compressible: false,
+        extensions: ["msix"]
+      },
+      "application/msixbundle": {
+        compressible: false,
+        extensions: ["msixbundle"]
       },
       "application/msword": {
         source: "iana",
@@ -52950,7 +53147,7 @@ var require_db = __commonJS({
       },
       "application/octet-stream": {
         source: "iana",
-        compressible: false,
+        compressible: true,
         extensions: ["bin", "dms", "lrf", "mar", "so", "dist", "distz", "pkg", "bpk", "dump", "elc", "deploy", "exe", "dll", "deb", "dmg", "iso", "img", "msi", "msp", "msm", "buffer"]
       },
       "application/oda": {
@@ -52974,6 +53171,9 @@ var require_db = __commonJS({
         compressible: false,
         extensions: ["ogx"]
       },
+      "application/ohttp-keys": {
+        source: "iana"
+      },
       "application/omdoc+xml": {
         source: "apache",
         compressible: true,
@@ -52981,7 +53181,7 @@ var require_db = __commonJS({
       },
       "application/onenote": {
         source: "apache",
-        extensions: ["onetoc", "onetoc2", "onetmp", "onepkg"]
+        extensions: ["onetoc", "onetoc2", "onetmp", "onepkg", "one", "onea"]
       },
       "application/opc-nodeset+xml": {
         source: "iana",
@@ -53039,7 +53239,7 @@ var require_db = __commonJS({
       },
       "application/pgp-signature": {
         source: "iana",
-        extensions: ["asc", "sig"]
+        extensions: ["sig", "asc"]
       },
       "application/pics-rules": {
         source: "apache",
@@ -53116,6 +53316,15 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/private-token-issuer-directory": {
+        source: "iana"
+      },
+      "application/private-token-request": {
+        source: "iana"
+      },
+      "application/private-token-response": {
+        source: "iana"
+      },
       "application/problem+json": {
         source: "iana",
         compressible: true
@@ -53128,6 +53337,9 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true,
         extensions: ["provx"]
+      },
+      "application/provided-claims+jwt": {
+        source: "iana"
       },
       "application/prs.alvestrand.titrax-sheet": {
         source: "iana"
@@ -53144,6 +53356,29 @@ var require_db = __commonJS({
         source: "iana",
         compressible: false
       },
+      "application/prs.implied-document+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/prs.implied-executable": {
+        source: "iana"
+      },
+      "application/prs.implied-object+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/prs.implied-object+json-seq": {
+        source: "iana"
+      },
+      "application/prs.implied-object+yaml": {
+        source: "iana"
+      },
+      "application/prs.implied-structure": {
+        source: "iana"
+      },
+      "application/prs.mayfile": {
+        source: "iana"
+      },
       "application/prs.nprend": {
         source: "iana"
       },
@@ -53153,9 +53388,13 @@ var require_db = __commonJS({
       "application/prs.rdf-xml-crypt": {
         source: "iana"
       },
+      "application/prs.vcfbzip2": {
+        source: "iana"
+      },
       "application/prs.xsf+xml": {
         source: "iana",
-        compressible: true
+        compressible: true,
+        extensions: ["xsf"]
       },
       "application/pskc+xml": {
         source: "iana",
@@ -53195,11 +53434,14 @@ var require_db = __commonJS({
         extensions: ["rnc"]
       },
       "application/remote-printing": {
-        source: "iana"
+        source: "apache"
       },
       "application/reputon+json": {
         source: "iana",
         compressible: true
+      },
+      "application/resolve-response+jwt": {
+        source: "iana"
       },
       "application/resource-lists+xml": {
         source: "iana",
@@ -53242,6 +53484,9 @@ var require_db = __commonJS({
         compressible: true,
         extensions: ["rusd"]
       },
+      "application/rpki-checklist": {
+        source: "iana"
+      },
       "application/rpki-ghostbusters": {
         source: "iana",
         extensions: ["gbr"]
@@ -53256,6 +53501,9 @@ var require_db = __commonJS({
       "application/rpki-roa": {
         source: "iana",
         extensions: ["roa"]
+      },
+      "application/rpki-signed-tal": {
+        source: "iana"
       },
       "application/rpki-updown": {
         source: "iana"
@@ -53429,7 +53677,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "application/smil": {
-        source: "iana"
+        source: "apache"
       },
       "application/smil+xml": {
         source: "iana",
@@ -53464,7 +53712,8 @@ var require_db = __commonJS({
         compressible: true
       },
       "application/sql": {
-        source: "iana"
+        source: "iana",
+        extensions: ["sql"]
       },
       "application/srgs": {
         source: "iana",
@@ -53485,14 +53734,26 @@ var require_db = __commonJS({
         compressible: true,
         extensions: ["ssdl"]
       },
+      "application/sslkeylogfile": {
+        source: "iana"
+      },
       "application/ssml+xml": {
         source: "iana",
         compressible: true,
         extensions: ["ssml"]
       },
+      "application/st2110-41": {
+        source: "iana"
+      },
       "application/stix+json": {
         source: "iana",
         compressible: true
+      },
+      "application/stratum": {
+        source: "iana"
+      },
+      "application/swid+cbor": {
+        source: "iana"
       },
       "application/swid+xml": {
         source: "iana",
@@ -53573,13 +53834,21 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/tm+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/tnauthlist": {
+        source: "iana"
+      },
+      "application/toc+cbor": {
         source: "iana"
       },
       "application/token-introspection+jwt": {
         source: "iana"
       },
       "application/toml": {
+        source: "iana",
         compressible: true,
         extensions: ["toml"]
       },
@@ -53589,6 +53858,16 @@ var require_db = __commonJS({
       "application/trig": {
         source: "iana",
         extensions: ["trig"]
+      },
+      "application/trust-chain+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/trust-mark+jwt": {
+        source: "iana"
+      },
+      "application/trust-mark-delegation+jwt": {
+        source: "iana"
       },
       "application/ttml+xml": {
         source: "iana",
@@ -53607,6 +53886,13 @@ var require_db = __commonJS({
       "application/ubjson": {
         compressible: false,
         extensions: ["ubj"]
+      },
+      "application/uccs+cbor": {
+        source: "iana"
+      },
+      "application/ujcs+json": {
+        source: "iana",
+        compressible: true
       },
       "application/ulpfec": {
         source: "iana"
@@ -53629,6 +53915,15 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/vc": {
+        source: "iana"
+      },
+      "application/vc+cose": {
+        source: "iana"
+      },
+      "application/vc+jwt": {
+        source: "iana"
+      },
       "application/vcard+json": {
         source: "iana",
         compressible: true
@@ -53648,11 +53943,26 @@ var require_db = __commonJS({
         compressible: true,
         extensions: ["1km"]
       },
+      "application/vnd.1ob": {
+        source: "iana"
+      },
       "application/vnd.3gpp-prose+xml": {
         source: "iana",
         compressible: true
       },
+      "application/vnd.3gpp-prose-pc3a+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp-prose-pc3ach+xml": {
+        source: "iana",
+        compressible: true
+      },
       "application/vnd.3gpp-prose-pc3ch+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp-prose-pc8+xml": {
         source: "iana",
         compressible: true
       },
@@ -53662,11 +53972,31 @@ var require_db = __commonJS({
       "application/vnd.3gpp.5gnas": {
         source: "iana"
       },
+      "application/vnd.3gpp.5gsa2x": {
+        source: "iana"
+      },
+      "application/vnd.3gpp.5gsa2x-local-service-information": {
+        source: "iana"
+      },
+      "application/vnd.3gpp.5gsv2x": {
+        source: "iana"
+      },
+      "application/vnd.3gpp.5gsv2x-local-service-information": {
+        source: "iana"
+      },
       "application/vnd.3gpp.access-transfer-events+xml": {
         source: "iana",
         compressible: true
       },
       "application/vnd.3gpp.bsf+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.crs+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.current-location-discovery+xml": {
         source: "iana",
         compressible: true
       },
@@ -53694,8 +54024,16 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/vnd.3gpp.mcdata-msgstore-ctrl-request+xml": {
+        source: "iana",
+        compressible: true
+      },
       "application/vnd.3gpp.mcdata-payload": {
         source: "iana"
+      },
+      "application/vnd.3gpp.mcdata-regroup+xml": {
+        source: "iana",
+        compressible: true
       },
       "application/vnd.3gpp.mcdata-service-config+xml": {
         source: "iana",
@@ -53732,6 +54070,10 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/vnd.3gpp.mcptt-regroup+xml": {
+        source: "iana",
+        compressible: true
+      },
       "application/vnd.3gpp.mcptt-service-config+xml": {
         source: "iana",
         compressible: true
@@ -53756,10 +54098,6 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
-      "application/vnd.3gpp.mcvideo-affiliation-info+xml": {
-        source: "iana",
-        compressible: true
-      },
       "application/vnd.3gpp.mcvideo-info+xml": {
         source: "iana",
         compressible: true
@@ -53769,6 +54107,10 @@ var require_db = __commonJS({
         compressible: true
       },
       "application/vnd.3gpp.mcvideo-mbms-usage-info+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.mcvideo-regroup+xml": {
         source: "iana",
         compressible: true
       },
@@ -53810,8 +54152,44 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["pvb"]
       },
+      "application/vnd.3gpp.pinapp-info+xml": {
+        source: "iana",
+        compressible: true
+      },
       "application/vnd.3gpp.s1ap": {
         source: "iana"
+      },
+      "application/vnd.3gpp.seal-group-doc+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.seal-info+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.seal-location-info+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.seal-mbms-usage-info+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.seal-network-qos-management-info+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.seal-ue-config-info+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.seal-unicast-info+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.seal-user-profile-info+xml": {
+        source: "iana",
+        compressible: true
       },
       "application/vnd.3gpp.sms": {
         source: "iana"
@@ -53833,6 +54211,13 @@ var require_db = __commonJS({
         compressible: true
       },
       "application/vnd.3gpp.ussd+xml": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.3gpp.v2x": {
+        source: "iana"
+      },
+      "application/vnd.3gpp.vae-info+xml": {
         source: "iana",
         compressible: true
       },
@@ -53861,6 +54246,14 @@ var require_db = __commonJS({
       "application/vnd.accpac.simply.imp": {
         source: "iana",
         extensions: ["imp"]
+      },
+      "application/vnd.acm.addressxfer+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.acm.chatbot+json": {
+        source: "iana",
+        compressible: true
       },
       "application/vnd.acucobol": {
         source: "iana",
@@ -53895,7 +54288,7 @@ var require_db = __commonJS({
         extensions: ["xdp"]
       },
       "application/vnd.adobe.xfdf": {
-        source: "iana",
+        source: "apache",
         extensions: ["xfdf"]
       },
       "application/vnd.aether.imp": {
@@ -53945,7 +54338,7 @@ var require_db = __commonJS({
         extensions: ["age"]
       },
       "application/vnd.ah-barcode": {
-        source: "iana"
+        source: "apache"
       },
       "application/vnd.ahead.space": {
         source: "iana",
@@ -54011,6 +54404,9 @@ var require_db = __commonJS({
       "application/vnd.apache.arrow.stream": {
         source: "iana"
       },
+      "application/vnd.apache.parquet": {
+        source: "iana"
+      },
       "application/vnd.apache.thrift.binary": {
         source: "iana"
       },
@@ -54018,6 +54414,9 @@ var require_db = __commonJS({
         source: "iana"
       },
       "application/vnd.apache.thrift.json": {
+        source: "iana"
+      },
+      "application/vnd.apexlang": {
         source: "iana"
       },
       "application/vnd.api+json": {
@@ -54058,7 +54457,7 @@ var require_db = __commonJS({
         extensions: ["pkpass"]
       },
       "application/vnd.arastra.swi": {
-        source: "iana"
+        source: "apache"
       },
       "application/vnd.aristanetworks.swi": {
         source: "iana",
@@ -54078,6 +54477,9 @@ var require_db = __commonJS({
       "application/vnd.audiograph": {
         source: "iana",
         extensions: ["aep"]
+      },
+      "application/vnd.autodesk.fbx": {
+        extensions: ["fbx"]
       },
       "application/vnd.autopackage": {
         source: "iana"
@@ -54115,6 +54517,14 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/vnd.belightsoft.lhzd+zip": {
+        source: "iana",
+        compressible: false
+      },
+      "application/vnd.belightsoft.lhzl+zip": {
+        source: "iana",
+        compressible: false
+      },
       "application/vnd.bint.med-content": {
         source: "iana"
       },
@@ -54150,6 +54560,13 @@ var require_db = __commonJS({
         extensions: ["rep"]
       },
       "application/vnd.byu.uapi+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.bzip3": {
+        source: "iana"
+      },
+      "application/vnd.c3voc.schedule+xml": {
         source: "iana",
         compressible: true
       },
@@ -54218,6 +54635,16 @@ var require_db = __commonJS({
       "application/vnd.cluetrust.cartomobile-config-pkg": {
         source: "iana",
         extensions: ["c11amz"]
+      },
+      "application/vnd.cncf.helm.chart.content.v1.tar+gzip": {
+        source: "iana"
+      },
+      "application/vnd.cncf.helm.chart.provenance.v1.prov": {
+        source: "iana"
+      },
+      "application/vnd.cncf.helm.config.v1+json": {
+        source: "iana",
+        compressible: true
       },
       "application/vnd.coffeescript": {
         source: "iana"
@@ -54385,6 +54812,9 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["rdz"]
       },
+      "application/vnd.datalog": {
+        source: "iana"
+      },
       "application/vnd.datapackage+json": {
         source: "iana",
         compressible: true
@@ -54396,6 +54826,11 @@ var require_db = __commonJS({
       "application/vnd.dbf": {
         source: "iana",
         extensions: ["dbf"]
+      },
+      "application/vnd.dcmp+xml": {
+        source: "iana",
+        compressible: true,
+        extensions: ["dcmp"]
       },
       "application/vnd.debian.binary-package": {
         source: "iana"
@@ -54595,6 +55030,10 @@ var require_db = __commonJS({
       "application/vnd.efi.iso": {
         source: "iana"
       },
+      "application/vnd.eln+zip": {
+        source: "iana",
+        compressible: false
+      },
       "application/vnd.emclient.accessrequest+xml": {
         source: "iana",
         compressible: true
@@ -54631,6 +55070,9 @@ var require_db = __commonJS({
         extensions: ["ssf"]
       },
       "application/vnd.ericsson.quickcall": {
+        source: "iana"
+      },
+      "application/vnd.erofs": {
         source: "iana"
       },
       "application/vnd.espass-espass+zip": {
@@ -54769,7 +55211,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "application/vnd.fdf": {
-        source: "iana",
+        source: "apache",
         extensions: ["fdf"]
       },
       "application/vnd.fdsn.mseed": {
@@ -54779,6 +55221,11 @@ var require_db = __commonJS({
       "application/vnd.fdsn.seed": {
         source: "iana",
         extensions: ["seed", "dataless"]
+      },
+      "application/vnd.fdsn.stationxml+xml": {
+        source: "iana",
+        charset: "XML-BASED",
+        compressible: true
       },
       "application/vnd.ffsns": {
         source: "iana"
@@ -54811,12 +55258,15 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["fm", "frame", "maker", "book"]
       },
+      "application/vnd.freelog.comic": {
+        source: "iana"
+      },
       "application/vnd.frogans.fnc": {
-        source: "iana",
+        source: "apache",
         extensions: ["fnc"]
       },
       "application/vnd.frogans.ltf": {
-        source: "iana",
+        source: "apache",
         extensions: ["ltf"]
       },
       "application/vnd.fsc.weblaunch": {
@@ -54894,28 +55344,61 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["fzs"]
       },
+      "application/vnd.ga4gh.passport+jwt": {
+        source: "iana"
+      },
       "application/vnd.genomatix.tuxedo": {
         source: "iana",
         extensions: ["txd"]
+      },
+      "application/vnd.genozip": {
+        source: "iana"
       },
       "application/vnd.gentics.grd+json": {
         source: "iana",
         compressible: true
       },
-      "application/vnd.geo+json": {
+      "application/vnd.gentoo.catmetadata+xml": {
         source: "iana",
         compressible: true
       },
-      "application/vnd.geocube+xml": {
+      "application/vnd.gentoo.ebuild": {
+        source: "iana"
+      },
+      "application/vnd.gentoo.eclass": {
+        source: "iana"
+      },
+      "application/vnd.gentoo.gpkg": {
+        source: "iana"
+      },
+      "application/vnd.gentoo.manifest": {
+        source: "iana"
+      },
+      "application/vnd.gentoo.pkgmetadata+xml": {
         source: "iana",
+        compressible: true
+      },
+      "application/vnd.gentoo.xpak": {
+        source: "iana"
+      },
+      "application/vnd.geo+json": {
+        source: "apache",
+        compressible: true
+      },
+      "application/vnd.geocube+xml": {
+        source: "apache",
         compressible: true
       },
       "application/vnd.geogebra.file": {
         source: "iana",
         extensions: ["ggb"]
       },
-      "application/vnd.geogebra.slides": {
+      "application/vnd.geogebra.pinboard": {
         source: "iana"
+      },
+      "application/vnd.geogebra.slides": {
+        source: "iana",
+        extensions: ["ggs"]
       },
       "application/vnd.geogebra.tool": {
         source: "iana",
@@ -54950,18 +55433,64 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["gmx"]
       },
+      "application/vnd.gnu.taler.exchange+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.gnu.taler.merchant+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.google-apps.audio": {},
       "application/vnd.google-apps.document": {
         compressible: false,
         extensions: ["gdoc"]
       },
+      "application/vnd.google-apps.drawing": {
+        compressible: false,
+        extensions: ["gdraw"]
+      },
+      "application/vnd.google-apps.drive-sdk": {
+        compressible: false
+      },
+      "application/vnd.google-apps.file": {},
+      "application/vnd.google-apps.folder": {
+        compressible: false
+      },
+      "application/vnd.google-apps.form": {
+        compressible: false,
+        extensions: ["gform"]
+      },
+      "application/vnd.google-apps.fusiontable": {},
+      "application/vnd.google-apps.jam": {
+        compressible: false,
+        extensions: ["gjam"]
+      },
+      "application/vnd.google-apps.mail-layout": {},
+      "application/vnd.google-apps.map": {
+        compressible: false,
+        extensions: ["gmap"]
+      },
+      "application/vnd.google-apps.photo": {},
       "application/vnd.google-apps.presentation": {
         compressible: false,
         extensions: ["gslides"]
+      },
+      "application/vnd.google-apps.script": {
+        compressible: false,
+        extensions: ["gscript"]
+      },
+      "application/vnd.google-apps.shortcut": {},
+      "application/vnd.google-apps.site": {
+        compressible: false,
+        extensions: ["gsite"]
       },
       "application/vnd.google-apps.spreadsheet": {
         compressible: false,
         extensions: ["gsheet"]
       },
+      "application/vnd.google-apps.unknown": {},
+      "application/vnd.google-apps.video": {},
       "application/vnd.google-earth.kml+xml": {
         source: "iana",
         compressible: true,
@@ -54973,7 +55502,7 @@ var require_db = __commonJS({
         extensions: ["kmz"]
       },
       "application/vnd.gov.sk.e-form+xml": {
-        source: "iana",
+        source: "apache",
         compressible: true
       },
       "application/vnd.gov.sk.e-form+zip": {
@@ -54981,6 +55510,11 @@ var require_db = __commonJS({
         compressible: false
       },
       "application/vnd.gov.sk.xmldatacontainer+xml": {
+        source: "iana",
+        compressible: true,
+        extensions: ["xdcf"]
+      },
+      "application/vnd.gpxsee.map+xml": {
         source: "iana",
         compressible: true
       },
@@ -55055,16 +55589,6 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["les"]
       },
-      "application/vnd.hl7cda+xml": {
-        source: "iana",
-        charset: "UTF-8",
-        compressible: true
-      },
-      "application/vnd.hl7v2+xml": {
-        source: "iana",
-        charset: "UTF-8",
-        compressible: true
-      },
       "application/vnd.hp-hpgl": {
         source: "iana",
         extensions: ["hpgl"]
@@ -55089,6 +55613,9 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["pclxl"]
       },
+      "application/vnd.hsl": {
+        source: "iana"
+      },
       "application/vnd.httphone": {
         source: "iana"
       },
@@ -55112,7 +55639,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "application/vnd.ibm.afplinedata": {
-        source: "iana"
+        source: "apache"
       },
       "application/vnd.ibm.electronic-media": {
         source: "iana"
@@ -55122,7 +55649,7 @@ var require_db = __commonJS({
         extensions: ["mpy"]
       },
       "application/vnd.ibm.modcap": {
-        source: "iana",
+        source: "apache",
         extensions: ["afp", "listafp", "list3820"]
       },
       "application/vnd.ibm.rights-management": {
@@ -55198,7 +55725,7 @@ var require_db = __commonJS({
         compressible: true
       },
       "application/vnd.informix-visionary": {
-        source: "iana"
+        source: "apache"
       },
       "application/vnd.infotech.project": {
         source: "iana"
@@ -55235,6 +55762,21 @@ var require_db = __commonJS({
       "application/vnd.intu.qfx": {
         source: "iana",
         extensions: ["qfx"]
+      },
+      "application/vnd.ipfs.ipns-record": {
+        source: "iana"
+      },
+      "application/vnd.ipld.car": {
+        source: "iana"
+      },
+      "application/vnd.ipld.dag-cbor": {
+        source: "iana"
+      },
+      "application/vnd.ipld.dag-json": {
+        source: "iana"
+      },
+      "application/vnd.ipld.raw": {
+        source: "iana"
       },
       "application/vnd.iptc.g2.catalogitem+xml": {
         source: "iana",
@@ -55364,9 +55906,19 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["kwd", "kwt"]
       },
+      "application/vnd.kdl": {
+        source: "iana"
+      },
       "application/vnd.kenameaapp": {
         source: "iana",
         extensions: ["htke"]
+      },
+      "application/vnd.keyman.kmp+zip": {
+        source: "iana",
+        compressible: false
+      },
+      "application/vnd.keyman.kmx": {
+        source: "iana"
       },
       "application/vnd.kidspiration": {
         source: "iana",
@@ -55397,6 +55949,9 @@ var require_db = __commonJS({
         extensions: ["lasxml"]
       },
       "application/vnd.laszip": {
+        source: "iana"
+      },
+      "application/vnd.ldev.productlicensing": {
         source: "iana"
       },
       "application/vnd.leap+json": {
@@ -55489,6 +56044,12 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["mcd"]
       },
+      "application/vnd.mdl": {
+        source: "iana"
+      },
+      "application/vnd.mdl-mbsdf": {
+        source: "iana"
+      },
       "application/vnd.medcalcdata": {
         source: "iana",
         extensions: ["mc1"]
@@ -55497,7 +56058,13 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["cdkey"]
       },
+      "application/vnd.medicalholodeck.recordxr": {
+        source: "iana"
+      },
       "application/vnd.meridian-slingshot": {
+        source: "iana"
+      },
+      "application/vnd.mermaid": {
         source: "iana"
       },
       "application/vnd.mfer": {
@@ -55567,6 +56134,9 @@ var require_db = __commonJS({
       "application/vnd.mobius.txf": {
         source: "iana",
         extensions: ["txf"]
+      },
+      "application/vnd.modl": {
+        source: "iana"
       },
       "application/vnd.mophun.application": {
         source: "iana",
@@ -55735,6 +56305,9 @@ var require_db = __commonJS({
       "application/vnd.ms-tnef": {
         source: "iana"
       },
+      "application/vnd.ms-visio.viewer": {
+        extensions: ["vdx"]
+      },
       "application/vnd.ms-windows.devicepairing": {
         source: "iana"
       },
@@ -55787,6 +56360,9 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["mseq"]
       },
+      "application/vnd.msgpack": {
+        source: "iana"
+      },
       "application/vnd.msign": {
         source: "iana"
       },
@@ -55814,6 +56390,22 @@ var require_db = __commonJS({
       "application/vnd.nacamar.ybrid+json": {
         source: "iana",
         compressible: true
+      },
+      "application/vnd.nato.bindingdataobject+cbor": {
+        source: "iana"
+      },
+      "application/vnd.nato.bindingdataobject+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.nato.bindingdataobject+xml": {
+        source: "iana",
+        compressible: true,
+        extensions: ["bdo"]
+      },
+      "application/vnd.nato.openxmlformats-package.iepd+zip": {
+        source: "iana",
+        compressible: false
       },
       "application/vnd.ncd.control": {
         source: "iana"
@@ -55901,7 +56493,7 @@ var require_db = __commonJS({
         extensions: ["ngdat"]
       },
       "application/vnd.nokia.n-gage.symbian.install": {
-        source: "iana",
+        source: "apache",
         extensions: ["n-gage"]
       },
       "application/vnd.nokia.ncd": {
@@ -55949,6 +56541,19 @@ var require_db = __commonJS({
       "application/vnd.ntt-local.sip-ta_tcp_stream": {
         source: "iana"
       },
+      "application/vnd.oai.workflows": {
+        source: "iana"
+      },
+      "application/vnd.oai.workflows+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vnd.oai.workflows+yaml": {
+        source: "iana"
+      },
+      "application/vnd.oasis.opendocument.base": {
+        source: "iana"
+      },
       "application/vnd.oasis.opendocument.chart": {
         source: "iana",
         extensions: ["odc"]
@@ -55958,7 +56563,7 @@ var require_db = __commonJS({
         extensions: ["otc"]
       },
       "application/vnd.oasis.opendocument.database": {
-        source: "iana",
+        source: "apache",
         extensions: ["odb"]
       },
       "application/vnd.oasis.opendocument.formula": {
@@ -56012,6 +56617,9 @@ var require_db = __commonJS({
       "application/vnd.oasis.opendocument.text-master": {
         source: "iana",
         extensions: ["odm"]
+      },
+      "application/vnd.oasis.opendocument.text-master-template": {
+        source: "iana"
       },
       "application/vnd.oasis.opendocument.text-template": {
         source: "iana",
@@ -56095,7 +56703,7 @@ var require_db = __commonJS({
         compressible: true
       },
       "application/vnd.oma.bcast.drm-trigger+xml": {
-        source: "iana",
+        source: "apache",
         compressible: true
       },
       "application/vnd.oma.bcast.imd+xml": {
@@ -56126,7 +56734,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "application/vnd.oma.bcast.smartcard-trigger+xml": {
-        source: "iana",
+        source: "apache",
         compressible: true
       },
       "application/vnd.oma.bcast.sprov+xml": {
@@ -56256,6 +56864,9 @@ var require_db = __commonJS({
       "application/vnd.onepagertatx": {
         source: "iana"
       },
+      "application/vnd.onvif.metadata": {
+        source: "iana"
+      },
       "application/vnd.openblox.game+xml": {
         source: "iana",
         compressible: true,
@@ -56278,6 +56889,10 @@ var require_db = __commonJS({
       },
       "application/vnd.opentimestamps.ots": {
         source: "iana"
+      },
+      "application/vnd.openvpi.dspx+json": {
+        source: "iana",
+        compressible: true
       },
       "application/vnd.openxmlformats-officedocument.custom-properties+xml": {
         source: "iana",
@@ -56689,11 +57304,23 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["box"]
       },
+      "application/vnd.procrate.brushset": {
+        extensions: ["brushset"]
+      },
+      "application/vnd.procreate.brush": {
+        extensions: ["brush"]
+      },
+      "application/vnd.procreate.dream": {
+        extensions: ["drm"]
+      },
       "application/vnd.proteus.magazine": {
         source: "iana",
         extensions: ["mgz"]
       },
       "application/vnd.psfs": {
+        source: "iana"
+      },
+      "application/vnd.pt.mundusmundi": {
         source: "iana"
       },
       "application/vnd.publishare-delta-tree": {
@@ -56709,7 +57336,8 @@ var require_db = __commonJS({
       },
       "application/vnd.pwg-xhtml-print+xml": {
         source: "iana",
-        compressible: true
+        compressible: true,
+        extensions: ["xhtm"]
       },
       "application/vnd.qualcomm.brew-app-res": {
         source: "iana"
@@ -56806,6 +57434,9 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true,
         extensions: ["musicxml"]
+      },
+      "application/vnd.relpipe": {
+        source: "iana"
       },
       "application/vnd.renlearn.rlprint": {
         source: "iana"
@@ -56960,6 +57591,9 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/vnd.sketchometry": {
+        source: "iana"
+      },
       "application/vnd.smaf": {
         source: "iana",
         extensions: ["mmf"]
@@ -56970,6 +57604,9 @@ var require_db = __commonJS({
       "application/vnd.smart.teacher": {
         source: "iana",
         extensions: ["teacher"]
+      },
+      "application/vnd.smintio.portals.archive": {
+        source: "iana"
       },
       "application/vnd.snesdev-page-table": {
         source: "iana"
@@ -57098,6 +57735,9 @@ var require_db = __commonJS({
       "application/vnd.swiftview-ics": {
         source: "iana"
       },
+      "application/vnd.sybyl.mol2": {
+        source: "iana"
+      },
       "application/vnd.sycle+xml": {
         source: "iana",
         compressible: true
@@ -57202,6 +57842,10 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["ufd", "ufdl"]
       },
+      "application/vnd.uic.osdm+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/vnd.uiq.theme": {
         source: "iana",
         extensions: ["utz"]
@@ -57217,7 +57861,7 @@ var require_db = __commonJS({
       "application/vnd.uoml+xml": {
         source: "iana",
         compressible: true,
-        extensions: ["uoml"]
+        extensions: ["uoml", "uo"]
       },
       "application/vnd.uplanet.alert": {
         source: "iana"
@@ -57278,6 +57922,13 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/vnd.veraison.tsm-report+cbor": {
+        source: "iana"
+      },
+      "application/vnd.veraison.tsm-report+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/vnd.verimatrix.vcas": {
         source: "iana"
       },
@@ -57296,13 +57947,16 @@ var require_db = __commonJS({
       },
       "application/vnd.visio": {
         source: "iana",
-        extensions: ["vsd", "vst", "vss", "vsw"]
+        extensions: ["vsd", "vst", "vss", "vsw", "vsdx", "vtx"]
       },
       "application/vnd.visionary": {
         source: "iana",
         extensions: ["vis"]
       },
       "application/vnd.vividence.scriptfile": {
+        source: "iana"
+      },
+      "application/vnd.vocalshaper.vsp4": {
         source: "iana"
       },
       "application/vnd.vsf": {
@@ -57327,6 +57981,9 @@ var require_db = __commonJS({
       "application/vnd.wap.wmlscriptc": {
         source: "iana",
         extensions: ["wmlsc"]
+      },
+      "application/vnd.wasmflow.wafl": {
+        source: "iana"
       },
       "application/vnd.webturbo": {
         source: "iana",
@@ -57359,6 +58016,9 @@ var require_db = __commonJS({
       "application/vnd.wolfram.player": {
         source: "iana",
         extensions: ["nbp"]
+      },
+      "application/vnd.wordlift": {
+        source: "iana"
       },
       "application/vnd.wordperfect": {
         source: "iana",
@@ -57393,6 +58053,12 @@ var require_db = __commonJS({
       "application/vnd.xara": {
         source: "iana",
         extensions: ["xar"]
+      },
+      "application/vnd.xarin.cpj": {
+        source: "iana"
+      },
+      "application/vnd.xecrets-encrypted": {
+        source: "iana"
       },
       "application/vnd.xfdl": {
         source: "iana",
@@ -57465,9 +58131,6 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["cmp"]
       },
-      "application/vnd.youtube.yt": {
-        source: "iana"
-      },
       "application/vnd.zul": {
         source: "iana",
         extensions: ["zir", "zirz"]
@@ -57485,6 +58148,19 @@ var require_db = __commonJS({
       "application/voucher-cms+json": {
         source: "iana",
         compressible: true
+      },
+      "application/voucher-jws+json": {
+        source: "iana",
+        compressible: true
+      },
+      "application/vp": {
+        source: "iana"
+      },
+      "application/vp+cose": {
+        source: "iana"
+      },
+      "application/vp+jwt": {
+        source: "iana"
       },
       "application/vq-rtcpxr": {
         source: "iana"
@@ -57581,6 +58257,9 @@ var require_db = __commonJS({
         source: "apache",
         extensions: ["torrent"]
       },
+      "application/x-blender": {
+        extensions: ["blend"]
+      },
       "application/x-blorb": {
         source: "apache",
         extensions: ["blb", "blorb"]
@@ -57624,6 +58303,9 @@ var require_db = __commonJS({
       },
       "application/x-compress": {
         source: "apache"
+      },
+      "application/x-compressed": {
+        extensions: ["rar"]
       },
       "application/x-conference": {
         source: "apache",
@@ -57768,6 +58450,10 @@ var require_db = __commonJS({
       "application/x-install-instructions": {
         source: "apache",
         extensions: ["install"]
+      },
+      "application/x-ipynb+json": {
+        compressible: true,
+        extensions: ["ipynb"]
       },
       "application/x-iso9660-image": {
         source: "apache",
@@ -58100,6 +58786,9 @@ var require_db = __commonJS({
         source: "apache",
         extensions: ["xz"]
       },
+      "application/x-zip-compressed": {
+        extensions: ["zip"]
+      },
       "application/x-zmachine": {
         source: "apache",
         extensions: ["z1", "z2", "z3", "z4", "z5", "z6", "z7", "z8"]
@@ -58157,6 +58846,10 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true,
         extensions: ["xenc"]
+      },
+      "application/xfdf": {
+        source: "iana",
+        extensions: ["xfdf"]
       },
       "application/xhtml+xml": {
         source: "iana",
@@ -58218,9 +58911,15 @@ var require_db = __commonJS({
         compressible: true,
         extensions: ["mxml", "xhvml", "xvml", "xvm"]
       },
+      "application/yaml": {
+        source: "iana"
+      },
       "application/yang": {
         source: "iana",
         extensions: ["yang"]
+      },
+      "application/yang-data+cbor": {
+        source: "iana"
       },
       "application/yang-data+json": {
         source: "iana",
@@ -58238,6 +58937,10 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "application/yang-sid+json": {
+        source: "iana",
+        compressible: true
+      },
       "application/yin+xml": {
         source: "iana",
         compressible: true,
@@ -58247,6 +58950,9 @@ var require_db = __commonJS({
         source: "iana",
         compressible: false,
         extensions: ["zip"]
+      },
+      "application/zip+dotlottie": {
+        extensions: ["lottie"]
       },
       "application/zlib": {
         source: "iana"
@@ -58269,7 +58975,8 @@ var require_db = __commonJS({
         source: "iana"
       },
       "audio/aac": {
-        source: "iana"
+        source: "iana",
+        extensions: ["adts", "aac"]
       },
       "audio/ac3": {
         source: "iana"
@@ -58392,6 +59099,9 @@ var require_db = __commonJS({
       "audio/evs": {
         source: "iana"
       },
+      "audio/flac": {
+        source: "iana"
+      },
       "audio/flexfec": {
         source: "iana"
       },
@@ -58474,6 +59184,9 @@ var require_db = __commonJS({
       "audio/lpc": {
         source: "iana"
       },
+      "audio/matroska": {
+        source: "iana"
+      },
       "audio/melp": {
         source: "iana"
       },
@@ -58493,6 +59206,9 @@ var require_db = __commonJS({
         source: "apache",
         extensions: ["mid", "midi", "kar", "rmi"]
       },
+      "audio/midi-clip": {
+        source: "iana"
+      },
       "audio/mobile-xmf": {
         source: "iana",
         extensions: ["mxmf"]
@@ -58504,7 +59220,7 @@ var require_db = __commonJS({
       "audio/mp4": {
         source: "iana",
         compressible: false,
-        extensions: ["m4a", "mp4a"]
+        extensions: ["m4a", "mp4a", "m4b"]
       },
       "audio/mp4a-latm": {
         source: "iana"
@@ -58754,7 +59470,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "audio/vnd.qcelp": {
-        source: "iana"
+        source: "apache"
       },
       "audio/vnd.rhetorex.32kadpcm": {
         source: "iana"
@@ -58913,6 +59629,7 @@ var require_db = __commonJS({
         extensions: ["exr"]
       },
       "image/apng": {
+        source: "iana",
         compressible: false,
         extensions: ["apng"]
       },
@@ -58932,7 +59649,7 @@ var require_db = __commonJS({
       "image/bmp": {
         source: "iana",
         compressible: true,
-        extensions: ["bmp"]
+        extensions: ["bmp", "dib"]
       },
       "image/cgm": {
         source: "iana",
@@ -58941,6 +59658,10 @@ var require_db = __commonJS({
       "image/dicom-rle": {
         source: "iana",
         extensions: ["drle"]
+      },
+      "image/dpx": {
+        source: "iana",
+        extensions: ["dpx"]
       },
       "image/emf": {
         source: "iana",
@@ -58979,13 +59700,20 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["hej2"]
       },
-      "image/hsj2": {
-        source: "iana",
-        extensions: ["hsj2"]
-      },
       "image/ief": {
         source: "iana",
         extensions: ["ief"]
+      },
+      "image/j2c": {
+        source: "iana"
+      },
+      "image/jaii": {
+        source: "iana",
+        extensions: ["jaii"]
+      },
+      "image/jais": {
+        source: "iana",
+        extensions: ["jais"]
       },
       "image/jls": {
         source: "iana",
@@ -58999,7 +59727,7 @@ var require_db = __commonJS({
       "image/jpeg": {
         source: "iana",
         compressible: false,
-        extensions: ["jpeg", "jpg", "jpe"]
+        extensions: ["jpg", "jpeg", "jpe"]
       },
       "image/jph": {
         source: "iana",
@@ -59012,12 +59740,16 @@ var require_db = __commonJS({
       "image/jpm": {
         source: "iana",
         compressible: false,
-        extensions: ["jpm"]
+        extensions: ["jpm", "jpgm"]
       },
       "image/jpx": {
         source: "iana",
         compressible: false,
         extensions: ["jpx", "jpf"]
+      },
+      "image/jxl": {
+        source: "iana",
+        extensions: ["jxl"]
       },
       "image/jxr": {
         source: "iana",
@@ -59059,7 +59791,8 @@ var require_db = __commonJS({
         source: "iana"
       },
       "image/pjpeg": {
-        compressible: false
+        compressible: false,
+        extensions: ["jfif"]
       },
       "image/png": {
         source: "iana",
@@ -59068,7 +59801,7 @@ var require_db = __commonJS({
       },
       "image/prs.btif": {
         source: "iana",
-        extensions: ["btif"]
+        extensions: ["btif", "btf"]
       },
       "image/prs.pti": {
         source: "iana",
@@ -59107,6 +59840,9 @@ var require_db = __commonJS({
       "image/vnd.airzip.accelerator.azv": {
         source: "iana",
         extensions: ["azv"]
+      },
+      "image/vnd.clip": {
+        source: "iana"
       },
       "image/vnd.cns.inf2": {
         source: "iana"
@@ -59221,7 +59957,7 @@ var require_db = __commonJS({
         extensions: ["pcx"]
       },
       "image/webp": {
-        source: "apache",
+        source: "iana",
         extensions: ["webp"]
       },
       "image/wmf": {
@@ -59232,6 +59968,9 @@ var require_db = __commonJS({
         source: "apache",
         extensions: ["3ds"]
       },
+      "image/x-adobe-dng": {
+        extensions: ["dng"]
+      },
       "image/x-cmu-raster": {
         source: "apache",
         extensions: ["ras"]
@@ -59239,6 +59978,9 @@ var require_db = __commonJS({
       "image/x-cmx": {
         source: "apache",
         extensions: ["cmx"]
+      },
+      "image/x-emf": {
+        source: "iana"
       },
       "image/x-freehand": {
         source: "apache",
@@ -59294,6 +60036,9 @@ var require_db = __commonJS({
         source: "apache",
         extensions: ["tga"]
       },
+      "image/x-wmf": {
+        source: "iana"
+      },
       "image/x-xbitmap": {
         source: "apache",
         extensions: ["xbm"]
@@ -59308,6 +60053,9 @@ var require_db = __commonJS({
       "image/x-xwindowdump": {
         source: "apache",
         extensions: ["xwd"]
+      },
+      "message/bhttp": {
+        source: "iana"
       },
       "message/cpim": {
         source: "iana"
@@ -59351,7 +60099,16 @@ var require_db = __commonJS({
         source: "iana",
         compressible: true
       },
+      "message/mls": {
+        source: "iana"
+      },
       "message/news": {
+        source: "apache"
+      },
+      "message/ohttp-req": {
+        source: "iana"
+      },
+      "message/ohttp-res": {
         source: "iana"
       },
       "message/partial": {
@@ -59361,10 +60118,10 @@ var require_db = __commonJS({
       "message/rfc822": {
         source: "iana",
         compressible: true,
-        extensions: ["eml", "mime"]
+        extensions: ["eml", "mime", "mht", "mhtml"]
       },
       "message/s-http": {
-        source: "iana"
+        source: "apache"
       },
       "message/sip": {
         source: "iana"
@@ -59376,7 +60133,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "message/vnd.si.simp": {
-        source: "iana"
+        source: "apache"
       },
       "message/vnd.wfa.wsc": {
         source: "iana",
@@ -59404,6 +60161,10 @@ var require_db = __commonJS({
         compressible: false,
         extensions: ["igs", "iges"]
       },
+      "model/jt": {
+        source: "iana",
+        extensions: ["jt"]
+      },
       "model/mesh": {
         source: "iana",
         compressible: false,
@@ -59417,8 +60178,13 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["obj"]
       },
+      "model/prc": {
+        source: "iana",
+        extensions: ["prc"]
+      },
       "model/step": {
-        source: "iana"
+        source: "iana",
+        extensions: ["step", "stp", "stpnc", "p21", "210"]
       },
       "model/step+xml": {
         source: "iana",
@@ -59438,6 +60204,18 @@ var require_db = __commonJS({
       "model/stl": {
         source: "iana",
         extensions: ["stl"]
+      },
+      "model/u3d": {
+        source: "iana",
+        extensions: ["u3d"]
+      },
+      "model/vnd.bary": {
+        source: "iana",
+        extensions: ["bary"]
+      },
+      "model/vnd.cld": {
+        source: "iana",
+        extensions: ["cld"]
       },
       "model/vnd.collada+xml": {
         source: "iana",
@@ -59486,7 +60264,8 @@ var require_db = __commonJS({
         extensions: ["x_t"]
       },
       "model/vnd.pytha.pyox": {
-        source: "iana"
+        source: "iana",
+        extensions: ["pyo", "pyox"]
       },
       "model/vnd.rosette.annotated-data-model": {
         source: "iana"
@@ -59494,6 +60273,10 @@ var require_db = __commonJS({
       "model/vnd.sap.vds": {
         source: "iana",
         extensions: ["vds"]
+      },
+      "model/vnd.usda": {
+        source: "iana",
+        extensions: ["usda"]
       },
       "model/vnd.usdz+zip": {
         source: "iana",
@@ -59640,7 +60423,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "text/ecmascript": {
-        source: "iana"
+        source: "apache"
       },
       "text/encaprtp": {
         source: "iana"
@@ -59663,6 +60446,9 @@ var require_db = __commonJS({
       "text/grammar-ref-list": {
         source: "iana"
       },
+      "text/hl7v2": {
+        source: "iana"
+      },
       "text/html": {
         source: "iana",
         compressible: true,
@@ -59673,7 +60459,9 @@ var require_db = __commonJS({
       },
       "text/javascript": {
         source: "iana",
-        compressible: true
+        charset: "UTF-8",
+        compressible: true,
+        extensions: ["js", "mjs"]
       },
       "text/jcr-cnd": {
         source: "iana"
@@ -59689,7 +60477,7 @@ var require_db = __commonJS({
       "text/markdown": {
         source: "iana",
         compressible: true,
-        extensions: ["markdown", "md"]
+        extensions: ["md", "markdown"]
       },
       "text/mathml": {
         source: "nginx",
@@ -59732,6 +60520,9 @@ var require_db = __commonJS({
         extensions: ["dsc"]
       },
       "text/prs.prop.logic": {
+        source: "iana"
+      },
+      "text/prs.texi": {
         source: "iana"
       },
       "text/raptorfec": {
@@ -59856,6 +60647,9 @@ var require_db = __commonJS({
         source: "iana",
         charset: "UTF-8"
       },
+      "text/vnd.exchangeable": {
+        source: "iana"
+      },
       "text/vnd.familysearch.gedcom": {
         source: "iana",
         extensions: ["ged"]
@@ -59917,7 +60711,7 @@ var require_db = __commonJS({
         source: "iana"
       },
       "text/vnd.si.uricatalogue": {
-        source: "iana"
+        source: "apache"
       },
       "text/vnd.sosi": {
         source: "iana"
@@ -59930,6 +60724,9 @@ var require_db = __commonJS({
       "text/vnd.trolltech.linguist": {
         source: "iana",
         charset: "UTF-8"
+      },
+      "text/vnd.vcf": {
+        source: "iana"
       },
       "text/vnd.wap.si": {
         source: "iana"
@@ -59945,11 +60742,18 @@ var require_db = __commonJS({
         source: "iana",
         extensions: ["wmls"]
       },
+      "text/vnd.zoo.kcl": {
+        source: "iana"
+      },
       "text/vtt": {
         source: "iana",
         charset: "UTF-8",
         compressible: true,
         extensions: ["vtt"]
+      },
+      "text/wgsl": {
+        source: "iana",
+        extensions: ["wgsl"]
       },
       "text/x-asm": {
         source: "apache",
@@ -60081,6 +60885,9 @@ var require_db = __commonJS({
       "video/encaprtp": {
         source: "iana"
       },
+      "video/evc": {
+        source: "iana"
+      },
       "video/ffv1": {
         source: "iana"
       },
@@ -60114,6 +60921,9 @@ var require_db = __commonJS({
       "video/h265": {
         source: "iana"
       },
+      "video/h266": {
+        source: "iana"
+      },
       "video/iso.segment": {
         source: "iana",
         extensions: ["m4s"]
@@ -60132,6 +60942,16 @@ var require_db = __commonJS({
       "video/jxsv": {
         source: "iana"
       },
+      "video/lottie+json": {
+        source: "iana",
+        compressible: true
+      },
+      "video/matroska": {
+        source: "iana"
+      },
+      "video/matroska-3d": {
+        source: "iana"
+      },
       "video/mj2": {
         source: "iana",
         extensions: ["mj2", "mjp2"]
@@ -60144,7 +60964,7 @@ var require_db = __commonJS({
       },
       "video/mp2t": {
         source: "iana",
-        extensions: ["ts"]
+        extensions: ["ts", "m2t", "m2ts", "mts"]
       },
       "video/mp4": {
         source: "iana",
@@ -60307,11 +61127,14 @@ var require_db = __commonJS({
       "video/vnd.objectvideo": {
         source: "iana"
       },
+      "video/vnd.planar": {
+        source: "iana"
+      },
       "video/vnd.radgamettools.bink": {
         source: "iana"
       },
       "video/vnd.radgamettools.smacker": {
-        source: "iana"
+        source: "apache"
       },
       "video/vnd.sealed.mpeg1": {
         source: "iana"
@@ -60431,12 +61254,53 @@ var require_mime_db = __commonJS({
   }
 });
 
+// ../../node_modules/mime-types/mimeScore.js
+var require_mimeScore = __commonJS({
+  "../../node_modules/mime-types/mimeScore.js"(exports2, module2) {
+    var FACET_SCORES = {
+      "prs.": 100,
+      "x-": 200,
+      "x.": 300,
+      "vnd.": 400,
+      default: 900
+    };
+    var SOURCE_SCORES = {
+      nginx: 10,
+      apache: 20,
+      iana: 40,
+      default: 30
+      // definitions added by `jshttp/mime-db` project?
+    };
+    var TYPE_SCORES = {
+      // prefer application/xml over text/xml
+      // prefer application/rtf over text/rtf
+      application: 1,
+      // prefer font/woff over application/font-woff
+      font: 2,
+      default: 0
+    };
+    module2.exports = function mimeScore(mimeType, source = "default") {
+      if (mimeType === "application/octet-stream") {
+        return 0;
+      }
+      const [type, subtype] = mimeType.split("/");
+      const facet = subtype.replace(/(\.|x-).*/, "$1");
+      const facetScore = FACET_SCORES[facet] || FACET_SCORES.default;
+      const sourceScore = SOURCE_SCORES[source] || SOURCE_SCORES.default;
+      const typeScore = TYPE_SCORES[type] || TYPE_SCORES.default;
+      const lengthScore = 1 - mimeType.length / 100;
+      return facetScore + sourceScore + typeScore + lengthScore;
+    };
+  }
+});
+
 // ../../node_modules/mime-types/index.js
 var require_mime_types = __commonJS({
   "../../node_modules/mime-types/index.js"(exports2) {
     "use strict";
     var db = require_mime_db();
     var extname = require("path").extname;
+    var mimeScore = require_mimeScore();
     var EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/;
     var TEXT_TYPE_REGEXP = /^text\//i;
     exports2.charset = charset;
@@ -60446,6 +61310,7 @@ var require_mime_types = __commonJS({
     exports2.extensions = /* @__PURE__ */ Object.create(null);
     exports2.lookup = lookup2;
     exports2.types = /* @__PURE__ */ Object.create(null);
+    exports2._extensionConflicts = [];
     populateMaps(exports2.extensions, exports2.types);
     function charset(type) {
       if (!type || typeof type !== "string") {
@@ -60490,14 +61355,13 @@ var require_mime_types = __commonJS({
       if (!path2 || typeof path2 !== "string") {
         return false;
       }
-      var extension2 = extname("x." + path2).toLowerCase().substr(1);
+      var extension2 = extname("x." + path2).toLowerCase().slice(1);
       if (!extension2) {
         return false;
       }
       return exports2.types[extension2] || false;
     }
     function populateMaps(extensions, types) {
-      var preference = ["nginx", "apache", void 0, "iana"];
       Object.keys(db).forEach(function forEachMimeType(type) {
         var mime = db[type];
         var exts = mime.extensions;
@@ -60507,16 +61371,31 @@ var require_mime_types = __commonJS({
         extensions[type] = exts;
         for (var i = 0; i < exts.length; i++) {
           var extension2 = exts[i];
-          if (types[extension2]) {
-            var from = preference.indexOf(db[types[extension2]].source);
-            var to = preference.indexOf(mime.source);
-            if (types[extension2] !== "application/octet-stream" && (from > to || from === to && types[extension2].substr(0, 12) === "application/")) {
-              continue;
-            }
+          types[extension2] = _preferredType(extension2, types[extension2], type);
+          const legacyType = _preferredTypeLegacy(
+            extension2,
+            types[extension2],
+            type
+          );
+          if (legacyType !== types[extension2]) {
+            exports2._extensionConflicts.push([extension2, legacyType, types[extension2]]);
           }
-          types[extension2] = type;
         }
       });
+    }
+    function _preferredType(ext, type0, type1) {
+      var score0 = type0 ? mimeScore(type0, db[type0].source) : 0;
+      var score1 = type1 ? mimeScore(type1, db[type1].source) : 0;
+      return score0 > score1 ? type0 : type1;
+    }
+    function _preferredTypeLegacy(ext, type0, type1) {
+      var SOURCE_RANK = ["nginx", "apache", void 0, "iana"];
+      var score0 = type0 ? SOURCE_RANK.indexOf(db[type0].source) : 0;
+      var score1 = type1 ? SOURCE_RANK.indexOf(db[type1].source) : 0;
+      if (exports2.types[extension] !== "application/octet-stream" && (score0 > score1 || score0 === score1 && exports2.types[extension]?.slice(0, 12) === "application/")) {
+        return type0;
+      }
+      return score0 > score1 ? type0 : type1;
     }
   }
 });
