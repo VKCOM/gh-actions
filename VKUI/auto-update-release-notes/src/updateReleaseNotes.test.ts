@@ -459,7 +459,7 @@ describe('run updateReleaseNotes', () => {
       },
       labels: [
         {
-          name: 'patch',
+          name: 'ci:cherry-pick:patch',
         },
       ],
     };
