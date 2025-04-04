@@ -24841,7 +24841,7 @@ async function calculateReleaseVersion({
   if (!latestVersion) {
     return null;
   }
-  const hasPatchLabel = labels.some((label) => label.name === "patch");
+  const hasPatchLabel = labels.some((label) => label.name === "ci:cherry-pick:patch");
   const updateType = hasPatchLabel ? "patch" : "minor";
   const nextVersion = getNextReleaseVersion(latestVersion, updateType);
   return {
