@@ -22,7 +22,7 @@
     "@jest/globals": "^29.7.0",
     "@swc/core": "^1.11.21",
     "@swc/jest": "^0.2.37",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "@typescript-eslint/eslint-plugin": "^8.29.1",
     "@typescript-eslint/parser": "^8.29.1",
     "@vkontakte/eslint-plugin": "^2.0.0",
