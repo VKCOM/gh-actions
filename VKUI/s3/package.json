@@ -7,7 +7,7 @@
   "devDependencies": {
     "@types/lodash": "^4.17.16",
     "@types/mime-types": "^2.1.4",
-    "@types/node": "^22.14.1",
+    "@types/node": "^22.15.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
