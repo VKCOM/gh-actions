@@ -19,7 +19,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/github": "npm:^6.0.1"
     "@octokit/plugin-retry": "npm:^8.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -31,7 +31,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/exec": "npm:^1.1.1"
     "@actions/github": "npm:^6.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     "@types/semver": "npm:^7.7.0"
     semver: "npm:^7.7.2"
     typescript: "npm:^5.8.3"
@@ -45,7 +45,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/exec": "npm:^1.1.1"
     "@actions/github": "npm:^6.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     "@types/semver": "npm:^7.7.0"
     semver: "npm:^7.7.2"
     typescript: "npm:^5.8.3"
@@ -59,7 +59,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/github": "npm:^6.0.1"
     "@octokit/plugin-retry": "npm:^8.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -71,7 +71,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/exec": "npm:^1.1.1"
     "@actions/github": "npm:^6.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     "@types/semver": "npm:^7.7.0"
     semver: "npm:^7.7.2"
     typescript: "npm:^5.8.3"
@@ -84,7 +84,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^1.11.1"
     "@actions/exec": "npm:^1.1.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -95,7 +95,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^1.11.1"
     "@actions/github": "npm:^6.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     strip-ansi: "npm:^7.1.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
@@ -109,7 +109,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/lodash": "npm:^4.17.17"
     "@types/mime-types": "npm:^3.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     lodash: "npm:^4.17.21"
     mime-types: "npm:^3.0.1"
     typescript: "npm:^5.8.3"
@@ -121,7 +121,7 @@ __metadata:
   resolution: "@actions-internal/shared-rust-cargo-update-toml@workspace:shared/rust/cargo-update-toml"
   dependencies:
     "@actions/core": "npm:^1.11.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -134,7 +134,7 @@ __metadata:
     "@actions/exec": "npm:^1.1.1"
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/mime-types": "npm:^3.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     mime-types: "npm:^3.0.1"
     typescript: "npm:^5.8.3"
   languageName: unknown
@@ -146,7 +146,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^1.11.1"
     "@actions/github": "npm:^6.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     "@types/nspell": "npm:^2.1.6"
     async-mutex: "npm:^0.5.0"
     nspell: "npm:^2.1.5"
@@ -161,7 +161,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/exec": "npm:^1.1.1"
     "@actions/github": "npm:^6.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     "@types/semver": "npm:^7.7.0"
     semver: "npm:^7.7.2"
     typescript: "npm:^5.8.3"
@@ -3109,12 +3109,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.15.29":
-  version: 22.15.29
-  resolution: "@types/node@npm:22.15.29"
+"@types/node@npm:^24.0.0":
+  version: 24.0.0
+  resolution: "@types/node@npm:24.0.0"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10c0/602cc88c6150780cd9b5b44604754e0ce13983ae876a538861d6ecfb1511dff289e5576fffd26c841cde2142418d4bb76e2a72a382b81c04557ccb17cff29e1d
+    undici-types: "npm:~7.8.0"
+  checksum: 10c0/075f3129aa88932a0b4c3c9c28486f93a8d295151138b1fdd590cbbb59ec92d59b66201f99a0f061a7c8955a09d06ecc3fa070ed3c438a521a9890d1a3460958
   languageName: node
   linkType: hard
 
@@ -3312,7 +3312,7 @@ __metadata:
     "@jest/globals": "npm:^29.7.0"
     "@swc/core": "npm:^1.11.31"
     "@swc/jest": "npm:^0.2.38"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.33.1"
     "@typescript-eslint/parser": "npm:^8.33.1"
     "@vkontakte/eslint-plugin": "npm:^2.0.0"
@@ -3351,7 +3351,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/exec": "npm:^1.1.1"
     "@actions/github": "npm:^6.0.1"
-    "@types/node": "npm:^22.15.29"
+    "@types/node": "npm:^24.0.0"
     "@types/semver": "npm:^7.7.0"
     figma-js: "npm:^1.16.0"
     semver: "npm:^7.7.2"
@@ -8338,10 +8338,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+"undici-types@npm:~7.8.0":
+  version: 7.8.0
+  resolution: "undici-types@npm:7.8.0"
+  checksum: 10c0/9d9d246d1dc32f318d46116efe3cfca5a72d4f16828febc1918d94e58f6ffcf39c158aa28bf5b4fc52f410446bc7858f35151367bd7a49f21746cab6497b709b
   languageName: node
   linkType: hard
 
