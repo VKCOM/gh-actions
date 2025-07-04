@@ -1,7 +1,11 @@
 import { ChangeData } from '../types';
 
+function toKebabCase(componentName: string) {
+  return componentName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 const componentToString = (component: string, version: string) => {
-  return `[${component}](https://vkcom.github.io/VKUI/${version}/#/${component})`;
+  return `[${component}](https://vkui.io/${version}/components/${toKebabCase(component)})`;
 };
 
 const prAuthorToString = (author?: string) => {
