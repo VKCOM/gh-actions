@@ -42,7 +42,7 @@ export function releaseNotesParser(body: string) {
     });
 
     const content = icons
-      .map((icon) => `### ${icon.name} (${icon.size})\r\n\r\n` + `![${icon.name}](${icon.url})`)
+      .map((icon) => `### ${icon.name} (${icon.size})\r\n\r\n![${icon.name}](${icon.url})`)
       .join('\r\n\r\n');
 
     return `## ${title}\r\n\r\n${content}\r\n`;
