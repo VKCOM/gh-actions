@@ -1,5 +1,10 @@
 import { IconData } from './types';
 
+function findNumber(input: string): string {
+  const match = input.match(/-?\d+/);
+  return match ? match[0] : '';
+}
+
 export function releaseNotesParser(body: string) {
   const parseIconsFromSection = (sectionTitle: string) => {
     const sectionStart = body.indexOf(`## ${sectionTitle}`);
@@ -10,14 +15,14 @@ export function releaseNotesParser(body: string) {
     const sectionContent = body.substring(sectionStart + sectionTitle.length + 3, sectionEnd);
 
     const icons: IconData[] = [];
-    const iconRegex = /### (.+?) \((\d+)\)\s+!\[.*?\]\((.+?)\)/g;
+    const iconRegex = /### (.+?)\s+!\[.*?\]\((.+?)\)/g;
     let match;
 
     while ((match = iconRegex.exec(sectionContent)) !== null) {
       icons.push({
         name: match[1],
-        size: match[2],
-        url: match[3],
+        size: findNumber(match[1]),
+        url: match[2],
       });
     }
 
@@ -42,7 +47,7 @@ export function releaseNotesParser(body: string) {
     });
 
     const content = icons
-      .map((icon) => `### ${icon.name} (${icon.size})\r\n\r\n![${icon.name}](${icon.url})`)
+      .map((icon) => `### ${icon.name}\r\n\r\n![${icon.name}](${icon.url})`)
       .join('\r\n\r\n');
 
     return `## ${title}\r\n\r\n${content}\r\n`;

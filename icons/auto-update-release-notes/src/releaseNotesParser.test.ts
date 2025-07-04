@@ -21,21 +21,21 @@ const fixtures = [
     testName: 'add some icons to release notes',
     body: `## Добавленные иконки\r
 \r
-### add_circle_fill_red_16 (16)\r
+### add_circle_fill_red_16\r
 \r
 ![add_circle_fill_red_16](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/16/add_circle_fill_red_16.svg)\r
 \r
-### accessibility_outline_24 (24)\r
+### accessibility_outline_24\r
 \r
 ![accessibility_outline_24](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/24/accessibility_outline_24.svg)\r
 \r
 ## Измененные иконки\r
 \r
-### add_rectangle_line_16 (16)\r
+### add_rectangle_line_16\r
 \r
 ![add_rectangle_line_16](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/16/add_rectangle_line_16.svg)\r
 \r
-### add_rectangle_line_24 (24)\r
+### add_rectangle_line_24\r
 \r
 ![add_rectangle_line_24](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/24/add_rectangle_line_24.svg)`,
     newData: [
@@ -50,33 +50,33 @@ const fixtures = [
     ],
     resultBody: `## Добавленные иконки\r
 \r
-### add_circle_fill_red_16 (16)\r
+### add_circle_fill_red_16\r
 \r
 ![add_circle_fill_red_16](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/16/add_circle_fill_red_16.svg)\r
 \r
-### bug_outline_16 (16)\r
+### bug_outline_16\r
 \r
 ![bug_outline_16](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/16/bug_outline_16.svg)\r
 \r
-### accessibility_outline_24 (24)\r
+### accessibility_outline_24\r
 \r
 ![accessibility_outline_24](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/24/accessibility_outline_24.svg)\r
 \r
-### discount_outline_32 (32)\r
+### discount_outline_32\r
 \r
 ![discount_outline_32](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/32/discount_outline_32.svg)\r
 \r
 ## Измененные иконки\r
 \r
-### add_rectangle_line_16 (16)\r
+### add_rectangle_line_16\r
 \r
 ![add_rectangle_line_16](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/16/add_rectangle_line_16.svg)\r
 \r
-### add_rectangle_line_24 (24)\r
+### add_rectangle_line_24\r
 \r
 ![add_rectangle_line_24](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/24/add_rectangle_line_24.svg)\r
 \r
-### calendar_outline_36 (36)\r
+### calendar_outline_36\r
 \r
 ![calendar_outline_36](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/36/calendar_outline_36.svg)`,
   },
@@ -84,11 +84,11 @@ const fixtures = [
     testName: 'add some icons to not existed section',
     body: `## Добавленные иконки\r
 \r
-### add_circle_fill_red_16 (16)\r
+### add_circle_fill_red_16\r
 \r
 ![add_circle_fill_red_16](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/16/add_circle_fill_red_16.svg)\r
 \r
-### accessibility_outline_24 (24)\r
+### accessibility_outline_24\r
 \r
 ![accessibility_outline_24](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/24/accessibility_outline_24.svg)`,
     newData: [
@@ -99,17 +99,17 @@ const fixtures = [
     ],
     resultBody: `## Добавленные иконки\r
 \r
-### add_circle_fill_red_16 (16)\r
+### add_circle_fill_red_16\r
 \r
 ![add_circle_fill_red_16](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/16/add_circle_fill_red_16.svg)\r
 \r
-### accessibility_outline_24 (24)\r
+### accessibility_outline_24\r
 \r
 ![accessibility_outline_24](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/24/accessibility_outline_24.svg)\r
 \r
 ## Измененные иконки\r
 \r
-### calendar_outline_36 (36)\r
+### calendar_outline_36\r
 \r
 ![calendar_outline_36](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/36/calendar_outline_36.svg)`,
   },
@@ -192,7 +192,7 @@ const fixtures = [
 \r
 ## Измененные иконки\r
 \r
-### calendar_outline_36 (36)\r
+### calendar_outline_36\r
 \r
 ![calendar_outline_36](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/36/calendar_outline_36.svg)`,
   },
