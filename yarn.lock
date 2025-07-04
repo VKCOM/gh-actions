@@ -24,6 +24,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@actions-internal/auto-update-icons-release-notes@workspace:icons/auto-update-release-notes":
+  version: 0.0.0-use.local
+  resolution: "@actions-internal/auto-update-icons-release-notes@workspace:icons/auto-update-release-notes"
+  dependencies:
+    "@actions/core": "npm:^1.11.1"
+    "@actions/exec": "npm:^1.1.1"
+    "@actions/github": "npm:^6.0.0"
+    "@types/node": "npm:^22.13.13"
+    "@types/semver": "npm:^7.7.0"
+    semver: "npm:^7.7.1"
+    typescript: "npm:^5.8.2"
+  languageName: unknown
+  linkType: soft
+
 "@actions-internal/auto-update-release-notes@workspace:VKUI/auto-update-release-notes":
   version: 0.0.0-use.local
   resolution: "@actions-internal/auto-update-release-notes@workspace:VKUI/auto-update-release-notes"

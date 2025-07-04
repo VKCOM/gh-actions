@@ -1,0 +1,13 @@
+name: 'Update release notes'
+description: 'Auto update icons release notes'
+inputs:
+  pull_request_number:
+    required: true
+    description: 'pull request number'
+
+  token:
+    required: true
+    description: 'token with access to your repository'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

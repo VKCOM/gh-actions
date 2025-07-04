@@ -1,0 +1,23 @@
+{
+  "name": "@actions-internal/auto-update-icons-release-notes",
+  "version": "0.0.0",
+  "main": "src/main.ts",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^22.13.13",
+    "@types/semver": "^7.7.0",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^6.0.0",
+    "semver": "^7.7.1"
+  },
+  "scripts": {
+    "prebuild": "shx rm -rf dist/*",
+    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --packages=bundle",
+    "test": "jest --passWithNoTests"
+  }
+}
