@@ -4,6 +4,20 @@ import * as core from '@actions/core';
 
 const ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^\/]+)\/([^\/]+)\.svg$/;
 
+function convertToIconName(input: string): string {
+  // Разбиваем строку по подчеркиваниям
+  const parts = input.split('_');
+
+  const nameParts = parts.slice(0, parts.length - 1);
+  const size = parts[parts.length - 1];
+
+  const formattedParts = nameParts.map(
+    (part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase(),
+  );
+
+  return `Icon${size}${formattedParts.join('')}`;
+}
+
 export async function getChangedIconsData(
   octokit: ReturnType<typeof github.getOctokit>,
   owner: string,
@@ -19,27 +33,24 @@ export async function getChangedIconsData(
   // Фильтрация SVG-иконок
   const addedIcons: IconData[] = [];
   const modifiedIcons: IconData[] = [];
-  const removedIcons: IconData[] = [];
 
   files.forEach((file) => {
     const match = file.filename.match(ICON_FILE_REGEX);
     if (!match) return;
 
     const [, size, name] = match;
-    const icon = { name, size, url: file['raw_url'] };
+    const formattedName = convertToIconName(name);
+    const icon = { name: formattedName, size, url: file['raw_url'] };
 
     if (file.status === 'added') addedIcons.push(icon);
     else if (file.status === 'modified') modifiedIcons.push(icon);
-    else if (file.status === 'removed') removedIcons.push(icon);
   });
 
   core.info(`Added icons: ${addedIcons.length}`);
   core.info(`Modified icons: ${modifiedIcons.length}`);
-  core.info(`Modified icons: ${removedIcons.length}`);
 
   return {
     addedIcons,
     modifiedIcons,
-    removedIcons,
   };
 }

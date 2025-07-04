@@ -18,14 +18,9 @@ export async function updateReleaseNotes({
   repo: string;
   prNumber: number;
 }) {
-  const { addedIcons, modifiedIcons, removedIcons } = await getChangedIconsData(
-    octokit,
-    owner,
-    repo,
-    prNumber,
-  );
+  const { addedIcons, modifiedIcons } = await getChangedIconsData(octokit, owner, repo, prNumber);
 
-  if (!addedIcons.length && !modifiedIcons.length && !removedIcons.length) {
+  if (!addedIcons.length && !modifiedIcons.length) {
     core.info('No icon changes detected. Skipping release update.');
     return;
   }
