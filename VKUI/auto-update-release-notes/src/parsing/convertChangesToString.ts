@@ -1,7 +1,8 @@
 import { ChangeData } from '../types';
+import { getComponentDocsUrl } from './getComponentDocsUrl';
 
 const componentToString = (component: string, version: string) => {
-  return `[${component}](https://vkcom.github.io/VKUI/${version}/#/${component})`;
+  return `[${component}](${getComponentDocsUrl(component, version)})`;
 };
 
 const prAuthorToString = (author?: string) => {
