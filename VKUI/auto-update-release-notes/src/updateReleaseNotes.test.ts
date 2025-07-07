@@ -497,8 +497,8 @@ describe('run updateReleaseNotes', () => {
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/14bb6d5e-2390-4766-8bdb-8e16d5166523">
   <img width="480" src="https://github.com/user-attachments/assets/404e2412-ed5d-4503-bf61-7c41d8784719"/>
   </picture>
-- [Text](https://vkui.io/6.7.0/components/text): добавлено использование compact токенов fontWeight/fontFamily в режиме compact (#7564)
-- [Caption](https://vkui.io/6.7.0/components/caption): добавлена поддержка compact режима (#7555)
+- [Text](https://vkui.io/6.7.0/components/typography#text): добавлено использование compact токенов fontWeight/fontFamily в режиме compact (#7564)
+- [Caption](https://vkui.io/6.7.0/components/typography#caption): добавлена поддержка compact режима (#7555)
 `,
     };
 
@@ -550,8 +550,8 @@ describe('run updateReleaseNotes', () => {
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/14bb6d5e-2390-4766-8bdb-8e16d5166523">\r
   <img width="480" src="https://github.com/user-attachments/assets/404e2412-ed5d-4503-bf61-7c41d8784719"/>\r
   </picture>\r
-- [Text](https://vkui.io/6.6.0/components/text): Добавлено использование compact токенов fontWeight/fontFamily в режиме compact (#7564)\r
-- [Caption](https://vkui.io/6.6.0/components/caption): Добавлена поддержка compact режима (#7555)\r
+- [Text](https://vkui.io/6.6.0/components/typography#text): Добавлено использование compact токенов fontWeight/fontFamily в режиме compact (#7564)\r
+- [Caption](https://vkui.io/6.6.0/components/typography#caption): Добавлена поддержка compact режима (#7555)\r
 - [ScreenSpinner](https://vkui.io/6.6.0/components/screen-spinner): Добавлена возможность прокидывать \`caption\` (#1234)\r
   <picture>\r
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/60251995-5276-4d3d-89ae-d4380d5039f4">\r

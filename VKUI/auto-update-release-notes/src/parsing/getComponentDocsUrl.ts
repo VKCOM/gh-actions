@@ -14,6 +14,14 @@ const COMPONENTS_DOCS_PARENT_MAP: Record<string, string> = {
   ActionSheetItem: 'ActionSheet',
   HorizontalCellShowMore: 'HorizontalCell',
   OnboardingTooltipContainer: 'OnboardingTooltip',
+  DisplayTitle: 'Typography',
+  Title: 'Typography',
+  Headline: 'Typography',
+  Text: 'Typography',
+  Paragraph: 'Typography',
+  Subhead: 'Typography',
+  Footnote: 'Typography',
+  Caption: 'Typography',
 };
 
 function toKebabCase(componentName: string) {
