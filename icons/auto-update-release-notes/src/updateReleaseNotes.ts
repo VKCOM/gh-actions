@@ -12,11 +12,13 @@ export async function updateReleaseNotes({
   owner,
   repo,
   prNumber,
+  currentIconsVersion,
 }: {
   octokit: ReturnType<typeof github.getOctokit>;
   owner: string;
   repo: string;
   prNumber: number;
+  currentIconsVersion: string;
 }) {
   const { addedIcons, modifiedIcons } = await getChangedIconsData(octokit, owner, repo, prNumber);
 
@@ -24,7 +26,7 @@ export async function updateReleaseNotes({
     core.info('No icon changes detected. Skipping release update.');
     return;
   }
-  const draftRelease = await getReleaseDraft(octokit, owner, repo);
+  const draftRelease = await getReleaseDraft(octokit, owner, repo, currentIconsVersion);
 
   const parser = releaseNotesParser(draftRelease.body || '');
 

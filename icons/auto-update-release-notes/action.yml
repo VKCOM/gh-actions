@@ -8,6 +8,10 @@ inputs:
   token:
     required: true
     description: 'token with access to your repository'
+
+  current_icons_version:
+    required: true
+    description: 'current icons version'
 runs:
   using: 'node20'
   main: 'dist/index.js'

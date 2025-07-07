@@ -5,7 +5,6 @@ import * as core from '@actions/core';
 const ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^\/]+)\/([^\/]+)\.svg$/;
 
 function convertToIconName(input: string): string {
-  // Разбиваем строку по подчеркиваниям
   const parts = input.split('_');
 
   const nameParts = parts.slice(0, parts.length - 1);
@@ -24,13 +23,11 @@ export async function getChangedIconsData(
   repo: string,
   prNumber: number,
 ) {
-  // Получаем список измененных файлов в PR
   const files = await octokit.paginate(octokit.rest.pulls.listFiles, {
     owner,
     repo,
     pull_number: prNumber,
   });
-  // Фильтрация SVG-иконок
   const addedIcons: IconData[] = [];
   const modifiedIcons: IconData[] = [];
 
