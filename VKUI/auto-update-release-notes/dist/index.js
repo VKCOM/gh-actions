@@ -39519,9 +39519,44 @@ function parseChanges(text) {
   return changes;
 }
 
+// src/parsing/getComponentDocsUrl.ts
+var COMPONENTS_DOCS_PARENT_MAP = {
+  Header: "Group",
+  Footer: "Group",
+  SplitCol: "SplitLayout",
+  WriteBarIcon: "WriteBar",
+  List: "Cell",
+  Tabbar: "Epic",
+  TabbarItem: "Epic",
+  PanelSpinner: "Panel",
+  PanelHeaderButton: "PanelHeader",
+  PanelHeaderContent: "PanelHeader",
+  SubnavigationButton: "SubnavigationBar",
+  TabsItem: "Tabs",
+  ActionSheetItem: "ActionSheet",
+  HorizontalCellShowMore: "HorizontalCell",
+  OnboardingTooltipContainer: "OnboardingTooltip",
+  DisplayTitle: "Typography",
+  Title: "Typography",
+  Headline: "Typography",
+  Text: "Typography",
+  Paragraph: "Typography",
+  Subhead: "Typography",
+  Footnote: "Typography",
+  Caption: "Typography"
+};
+function toKebabCase(componentName) {
+  return componentName.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+}
+function getComponentDocsUrl(component, version) {
+  const parent = COMPONENTS_DOCS_PARENT_MAP[component];
+  const url = parent ? `${toKebabCase(parent)}#${toKebabCase(component)}` : toKebabCase(component);
+  return `https://vkui.io/${version}/components/${url}`;
+}
+
 // src/parsing/convertChangesToString.ts
 var componentToString = (component, version) => {
-  return `[${component}](https://vkcom.github.io/VKUI/${version}/#/${component})`;
+  return `[${component}](${getComponentDocsUrl(component, version)})`;
 };
 var prAuthorToString = (author) => {
   return author ? `, \u0441\u043F\u0430\u0441\u0438\u0431\u043E @${author}` : "";
