@@ -53,7 +53,6 @@ export function releaseNotesParser(body: string) {
     return `## ${title}\r\n\r\n${content}\r\n`;
   };
 
-  // Обновляем тело релиза
   const updateSection = (sectionContent: string, sectionTitle: string) => {
     if (!sectionContent) return body;
 

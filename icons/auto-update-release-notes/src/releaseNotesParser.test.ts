@@ -18,7 +18,7 @@ const generateIconData = (name: string): IconData => {
 
 const fixtures = [
   {
-    testName: 'add some icons to release notes',
+    testName: 'Добавляем иконки в уже созданные секции',
     body: `## Добавленные иконки\r
 \r
 ### add_circle_fill_red_16\r
@@ -81,7 +81,7 @@ const fixtures = [
 ![calendar_outline_36](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/36/calendar_outline_36.svg)`,
   },
   {
-    testName: 'add some icons to not existed section',
+    testName: 'Добавляем иконки в несозданные секции',
     body: `## Добавленные иконки\r
 \r
 ### add_circle_fill_red_16\r
@@ -114,7 +114,8 @@ const fixtures = [
 ![calendar_outline_36](https://raw.githubusercontent.com/your-org/your-repo/commit-sha/packages/icons/src/svg/36/calendar_outline_36.svg)`,
   },
   {
-    testName: 'add some icons to not existed section with some other sections',
+    testName:
+      'Добавляем иконки в несозданные секции, когда при этом есть другие не сгенерированные секции',
     body: `## BREAKING CHANGE\r
 \r
 ### Переименование иконок\r
