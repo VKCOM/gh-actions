@@ -18,7 +18,12 @@ export async function getReleaseDraft(
 
   const releaseName = `@vkontakte/icons@v${nextMinorVersion}`;
 
-  const releases = await octokit.paginate(octokit.rest.repos.listReleases, { owner, repo });
+  const { data: releases } = await octokit.rest.repos.listReleases({
+    owner,
+    repo,
+    per_page: 10,
+    page: 1,
+  });
   let draftRelease = releases.find((r) => r.draft && r.name === releaseName);
 
   if (!draftRelease) {

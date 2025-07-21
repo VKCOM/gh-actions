@@ -33,7 +33,6 @@ export async function updateReleaseNotes({
   parser.modifySection(ADDED_SECTION_HEADER, addedIcons);
   parser.modifySection(MODIFIED_SECTION_HEADER, modifiedIcons);
 
-  // Обновляем релиз
   await octokit.rest.repos.updateRelease({
     owner,
     repo,
