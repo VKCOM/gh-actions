@@ -73,7 +73,7 @@ __metadata:
     "@actions/core": "npm:^1.11.1"
     "@actions/github": "npm:^6.0.1"
     "@octokit/plugin-retry": "npm:^8.0.1"
-    "@types/node": "npm:^24.0.15"
+    "@types/node": "npm:^24.1.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
