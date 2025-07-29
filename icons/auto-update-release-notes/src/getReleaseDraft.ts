@@ -16,7 +16,7 @@ export async function getReleaseDraft(
 ) {
   const nextMinorVersion = getNextMinorVersion(currentIconsVersion);
 
-  const releaseName = `@vkontakte/icons@v${nextMinorVersion}`;
+  const releaseName = `@vkontakte/icons@${nextMinorVersion}`;
 
   const { data: releases } = await octokit.rest.repos.listReleases({
     owner,
