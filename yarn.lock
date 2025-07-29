@@ -66,6 +66,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@actions-internal/complete-icons-publish@workspace:icons/complete-publish":
+  version: 0.0.0-use.local
+  resolution: "@actions-internal/complete-icons-publish@workspace:icons/complete-publish"
+  dependencies:
+    "@actions/core": "npm:^1.11.1"
+    "@actions/github": "npm:^6.0.1"
+    "@octokit/plugin-retry": "npm:^8.0.1"
+    "@types/node": "npm:^24.0.15"
+    typescript: "npm:^5.8.3"
+  languageName: unknown
+  linkType: soft
+
 "@actions-internal/complete-publish@workspace:VKUI/complete-publish":
   version: 0.0.0-use.local
   resolution: "@actions-internal/complete-publish@workspace:VKUI/complete-publish"

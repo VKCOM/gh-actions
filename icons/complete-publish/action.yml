@@ -1,0 +1,12 @@
+name: 'Publish the Release Notes'
+description: 'Find and publish the release notes'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+  releaseTag:
+    required: true
+    description: "released version's tag"
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
