@@ -1,0 +1,21 @@
+{
+  "name": "@actions-internal/complete-icons-publish",
+  "version": "0.0.0",
+  "main": "src/main.ts",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.1",
+    "@octokit/plugin-retry": "^8.0.1"
+  },
+  "scripts": {
+    "prebuild": "shx rm -rf dist/*",
+    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --packages=bundle",
+    "test": "jest --passWithNoTests"
+  }
+}
