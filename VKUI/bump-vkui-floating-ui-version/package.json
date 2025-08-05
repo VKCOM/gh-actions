@@ -7,7 +7,7 @@
   "devDependencies": {
     "@types/node": "^24.2.0",
     "@types/semver": "^7.7.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
