@@ -61,12 +61,13 @@ M\tdist-1/index.js.map
 M\tdist-1/vkui.css
 M\tdist-1/vkui.css.map
 `,
-    output: `| Путь | Статус |
-| index.js | Изменен |
-| index.d.ts | Изменен |
-| components.css | Изменен |
-| vkui.css | Изменен |
-| cssm/index.js | Изменен |
+    output: `| Файл | Статус |
+|----|----|
+| index.js | ✏️ Изменен |
+| index.d.ts | ✏️ Изменен |
+| components.css | ✏️ Изменен |
+| vkui.css | ✏️ Изменен |
+| cssm/index.js | ✏️ Изменен |
 
 И еще 21 файлов.
 
@@ -77,21 +78,22 @@ M\tdist-1/vkui.css.map
     input: `
 M\tdist-1/components.css
 M\tdist-1/components.css.map
-M\tdist-1/cssm/index.js
+D\tdist-1/cssm/index.js
 M\tdist-1/cssm/index.js.map
 M\tdist-1/index.d.ts
 M\tdist-1/index.d.ts.map
-M\tdist-1/index.js
+A\tdist-1/index.js
 M\tdist-1/index.js.map
 M\tdist-1/vkui.css
 M\tdist-1/vkui.css.map
 `,
-    output: `| Путь | Статус |
-| index.js | Изменен |
-| index.d.ts | Изменен |
-| components.css | Изменен |
-| vkui.css | Изменен |
-| cssm/index.js | Изменен |
+    output: `| Файл | Статус |
+|----|----|
+| index.js | ✨ Добавлен |
+| index.d.ts | ✏️ Изменен |
+| components.css | ✏️ Изменен |
+| vkui.css | ✏️ Изменен |
+| cssm/index.js | ❌️ Удален |
 
 Полный отчет вы можете посмотреть по [ссылке](https://diff-report.html)`,
   },

@@ -1,9 +1,11 @@
 const MAX_VISIBLE_FILES_COUNT = 5;
 
+const TABLE_HEADER = `| Файл | Статус |\n|----|----|\n`;
+
 const FILE_STATUS_LABEL = {
-  A: 'Добавлен',
-  M: 'Изменен',
-  D: 'Удален',
+  A: '✨ Добавлен',
+  M: '✏️ Изменен',
+  D: '❌️ Удален',
 };
 
 type FileType = {
@@ -51,7 +53,7 @@ export function generateMessageBody(changedFilesTxt: string, diffReportUrl: stri
 
   let result = files.slice(0, MAX_VISIBLE_FILES_COUNT).reduce((res, file) => {
     return res + `| ${file.path.join('/')} | ${FILE_STATUS_LABEL[file.status]} |\n`;
-  }, '| Путь | Статус |\n');
+  }, TABLE_HEADER);
 
   if (files.length > MAX_VISIBLE_FILES_COUNT) {
     result += `\nИ еще ${files.slice(MAX_VISIBLE_FILES_COUNT).length} файлов.\n`;

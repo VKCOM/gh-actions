@@ -7,7 +7,7 @@ async function run() {
 
   const changedFilesTxt = fs.readFileSync('changed_files.txt', 'utf-8');
 
-  const result = `## Bundle diff report\n\n${generateMessageBody(changedFilesTxt, diffReportUrl)}`;
+  const result = `## 🆚 Bundle diff report\n\n${generateMessageBody(changedFilesTxt, diffReportUrl)}`;
 
   core.setOutput('diff_message', result);
 }
