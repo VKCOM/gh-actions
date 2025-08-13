@@ -1,0 +1,23 @@
+{
+  "name": "@actions-internal/generate-diff-message",
+  "version": "0.0.0",
+  "main": "src/main.ts",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^24.2.1",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/exec": "^1.1.1",
+    "@aws-sdk/client-s3": "3.726.1",
+    "mime-types": "^3.0.1"
+  },
+  "scripts": {
+    "prebuild": "shx rm -rf dist/*",
+    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --packages=bundle",
+    "test": "jest --passWithNoTests"
+  }
+}

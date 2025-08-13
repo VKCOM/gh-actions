@@ -1,0 +1,9 @@
+name: 'Generate diff message'
+description: 'Auto generation diff result message'
+inputs:
+  diff_report_url:
+    required: true
+    description: 'diff report url'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

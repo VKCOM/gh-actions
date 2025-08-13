@@ -90,6 +90,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@actions-internal/generate-diff-message@workspace:VKUI/generate-diff-message":
+  version: 0.0.0-use.local
+  resolution: "@actions-internal/generate-diff-message@workspace:VKUI/generate-diff-message"
+  dependencies:
+    "@actions/core": "npm:^1.11.1"
+    "@actions/exec": "npm:^1.1.1"
+    "@aws-sdk/client-s3": "npm:3.726.1"
+    "@types/mime-types": "npm:^3.0.1"
+    "@types/node": "npm:^24.2.1"
+    mime-types: "npm:^3.0.1"
+    typescript: "npm:^5.9.2"
+  languageName: unknown
+  linkType: soft
+
 "@actions-internal/patch@workspace:VKUI/patch":
   version: 0.0.0-use.local
   resolution: "@actions-internal/patch@workspace:VKUI/patch"
