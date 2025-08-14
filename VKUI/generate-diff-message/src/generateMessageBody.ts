@@ -52,7 +52,7 @@ export function generateMessageBody(changedFilesTxt: string, diffReportUrl: stri
   }
 
   let result = files.slice(0, MAX_VISIBLE_FILES_COUNT).reduce((res, file) => {
-    return res + `| ${file.path.join('/')} | ${FILE_STATUS_LABEL[file.status]} |\n`;
+    return res + `| \`${file.path.join('/')}\` | ${FILE_STATUS_LABEL[file.status]} |\n`;
   }, TABLE_HEADER);
 
   if (files.length > MAX_VISIBLE_FILES_COUNT) {

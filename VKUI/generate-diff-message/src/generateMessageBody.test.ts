@@ -63,11 +63,11 @@ M\tdist-1/vkui.css.map
 `,
     output: `| Файл | Статус |
 |----|----|
-| index.js | ✏️ Изменен |
-| index.d.ts | ✏️ Изменен |
-| components.css | ✏️ Изменен |
-| vkui.css | ✏️ Изменен |
-| cssm/index.js | ✏️ Изменен |
+| \`index.js\` | ✏️ Изменен |
+| \`index.d.ts\` | ✏️ Изменен |
+| \`components.css\` | ✏️ Изменен |
+| \`vkui.css\` | ✏️ Изменен |
+| \`cssm/index.js\` | ✏️ Изменен |
 
 И еще 21 файлов.
 
@@ -89,11 +89,11 @@ M\tdist-1/vkui.css.map
 `,
     output: `| Файл | Статус |
 |----|----|
-| index.js | ✨ Добавлен |
-| index.d.ts | ✏️ Изменен |
-| components.css | ✏️ Изменен |
-| vkui.css | ✏️ Изменен |
-| cssm/index.js | ❌️ Удален |
+| \`index.js\` | ✨ Добавлен |
+| \`index.d.ts\` | ✏️ Изменен |
+| \`components.css\` | ✏️ Изменен |
+| \`vkui.css\` | ✏️ Изменен |
+| \`cssm/index.js\` | ❌️ Удален |
 
 Полный отчет вы можете посмотреть по [ссылке](https://diff-report.html)`,
   },
