@@ -13,7 +13,7 @@ runs:
       shell: bash
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v6
+      uses: peter-evans/create-pull-request@v7
       with:
         title: Corepack up
         branch: github-actions/build/tools/corepack-up
