@@ -37455,7 +37455,7 @@ var core3 = __toESM(require_core());
 // src/jest.ts
 var core = __toESM(require_core());
 
-// ../../node_modules/strip-ansi/node_modules/ansi-regex/index.js
+// ../../node_modules/ansi-regex/index.js
 function ansiRegex({ onlyFirst = false } = {}) {
   const pattern = [
     "[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
