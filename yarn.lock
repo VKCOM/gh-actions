@@ -104,6 +104,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@actions-internal/publish-release-notes@workspace:vkui-tokens/publish-release-notes":
+  version: 0.0.0-use.local
+  resolution: "@actions-internal/publish-release-notes@workspace:vkui-tokens/publish-release-notes"
+  dependencies:
+    "@actions/core": "npm:^1.11.1"
+    "@actions/github": "npm:^6.0.1"
+    "@octokit/plugin-retry": "npm:^8.0.2"
+    "@types/node": "npm:^24.7.2"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@actions-internal/push-screenshots@workspace:VKUI/push-screenshots":
   version: 0.0.0-use.local
   resolution: "@actions-internal/push-screenshots@workspace:VKUI/push-screenshots"
