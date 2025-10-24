@@ -8,7 +8,9 @@ function findNumber(input: string): string {
 export function releaseNotesParser(body: string) {
   const parseIconsFromSection = (sectionTitle: string) => {
     const sectionStart = body.indexOf(`## ${sectionTitle}`);
-    if (sectionStart === -1) return [];
+    if (sectionStart === -1) {
+      return [];
+    }
 
     const nextSectionStart = body.indexOf('\r\n## ', sectionStart + 1);
     const sectionEnd = nextSectionStart !== -1 ? nextSectionStart : body.length;
@@ -33,16 +35,22 @@ export function releaseNotesParser(body: string) {
     const unique = new Map();
     icons.forEach((icon) => {
       const key = `${icon.name}-${icon.size}`;
-      if (!unique.has(key)) unique.set(key, icon);
+      if (!unique.has(key)) {
+        unique.set(key, icon);
+      }
     });
     return Array.from(unique.values());
   };
 
   const generateSectionContent = (icons: IconData[], title: string) => {
-    if (icons.length === 0) return '';
+    if (icons.length === 0) {
+      return '';
+    }
 
     icons.sort((a, b) => {
-      if (a.size !== b.size) return parseInt(a.size) - parseInt(b.size);
+      if (a.size !== b.size) {
+        return parseInt(a.size) - parseInt(b.size);
+      }
       return a.name.localeCompare(b.name);
     });
 
@@ -54,7 +62,9 @@ export function releaseNotesParser(body: string) {
   };
 
   const updateSection = (sectionContent: string, sectionTitle: string) => {
-    if (!sectionContent) return body;
+    if (!sectionContent) {
+      return body;
+    }
 
     const sectionHeader = `## ${sectionTitle}`;
     const sectionRegex = new RegExp(`${sectionHeader}[\\s\\S]*?(?=\\r\\n## |$)`, 'g');

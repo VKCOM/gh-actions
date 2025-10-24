@@ -28,9 +28,12 @@ export class ActionService extends Service {
   public async run(): Promise<void> {
     const paths = await this.repositories.githubRepository.pullRequestPaths();
 
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     for await (const filePath of paths) {
       const word = await this.checkPath(filePath);
-      if (!word.length) continue;
+      if (!word.length) {
+        continue;
+      }
 
       await this.repositories.githubRepository.warningFile(
         filePath,

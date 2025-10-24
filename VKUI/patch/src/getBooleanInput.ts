@@ -11,9 +11,15 @@ const falseValue = ['false', 'False', 'FALSE'];
 export function getBooleanInput(name: string, options?: core.InputOptions): boolean {
   const val = core.getInput(name, options);
 
-  if (!val) return false;
-  if (trueValue.includes(val)) return true;
-  if (falseValue.includes(val)) return false;
+  if (!val) {
+    return false;
+  }
+  if (trueValue.includes(val)) {
+    return true;
+  }
+  if (falseValue.includes(val)) {
+    return false;
+  }
 
   throw new TypeError(
     `Input does not meet YAML 1.2 "Core Schema" specification: ${name}\n` +

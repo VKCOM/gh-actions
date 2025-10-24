@@ -102,6 +102,8 @@ export async function jest(lintPath: string) {
 
     results.testResults.filter(({ status }) => status === 'failed').forEach(checkResult);
   } catch (err) {
-    if (err instanceof Error) core.error(`Could not read test results: ${err.message}`);
+    if (err instanceof Error) {
+      core.error(`Could not read test results: ${err.message}`);
+    }
   }
 }

@@ -15,7 +15,9 @@ function isObject(value: unknown): value is Record<string, any> {
  * ```
  */
 export function sortObjectRecursively<T>(value: T): T {
-  if (!isObject(value)) return value;
+  if (!isObject(value)) {
+    return value;
+  }
 
   // С ES6 ключи в объектах находятся в том порядке, в котором они были созданы
   //

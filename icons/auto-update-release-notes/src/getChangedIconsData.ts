@@ -33,14 +33,19 @@ export async function getChangedIconsData(
 
   files.forEach((file) => {
     const match = file.filename.match(ICON_FILE_REGEX);
-    if (!match) return;
+    if (!match) {
+      return;
+    }
 
     const [, size, name] = match;
     const formattedName = convertToIconName(name);
     const icon = { name: formattedName, size, url: file['raw_url'] };
 
-    if (file.status === 'added') addedIcons.push(icon);
-    else if (file.status === 'modified') modifiedIcons.push(icon);
+    if (file.status === 'added') {
+      addedIcons.push(icon);
+    } else if (file.status === 'modified') {
+      modifiedIcons.push(icon);
+    }
   });
 
   core.info(`Added icons: ${addedIcons.length}`);
