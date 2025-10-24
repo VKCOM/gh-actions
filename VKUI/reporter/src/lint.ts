@@ -91,6 +91,8 @@ export async function lint(lintPath: string) {
       }
     }
   } catch (err) {
-    if (err instanceof Error) core.error(`Could not read lint results: ${err.message}`);
+    if (err instanceof Error) {
+      core.error(`Could not read lint results: ${err.message}`);
+    }
   }
 }

@@ -143,6 +143,7 @@ class Action {
 
     const sizes = await getSizesFromJSON(core.getInput('sizePath', req));
 
+    // eslint-disable-next-line @typescript-eslint/await-thenable
     for await (const { name, size } of sizes) {
       const line = (await getHashAndTimestamp()) + size.toString();
 

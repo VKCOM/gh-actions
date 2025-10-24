@@ -153,7 +153,7 @@ export class WorkflowHandler {
 
     const issueCommentBody = getIssueCommentBody(this.releaseTag);
 
-    for (let issue_number of issueNumbers) {
+    for (const issue_number of issueNumbers) {
       const { data: listComments } = await this.gh.rest.issues.listComments({
         ...github.context.repo,
         issue_number,

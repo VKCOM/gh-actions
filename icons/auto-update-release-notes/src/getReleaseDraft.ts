@@ -4,7 +4,9 @@ import semver from 'semver';
 
 function getNextMinorVersion(currentVersion: string): string {
   const nextVersion = semver.inc(currentVersion, 'minor');
-  if (!nextVersion) throw new Error('Failed to increment version');
+  if (!nextVersion) {
+    throw new Error('Failed to increment version');
+  }
   return nextVersion;
 }
 
