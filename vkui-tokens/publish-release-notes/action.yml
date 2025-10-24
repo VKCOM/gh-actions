@@ -1,0 +1,18 @@
+name: 'Publish the Release Notes for vkui-tokens'
+description: 'Find and publish the release notes'
+inputs:
+  token:
+    required: true
+    description: 'token with access to your repository'
+  releaseName:
+    required: true
+    description: 'release notes name'
+  sha:
+    required: true
+    description: 'commit sha'
+  latest:
+    required: true
+    description: 'latest tag for release'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
