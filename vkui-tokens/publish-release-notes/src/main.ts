@@ -35,7 +35,9 @@ async function run(): Promise<void> {
       target_commitish: sha,
     });
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    }
   }
 }
 
