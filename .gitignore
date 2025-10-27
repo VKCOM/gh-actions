@@ -1,6 +1,7 @@
 node_modules/
 .cache/
 *.log
+.eslintcache
 
 # yarn specific
 # see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
