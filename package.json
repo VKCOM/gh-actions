@@ -14,7 +14,7 @@
     "build": "yarn workspaces foreach -p -A run build",
     "test": "NODE_OPTIONS='--no-experimental-strip-types' yarn workspaces foreach -p -A run test",
     "lint": "concurrently 'yarn:lint:*'",
-    "lint:es": "eslint . --ext .jsx,.js,.ts,.tsx --cache --cache-location .cache/.eslintcache",
+    "lint:es": "yarn workspaces foreach -p -A run lint:es",
     "lint:types": "tsc --incremental --tsBuildInfoFile .cache/.tsbuildinfo",
     "prepare": "husky",
     "pre-commit": "lint-staged"
@@ -37,6 +37,7 @@
     "eslint-plugin-react-hooks": "^7.0.0",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
+    "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
     "shx": "^0.4.0",
     "ts-node": "^10.9.2",
