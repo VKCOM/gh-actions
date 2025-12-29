@@ -16,7 +16,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/add-next-minor-milestone@workspace:VKUI/add-next-minor-milestone"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/github": "npm:^6.0.1"
     "@octokit/plugin-retry": "npm:^8.0.3"
     "@types/node": "npm:^25.0.3"
@@ -28,7 +28,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/auto-update-icons-release-notes@workspace:icons/auto-update-release-notes"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@actions/github": "npm:^6.0.0"
     "@types/node": "npm:^25.0.3"
@@ -42,7 +42,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/auto-update-release-notes@workspace:VKUI/auto-update-release-notes"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@actions/github": "npm:^6.0.1"
     "@types/node": "npm:^25.0.3"
@@ -56,7 +56,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/bump-vkui-floating-ui-version@workspace:VKUI/bump-vkui-floating-ui-version"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@actions/github": "npm:^6.0.1"
     "@types/node": "npm:^25.0.3"
@@ -70,7 +70,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/complete-icons-publish@workspace:icons/complete-publish"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/github": "npm:^6.0.1"
     "@octokit/plugin-retry": "npm:^8.0.3"
     "@types/node": "npm:^25.0.3"
@@ -82,7 +82,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/complete-publish@workspace:VKUI/complete-publish"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/github": "npm:^6.0.1"
     "@octokit/plugin-retry": "npm:^8.0.3"
     "@types/node": "npm:^25.0.3"
@@ -94,7 +94,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/patch@workspace:VKUI/patch"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@actions/github": "npm:^6.0.1"
     "@types/node": "npm:^25.0.3"
@@ -108,7 +108,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/publish-release-notes@workspace:vkui-tokens/publish-release-notes"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/github": "npm:^6.0.1"
     "@octokit/plugin-retry": "npm:^8.0.3"
     "@types/node": "npm:^25.0.3"
@@ -120,7 +120,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/push-screenshots@workspace:VKUI/push-screenshots"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@types/node": "npm:^25.0.3"
     typescript: "npm:^5.9.3"
@@ -131,7 +131,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/reporter@workspace:VKUI/reporter"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/github": "npm:^6.0.1"
     "@types/node": "npm:^25.0.3"
     strip-ansi: "npm:^7.1.2"
@@ -143,7 +143,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/s3@workspace:VKUI/s3"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/lodash": "npm:^4.17.21"
     "@types/mime-types": "npm:^3.0.1"
@@ -158,7 +158,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/shared-rust-cargo-update-toml@workspace:shared/rust/cargo-update-toml"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@types/node": "npm:^25.0.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
@@ -168,7 +168,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/size-upload@workspace:VKUI/size-upload"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/mime-types": "npm:^3.0.1"
@@ -182,7 +182,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/spell-checker-filename@workspace:shared/spell-checker-filename"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/github": "npm:^6.0.1"
     "@types/node": "npm:^25.0.3"
     "@types/nspell": "npm:^2.1.6"
@@ -196,7 +196,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/stable-branch@workspace:VKUI/stable-branch"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@actions/github": "npm:^6.0.1"
     "@types/node": "npm:^25.0.3"
@@ -206,22 +206,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@actions/core@npm:^1.11.1":
-  version: 1.11.1
-  resolution: "@actions/core@npm:1.11.1"
+"@actions/core@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "@actions/core@npm:2.0.1"
   dependencies:
-    "@actions/exec": "npm:^1.1.1"
-    "@actions/http-client": "npm:^2.0.1"
-  checksum: 10c0/9aa30b397d8d0dbc74e69fe46b23fb105cab989beb420c57eacbfc51c6804abe8da0f46973ca9f639d532ea4c096d0f4d37da0223fbe94f304fa3c5f53537c30
-  languageName: node
-  linkType: hard
-
-"@actions/exec@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@actions/exec@npm:1.1.1"
-  dependencies:
-    "@actions/io": "npm:^1.0.1"
-  checksum: 10c0/4a09f6bdbe50ce68b5cf8a7254d176230d6a74bccf6ecc3857feee209a8c950ba9adec87cc5ecceb04110182d1c17117234e45557d72fde6229b7fd3a395322a
+    "@actions/exec": "npm:^2.0.0"
+    "@actions/http-client": "npm:^3.0.0"
+  checksum: 10c0/710ed76ae43759d5e9eee9217f1ca80a7ab2bda0dc8038b777871d5c745df773cb7a091b7c4da91955f6a06f9df91c36696e2f8458768346913fa6f829d0b088
   languageName: node
   linkType: hard
 
@@ -249,7 +240,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/http-client@npm:^2.0.1, @actions/http-client@npm:^2.2.0":
+"@actions/http-client@npm:^2.2.0":
   version: 2.2.0
   resolution: "@actions/http-client@npm:2.2.0"
   dependencies:
@@ -259,10 +250,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/io@npm:^1.0.1":
-  version: 1.1.3
-  resolution: "@actions/io@npm:1.1.3"
-  checksum: 10c0/5b8751918e5bf0bebd923ba917fb1c0e294401e7ff0037f32c92a4efa4215550df1f6633c63fd4efb2bdaae8711e69b9e36925857db1f38935ff62a5c92ec29e
+"@actions/http-client@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@actions/http-client@npm:3.0.0"
+  dependencies:
+    tunnel: "npm:^0.0.6"
+    undici: "npm:^5.28.5"
+  checksum: 10c0/2d4452c7dbf36c82ad9117c03c3f7a5c48be15aa5b01f17d0dc6b1eb580f3fac2127f5be33a627c1fbeb117e22db493aa760a0fcd62846cea7d914e702540fe3
   languageName: node
   linkType: hard
 
@@ -3538,7 +3532,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkui-tokens/token-base@workspace:vkui-tokens/token-base"
   dependencies:
-    "@actions/core": "npm:^1.11.1"
+    "@actions/core": "npm:^2.0.1"
     "@actions/exec": "npm:^2.0.0"
     "@actions/github": "npm:^6.0.1"
     "@types/node": "npm:^25.0.3"
