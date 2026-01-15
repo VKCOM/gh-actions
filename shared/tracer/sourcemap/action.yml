@@ -1,0 +1,25 @@
+name: 'Upload Tracer Sourcemap'
+description: 'Uploads sourcemaps to Tracer'
+inputs:
+  pluginToken:
+    required: true
+    description: 'Plugin token from Tracer settings'
+  path:
+    required: true
+    description: 'Path to the sourcemap file'
+  versionName:
+    required: true
+    description: 'Displayed version name'
+  versionCode:
+    required: true
+    description: 'Displayed version code'
+  buildUuid:
+    required: false
+    description: 'Build UUID'
+  apiHost:
+    required: false
+    description: 'Tracer API host'
+
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
