@@ -1,5 +1,5 @@
 import * as exec from '@actions/exec';
-import * as github from '@actions/github';
+import type * as github from '@actions/github';
 
 const MINIMUM_MERGE_COMMIT_COUNT = 2;
 

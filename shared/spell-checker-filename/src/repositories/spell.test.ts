@@ -1,25 +1,27 @@
-import { expect, test } from '@jest/globals';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { test } from 'node:test';
+import * as assert from 'node:assert/strict';
 
-import { NSpellSpellChecker } from './spell';
+import { NSpellSpellChecker } from './spell.ts';
 
 const spellChecker = new NSpellSpellChecker();
 
 test('NSpellSpellChecker check', async () => {
-  expect(await spellChecker.correct('hello')).toBeTruthy();
-  expect(await spellChecker.correct('helloo')).toBeFalsy();
+  assert.ok(await spellChecker.correct('hello'));
+  assert.ok(!(await spellChecker.correct('helloo')));
 });
 
 test('NSpellSpellChecker check personal dictionary', async () => {
-  expect(await spellChecker.correct('svg')).toBeTruthy();
-  expect(await spellChecker.correct('src')).toBeTruthy();
+  assert.ok(await spellChecker.correct('svg'));
+  assert.ok(await spellChecker.correct('src'));
 });
 
 test('NSpellSpellChecker suggest', async () => {
-  expect(await spellChecker.suggest('helloo')).toEqual(['hello', 'halloo', 'hellos']);
+  assert.deepStrictEqual(await spellChecker.suggest('helloo'), ['hello', 'halloo', 'hellos']);
 });
 
 test('NSpellSpellChecker check', async () => {
-  expect(await spellChecker.correct('npm')).toBeFalsy();
+  assert.ok(!(await spellChecker.correct('npm')));
   await spellChecker.addToDict(['npm']);
-  expect(await spellChecker.correct('npm')).toBeTruthy();
+  assert.ok(await spellChecker.correct('npm'));
 });

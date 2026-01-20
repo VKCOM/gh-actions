@@ -1,9 +1,12 @@
-import { expect, test } from '@jest/globals';
+/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты*/
+import { describe, it } from 'node:test';
+import assert from 'node:assert';
+import { cargoRegistryLastIndexPackage } from './registry.ts';
 
-import { cargoRegistryLastIndexPackage } from './registry';
+describe('cargoRegistryLastIndexPackage', () => {
+  it('get md4', async () => {
+    const lastPackage = await cargoRegistryLastIndexPackage('md4');
 
-test('cargoRegistryLastIndexPackage get md4', async () => {
-  const lastPackage = await cargoRegistryLastIndexPackage('md4');
-
-  expect(lastPackage.name).toBe('md4');
+    assert.strictEqual(lastPackage.name, 'md4');
+  });
 });

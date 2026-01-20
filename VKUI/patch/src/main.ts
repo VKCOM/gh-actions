@@ -4,10 +4,10 @@ import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
 import { SemVer } from 'semver';
-import { getPatchInstructions } from './message';
-import { getMergeData } from './getMergeData';
-import { stableBranchName } from './stableBranchName';
-import { getBooleanInput } from './getBooleanInput';
+import { getPatchInstructions } from './message.ts';
+import { getMergeData } from './getMergeData.ts';
+import { stableBranchName } from './stableBranchName.ts';
+import { getBooleanInput } from './getBooleanInput.ts';
 
 function getPrNumber() {
   const pullRequest = github.context.payload.pull_request;

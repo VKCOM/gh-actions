@@ -1,11 +1,17 @@
-import { expect, test } from '@jest/globals';
-import { stableBranchName } from './stableBranchName';
+/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты */
+import { test } from 'node:test';
+import { strict as assert } from 'node:assert';
+import { stableBranchName } from './stableBranchName.ts';
 import { SemVer } from 'semver';
 
-test.each([
-  { version: '1.1.0', expected: '1.1-stable' },
-  { version: '1.2.3', expected: '1.2-stable' },
-  { version: '0.2.3', expected: '0.2-stable' },
-])('stableBranchName($version) is $expected', ({ version, expected }) => {
-  expect(stableBranchName(new SemVer(version))).toBe(expected);
+test('stableBranchName version 1.1.0 is 1.1-stable', () => {
+  assert.strictEqual(stableBranchName(new SemVer('1.1.0')), '1.1-stable');
+});
+
+test('stableBranchName version 1.2.3 is 1.2-stable', () => {
+  assert.strictEqual(stableBranchName(new SemVer('1.2.3')), '1.2-stable');
+});
+
+test('stableBranchName version 0.2.3 is 0.2-stable', () => {
+  assert.strictEqual(stableBranchName(new SemVer('0.2.3')), '0.2-stable');
 });

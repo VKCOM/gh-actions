@@ -1,4 +1,4 @@
-import { ChangeData } from '../types';
+import type { ChangeData } from '../types.ts';
 
 const COMPONENT_REGEX = /-\s(\w+):(.+)?/;
 const COMPONENT_WITH_LINK_REGEX = /-\s\[(\w+)]\(.+\):(.+)?/;

@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-import { GithubRepository } from '../entities/repositories';
+import type { GithubRepository } from '../entities/repositories.ts';
 
 export class GitHub implements GithubRepository {
   private readonly octokit: ReturnType<typeof github.getOctokit>;

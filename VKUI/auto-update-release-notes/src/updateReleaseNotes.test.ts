@@ -1,6 +1,8 @@
-import { describe, expect, it, jest } from '@jest/globals';
-import * as github from '@actions/github';
-import { updateReleaseNotes } from './updateReleaseNotes';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { describe, it, mock } from 'node:test';
+import * as assert from 'node:assert';
+import type * as github from '@actions/github';
+import { updateReleaseNotes } from './updateReleaseNotes.ts';
 
 type Octokit = ReturnType<typeof github.getOctokit>;
 type ArrayElement<ArrayType extends any[] | undefined> =
@@ -21,11 +23,11 @@ type PartialPullRequestData = Partial<Omit<PullRequestData, 'head'>> & {
 type PartialIssueData = Partial<IssueData>;
 
 const setupData = () => {
-  const getPullRequest = jest.fn();
-  const getReleaseRequest = jest.fn();
-  const createReleaseRequest = jest.fn();
-  const updateReleaseRequest = jest.fn();
-  const getIssueRequest = jest.fn();
+  const getPullRequest = mock.fn();
+  const getReleaseRequest = mock.fn();
+  const createReleaseRequest = mock.fn();
+  const updateReleaseRequest = mock.fn();
+  const getIssueRequest = mock.fn();
 
   const pullRequestData: PartialPullRequestData = {
     body: '',
@@ -227,14 +229,14 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
-    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+    assert.strictEqual(mockedData.createReleaseRequest.mock.calls.length, 0);
+    assert.deepStrictEqual(mockedData.getReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       per_page: 10,
     });
 
-    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+    assert.deepStrictEqual(mockedData.updateReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       release_id: 123,
@@ -329,14 +331,14 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
-    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+    assert.strictEqual(mockedData.createReleaseRequest.mock.calls.length, 0);
+    assert.deepStrictEqual(mockedData.getReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       per_page: 10,
     });
 
-    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+    assert.deepStrictEqual(mockedData.updateReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       release_id: 123,
@@ -408,14 +410,14 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
-    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+    assert.strictEqual(mockedData.createReleaseRequest.mock.calls.length, 0);
+    assert.deepStrictEqual(mockedData.getReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       per_page: 10,
     });
 
-    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+    assert.deepStrictEqual(mockedData.updateReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       release_id: 123,
@@ -472,8 +474,8 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
-    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+    assert.strictEqual(mockedData.createReleaseRequest.mock.calls.length, 0);
+    assert.deepStrictEqual(mockedData.getReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       per_page: 10,
@@ -536,7 +538,7 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+    assert.deepStrictEqual(mockedData.updateReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       release_id: 123,
@@ -633,14 +635,14 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
-    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+    assert.strictEqual(mockedData.createReleaseRequest.mock.calls.length, 0);
+    assert.deepStrictEqual(mockedData.getReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       per_page: 10,
     });
 
-    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+    assert.deepStrictEqual(mockedData.updateReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       release_id: 123,
@@ -756,14 +758,14 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
-    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+    assert.strictEqual(mockedData.createReleaseRequest.mock.calls.length, 0);
+    assert.deepStrictEqual(mockedData.getReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       per_page: 10,
     });
 
-    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+    assert.deepStrictEqual(mockedData.updateReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       release_id: 123,
@@ -892,14 +894,14 @@ describe('run updateReleaseNotes', () => {
       repo: 'repo',
       prNumber: 1234,
     });
-    expect(mockedData.createReleaseRequest).toHaveBeenCalledTimes(0);
-    expect(mockedData.getReleaseRequest).toHaveBeenCalledWith({
+    assert.strictEqual(mockedData.createReleaseRequest.mock.calls.length, 0);
+    assert.deepStrictEqual(mockedData.getReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       per_page: 10,
     });
 
-    expect(mockedData.updateReleaseRequest).toHaveBeenCalledWith({
+    assert.deepStrictEqual(mockedData.updateReleaseRequest.mock.calls[0].arguments[0], {
       owner: 'owner',
       repo: 'repo',
       release_id: 123,

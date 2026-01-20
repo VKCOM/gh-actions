@@ -1,6 +1,8 @@
-import { describe, expect, it } from '@jest/globals';
-import { IconData } from './types';
-import { releaseNotesParser } from './releaseNotesParser';
+/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты */
+import { test, describe } from 'node:test';
+import * as assert from 'node:assert/strict';
+import type { IconData } from './types.ts';
+import { releaseNotesParser } from './releaseNotesParser.ts';
 
 function findSize(input: string): string {
   const match = input.match(/-?\d+/);
@@ -201,14 +203,14 @@ const fixtures = [
 
 describe('releaseNotesParser', () => {
   fixtures.forEach(({ testName, newData, resultBody, body }) => {
-    it(testName, () => {
+    test(testName, () => {
       const parser = releaseNotesParser(body);
       newData.forEach((data) => {
         parser.modifySection(data.title, data.icons);
       });
       const resBody = parser.body;
 
-      expect(resBody).toEqual(resultBody);
+      assert.strictEqual(resBody, resultBody);
     });
   });
 });

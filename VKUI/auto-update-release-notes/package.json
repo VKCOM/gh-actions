@@ -2,6 +2,7 @@
   "name": "@actions-internal/auto-update-release-notes",
   "version": "0.0.0",
   "main": "src/main.ts",
+  "type": "module",
   "license": "MIT",
   "private": true,
   "devDependencies": {
@@ -18,7 +19,7 @@
   "scripts": {
     "prebuild": "shx rm -rf dist/*",
     "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --packages=bundle",
-    "test": "jest --passWithNoTests",
+    "test": "node --version && node --test '**/*.test.*'",
     "lint:es": "eslint . --ext .jsx,.js,.ts,.tsx --cache --ignore-path ../../.eslintignore"
   }
 }

@@ -1,8 +1,8 @@
-import * as github from '@actions/github';
+import type * as github from '@actions/github';
 import * as core from '@actions/core';
-import { releaseNotesParser } from './releaseNotesParser';
-import { getChangedIconsData } from './getChangedIconsData';
-import { getReleaseDraft } from './getReleaseDraft';
+import { releaseNotesParser } from './releaseNotesParser.ts';
+import { getChangedIconsData } from './getChangedIconsData.ts';
+import { getReleaseDraft } from './getReleaseDraft.ts';
 
 const ADDED_SECTION_HEADER = 'Добавленные иконки';
 const MODIFIED_SECTION_HEADER = 'Измененные иконки';

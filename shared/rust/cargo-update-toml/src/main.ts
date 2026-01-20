@@ -1,7 +1,7 @@
 import * as fs from 'node:fs/promises';
 import * as core from '@actions/core';
-import { versionStyle } from './versionStyle';
-import { cargoRegistryLastIndexPackage } from './registry';
+import { versionStyle } from './versionStyle.ts';
+import { cargoRegistryLastIndexPackage } from './registry.ts';
 
 /**
  * Возвращает последнюю версию crate пакета
