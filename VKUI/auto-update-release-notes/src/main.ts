@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { updateReleaseNotes } from './updateReleaseNotes';
+import { updateReleaseNotes } from './updateReleaseNotes.ts';
 
 async function run() {
   const token = core.getInput('token', { required: true });

@@ -1,6 +1,6 @@
 import * as readline from 'node:readline/promises';
 import * as https from 'node:https';
-import { getLastLine } from './getLastLine';
+import { getLastLine } from './getLastLine.ts';
 
 const HTTPStatusOK = 200;
 

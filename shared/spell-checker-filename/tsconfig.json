@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "esModuleInterop": true,
+    "erasableSyntaxOnly": true,
     "noEmit": true,
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
     "rootDir": "./src",
     "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    "target": "esnext",
+    "module": "nodenext",
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": true
   },
-  "include": ["src/**/*.ts", ".eslintrc.js"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", ".eslintrc.js"]
 }

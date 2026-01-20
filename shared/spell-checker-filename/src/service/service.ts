@@ -1,4 +1,4 @@
-import { Repositories } from '../entities/repositories';
+import type { Repositories } from '../entities/repositories.ts';
 
 /**
  * Базовый класс сервиса, для доступа к [адаптерам](../repositories/)

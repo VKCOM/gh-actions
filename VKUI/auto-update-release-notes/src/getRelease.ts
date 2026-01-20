@@ -1,4 +1,4 @@
-import * as github from '@actions/github';
+import type * as github from '@actions/github';
 
 type ArrayElement<ArrayType extends any[]> =
   ArrayType extends Array<infer ElementType> ? ElementType : never;

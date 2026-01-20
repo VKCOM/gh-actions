@@ -1,5 +1,5 @@
-import { ReleaseNoteData } from '../types';
-import { releaseNotesUpdater } from './releaseNotesUpdater';
+import type { ReleaseNoteData } from '../types.ts';
+import { releaseNotesUpdater } from './releaseNotesUpdater.ts';
 
 export function parsePullRequestReleaseNotesBody(
   releaseNotesBody: string,

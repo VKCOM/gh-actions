@@ -1,4 +1,4 @@
-import { IconData } from './types';
+import type { IconData } from './types.ts';
 
 function findNumber(input: string): string {
   const match = input.match(/-?\d+/);
@@ -18,14 +18,15 @@ export function releaseNotesParser(body: string) {
 
     const icons: IconData[] = [];
     const iconRegex = /### (.+?)\s+!\[.*?\]\((.+?)\)/g;
-    let match;
+    let match: RegExpExecArray | null = iconRegex.exec(sectionContent);
 
-    while ((match = iconRegex.exec(sectionContent)) !== null) {
+    while (match !== null) {
       icons.push({
         name: match[1],
         size: findNumber(match[1]),
         url: match[2],
       });
+      match = iconRegex.exec(sectionContent);
     }
 
     return icons;

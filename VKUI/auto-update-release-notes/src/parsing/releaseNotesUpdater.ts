@@ -1,7 +1,11 @@
-import { ReleaseNoteData } from '../types';
-import { getHeaderBySectionType, getSectionTypeByHeader, NEED_TO_DESCRIBE_HEADER } from './headers';
-import { parseChanges } from './parseChanges';
-import { convertChangesToString } from './convertChangesToString';
+import type { ReleaseNoteData } from '../types.ts';
+import {
+  getHeaderBySectionType,
+  getSectionTypeByHeader,
+  NEED_TO_DESCRIBE_HEADER,
+} from './headers.ts';
+import { parseChanges } from './parseChanges.ts';
+import { convertChangesToString } from './convertChangesToString.ts';
 
 export function releaseNotesUpdater(currentBody: string) {
   let body = currentBody;

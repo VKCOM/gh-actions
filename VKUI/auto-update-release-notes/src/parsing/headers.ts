@@ -1,4 +1,4 @@
-import { SectionType } from '../types';
+import type { SectionType } from '../types.ts';
 
 export const IMPROVEMENT_HEADER = 'Улучшения';
 export const FIX_HEADER = 'Исправления';

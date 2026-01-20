@@ -1,5 +1,5 @@
-import * as github from '@actions/github';
-import { IconData } from './types';
+import type * as github from '@actions/github';
+import type { IconData } from './types.ts';
 import * as core from '@actions/core';
 
 const ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^\/]+)\/([^\/]+)\.svg$/;

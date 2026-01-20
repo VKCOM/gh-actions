@@ -1,6 +1,8 @@
-import { expect, test } from '@jest/globals';
-import { ActionService } from './action';
-import { MockSpellChecker } from '../repositories/spell';
+/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты */
+import { test } from 'node:test';
+import { strict as assert } from 'node:assert';
+import { ActionService } from './action.ts';
+import { MockSpellChecker } from '../repositories/spell.ts';
 
 test('Action checkPath', async () => {
   const repositories = {
@@ -12,7 +14,7 @@ test('Action checkPath', async () => {
 
   const action = new ActionService(repositories);
 
-  expect(await action.checkPath('path/to_file')).toEqual([]);
-  expect(await action.checkPath('path/to_file/40.svg')).toEqual([]);
-  expect(await action.checkPath('path/to_file/bad')).toEqual(['bad']);
+  assert.deepStrictEqual(await action.checkPath('path/to_file'), []);
+  assert.deepStrictEqual(await action.checkPath('path/to_file/40.svg'), []);
+  assert.deepStrictEqual(await action.checkPath('path/to_file/bad'), ['bad']);
 });

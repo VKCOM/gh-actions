@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import nspell from 'nspell';
 import { Mutex } from 'async-mutex';
-import { SpellCheckerRepository } from '../entities/repositories';
+import type { SpellCheckerRepository } from '../entities/repositories.ts';
 
 const PERSONAL_DICTIONARY = ['svg', 'src'].join('\n');
 

@@ -1,5 +1,5 @@
-import { getNextReleaseVersion } from './getVersion';
-import * as github from '@actions/github';
+import { getNextReleaseVersion } from './getVersion.ts';
+import type * as github from '@actions/github';
 
 type ReleaseData = {
   releaseName: string;

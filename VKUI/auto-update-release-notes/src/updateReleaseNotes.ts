@@ -1,11 +1,11 @@
-import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody';
-import { releaseNotesUpdater } from './parsing/releaseNotesUpdater';
-import * as github from '@actions/github';
-import { getRelease } from './getRelease';
-import { calculateReleaseVersion } from './calculateReleaseVersion';
-import { getPullRequestReleaseNotesBody } from './parsing/getPullRequestReleaseNotesBody';
-import { parsePullRequestLinkedIssue } from './parsing/parsePullRequestLinkedIssue';
-import { getMilestone } from './getMilestone';
+import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody.ts';
+import { releaseNotesUpdater } from './parsing/releaseNotesUpdater.ts';
+import type * as github from '@actions/github';
+import { getRelease } from './getRelease.ts';
+import { calculateReleaseVersion } from './calculateReleaseVersion.ts';
+import { getPullRequestReleaseNotesBody } from './parsing/getPullRequestReleaseNotesBody.ts';
+import { parsePullRequestLinkedIssue } from './parsing/parsePullRequestLinkedIssue.ts';
+import { getMilestone } from './getMilestone.ts';
 
 const EMPTY_NOTES = '-';
 

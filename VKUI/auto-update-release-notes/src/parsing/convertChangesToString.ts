@@ -1,5 +1,5 @@
-import { ChangeData } from '../types';
-import { getComponentDocsUrl } from './getComponentDocsUrl';
+import type { ChangeData } from '../types.ts';
+import { getComponentDocsUrl } from './getComponentDocsUrl.ts';
 
 const componentToString = (component: string, version: string) => {
   return `[${component}](${getComponentDocsUrl(component, version)})`;
