@@ -1,5 +1,4 @@
-import path from 'path';
-
+import path from 'node:path';
 import * as core from '@actions/core';
 
 import { parseFile } from './shared';
@@ -57,7 +56,7 @@ export interface Fix {
 
 interface UsedDeprecatedRule {
   ruleId: string;
-  replacedBy: any[];
+  replacedBy: string[];
 }
 
 function report(message: Message, relPath: string) {

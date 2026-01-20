@@ -1,6 +1,6 @@
-import { retry } from '@octokit/plugin-retry';
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import { retry } from '@octokit/plugin-retry';
 
 type OctokitProp = ReturnType<typeof github.getOctokit>;
 

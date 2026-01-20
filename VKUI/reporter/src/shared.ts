@@ -1,5 +1,4 @@
-import { readFile } from 'fs/promises';
-
+import { readFile } from 'node:fs/promises';
 import * as github from '@actions/github';
 
 export const updateScreensActionLink =

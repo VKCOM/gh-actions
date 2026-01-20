@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты */
-import { test, describe } from 'node:test';
 import * as assert from 'node:assert/strict';
-import type { IconData } from './types.ts';
+import { describe, test } from 'node:test';
 import { releaseNotesParser } from './releaseNotesParser.ts';
+import type { IconData } from './types.ts';
 
 function findSize(input: string): string {
   const match = input.match(/-?\d+/);

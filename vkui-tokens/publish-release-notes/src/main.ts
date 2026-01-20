@@ -1,12 +1,12 @@
-import * as core from '@actions/core';
-import * as github from '@actions/github';
+import * as core from "@actions/core";
+import * as github from "@actions/github";
 
 async function run(): Promise<void> {
   try {
-    const token = core.getInput('token', { required: true });
-    const releaseName = core.getInput('releaseName', { required: true });
-    const latest = core.getInput('latest', { required: true });
-    const sha = core.getInput('sha', { required: true });
+    const token = core.getInput("token", { required: true });
+    const releaseName = core.getInput("releaseName", { required: true });
+    const latest = core.getInput("latest", { required: true });
+    const sha = core.getInput("sha", { required: true });
 
     const gh = github.getOctokit(token);
 
@@ -31,7 +31,7 @@ async function run(): Promise<void> {
       tag_name: releaseName,
       draft: false,
       // make_latest does not work as expected
-      prerelease: latest !== 'true',
+      prerelease: latest !== "true",
       target_commitish: sha,
     });
   } catch (error) {

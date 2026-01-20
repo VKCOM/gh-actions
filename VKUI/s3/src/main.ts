@@ -1,8 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-
+import fs from 'node:fs';
+import path from 'node:path';
 import * as core from '@actions/core';
-import { PutObjectCommandInput, S3, S3ClientConfig } from '@aws-sdk/client-s3';
+import { type PutObjectCommandInput, S3, type S3ClientConfig } from '@aws-sdk/client-s3';
 import lodash from 'lodash';
 import { lookup } from 'mime-types';
 
@@ -130,18 +129,20 @@ class Action {
     const command = core.getInput('command', req);
 
     switch (command) {
-      case 'upload':
+      case 'upload': {
         const src = core.getInput('commandUploadSrc', req);
         const dist = core.getInput('commandUploadDist', req);
 
         await this.upload(src, dist);
         break;
+      }
 
-      case 'delete':
+      case 'delete': {
         const prefix = core.getInput('commandDeletePrefix', req);
 
         await this.delete(prefix);
         break;
+      }
 
       default:
         core.setFailed(`Invalid command: ${command}`);

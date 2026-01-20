@@ -15,7 +15,10 @@ export async function getMergeData(
   repo: typeof github.context.repo,
   pullNumber: number,
 ): Promise<MergeData> {
-  const pullRequest = await gh.rest.pulls.get({ ...repo, pull_number: pullNumber });
+  const pullRequest = await gh.rest.pulls.get({
+    ...repo,
+    pull_number: pullNumber,
+  });
   const mergeCommitSHA = pullRequest.data.merge_commit_sha || '';
 
   let method: MergeMethod = 'merge';

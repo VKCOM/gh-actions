@@ -6,7 +6,6 @@ async function run(): Promise<void> {
     let count = 18;
 
     async function retry(cb: () => Promise<void>, onError: () => Promise<void>) {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       while (true) {
         try {
           await cb();
@@ -15,10 +14,8 @@ async function run(): Promise<void> {
         } catch (e) {
           console.error(e);
 
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           count -= 1;
 
-          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
           if (count < 0) {
             throw e;
           }
@@ -36,7 +33,7 @@ async function run(): Promise<void> {
 
         try {
           await exec.exec('git', ['diff-index', '--quiet', 'HEAD']);
-        } catch (e) {
+        } catch (_e) {
           await exec.exec('git', ['commit', '-m', `CHORE: Update screenshots`]);
         }
       },

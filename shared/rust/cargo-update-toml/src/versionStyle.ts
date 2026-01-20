@@ -27,12 +27,12 @@ function countInstances(string: string, word: string) {
  * https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#version-requirement-syntax
  */
 export function versionStyle(version: string, newVersion: string) {
-  if (version.indexOf(',') > 0) {
+  if (version.indexOf(",") > 0) {
     // Multiple version requirements
     return version;
   }
 
-  const re = /[\d\.]+(?!\*)/;
+  const re = /[\d.]+(?!\*)/;
 
   const match = version.match(re);
   if (match === null) {
@@ -41,9 +41,9 @@ export function versionStyle(version: string, newVersion: string) {
   }
 
   const subVersion = newVersion
-    .split('.')
-    .slice(0, countInstances(match[0], '.') + 1)
-    .join('.');
+    .split(".")
+    .slice(0, countInstances(match[0], ".") + 1)
+    .join(".");
 
   return version.replace(re, subVersion);
 }

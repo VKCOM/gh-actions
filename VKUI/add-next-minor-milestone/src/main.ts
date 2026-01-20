@@ -20,7 +20,7 @@ async function run() {
 
       await addMilestoneToPR(octokit, prNumber, milestone.number);
     }
-  } catch (error) {}
+  } catch (_error) {}
 }
 
 void run();

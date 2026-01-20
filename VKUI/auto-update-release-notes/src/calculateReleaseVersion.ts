@@ -1,5 +1,5 @@
-import { getNextReleaseVersion } from './getVersion.ts';
 import type * as github from '@actions/github';
+import { getNextReleaseVersion } from './getVersion.ts';
 
 type ReleaseData = {
   releaseName: string;
@@ -30,13 +30,13 @@ export async function calculateReleaseVersion({
       version: parseReleaseVersion(milestone.title),
     };
   }
-  let latestRelease;
+  let latestRelease: Awaited<ReturnType<typeof octokit.rest.repos.getLatestRelease>>;
   try {
     latestRelease = await octokit.rest.repos.getLatestRelease({
       repo,
       owner,
     });
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 

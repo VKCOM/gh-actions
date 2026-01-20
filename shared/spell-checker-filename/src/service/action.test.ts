@@ -1,16 +1,17 @@
-/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты */
+import * as assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { strict as assert } from 'node:assert';
-import { ActionService } from './action.ts';
+import type { Repositories } from '../entities/repositories.ts';
 import { MockSpellChecker } from '../repositories/spell.ts';
+import { ActionService } from './action.ts';
 
 test('Action checkPath', async () => {
-  const repositories = {
-    spellCheckerRepository: new MockSpellChecker(),
-    githubRepository: {} as any,
-  };
+  const spellCheckerRepository = new MockSpellChecker();
+  spellCheckerRepository.dict = new Set(['path', 'to', 'file', 'svg']);
 
-  repositories.spellCheckerRepository.dict = new Set(['path', 'to', 'file', 'svg']);
+  const repositories = {
+    spellCheckerRepository,
+    githubRepository: {},
+  } as unknown as Repositories;
 
   const action = new ActionService(repositories);
 

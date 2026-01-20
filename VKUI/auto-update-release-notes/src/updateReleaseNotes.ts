@@ -1,11 +1,11 @@
-import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody.ts';
-import { releaseNotesUpdater } from './parsing/releaseNotesUpdater.ts';
 import type * as github from '@actions/github';
-import { getRelease } from './getRelease.ts';
 import { calculateReleaseVersion } from './calculateReleaseVersion.ts';
+import { getMilestone } from './getMilestone.ts';
+import { getRelease } from './getRelease.ts';
 import { getPullRequestReleaseNotesBody } from './parsing/getPullRequestReleaseNotesBody.ts';
 import { parsePullRequestLinkedIssue } from './parsing/parsePullRequestLinkedIssue.ts';
-import { getMilestone } from './getMilestone.ts';
+import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody.ts';
+import { releaseNotesUpdater } from './parsing/releaseNotesUpdater.ts';
 
 const EMPTY_NOTES = '-';
 
@@ -20,7 +20,7 @@ export const updateReleaseNotes = async ({
   repo: string;
   prNumber: number;
 }) => {
-  let pullRequest;
+  let pullRequest: Awaited<ReturnType<typeof octokit.rest.pulls.get>>['data'] | undefined;
   try {
     const { data: searchedPullRequest } = await octokit.rest.pulls.get({
       owner,
@@ -28,7 +28,7 @@ export const updateReleaseNotes = async ({
       pull_number: prNumber,
     });
     pullRequest = searchedPullRequest;
-  } catch (e) {}
+  } catch (_e) {}
 
   if (!pullRequest) {
     return;

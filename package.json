@@ -15,37 +15,26 @@
     "build": "yarn workspaces foreach -p -A run build",
     "test": "yarn workspaces foreach -p -A run test",
     "lint": "concurrently 'yarn:lint:*'",
-    "lint:es": "yarn workspaces foreach -p -A run lint:es",
+    "lint:biome": "yarn workspaces foreach -p -A run lint:biome",
     "lint:types": "tsc --incremental --tsBuildInfoFile .cache/.tsbuildinfo",
     "prepare": "husky",
     "pre-commit": "lint-staged"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
     "@swc/core": "^1.15.8",
     "@types/node": "^25.0.9",
-    "@typescript-eslint/eslint-plugin": "^8.52.0",
-    "@typescript-eslint/parser": "^8.52.0",
-    "@vkontakte/prettier-config": "^0.2.1",
     "concurrently": "^9.2.1",
     "esbuild": "^0.27.2",
-    "eslint": "^8.57.1",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.8.0",
     "shx": "^0.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3",
-    "yarn-deduplicate": "^6.0.2"
+    "typescript": "^5.9.3"
   },
-  "prettier": "@vkontakte/prettier-config",
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "eslint"
+      "biome check"
     ]
   },
   "packageManager": "yarn@4.12.0+sha512.f45ab632439a67f8bc759bf32ead036a1f413287b9042726b7cc4818b7b49e14e9423ba49b18f9e06ea4941c1ad062385b1d8760a8d5091a1a31e5f6219afca8"

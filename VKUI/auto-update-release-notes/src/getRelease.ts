@@ -1,6 +1,6 @@
 import type * as github from '@actions/github';
 
-type ArrayElement<ArrayType extends any[]> =
+type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends Array<infer ElementType> ? ElementType : never;
 
 type Octokit = ReturnType<typeof github.getOctokit>;
@@ -32,7 +32,7 @@ async function getRecentDraftReleaseByName({
       .find((release) => release.name === releaseName);
 
     return searchedRelease || null;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }
@@ -58,7 +58,7 @@ export async function getRelease({
     if (searchedRelease) {
       return searchedRelease;
     }
-  } catch (e) {}
+  } catch (_e) {}
   try {
     const { data: createdRelease } = await octokit.rest.repos.createRelease({
       owner,
@@ -70,7 +70,7 @@ export async function getRelease({
       prerelease: false,
     });
     return createdRelease;
-  } catch (e) {}
+  } catch (_e) {}
 
   return null;
 }

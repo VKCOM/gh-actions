@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/naming-convention
-import * as Figma from 'figma-js';
+import * as fs from 'node:fs/promises';
 import * as core from '@actions/core';
-import * as fs from 'fs/promises';
+import * as Figma from 'figma-js';
 import { sortObjectRecursively } from './sort';
 
 type Tokens = { [P in string]: Tokens | string };
@@ -14,7 +13,7 @@ function to16(n: number, padding = 2): string {
   let hex = n.toString(16);
 
   while (hex.length < padding) {
-    hex = '0' + hex;
+    hex = `0${hex}`;
   }
 
   return hex;
@@ -72,7 +71,6 @@ const req = {
 };
 
 function getFigmaClient(personalAccessToken: string) {
-  // eslint-disable-next-line new-cap
   return Figma.Client({
     personalAccessToken,
   });
@@ -101,7 +99,7 @@ async function main() {
   const tokens: Tokens = {};
 
   // Перебираем все ноды
-  styles.data.meta.styles.map((style) => {
+  styles.data.meta.styles.forEach((style) => {
     const doc = nodes.data.nodes[style.node_id]?.document;
     if (!doc) {
       core.warning(`document is undefined'`);
@@ -133,7 +131,7 @@ async function main() {
     let cssValue = '';
 
     switch (doc.fills[0].type) {
-      case 'SOLID':
+      case 'SOLID': {
         const fill = doc.fills[0];
 
         if (!fill.color) {
@@ -142,6 +140,7 @@ async function main() {
 
         cssValue = figmaToCSS(fill.color, fill.opacity || 1);
         break;
+      }
       // TODO: Обработка градиентов
       case 'GRADIENT_LINEAR':
         break;
