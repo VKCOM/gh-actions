@@ -16,7 +16,7 @@
   },
   "scripts": {
     "prebuild": "shx rm -rf dist/*",
-    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --packages=bundle",
+    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --format=esm --packages=bundle",
     "test": "node --version && node --test '**/*.test.*'"
   }
 }
