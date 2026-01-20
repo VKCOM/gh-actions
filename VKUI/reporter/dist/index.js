@@ -23516,8 +23516,8 @@ var require_github = __commonJS({
 });
 
 // src/main.ts
-var import_fs2 = __toESM(require("fs"));
-var import_path3 = __toESM(require("path"));
+var import_node_fs2 = __toESM(require("node:fs"));
+var import_node_path3 = __toESM(require("node:path"));
 var core3 = __toESM(require_core());
 
 // src/jest.ts
@@ -23542,7 +23542,7 @@ function stripAnsi(string) {
 }
 
 // src/shared.ts
-var import_promises = require("fs/promises");
+var import_promises = require("node:fs/promises");
 var github = __toESM(require_github());
 function getPullRequestNumber() {
   const payload = github.context.payload.pull_request;
@@ -23588,7 +23588,9 @@ function reportFailed(fullPath, result) {
   });
 }
 function checkResult(result) {
-  result.assertionResults.filter(({ status }) => status === "failed").forEach((assertionResult) => reportFailed(result.name, assertionResult));
+  result.assertionResults.filter(({ status }) => status === "failed").forEach((assertionResult) => {
+    reportFailed(result.name, assertionResult);
+  });
 }
 async function jest(lintPath) {
   try {
@@ -23605,7 +23607,7 @@ async function jest(lintPath) {
 }
 
 // src/lint.ts
-var import_path = __toESM(require("path"));
+var import_node_path = __toESM(require("node:path"));
 var core2 = __toESM(require_core());
 var SEVERITY = {
   /**
@@ -23641,7 +23643,7 @@ async function lint(lintPath) {
   try {
     const lintReport = await parseFile(lintPath);
     for (const { messages, filePath } of lintReport) {
-      const relPath = import_path.default.relative(process.cwd(), filePath);
+      const relPath = import_node_path.default.relative(process.cwd(), filePath);
       for (const message of messages) {
         report(message, relPath);
       }
@@ -23654,8 +23656,8 @@ async function lint(lintPath) {
 }
 
 // src/playwrightReport.ts
-var import_fs = require("fs");
-var import_path2 = __toESM(require("path"));
+var import_node_fs = require("node:fs");
+var import_node_path2 = __toESM(require("node:path"));
 var github3 = __toESM(require_github());
 
 // src/comment.ts
@@ -23671,7 +23673,9 @@ var GitHubCommentBuilder = class {
    * Добавляет текст к комментарию.
    */
   add(text) {
-    this.message += text + "\n\n";
+    this.message += `${text}
+
+`;
   }
   /**
    * Пытаемся найти уже существующий комментарий
@@ -23716,11 +23720,11 @@ var GitHubCommentBuilder = class {
 
 // src/playwrightReport.ts
 function hasFailedScreenshots() {
-  const playwrightReportDirPath = import_path2.default.join(process.cwd(), "playwright-report");
-  const playwrightReportDataDirPath = import_path2.default.join(playwrightReportDirPath, "data");
-  const playwrightReportTracePathDir = import_path2.default.join(playwrightReportDirPath, "trace");
-  const isDataDirExist = (0, import_fs.existsSync)(playwrightReportDataDirPath);
-  const isTraceDirExist = (0, import_fs.existsSync)(playwrightReportTracePathDir);
+  const playwrightReportDirPath = import_node_path2.default.join(process.cwd(), "playwright-report");
+  const playwrightReportDataDirPath = import_node_path2.default.join(playwrightReportDirPath, "data");
+  const playwrightReportTracePathDir = import_node_path2.default.join(playwrightReportDirPath, "trace");
+  const isDataDirExist = (0, import_node_fs.existsSync)(playwrightReportDataDirPath);
+  const isTraceDirExist = (0, import_node_fs.existsSync)(playwrightReportTracePathDir);
   return isDataDirExist || isTraceDirExist;
 }
 async function playwrightReport(url, token, prNumber) {
@@ -23739,19 +23743,21 @@ async function playwrightReport(url, token, prNumber) {
 async function run() {
   try {
     const jobs = [];
-    const lintResults = import_path3.default.join(process.cwd(), "lint-results.json");
-    const testResults = import_path3.default.join(process.cwd(), "test-results.json");
-    const a11yResults = import_path3.default.join(process.cwd(), "a11y-results.json");
-    if (import_fs2.default.existsSync(lintResults)) {
+    const lintResults = import_node_path3.default.join(process.cwd(), "lint-results.json");
+    const testResults = import_node_path3.default.join(process.cwd(), "test-results.json");
+    const a11yResults = import_node_path3.default.join(process.cwd(), "a11y-results.json");
+    if (import_node_fs2.default.existsSync(lintResults)) {
       jobs.push(lint(lintResults));
     }
-    if (import_fs2.default.existsSync(testResults)) {
+    if (import_node_fs2.default.existsSync(testResults)) {
       jobs.push(jest(testResults));
     }
-    if (import_fs2.default.existsSync(a11yResults)) {
+    if (import_node_fs2.default.existsSync(a11yResults)) {
       jobs.push(jest(a11yResults));
     }
-    const playwrightReportURL = core3.getInput("playwrightReportURL", { required: false });
+    const playwrightReportURL = core3.getInput("playwrightReportURL", {
+      required: false
+    });
     const token = core3.getInput("token", { required: false });
     const prNumberRaw = core3.getInput("prNumber", { required: false });
     if (playwrightReportURL && token) {

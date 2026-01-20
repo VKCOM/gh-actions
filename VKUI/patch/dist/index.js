@@ -25446,12 +25446,61 @@ var require_semver2 = __commonJS({
 });
 
 // src/main.ts
-var fs = __toESM(require("fs"), 1);
-var path = __toESM(require("path"), 1);
+var fs = __toESM(require("node:fs"), 1);
+var path = __toESM(require("node:path"), 1);
 var core2 = __toESM(require_core(), 1);
 var exec3 = __toESM(require_exec(), 1);
 var github = __toESM(require_github(), 1);
 var import_semver = __toESM(require_semver2(), 1);
+
+// src/getBooleanInput.ts
+var core = __toESM(require_core(), 1);
+var trueValue = ["true", "True", "TRUE"];
+var falseValue = ["false", "False", "FALSE"];
+function getBooleanInput(name, options) {
+  const val = core.getInput(name, options);
+  if (!val) {
+    return false;
+  }
+  if (trueValue.includes(val)) {
+    return true;
+  }
+  if (falseValue.includes(val)) {
+    return false;
+  }
+  throw new TypeError(
+    `Input does not meet YAML 1.2 "Core Schema" specification: ${name}
+Support boolean input list: \`true | True | TRUE | false | False | FALSE\``
+  );
+}
+
+// src/getMergeData.ts
+var exec = __toESM(require_exec(), 1);
+var MINIMUM_MERGE_COMMIT_COUNT = 2;
+async function getMergeData(gh, repo, pullNumber) {
+  const pullRequest = await gh.rest.pulls.get({
+    ...repo,
+    pull_number: pullNumber
+  });
+  const mergeCommitSHA = pullRequest.data.merge_commit_sha || "";
+  let method = "merge";
+  try {
+    await exec.exec("git", ["show", "-s", "--pretty=%p", mergeCommitSHA], {
+      listeners: {
+        stdout: (dataRaw) => {
+          const data = dataRaw.toString().trim().split(" ");
+          method = data.length >= MINIMUM_MERGE_COMMIT_COUNT ? "merge" : "squash";
+        }
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
+  return {
+    method,
+    mergeCommitSHA
+  };
+}
 
 // src/message.ts
 function getPatchInstructions(header, description, patch) {
@@ -25491,55 +25540,9 @@ gh pr create --base ${targetBranchRef} --title "patch: pr${pullNumber}" --body "
 `;
 }
 
-// src/getMergeData.ts
-var exec = __toESM(require_exec(), 1);
-var MINIMUM_MERGE_COMMIT_COUNT = 2;
-async function getMergeData(gh, repo, pullNumber) {
-  const pullRequest = await gh.rest.pulls.get({ ...repo, pull_number: pullNumber });
-  const mergeCommitSHA = pullRequest.data.merge_commit_sha || "";
-  let method = "merge";
-  try {
-    await exec.exec("git", ["show", "-s", "--pretty=%p", mergeCommitSHA], {
-      listeners: {
-        stdout: (dataRaw) => {
-          const data = dataRaw.toString().trim().split(" ");
-          method = data.length >= MINIMUM_MERGE_COMMIT_COUNT ? "merge" : "squash";
-        }
-      }
-    });
-  } catch (e) {
-    console.error(e);
-  }
-  return {
-    method,
-    mergeCommitSHA
-  };
-}
-
 // src/stableBranchName.ts
 function stableBranchName(semVer) {
   return `${semVer.major}.${semVer.minor}-stable`;
-}
-
-// src/getBooleanInput.ts
-var core = __toESM(require_core(), 1);
-var trueValue = ["true", "True", "TRUE"];
-var falseValue = ["false", "False", "FALSE"];
-function getBooleanInput(name, options) {
-  const val = core.getInput(name, options);
-  if (!val) {
-    return false;
-  }
-  if (trueValue.includes(val)) {
-    return true;
-  }
-  if (falseValue.includes(val)) {
-    return false;
-  }
-  throw new TypeError(
-    `Input does not meet YAML 1.2 "Core Schema" specification: ${name}
-Support boolean input list: \`true | True | TRUE | false | False | FALSE\``
-  );
 }
 
 // src/main.ts

@@ -46843,21 +46843,6 @@ var GitHub = class {
   }
 };
 
-// src/service/service.ts
-var Service = class {
-  constructor(repositories) {
-    this.repositories = repositories;
-  }
-};
-
-// src/service/action.ts
-var ActionService = class extends Service {
-  async run() {
-    const { path, ...options } = await this.repositories.githubRepository.getInput();
-    await this.repositories.tracerSourceMapRepository.uploadSourcemap(path, options);
-  }
-};
-
 // src/repositories/tracer.ts
 var import_sourcemap = __toESM(require_lib2());
 var TracerSourceMap = class {
@@ -46870,6 +46855,21 @@ var TracerSourceMap = class {
         onError
       });
     });
+  }
+};
+
+// src/service/service.ts
+var Service = class {
+  constructor(repositories) {
+    this.repositories = repositories;
+  }
+};
+
+// src/service/action.ts
+var ActionService = class extends Service {
+  async run() {
+    const { path, ...options } = await this.repositories.githubRepository.getInput();
+    await this.repositories.tracerSourceMapRepository.uploadSourcemap(path, options);
   }
 };
 

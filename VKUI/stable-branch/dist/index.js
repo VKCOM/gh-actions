@@ -25446,8 +25446,8 @@ var require_semver2 = __commonJS({
 });
 
 // src/main.ts
-var fs = __toESM(require("fs"));
-var path = __toESM(require("path"));
+var fs = __toESM(require("node:fs"));
+var path = __toESM(require("node:path"));
 var core = __toESM(require_core());
 var exec = __toESM(require_exec());
 var github = __toESM(require_github());

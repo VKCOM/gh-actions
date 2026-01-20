@@ -19450,7 +19450,7 @@ async function run() {
         await exec.exec("git", ["add", "./**/*.png"]);
         try {
           await exec.exec("git", ["diff-index", "--quiet", "HEAD"]);
-        } catch (e) {
+        } catch (_e) {
           await exec.exec("git", ["commit", "-m", `CHORE: Update screenshots`]);
         }
       },

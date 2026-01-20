@@ -25450,10 +25450,10 @@ var core = __toESM(require_core());
 var github2 = __toESM(require_github());
 
 // src/getVersion.ts
-var import_fs = __toESM(require("fs"));
+var import_node_fs = __toESM(require("node:fs"));
 var import_semver = __toESM(require_semver2());
 function getCurrentVersion() {
-  const packageJson = JSON.parse(import_fs.default.readFileSync("packages/vkui/package.json", "utf8"));
+  const packageJson = JSON.parse(import_node_fs.default.readFileSync("packages/vkui/package.json", "utf8"));
   return packageJson.version;
 }
 function getNextMinorVersion(currentVersion) {
@@ -25510,7 +25510,7 @@ async function run() {
       }
       await addMilestoneToPR(octokit, prNumber, milestone.number);
     }
-  } catch (error) {
+  } catch (_error) {
   }
 }
 void run();

@@ -19427,26 +19427,9 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
 var fs = __toESM(require("node:fs/promises"), 1);
 var core = __toESM(require_core(), 1);
 
-// src/versionStyle.ts
-function countInstances(string, word) {
-  return string.split(word).length - 1;
-}
-function versionStyle(version, newVersion) {
-  if (version.indexOf(",") > 0) {
-    return version;
-  }
-  const re = /[\d\.]+(?!\*)/;
-  const match = version.match(re);
-  if (match === null) {
-    return version;
-  }
-  const subVersion = newVersion.split(".").slice(0, countInstances(match[0], ".") + 1).join(".");
-  return version.replace(re, subVersion);
-}
-
 // src/registry.ts
-var readline2 = __toESM(require("node:readline/promises"), 1);
 var https = __toESM(require("node:https"), 1);
+var readline2 = __toESM(require("node:readline/promises"), 1);
 
 // src/getLastLine.ts
 var readline = __toESM(require("node:readline/promises"), 1);
@@ -19454,11 +19437,11 @@ function getLastLine(input) {
   return new Promise((resolve, reject) => {
     const rl = readline.createInterface(input);
     let lastLine = "";
-    rl.on("line", function(line) {
+    rl.on("line", (line) => {
       lastLine = line;
     });
     rl.on("error", reject);
-    rl.on("close", function() {
+    rl.on("close", () => {
       resolve(lastLine);
     });
   });
@@ -19495,6 +19478,23 @@ async function cargoRegistryLastIndexPackage(name) {
   return JSON.parse(lastLine);
 }
 
+// src/versionStyle.ts
+function countInstances(string, word) {
+  return string.split(word).length - 1;
+}
+function versionStyle(version, newVersion) {
+  if (version.indexOf(",") > 0) {
+    return version;
+  }
+  const re = /[\d.]+(?!\*)/;
+  const match = version.match(re);
+  if (match === null) {
+    return version;
+  }
+  const subVersion = newVersion.split(".").slice(0, countInstances(match[0], ".") + 1).join(".");
+  return version.replace(re, subVersion);
+}
+
 // src/main.ts
 async function crateRegistryVersion(name) {
   const index = await cargoRegistryLastIndexPackage(name);
@@ -19515,7 +19515,7 @@ async function updateDependency(data, name) {
 }
 async function run() {
   try {
-    const packages = core.getInput("packages", { required: true }).split(/[\n\,]/);
+    const packages = core.getInput("packages", { required: true }).split(/[\n,]/);
     const filepath = "Cargo.toml";
     const encoding = "utf8";
     const data = await fs.readFile(filepath, encoding);

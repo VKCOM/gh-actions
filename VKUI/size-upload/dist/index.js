@@ -62199,18 +62199,11 @@ var require_mime_types = __commonJS({
 });
 
 // src/main.ts
-var path = __toESM(require("node:path"));
 var crypto5 = __toESM(require("node:crypto"));
+var path = __toESM(require("node:path"));
 var core = __toESM(require_core());
 var import_client_s3 = __toESM(require_dist_cjs71());
 var import_mime_types = __toESM(require_mime_types());
-
-// src/size_limit.ts
-var fs = __toESM(require("node:fs/promises"));
-async function getSizesFromJSON(path2) {
-  const buf = await fs.readFile(path2);
-  return JSON.parse(buf.toString());
-}
 
 // src/git.ts
 var exec = __toESM(require_exec());
@@ -62222,6 +62215,13 @@ async function getHashAndTimestamp() {
     "--no-patch"
   ]);
   return output.stdout;
+}
+
+// src/size_limit.ts
+var fs = __toESM(require("node:fs/promises"));
+async function getSizesFromJSON(path2) {
+  const buf = await fs.readFile(path2);
+  return JSON.parse(buf.toString());
 }
 
 // src/main.ts
@@ -62249,6 +62249,9 @@ function generateSizeCheckFilename() {
   return `${crypto5.randomUUID()}.csv`;
 }
 var Action = class {
+  s3;
+  bucket;
+  keyPrefix;
   constructor() {
     core.info("Initial S3");
     this.s3 = new import_client_s3.S3(configuration());
@@ -62316,7 +62319,8 @@ var Action = class {
   async addInSizeCheck(filename, line) {
     const key = path.join(this.keyPrefix, filename);
     const file = await this.getObject(key);
-    await this.putObject(key, file + line + "\n");
+    await this.putObject(key, `${file + line}
+`);
     return filename;
   }
   async addSize() {
@@ -62325,7 +62329,7 @@ var Action = class {
     const sizes = await getSizesFromJSON(core.getInput("sizePath", req));
     for await (const { name, size } of sizes) {
       const line = await getHashAndTimestamp() + size.toString();
-      if (!list.hasOwnProperty(name)) {
+      if (!(name in list)) {
         const filename2 = await this.createSizeCheck();
         list[name] = {
           filename: filename2

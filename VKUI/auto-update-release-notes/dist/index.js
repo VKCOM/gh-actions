@@ -25449,6 +25449,305 @@ var require_semver2 = __commonJS({
 var core = __toESM(require_core(), 1);
 var github = __toESM(require_github(), 1);
 
+// src/getVersion.ts
+var import_semver = __toESM(require_semver2(), 1);
+function getNextMinorVersion(currentVersion) {
+  const nextVersion = import_semver.default.inc(currentVersion, "minor");
+  if (!nextVersion) {
+    throw new Error("Failed to increment version");
+  }
+  return nextVersion;
+}
+function getNextPatchVersion(currentVersion) {
+  const nextVersion = import_semver.default.inc(currentVersion, "patch");
+  if (!nextVersion) {
+    throw new Error("Failed to increment version");
+  }
+  return nextVersion;
+}
+function getNextReleaseVersion(lastVKUIVersion, updateType) {
+  switch (updateType) {
+    case "minor":
+      return getNextMinorVersion(lastVKUIVersion);
+    case "patch":
+      return getNextPatchVersion(lastVKUIVersion);
+  }
+  return lastVKUIVersion;
+}
+
+// src/calculateReleaseVersion.ts
+var parseReleaseVersion = (releaseVersion) => {
+  const match = releaseVersion.match(/v(\d+\.\d+\.\d+(-beta\.\d+)?)/);
+  return match?.[1] || null;
+};
+async function calculateReleaseVersion({
+  octokit,
+  owner,
+  repo,
+  labels,
+  milestone
+}) {
+  if (milestone?.title) {
+    return {
+      releaseName: milestone.title,
+      version: parseReleaseVersion(milestone.title)
+    };
+  }
+  let latestRelease;
+  try {
+    latestRelease = await octokit.rest.repos.getLatestRelease({
+      repo,
+      owner
+    });
+  } catch (_e) {
+    return null;
+  }
+  const latestVersion = latestRelease.data.name && parseReleaseVersion(latestRelease.data.name);
+  if (!latestVersion) {
+    return null;
+  }
+  const hasPatchLabel = labels.some((label) => label.name === "ci:cherry-pick:patch");
+  const updateType = hasPatchLabel ? "patch" : "minor";
+  const nextVersion = getNextReleaseVersion(latestVersion, updateType);
+  return {
+    releaseName: `v${nextVersion}`,
+    version: nextVersion
+  };
+}
+
+// src/getMilestone.ts
+var getMilestone = async ({
+  octokit,
+  owner,
+  repo,
+  pullRequestMilestone,
+  linkedIssueNumber
+}) => {
+  if (pullRequestMilestone) {
+    return pullRequestMilestone;
+  }
+  if (!linkedIssueNumber) {
+    return null;
+  }
+  try {
+    const { data: issue } = await octokit.rest.issues.get({
+      owner,
+      repo,
+      issue_number: linkedIssueNumber
+    });
+    return issue.milestone;
+  } catch (_e) {
+    return null;
+  }
+};
+
+// src/getRelease.ts
+async function getRecentDraftReleaseByName({
+  octokit,
+  owner,
+  repo,
+  releaseName
+}) {
+  try {
+    const response = await octokit.rest.repos.listReleases({
+      owner,
+      repo,
+      per_page: 10
+    });
+    const searchedRelease = response.data.filter((release) => release.draft).find((release) => release.name === releaseName);
+    return searchedRelease || null;
+  } catch (_error) {
+    return null;
+  }
+}
+async function getRelease({
+  octokit,
+  owner,
+  repo,
+  releaseName
+}) {
+  try {
+    const searchedRelease = await getRecentDraftReleaseByName({
+      octokit,
+      owner,
+      repo,
+      releaseName
+    });
+    if (searchedRelease) {
+      return searchedRelease;
+    }
+  } catch (_e) {
+  }
+  try {
+    const { data: createdRelease } = await octokit.rest.repos.createRelease({
+      owner,
+      repo,
+      tag_name: releaseName,
+      name: releaseName,
+      body: "",
+      draft: true,
+      prerelease: false
+    });
+    return createdRelease;
+  } catch (_e) {
+  }
+  return null;
+}
+
+// src/parsing/getPullRequestReleaseNotesBody.ts
+var RELEASE_NOTE_HEADER = "## Release notes";
+var COMMENT_START = "<!-- ";
+var getPullRequestReleaseNotesBody = (body) => {
+  const releaseNotesIndex = body.indexOf(RELEASE_NOTE_HEADER);
+  if (releaseNotesIndex === -1) {
+    return null;
+  }
+  const commentStart = body.indexOf(COMMENT_START, releaseNotesIndex);
+  const end = commentStart !== -1 ? commentStart : body.length;
+  return body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length, end).trim();
+};
+
+// src/parsing/parsePullRequestLinkedIssue.ts
+var keywords = [
+  "close",
+  "closes",
+  "closed",
+  "fix",
+  "fixes",
+  "fixed",
+  "resolve",
+  "resolves",
+  "resolved"
+];
+var startGroup = "(|-\\s)";
+var keywordsGroup = `(${keywords.join("|")})`;
+var issueNumberRegexStr = "#(\\d+)";
+var linkedIssueRegExp = new RegExp(
+  `^${startGroup}${keywordsGroup}\\s${issueNumberRegexStr}`,
+  "mi"
+);
+var ISSUE_NUMBER_MATCH_INDEX = 3;
+var parsePullRequestLinkedIssue = (pullRequestBody) => {
+  const match = pullRequestBody.match(linkedIssueRegExp);
+  if (!match || !match[ISSUE_NUMBER_MATCH_INDEX]) {
+    return null;
+  }
+  return Number(match[ISSUE_NUMBER_MATCH_INDEX]);
+};
+
+// src/parsing/getComponentDocsUrl.ts
+var COMPONENTS_DOCS_PARENT_MAP = {
+  Header: "Group",
+  Footer: "Group",
+  SplitCol: "SplitLayout",
+  WriteBarIcon: "WriteBar",
+  List: "Cell",
+  Tabbar: "Epic",
+  TabbarItem: "Epic",
+  PanelSpinner: "Panel",
+  PanelHeaderButton: "PanelHeader",
+  PanelHeaderContent: "PanelHeader",
+  SubnavigationButton: "SubnavigationBar",
+  TabsItem: "Tabs",
+  ActionSheetItem: "ActionSheet",
+  HorizontalCellShowMore: "HorizontalCell",
+  OnboardingTooltipContainer: "OnboardingTooltip",
+  DisplayTitle: "Typography",
+  Title: "Typography",
+  Headline: "Typography",
+  Text: "Typography",
+  Paragraph: "Typography",
+  Subhead: "Typography",
+  Footnote: "Typography",
+  Caption: "Typography"
+};
+function toKebabCase(componentName) {
+  return componentName.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+}
+function getComponentDocsUrl(component, version) {
+  const parent = COMPONENTS_DOCS_PARENT_MAP[component];
+  const url = parent ? `${toKebabCase(parent)}#${toKebabCase(component)}` : toKebabCase(component);
+  return `https://vkui.io/${version}/components/${url}`;
+}
+
+// src/parsing/convertChangesToString.ts
+var componentToString = (component, version) => {
+  return `[${component}](${getComponentDocsUrl(component, version)})`;
+};
+var prAuthorToString = (author) => {
+  return author ? `, \u0441\u043F\u0430\u0441\u0438\u0431\u043E @${author}` : "";
+};
+var pullRequestNumberToString = (prNumber, author) => {
+  return prNumber ? ` (#${prNumber}${prAuthorToString(author)})` : "";
+};
+var formatDescription = (description) => {
+  let formattedDescription = description.trimEnd();
+  if (!description || description.length === 0) {
+    return description;
+  }
+  formattedDescription = formattedDescription.charAt(0).toUpperCase() + formattedDescription.slice(1);
+  if (formattedDescription.endsWith(".")) {
+    formattedDescription = formattedDescription.slice(0, -1);
+  }
+  return formattedDescription;
+};
+var changeDescriptionToString = (changeItem, author) => {
+  return ` ${formatDescription(changeItem.description)}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
+};
+var convertChangesToString = (changes, version) => {
+  let result = "";
+  const filteredChanges = [];
+  const mapComponentToChanges = /* @__PURE__ */ new Map();
+  changes.forEach((change) => {
+    if (change.type === "component") {
+      const componentChanges = mapComponentToChanges.get(change.component);
+      if (!componentChanges) {
+        filteredChanges.push(change);
+        mapComponentToChanges.set(change.component, [change]);
+      } else {
+        componentChanges.push(change);
+      }
+    } else {
+      filteredChanges.push(change);
+    }
+  });
+  const addAdditionalInfo = (change, offsetLevel) => {
+    const offsetStr = " ".repeat(offsetLevel * 2);
+    if (change.additionalInfo) {
+      change.additionalInfo.split(/\r?\n/).forEach((line) => {
+        result += `${offsetStr}${line}\r
+`;
+      });
+    }
+  };
+  filteredChanges.forEach((change) => {
+    if (change.type === "component") {
+      const componentChanges = mapComponentToChanges.get(change.component);
+      if (!componentChanges) {
+        return;
+      }
+      result += `- ${componentToString(change.component, version)}:`;
+      if (componentChanges.length > 1) {
+        result += "\r\n";
+        componentChanges.forEach((changeItem) => {
+          result += `  -${changeDescriptionToString(changeItem, changeItem.author)}\r
+`;
+          addAdditionalInfo(changeItem, 2);
+        });
+      } else {
+        result += `${changeDescriptionToString(change, change.author)}\r
+`;
+        addAdditionalInfo(change, 1);
+      }
+    } else {
+      result += `-${changeDescriptionToString(change, change.author)}\r
+`;
+      addAdditionalInfo(change, 1);
+    }
+  });
+  return result;
+};
+
 // src/parsing/headers.ts
 var IMPROVEMENT_HEADER = "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u044F";
 var FIX_HEADER = "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F";
@@ -25605,122 +25904,11 @@ function parseChanges(text) {
     }
   }
   changes = changes.filter((change) => !!change.description);
-  changes.forEach((change) => change.additionalInfo = change.additionalInfo?.trim());
+  changes.forEach((change) => {
+    change.additionalInfo = change.additionalInfo?.trim();
+  });
   return changes;
 }
-
-// src/parsing/getComponentDocsUrl.ts
-var COMPONENTS_DOCS_PARENT_MAP = {
-  Header: "Group",
-  Footer: "Group",
-  SplitCol: "SplitLayout",
-  WriteBarIcon: "WriteBar",
-  List: "Cell",
-  Tabbar: "Epic",
-  TabbarItem: "Epic",
-  PanelSpinner: "Panel",
-  PanelHeaderButton: "PanelHeader",
-  PanelHeaderContent: "PanelHeader",
-  SubnavigationButton: "SubnavigationBar",
-  TabsItem: "Tabs",
-  ActionSheetItem: "ActionSheet",
-  HorizontalCellShowMore: "HorizontalCell",
-  OnboardingTooltipContainer: "OnboardingTooltip",
-  DisplayTitle: "Typography",
-  Title: "Typography",
-  Headline: "Typography",
-  Text: "Typography",
-  Paragraph: "Typography",
-  Subhead: "Typography",
-  Footnote: "Typography",
-  Caption: "Typography"
-};
-function toKebabCase(componentName) {
-  return componentName.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-}
-function getComponentDocsUrl(component, version) {
-  const parent = COMPONENTS_DOCS_PARENT_MAP[component];
-  const url = parent ? `${toKebabCase(parent)}#${toKebabCase(component)}` : toKebabCase(component);
-  return `https://vkui.io/${version}/components/${url}`;
-}
-
-// src/parsing/convertChangesToString.ts
-var componentToString = (component, version) => {
-  return `[${component}](${getComponentDocsUrl(component, version)})`;
-};
-var prAuthorToString = (author) => {
-  return author ? `, \u0441\u043F\u0430\u0441\u0438\u0431\u043E @${author}` : "";
-};
-var pullRequestNumberToString = (prNumber, author) => {
-  return prNumber ? ` (#${prNumber}${prAuthorToString(author)})` : "";
-};
-var formatDescription = (description) => {
-  let formattedDescription = description.trimEnd();
-  if (!description || description.length === 0) {
-    return description;
-  }
-  formattedDescription = formattedDescription.charAt(0).toUpperCase() + formattedDescription.slice(1);
-  if (formattedDescription.endsWith(".")) {
-    formattedDescription = formattedDescription.slice(0, -1);
-  }
-  return formattedDescription;
-};
-var changeDescriptionToString = (changeItem, author) => {
-  return ` ${formatDescription(changeItem.description)}${pullRequestNumberToString(changeItem.pullRequestNumber, author)}`;
-};
-var convertChangesToString = (changes, version) => {
-  let result = "";
-  const filteredChanges = [];
-  const mapComponentToChanges = /* @__PURE__ */ new Map();
-  changes.forEach((change) => {
-    if (change.type === "component") {
-      const componentChanges = mapComponentToChanges.get(change.component);
-      if (!componentChanges) {
-        filteredChanges.push(change);
-        mapComponentToChanges.set(change.component, [change]);
-      } else {
-        componentChanges.push(change);
-      }
-    } else {
-      filteredChanges.push(change);
-    }
-  });
-  const addAdditionalInfo = (change, offsetLevel) => {
-    const offsetStr = " ".repeat(offsetLevel * 2);
-    if (change.additionalInfo) {
-      change.additionalInfo.split(/\r?\n/).forEach((line) => {
-        result += `${offsetStr}${line}\r
-`;
-      });
-    }
-  };
-  filteredChanges.forEach((change) => {
-    if (change.type === "component") {
-      const componentChanges = mapComponentToChanges.get(change.component);
-      if (!componentChanges) {
-        return;
-      }
-      result += `- ${componentToString(change.component, version)}:`;
-      if (componentChanges.length > 1) {
-        result += "\r\n";
-        componentChanges.forEach((changeItem) => {
-          result += `  -${changeDescriptionToString(changeItem, changeItem.author)}\r
-`;
-          addAdditionalInfo(changeItem, 2);
-        });
-      } else {
-        result += `${changeDescriptionToString(change, change.author)}\r
-`;
-        addAdditionalInfo(change, 1);
-      }
-    } else {
-      result += `-${changeDescriptionToString(change, change.author)}\r
-`;
-      addAdditionalInfo(change, 1);
-    }
-  });
-  return result;
-};
 
 // src/parsing/releaseNotesUpdater.ts
 function releaseNotesUpdater(currentBody) {
@@ -25754,7 +25942,9 @@ function releaseNotesUpdater(currentBody) {
     const endIndex = findNextHeaderPosition(startIndex);
     let currentContent = body.substring(startIndex, endIndex).trim();
     currentContent = calculateNewContent(currentContent);
-    body = body.slice(0, startIndex) + "\r\n" + currentContent + "\r\n" + body.slice(endIndex);
+    body = `${body.slice(0, startIndex)}\r
+${currentContent}\r
+${body.slice(endIndex)}`;
   };
   const addSectionWithContent = (header, content) => {
     body += `\r
@@ -25811,192 +26001,6 @@ function parsePullRequestReleaseNotesBody(releaseNotesBody, pullRequestNumber, a
   }));
 }
 
-// src/getRelease.ts
-async function getRecentDraftReleaseByName({
-  octokit,
-  owner,
-  repo,
-  releaseName
-}) {
-  try {
-    const response = await octokit.rest.repos.listReleases({
-      owner,
-      repo,
-      per_page: 10
-    });
-    const searchedRelease = response.data.filter((release) => release.draft).find((release) => release.name === releaseName);
-    return searchedRelease || null;
-  } catch (error) {
-    return null;
-  }
-}
-async function getRelease({
-  octokit,
-  owner,
-  repo,
-  releaseName
-}) {
-  try {
-    const searchedRelease = await getRecentDraftReleaseByName({
-      octokit,
-      owner,
-      repo,
-      releaseName
-    });
-    if (searchedRelease) {
-      return searchedRelease;
-    }
-  } catch (e) {
-  }
-  try {
-    const { data: createdRelease } = await octokit.rest.repos.createRelease({
-      owner,
-      repo,
-      tag_name: releaseName,
-      name: releaseName,
-      body: "",
-      draft: true,
-      prerelease: false
-    });
-    return createdRelease;
-  } catch (e) {
-  }
-  return null;
-}
-
-// src/getVersion.ts
-var import_semver = __toESM(require_semver2(), 1);
-function getNextMinorVersion(currentVersion) {
-  const nextVersion = import_semver.default.inc(currentVersion, "minor");
-  if (!nextVersion) {
-    throw new Error("Failed to increment version");
-  }
-  return nextVersion;
-}
-function getNextPatchVersion(currentVersion) {
-  const nextVersion = import_semver.default.inc(currentVersion, "patch");
-  if (!nextVersion) {
-    throw new Error("Failed to increment version");
-  }
-  return nextVersion;
-}
-function getNextReleaseVersion(lastVKUIVersion, updateType) {
-  switch (updateType) {
-    case "minor":
-      return getNextMinorVersion(lastVKUIVersion);
-    case "patch":
-      return getNextPatchVersion(lastVKUIVersion);
-  }
-  return lastVKUIVersion;
-}
-
-// src/calculateReleaseVersion.ts
-var parseReleaseVersion = (releaseVersion) => {
-  const match = releaseVersion.match(/v(\d+\.\d+\.\d+(-beta\.\d+)?)/);
-  return match?.[1] || null;
-};
-async function calculateReleaseVersion({
-  octokit,
-  owner,
-  repo,
-  labels,
-  milestone
-}) {
-  if (milestone?.title) {
-    return {
-      releaseName: milestone.title,
-      version: parseReleaseVersion(milestone.title)
-    };
-  }
-  let latestRelease;
-  try {
-    latestRelease = await octokit.rest.repos.getLatestRelease({
-      repo,
-      owner
-    });
-  } catch (e) {
-    return null;
-  }
-  const latestVersion = latestRelease.data.name && parseReleaseVersion(latestRelease.data.name);
-  if (!latestVersion) {
-    return null;
-  }
-  const hasPatchLabel = labels.some((label) => label.name === "ci:cherry-pick:patch");
-  const updateType = hasPatchLabel ? "patch" : "minor";
-  const nextVersion = getNextReleaseVersion(latestVersion, updateType);
-  return {
-    releaseName: `v${nextVersion}`,
-    version: nextVersion
-  };
-}
-
-// src/parsing/getPullRequestReleaseNotesBody.ts
-var RELEASE_NOTE_HEADER = "## Release notes";
-var COMMENT_START = "<!-- ";
-var getPullRequestReleaseNotesBody = (body) => {
-  const releaseNotesIndex = body.indexOf(RELEASE_NOTE_HEADER);
-  if (releaseNotesIndex === -1) {
-    return null;
-  }
-  const commentStart = body.indexOf(COMMENT_START, releaseNotesIndex);
-  const end = commentStart !== -1 ? commentStart : body.length;
-  return body.slice(releaseNotesIndex + RELEASE_NOTE_HEADER.length, end).trim();
-};
-
-// src/parsing/parsePullRequestLinkedIssue.ts
-var keywords = [
-  "close",
-  "closes",
-  "closed",
-  "fix",
-  "fixes",
-  "fixed",
-  "resolve",
-  "resolves",
-  "resolved"
-];
-var startGroup = "(|-\\s)";
-var keywordsGroup = `(${keywords.join("|")})`;
-var issueNumberRegexStr = "#(\\d+)";
-var linkedIssueRegExp = new RegExp(
-  `^${startGroup}${keywordsGroup}\\s${issueNumberRegexStr}`,
-  "mi"
-);
-var ISSUE_NUMBER_MATCH_INDEX = 3;
-var parsePullRequestLinkedIssue = (pullRequestBody) => {
-  const match = pullRequestBody.match(linkedIssueRegExp);
-  if (!match || !match[ISSUE_NUMBER_MATCH_INDEX]) {
-    return null;
-  }
-  return Number(match[ISSUE_NUMBER_MATCH_INDEX]);
-};
-
-// src/getMilestone.ts
-var getMilestone = async ({
-  octokit,
-  owner,
-  repo,
-  pullRequestMilestone,
-  linkedIssueNumber
-}) => {
-  if (pullRequestMilestone) {
-    return pullRequestMilestone;
-  }
-  if (!linkedIssueNumber) {
-    return null;
-  }
-  try {
-    const { data: issue } = await octokit.rest.issues.get({
-      owner,
-      repo,
-      issue_number: linkedIssueNumber
-    });
-    return issue.milestone;
-  } catch (e) {
-    return null;
-  }
-};
-
 // src/updateReleaseNotes.ts
 var EMPTY_NOTES = "-";
 var updateReleaseNotes = async ({
@@ -26013,7 +26017,7 @@ var updateReleaseNotes = async ({
       pull_number: prNumber
     });
     pullRequest = searchedPullRequest;
-  } catch (e) {
+  } catch (_e) {
   }
   if (!pullRequest) {
     return;

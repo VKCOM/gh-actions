@@ -32718,13 +32718,13 @@ var require_dist_cjs40 = __commonJS({
         ...data.default && { default: data.default }
       }
     ), "getConfigData");
-    var import_path2 = require("path");
+    var import_path = require("path");
     var import_getHomeDir = require_getHomeDir();
     var ENV_CONFIG_PATH = "AWS_CONFIG_FILE";
-    var getConfigFilepath = /* @__PURE__ */ __name(() => process.env[ENV_CONFIG_PATH] || (0, import_path2.join)((0, import_getHomeDir.getHomeDir)(), ".aws", "config"), "getConfigFilepath");
+    var getConfigFilepath = /* @__PURE__ */ __name(() => process.env[ENV_CONFIG_PATH] || (0, import_path.join)((0, import_getHomeDir.getHomeDir)(), ".aws", "config"), "getConfigFilepath");
     var import_getHomeDir2 = require_getHomeDir();
     var ENV_CREDENTIALS_PATH = "AWS_SHARED_CREDENTIALS_FILE";
-    var getCredentialsFilepath = /* @__PURE__ */ __name(() => process.env[ENV_CREDENTIALS_PATH] || (0, import_path2.join)((0, import_getHomeDir2.getHomeDir)(), ".aws", "credentials"), "getCredentialsFilepath");
+    var getCredentialsFilepath = /* @__PURE__ */ __name(() => process.env[ENV_CREDENTIALS_PATH] || (0, import_path.join)((0, import_getHomeDir2.getHomeDir)(), ".aws", "credentials"), "getCredentialsFilepath");
     var import_getHomeDir3 = require_getHomeDir();
     var prefixKeyRegex = /^([\w-]+)\s(["'])?([\w-@\+\.%:/]+)\2$/;
     var profileNameBlockList = ["__proto__", "profile __proto__"];
@@ -32782,11 +32782,11 @@ var require_dist_cjs40 = __commonJS({
       const relativeHomeDirPrefix = "~/";
       let resolvedFilepath = filepath;
       if (filepath.startsWith(relativeHomeDirPrefix)) {
-        resolvedFilepath = (0, import_path2.join)(homeDir, filepath.slice(2));
+        resolvedFilepath = (0, import_path.join)(homeDir, filepath.slice(2));
       }
       let resolvedConfigFilepath = configFilepath;
       if (configFilepath.startsWith(relativeHomeDirPrefix)) {
-        resolvedConfigFilepath = (0, import_path2.join)(homeDir, configFilepath.slice(2));
+        resolvedConfigFilepath = (0, import_path.join)(homeDir, configFilepath.slice(2));
       }
       const parsedFiles = await Promise.all([
         (0, import_slurpFile.slurpFile)(resolvedConfigFilepath, {
@@ -34986,7 +34986,7 @@ var require_dist_cjs51 = __commonJS({
       calculateBodyLength: () => calculateBodyLength
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_fs2 = require("fs");
+    var import_fs = require("fs");
     var calculateBodyLength = /* @__PURE__ */ __name((body) => {
       if (!body) {
         return 0;
@@ -35000,9 +35000,9 @@ var require_dist_cjs51 = __commonJS({
       } else if (typeof body.start === "number" && typeof body.end === "number") {
         return body.end + 1 - body.start;
       } else if (typeof body.path === "string" || Buffer.isBuffer(body.path)) {
-        return (0, import_fs2.lstatSync)(body.path).size;
+        return (0, import_fs.lstatSync)(body.path).size;
       } else if (typeof body.fd === "number") {
-        return (0, import_fs2.fstatSync)(body.fd).size;
+        return (0, import_fs.fstatSync)(body.fd).size;
       }
       throw new Error(`Body Length computation failed for ${body}`);
     }, "calculateBodyLength");
@@ -37506,8 +37506,8 @@ var require_dist_cjs56 = __commonJS({
       }
     }, "validateTokenKey");
     var import_shared_ini_file_loader = require_dist_cjs40();
-    var import_fs2 = require("fs");
-    var { writeFile } = import_fs2.promises;
+    var import_fs = require("fs");
+    var { writeFile } = import_fs.promises;
     var writeSSOTokenToFile = /* @__PURE__ */ __name((id, ssoToken) => {
       const tokenFilepath = (0, import_shared_ini_file_loader.getSSOTokenFilepath)(id);
       const tokenString = JSON.stringify(ssoToken, null, 2);
@@ -41629,7 +41629,7 @@ var require_dist_cjs67 = __commonJS({
       readableStreamHasher: () => readableStreamHasher
     });
     module2.exports = __toCommonJS2(src_exports);
-    var import_fs2 = require("fs");
+    var import_fs = require("fs");
     var import_util_utf8 = require_dist_cjs8();
     var import_stream = require("stream");
     var HashCalculator = class extends import_stream.Writable {
@@ -41654,7 +41654,7 @@ var require_dist_cjs67 = __commonJS({
         reject(new Error("Unable to calculate hash for non-file streams."));
         return;
       }
-      const fileStreamTee = (0, import_fs2.createReadStream)(fileStream.path, {
+      const fileStreamTee = (0, import_fs.createReadStream)(fileStream.path, {
         start: fileStream.start,
         end: fileStream.end
       });
@@ -67679,8 +67679,8 @@ var require_mime_types = __commonJS({
 });
 
 // src/main.ts
-var import_fs = __toESM(require("fs"));
-var import_path = __toESM(require("path"));
+var import_node_fs = __toESM(require("node:fs"));
+var import_node_path = __toESM(require("node:path"));
 var core = __toESM(require_core());
 var import_client_s3 = __toESM(require_dist_cjs71());
 var import_lodash = __toESM(require_lodash());
@@ -67694,12 +67694,12 @@ var notReq = {
 };
 function getFilesFromFolder(folderPath) {
   const fileList = [];
-  const files = import_fs.default.readdirSync(folderPath, { withFileTypes: true });
+  const files = import_node_fs.default.readdirSync(folderPath, { withFileTypes: true });
   files.forEach((file) => {
     if (file.isDirectory()) {
-      fileList.push(...getFilesFromFolder(import_path.default.join(folderPath, file.name)));
+      fileList.push(...getFilesFromFolder(import_node_path.default.join(folderPath, file.name)));
     } else {
-      fileList.push(import_path.default.join(folderPath, file.name));
+      fileList.push(import_node_path.default.join(folderPath, file.name));
     }
   });
   return fileList;
@@ -67736,14 +67736,14 @@ var Action = class {
   }
   async upload(src, dist) {
     core.info("Command upload");
-    const sourceDir = import_path.default.join(process.cwd(), src);
+    const sourceDir = import_node_path.default.join(process.cwd(), src);
     const files = getFilesFromFolder(sourceDir);
     core.debug(`length ${files.length}`);
     const uploadTasks = import_lodash.default.chunk(
       files.map((file) => {
         core.debug(`file: ${file}`);
-        const fileStream = import_fs.default.createReadStream(file);
-        const bucketPath = import_path.default.join(dist, import_path.default.relative(sourceDir, file));
+        const fileStream = import_node_fs.default.createReadStream(file);
+        const bucketPath = import_node_path.default.join(dist, import_node_path.default.relative(sourceDir, file));
         core.debug(`put ${files.length}`);
         return this.putObject({
           Bucket: this.bucket,
@@ -67785,15 +67785,17 @@ var Action = class {
   async run() {
     const command = core.getInput("command", req);
     switch (command) {
-      case "upload":
+      case "upload": {
         const src = core.getInput("commandUploadSrc", req);
         const dist = core.getInput("commandUploadDist", req);
         await this.upload(src, dist);
         break;
-      case "delete":
+      }
+      case "delete": {
         const prefix = core.getInput("commandDeletePrefix", req);
         await this.delete(prefix);
         break;
+      }
       default:
         core.setFailed(`Invalid command: ${command}`);
         break;

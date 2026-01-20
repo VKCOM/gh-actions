@@ -21358,16 +21358,22 @@ var core = __toESM(require_core());
 var import_semver = __toESM(require_semver2());
 async function run() {
   try {
-    const prevFloatingUiReactDomVersion = core.getInput("prev_origin_version", { required: true });
-    const newFloatingUiReactDomVersion = core.getInput("new_origin_version", { required: true });
-    const floatingUIVersion = core.getInput("current_version", { required: true });
+    const prevFloatingUiReactDomVersion = core.getInput("prev_origin_version", {
+      required: true
+    });
+    const newFloatingUiReactDomVersion = core.getInput("new_origin_version", {
+      required: true
+    });
+    const floatingUIVersion = core.getInput("current_version", {
+      required: true
+    });
     const updateType = import_semver.default.diff(
       prevFloatingUiReactDomVersion,
       newFloatingUiReactDomVersion
     );
     const newVKUIFloatingVersion = import_semver.default.inc(floatingUIVersion, updateType);
     core.setOutput("new_version", newVKUIFloatingVersion);
-  } catch (e) {
+  } catch (_e) {
   }
 }
 void run();

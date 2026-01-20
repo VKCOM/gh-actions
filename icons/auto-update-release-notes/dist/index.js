@@ -25452,93 +25452,9 @@ var github = __toESM(require_github(), 1);
 // src/updateReleaseNotes.ts
 var core3 = __toESM(require_core(), 1);
 
-// src/releaseNotesParser.ts
-function findNumber(input) {
-  const match = input.match(/-?\d+/);
-  return match ? match[0] : "";
-}
-function releaseNotesParser(body) {
-  const parseIconsFromSection = (sectionTitle) => {
-    const sectionStart = body.indexOf(`## ${sectionTitle}`);
-    if (sectionStart === -1) {
-      return [];
-    }
-    const nextSectionStart = body.indexOf("\r\n## ", sectionStart + 1);
-    const sectionEnd = nextSectionStart !== -1 ? nextSectionStart : body.length;
-    const sectionContent = body.substring(sectionStart + sectionTitle.length + 3, sectionEnd);
-    const icons = [];
-    const iconRegex = /### (.+?)\s+!\[.*?\]\((.+?)\)/g;
-    let match = iconRegex.exec(sectionContent);
-    while (match !== null) {
-      icons.push({
-        name: match[1],
-        size: findNumber(match[1]),
-        url: match[2]
-      });
-      match = iconRegex.exec(sectionContent);
-    }
-    return icons;
-  };
-  const uniqueIcons = (icons) => {
-    const unique = /* @__PURE__ */ new Map();
-    icons.forEach((icon) => {
-      const key = `${icon.name}-${icon.size}`;
-      if (!unique.has(key)) {
-        unique.set(key, icon);
-      }
-    });
-    return Array.from(unique.values());
-  };
-  const generateSectionContent = (icons, title) => {
-    if (icons.length === 0) {
-      return "";
-    }
-    icons.sort((a, b) => {
-      if (a.size !== b.size) {
-        return parseInt(a.size) - parseInt(b.size);
-      }
-      return a.name.localeCompare(b.name);
-    });
-    const content = icons.map((icon) => `### ${icon.name}\r
-\r
-![${icon.name}](${icon.url})`).join("\r\n\r\n");
-    return `## ${title}\r
-\r
-${content}\r
-`;
-  };
-  const updateSection = (sectionContent, sectionTitle) => {
-    if (!sectionContent) {
-      return body;
-    }
-    const sectionHeader = `## ${sectionTitle}`;
-    const sectionRegex = new RegExp(`${sectionHeader}[\\s\\S]*?(?=\\r\\n## |$)`, "g");
-    if (sectionRegex.test(body)) {
-      body = body.replace(sectionRegex, sectionContent);
-    } else {
-      body += `\r
-\r
-${sectionContent}`;
-    }
-  };
-  const modifySection = (sectionTitle, icons) => {
-    const existingSectionIcons = parseIconsFromSection(sectionTitle);
-    const allSectionIcons = uniqueIcons([...existingSectionIcons, ...icons]);
-    const newSectionContent = generateSectionContent(allSectionIcons, sectionTitle);
-    updateSection(newSectionContent, sectionTitle);
-  };
-  return {
-    modifySection,
-    get body() {
-      body = body.trim().replace(/\r\n\r\n\r\n+/g, "\r\n\r\n");
-      return body;
-    }
-  };
-}
-
 // src/getChangedIconsData.ts
 var core = __toESM(require_core(), 1);
-var ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^\/]+)\/([^\/]+)\.svg$/;
+var ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^/]+)\/([^/]+)\.svg$/;
 function convertToIconName(input) {
   const parts = input.split("_");
   const nameParts = parts.slice(0, parts.length - 1);
@@ -25563,7 +25479,7 @@ async function getChangedIconsData(octokit, owner, repo, prNumber) {
     }
     const [, size, name] = match;
     const formattedName = convertToIconName(name);
-    const icon = { name: formattedName, size, url: file["raw_url"] };
+    const icon = { name: formattedName, size, url: file.raw_url };
     if (file.status === "added") {
       addedIcons.push(icon);
     } else if (file.status === "modified") {
@@ -25614,6 +25530,90 @@ async function getReleaseDraft(octokit, owner, repo, currentIconsVersion) {
   return draftRelease;
 }
 
+// src/releaseNotesParser.ts
+function findNumber(input) {
+  const match = input.match(/-?\d+/);
+  return match ? match[0] : "";
+}
+function releaseNotesParser(body) {
+  const parseIconsFromSection = (sectionTitle) => {
+    const sectionStart = body.indexOf(`## ${sectionTitle}`);
+    if (sectionStart === -1) {
+      return [];
+    }
+    const nextSectionStart = body.indexOf("\r\n## ", sectionStart + 1);
+    const sectionEnd = nextSectionStart !== -1 ? nextSectionStart : body.length;
+    const sectionContent = body.substring(sectionStart + sectionTitle.length + 3, sectionEnd);
+    const icons = [];
+    const iconRegex = /### (.+?)\s+!\[.*?\]\((.+?)\)/g;
+    let match = iconRegex.exec(sectionContent);
+    while (match !== null) {
+      icons.push({
+        name: match[1],
+        size: findNumber(match[1]),
+        url: match[2]
+      });
+      match = iconRegex.exec(sectionContent);
+    }
+    return icons;
+  };
+  const uniqueIcons = (icons) => {
+    const unique = /* @__PURE__ */ new Map();
+    icons.forEach((icon) => {
+      const key = `${icon.name}-${icon.size}`;
+      if (!unique.has(key)) {
+        unique.set(key, icon);
+      }
+    });
+    return Array.from(unique.values());
+  };
+  const generateSectionContent = (icons, title) => {
+    if (icons.length === 0) {
+      return "";
+    }
+    icons.sort((a, b) => {
+      if (a.size !== b.size) {
+        return parseInt(a.size, 10) - parseInt(b.size, 10);
+      }
+      return a.name.localeCompare(b.name);
+    });
+    const content = icons.map((icon) => `### ${icon.name}\r
+\r
+![${icon.name}](${icon.url})`).join("\r\n\r\n");
+    return `## ${title}\r
+\r
+${content}\r
+`;
+  };
+  const updateSection = (sectionContent, sectionTitle) => {
+    if (!sectionContent) {
+      return body;
+    }
+    const sectionHeader = `## ${sectionTitle}`;
+    const sectionRegex = new RegExp(`${sectionHeader}[\\s\\S]*?(?=\\r\\n## |$)`, "g");
+    if (sectionRegex.test(body)) {
+      body = body.replace(sectionRegex, sectionContent);
+    } else {
+      body += `\r
+\r
+${sectionContent}`;
+    }
+  };
+  const modifySection = (sectionTitle, icons) => {
+    const existingSectionIcons = parseIconsFromSection(sectionTitle);
+    const allSectionIcons = uniqueIcons([...existingSectionIcons, ...icons]);
+    const newSectionContent = generateSectionContent(allSectionIcons, sectionTitle);
+    updateSection(newSectionContent, sectionTitle);
+  };
+  return {
+    modifySection,
+    get body() {
+      body = body.trim().replace(/\r\n\r\n\r\n+/g, "\r\n\r\n");
+      return body;
+    }
+  };
+}
+
 // src/updateReleaseNotes.ts
 var ADDED_SECTION_HEADER = "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043D\u044B\u0435 \u0438\u043A\u043E\u043D\u043A\u0438";
 var MODIFIED_SECTION_HEADER = "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u043D\u044B\u0435 \u0438\u043A\u043E\u043D\u043A\u0438";
@@ -25646,7 +25646,9 @@ async function updateReleaseNotes({
 async function run() {
   const token = core4.getInput("token", { required: true });
   const prNumber = Number(core4.getInput("pull_request_number", { required: true }));
-  const currentIconsVersion = core4.getInput("current_icons_version", { required: true });
+  const currentIconsVersion = core4.getInput("current_icons_version", {
+    required: true
+  });
   const octokit = github.getOctokit(token);
   const { owner, repo } = github.context.repo;
   await updateReleaseNotes({
