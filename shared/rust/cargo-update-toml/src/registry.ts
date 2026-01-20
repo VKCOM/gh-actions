@@ -1,6 +1,6 @@
-import * as readline from 'node:readline/promises';
-import * as https from 'node:https';
-import { getLastLine } from './getLastLine.ts';
+import * as https from "node:https";
+import * as readline from "node:readline/promises";
+import { getLastLine } from "./getLastLine.ts";
 
 const HTTPStatusOK = 200;
 
@@ -20,7 +20,7 @@ async function get(url: string | https.RequestOptions | URL) {
 
         resolve(response);
       })
-      .on('error', reject);
+      .on("error", reject);
   });
 }
 
@@ -28,7 +28,7 @@ async function get(url: string | https.RequestOptions | URL) {
  * Возвращает url для crate пакета
  */
 function indexPackageURL(name: string) {
-  const url = ['https://raw.githubusercontent.com/rust-lang/crates.io-index/master'];
+  const url = ["https://raw.githubusercontent.com/rust-lang/crates.io-index/master"];
 
   if (name.length <= 3) {
     url.push(name.length.toString(), name[0]);
@@ -38,7 +38,7 @@ function indexPackageURL(name: string) {
 
   url.push(name);
 
-  return url.join('/');
+  return url.join("/");
 }
 
 type Features = Record<string, string[]>;
@@ -123,7 +123,7 @@ export interface RegistryDependency {
   // The target platform for this dependency.
   target?: string;
   // The dependency kind. "dev", "build", and "normal"
-  kind?: 'dev' | 'build' | 'normal';
+  kind?: "dev" | "build" | "normal";
   // The URL of the index of the registry where this dependency is from.
   // `None` if it is from the same index.
   registry?: string;
@@ -146,13 +146,13 @@ export function parsePackagesFromStream(input: NodeJS.ReadableStream) {
     const rl = readline.createInterface(input);
 
     const packages: IndexPackage[] = [];
-    rl.on('line', function (line) {
+    rl.on("line", (line) => {
       packages.push(JSON.parse(line));
     });
 
-    rl.on('error', reject);
+    rl.on("error", reject);
 
-    rl.on('close', function () {
+    rl.on("close", () => {
       resolve(packages);
     });
   });

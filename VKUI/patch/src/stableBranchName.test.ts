@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-floating-promises -- node тесты */
+import * as assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { strict as assert } from 'node:assert';
-import { stableBranchName } from './stableBranchName.ts';
 import { SemVer } from 'semver';
+import { stableBranchName } from './stableBranchName.ts';
 
 test('stableBranchName version 1.1.0 is 1.1-stable', () => {
   assert.strictEqual(stableBranchName(new SemVer('1.1.0')), '1.1-stable');

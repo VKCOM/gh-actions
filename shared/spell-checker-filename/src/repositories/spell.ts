@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import nspell from 'nspell';
+
 import { Mutex } from 'async-mutex';
+import nspell from 'nspell';
 import type { SpellCheckerRepository } from '../entities/repositories.ts';
 
 const PERSONAL_DICTIONARY = ['svg', 'src'].join('\n');
@@ -15,8 +16,8 @@ export class NSpellSpellChecker implements SpellCheckerRepository {
       'https://raw.githubusercontent.com/wooorm/dictionaries/8cfea406b505e4d7df52d5a19bce525df98c54ab/dictionaries/en/';
 
     // TODO: Кэширование на устройстве?
-    const aff = await fetch(urlEnDict + 'index.aff');
-    const dic = await fetch(urlEnDict + 'index.dic');
+    const aff = await fetch(`${urlEnDict}index.aff`);
+    const dic = await fetch(`${urlEnDict}index.dic`);
 
     this.spell = nspell(Buffer.from(await aff.arrayBuffer()), Buffer.from(await dic.arrayBuffer()));
     this.spell.personal(PERSONAL_DICTIONARY);
@@ -38,19 +39,27 @@ export class NSpellSpellChecker implements SpellCheckerRepository {
   public async correct(word: string): Promise<boolean> {
     await this.load();
 
-    return this.spell!.correct(word);
+    if (!this.spell) {
+      throw new Error('Spell checker is not loaded');
+    }
+
+    return this.spell.correct(word);
   }
 
   public async suggest(word: string): Promise<string[]> {
     await this.load();
 
-    return this.spell!.suggest(word);
+    if (!this.spell) {
+      throw new Error('Spell checker is not loaded');
+    }
+
+    return this.spell.suggest(word);
   }
 
   public async addToDict(words: string[]): Promise<void> {
     await this.load();
 
-    this.spell!.personal(words.join('\n'));
+    this.spell?.personal(words.join('\n'));
   }
 }
 

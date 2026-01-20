@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import * as core from '@actions/core';
 import { jest } from './jest';
 import { lint } from './lint';
@@ -24,7 +24,9 @@ async function run(): Promise<void> {
       jobs.push(jest(a11yResults));
     }
 
-    const playwrightReportURL = core.getInput('playwrightReportURL', { required: false });
+    const playwrightReportURL = core.getInput('playwrightReportURL', {
+      required: false,
+    });
     const token = core.getInput('token', { required: false });
     const prNumberRaw = core.getInput('prNumber', { required: false });
 

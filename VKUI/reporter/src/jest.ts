@@ -56,12 +56,10 @@ function getTitle({ ancestorTitles, title }: FormattedAssertionResult) {
 }
 
 function getLine({ location }: FormattedAssertionResult) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   return location?.line || 0;
 }
 
 function getColumn(result: FormattedAssertionResult) {
-  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   return result.location?.column || 0;
 }
 
@@ -90,7 +88,9 @@ function reportFailed(fullPath: string, result: FormattedAssertionResult) {
 function checkResult(result: FormattedTestResult) {
   result.assertionResults
     .filter(({ status }) => status === 'failed')
-    .forEach((assertionResult) => reportFailed(result.name, assertionResult));
+    .forEach((assertionResult) => {
+      reportFailed(result.name, assertionResult);
+    });
 }
 
 export async function jest(lintPath: string) {

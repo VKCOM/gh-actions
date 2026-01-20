@@ -28,7 +28,7 @@ export const getMilestone = async ({
       issue_number: linkedIssueNumber,
     });
     return issue.milestone;
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 };

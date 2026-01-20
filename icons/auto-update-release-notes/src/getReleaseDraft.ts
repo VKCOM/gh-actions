@@ -1,5 +1,5 @@
-import type * as github from '@actions/github';
 import * as core from '@actions/core';
+import type * as github from '@actions/github';
 import semver from 'semver';
 
 function getNextMinorVersion(currentVersion: string): string {

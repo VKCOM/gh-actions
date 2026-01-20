@@ -1,5 +1,5 @@
-function isObject(value: unknown): value is Record<string, any> {
-  return typeof value === 'object' && !(value instanceof Array);
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && !Array.isArray(value);
 }
 
 /**
@@ -23,10 +23,9 @@ export function sortObjectRecursively<T>(value: T): T {
   //
   // https://exploringjs.com/es6/ch_oop-besides-classes.html#_traversal-order-of-properties
 
-  // eslint-disable-next-line @typescript-eslint/require-array-sort-compare -- сортируем строки
   return Object.keys(value)
     .sort()
-    .reduce<any>((obj, key) => {
+    .reduce<Record<string, unknown>>((obj, key) => {
       obj[key] = sortObjectRecursively(value[key]);
       return obj;
     }, {}) as T;

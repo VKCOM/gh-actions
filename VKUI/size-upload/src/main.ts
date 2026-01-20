@@ -1,11 +1,11 @@
-import * as path from 'node:path';
 import * as crypto from 'node:crypto';
+import * as path from 'node:path';
 
 import * as core from '@actions/core';
-import { PutObjectCommandInput, S3, S3ClientConfig } from '@aws-sdk/client-s3';
+import { type PutObjectCommandInput, S3, type S3ClientConfig } from '@aws-sdk/client-s3';
 import { lookup } from 'mime-types';
-import { getSizesFromJSON } from './size_limit';
 import { getHashAndTimestamp } from './git';
+import { getSizesFromJSON } from './size_limit';
 
 const req = {
   required: true,
@@ -132,7 +132,7 @@ class Action {
     const key = path.join(this.keyPrefix, filename);
 
     const file = await this.getObject(key);
-    await this.putObject(key, file + line + '\n');
+    await this.putObject(key, `${file + line}\n`);
 
     return filename;
   }
@@ -143,11 +143,10 @@ class Action {
 
     const sizes = await getSizesFromJSON(core.getInput('sizePath', req));
 
-    // eslint-disable-next-line @typescript-eslint/await-thenable
     for await (const { name, size } of sizes) {
       const line = (await getHashAndTimestamp()) + size.toString();
 
-      if (!list.hasOwnProperty(name)) {
+      if (!(name in list)) {
         const filename = await this.createSizeCheck();
         list[name] = {
           filename,

@@ -1,8 +1,8 @@
 import * as core from '@actions/core';
-import { NSpellSpellChecker } from './repositories/spell.ts';
-import { GitHub } from './repositories/github.ts';
-import { ActionService } from './service/action.ts';
 import type { Repositories } from './entities/repositories.ts';
+import { GitHub } from './repositories/github.ts';
+import { NSpellSpellChecker } from './repositories/spell.ts';
+import { ActionService } from './service/action.ts';
 
 function prodRepositories(): Repositories {
   return {

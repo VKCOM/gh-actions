@@ -1,13 +1,13 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec';
 import * as github from '@actions/github';
 import { SemVer } from 'semver';
-import { getPatchInstructions } from './message.ts';
-import { getMergeData } from './getMergeData.ts';
-import { stableBranchName } from './stableBranchName.ts';
 import { getBooleanInput } from './getBooleanInput.ts';
+import { getMergeData } from './getMergeData.ts';
+import { getPatchInstructions } from './message.ts';
+import { stableBranchName } from './stableBranchName.ts';
 
 function getPrNumber() {
   const pullRequest = github.context.payload.pull_request;

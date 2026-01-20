@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { describe, it, mock } from 'node:test';
+
 import * as assert from 'node:assert';
+import { describe, it, mock } from 'node:test';
 import type * as github from '@actions/github';
 import { updateReleaseNotes } from './updateReleaseNotes.ts';
 
 type Octokit = ReturnType<typeof github.getOctokit>;
-type ArrayElement<ArrayType extends any[] | undefined> =
+type ArrayElement<ArrayType extends readonly unknown[] | undefined> =
   ArrayType extends Array<infer ElementType> ? ElementType : never;
 
 type PullRequestData = Awaited<ReturnType<Octokit['rest']['pulls']['get']>>['data'];
@@ -104,23 +105,21 @@ const setupData = () => {
     set lastReleaseName(name: string) {
       lastReleaseName = name;
     },
-    set issueData(
-      data: Partial<Omit<IssueData, 'milestone'>> & {
-        milestone?: Partial<IssueData['milestone']>;
-      },
-    ) {
+    set issueData(data: Partial<Omit<IssueData, 'milestone'>> & {
+      milestone?: Partial<IssueData['milestone']>;
+    },) {
       if (data.milestone) {
         issueData.milestone = data.milestone as IssueData['milestone'];
       }
     },
-    set pullRequestData(
-      data: Partial<Omit<typeof pullRequestData, 'user' | 'labels' | 'milestone'>> & {
-        milestone?: Partial<(typeof pullRequestData)['milestone']>;
-        user?: Partial<(typeof pullRequestData)['user']>;
-        labels?: Array<Partial<ArrayElement<(typeof pullRequestData)['labels']>>>;
-        fork?: boolean;
-      },
-    ) {
+    set pullRequestData(data: Partial<
+      Omit<typeof pullRequestData, 'user' | 'labels' | 'milestone'>
+    > & {
+      milestone?: Partial<(typeof pullRequestData)['milestone']>;
+      user?: Partial<(typeof pullRequestData)['user']>;
+      labels?: Array<Partial<ArrayElement<(typeof pullRequestData)['labels']>>>;
+      fork?: boolean;
+    },) {
       if (data.milestone) {
         pullRequestData.milestone = data.milestone as (typeof pullRequestData)['milestone'];
       }

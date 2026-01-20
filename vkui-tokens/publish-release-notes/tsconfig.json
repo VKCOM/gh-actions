@@ -10,6 +10,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", ".eslintrc.cjs"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

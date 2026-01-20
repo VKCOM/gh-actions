@@ -125,7 +125,9 @@ export function parseChanges(text: string): ChangeData[] {
     }
   }
   changes = changes.filter((change) => !!change.description);
-  changes.forEach((change) => (change.additionalInfo = change.additionalInfo?.trim()));
+  changes.forEach((change) => {
+    change.additionalInfo = change.additionalInfo?.trim();
+  });
 
   return changes;
 }

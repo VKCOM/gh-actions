@@ -25,7 +25,7 @@ export class GitHubCommentBuilder {
    * Добавляет текст к комментарию.
    */
   public add(text: string) {
-    this.message += text + '\n\n';
+    this.message += `${text}\n\n`;
   }
 
   /**

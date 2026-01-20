@@ -50,7 +50,7 @@ export function releaseNotesParser(body: string) {
 
     icons.sort((a, b) => {
       if (a.size !== b.size) {
-        return parseInt(a.size) - parseInt(b.size);
+        return parseInt(a.size, 10) - parseInt(b.size, 10);
       }
       return a.name.localeCompare(b.name);
     });

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { test } from 'node:test';
+
 import * as assert from 'node:assert/strict';
+import { test } from 'node:test';
 
 import { NSpellSpellChecker } from './spell.ts';
 

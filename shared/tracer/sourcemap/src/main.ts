@@ -1,8 +1,8 @@
 import * as core from '@actions/core';
-import { GitHub } from './repositories/github';
-import { ActionService } from './service/action';
 import type { Repositories } from './entities/repositories';
+import { GitHub } from './repositories/github';
 import { TracerSourceMap } from './repositories/tracer';
+import { ActionService } from './service/action';
 
 function prodRepositories(): Repositories {
   return {

@@ -1,8 +1,8 @@
+import * as core from '@actions/core';
 import type * as github from '@actions/github';
 import type { IconData } from './types.ts';
-import * as core from '@actions/core';
 
-const ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^\/]+)\/([^\/]+)\.svg$/;
+const ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^/]+)\/([^/]+)\.svg$/;
 
 function convertToIconName(input: string): string {
   const parts = input.split('_');
@@ -39,7 +39,7 @@ export async function getChangedIconsData(
 
     const [, size, name] = match;
     const formattedName = convertToIconName(name);
-    const icon = { name: formattedName, size, url: file['raw_url'] };
+    const icon = { name: formattedName, size, url: file.raw_url };
 
     if (file.status === 'added') {
       addedIcons.push(icon);

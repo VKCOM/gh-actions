@@ -1,11 +1,11 @@
 import type { ReleaseNoteData } from '../types.ts';
+import { convertChangesToString } from './convertChangesToString.ts';
 import {
   getHeaderBySectionType,
   getSectionTypeByHeader,
   NEED_TO_DESCRIBE_HEADER,
 } from './headers.ts';
 import { parseChanges } from './parseChanges.ts';
-import { convertChangesToString } from './convertChangesToString.ts';
 
 export function releaseNotesUpdater(currentBody: string) {
   let body = currentBody;
@@ -46,7 +46,7 @@ export function releaseNotesUpdater(currentBody: string) {
     const endIndex = findNextHeaderPosition(startIndex);
     let currentContent = body.substring(startIndex, endIndex).trim();
     currentContent = calculateNewContent(currentContent);
-    body = body.slice(0, startIndex) + '\r\n' + currentContent + '\r\n' + body.slice(endIndex);
+    body = `${body.slice(0, startIndex)}\r\n${currentContent}\r\n${body.slice(endIndex)}`;
   };
 
   const addSectionWithContent = (header: string, content: string) => {
