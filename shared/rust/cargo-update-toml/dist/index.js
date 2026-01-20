@@ -19424,8 +19424,8 @@ Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
 });
 
 // src/main.ts
-var fs = __toESM(require("node:fs/promises"));
-var core = __toESM(require_core());
+var fs = __toESM(require("node:fs/promises"), 1);
+var core = __toESM(require_core(), 1);
 
 // src/versionStyle.ts
 function countInstances(string, word) {
@@ -19445,11 +19445,11 @@ function versionStyle(version, newVersion) {
 }
 
 // src/registry.ts
-var readline2 = __toESM(require("node:readline/promises"));
-var https = __toESM(require("node:https"));
+var readline2 = __toESM(require("node:readline/promises"), 1);
+var https = __toESM(require("node:https"), 1);
 
 // src/getLastLine.ts
-var readline = __toESM(require("node:readline/promises"));
+var readline = __toESM(require("node:readline/promises"), 1);
 function getLastLine(input) {
   return new Promise((resolve, reject) => {
     const rl = readline.createInterface(input);

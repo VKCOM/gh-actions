@@ -25446,8 +25446,8 @@ var require_semver2 = __commonJS({
 });
 
 // src/main.ts
-var core = __toESM(require_core());
-var github = __toESM(require_github());
+var core = __toESM(require_core(), 1);
+var github = __toESM(require_github(), 1);
 
 // src/parsing/headers.ts
 var IMPROVEMENT_HEADER = "\u0423\u043B\u0443\u0447\u0448\u0435\u043D\u0438\u044F";
@@ -25865,7 +25865,7 @@ async function getRelease({
 }
 
 // src/getVersion.ts
-var import_semver = __toESM(require_semver2());
+var import_semver = __toESM(require_semver2(), 1);
 function getNextMinorVersion(currentVersion) {
   const nextVersion = import_semver.default.inc(currentVersion, "minor");
   if (!nextVersion) {

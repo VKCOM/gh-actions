@@ -25446,11 +25446,11 @@ var require_semver2 = __commonJS({
 });
 
 // src/main.ts
-var core4 = __toESM(require_core());
-var github = __toESM(require_github());
+var core4 = __toESM(require_core(), 1);
+var github = __toESM(require_github(), 1);
 
 // src/updateReleaseNotes.ts
-var core3 = __toESM(require_core());
+var core3 = __toESM(require_core(), 1);
 
 // src/releaseNotesParser.ts
 function findNumber(input) {
@@ -25468,13 +25468,14 @@ function releaseNotesParser(body) {
     const sectionContent = body.substring(sectionStart + sectionTitle.length + 3, sectionEnd);
     const icons = [];
     const iconRegex = /### (.+?)\s+!\[.*?\]\((.+?)\)/g;
-    let match;
-    while ((match = iconRegex.exec(sectionContent)) !== null) {
+    let match = iconRegex.exec(sectionContent);
+    while (match !== null) {
       icons.push({
         name: match[1],
         size: findNumber(match[1]),
         url: match[2]
       });
+      match = iconRegex.exec(sectionContent);
     }
     return icons;
   };
@@ -25536,7 +25537,7 @@ ${sectionContent}`;
 }
 
 // src/getChangedIconsData.ts
-var core = __toESM(require_core());
+var core = __toESM(require_core(), 1);
 var ICON_FILE_REGEX = /^packages\/icons\/src\/svg\/([^\/]+)\/([^\/]+)\.svg$/;
 function convertToIconName(input) {
   const parts = input.split("_");
@@ -25578,8 +25579,8 @@ async function getChangedIconsData(octokit, owner, repo, prNumber) {
 }
 
 // src/getReleaseDraft.ts
-var core2 = __toESM(require_core());
-var import_semver = __toESM(require_semver2());
+var core2 = __toESM(require_core(), 1);
+var import_semver = __toESM(require_semver2(), 1);
 function getNextMinorVersion(currentVersion) {
   const nextVersion = import_semver.default.inc(currentVersion, "minor");
   if (!nextVersion) {

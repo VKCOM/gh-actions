@@ -24486,10 +24486,10 @@ var require_github = __commonJS({
 });
 
 // src/main.ts
-var core2 = __toESM(require_core());
+var core2 = __toESM(require_core(), 1);
 
 // src/repositories/spell.ts
-var import_nspell = __toESM(require_lib2());
+var import_nspell = __toESM(require_lib2(), 1);
 
 // ../../node_modules/async-mutex/index.mjs
 var E_TIMEOUT = new Error("timeout while waiting for mutex to become available");
@@ -24700,10 +24700,8 @@ var Mutex = class {
 // src/repositories/spell.ts
 var PERSONAL_DICTIONARY = ["svg", "src"].join("\n");
 var NSpellSpellChecker = class {
-  constructor() {
-    this.spell = null;
-    this.mutexLoad = new Mutex();
-  }
+  spell = null;
+  mutexLoad = new Mutex();
   async loadNSpell() {
     const urlEnDict = "https://raw.githubusercontent.com/wooorm/dictionaries/8cfea406b505e4d7df52d5a19bce525df98c54ab/dictionaries/en/";
     const aff = await fetch(urlEnDict + "index.aff");
@@ -24733,9 +24731,10 @@ var NSpellSpellChecker = class {
 };
 
 // src/repositories/github.ts
-var core = __toESM(require_core());
-var github = __toESM(require_github());
+var core = __toESM(require_core(), 1);
+var github = __toESM(require_github(), 1);
 var GitHub = class {
+  octokit;
   constructor() {
     const token = core.getInput("token", { required: true });
     this.octokit = github.getOctokit(token);
@@ -24777,6 +24776,7 @@ var GitHub = class {
 
 // src/service/service.ts
 var Service = class {
+  repositories;
   constructor(repositories) {
     this.repositories = repositories;
   }

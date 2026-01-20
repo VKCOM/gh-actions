@@ -25446,12 +25446,12 @@ var require_semver2 = __commonJS({
 });
 
 // src/main.ts
-var fs = __toESM(require("fs"));
-var path = __toESM(require("path"));
-var core2 = __toESM(require_core());
-var exec3 = __toESM(require_exec());
-var github = __toESM(require_github());
-var import_semver = __toESM(require_semver2());
+var fs = __toESM(require("fs"), 1);
+var path = __toESM(require("path"), 1);
+var core2 = __toESM(require_core(), 1);
+var exec3 = __toESM(require_exec(), 1);
+var github = __toESM(require_github(), 1);
+var import_semver = __toESM(require_semver2(), 1);
 
 // src/message.ts
 function getPatchInstructions(header, description, patch) {
@@ -25492,7 +25492,7 @@ gh pr create --base ${targetBranchRef} --title "patch: pr${pullNumber}" --body "
 }
 
 // src/getMergeData.ts
-var exec = __toESM(require_exec());
+var exec = __toESM(require_exec(), 1);
 var MINIMUM_MERGE_COMMIT_COUNT = 2;
 async function getMergeData(gh, repo, pullNumber) {
   const pullRequest = await gh.rest.pulls.get({ ...repo, pull_number: pullNumber });
@@ -25522,7 +25522,7 @@ function stableBranchName(semVer) {
 }
 
 // src/getBooleanInput.ts
-var core = __toESM(require_core());
+var core = __toESM(require_core(), 1);
 var trueValue = ["true", "True", "TRUE"];
 var falseValue = ["false", "False", "FALSE"];
 function getBooleanInput(name, options) {
