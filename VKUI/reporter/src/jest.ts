@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import strip from 'strip-ansi';
 
-import { parseFile } from './shared';
+import { parseFile } from './shared.ts';
 
 type Status = 'passed' | 'failed' | 'skipped' | 'pending' | 'todo' | 'disabled';
 
@@ -100,7 +100,9 @@ export async function jest(lintPath: string) {
       return;
     }
 
-    results.testResults.filter(({ status }) => status === 'failed').forEach(checkResult);
+    results.testResults
+      .filter(({ status }: FormattedTestResult) => status === 'failed')
+      .forEach(checkResult);
   } catch (err) {
     if (err instanceof Error) {
       core.error(`Could not read test results: ${err.message}`);

@@ -4,8 +4,8 @@ import * as path from 'node:path';
 import * as core from '@actions/core';
 import { type PutObjectCommandInput, S3, type S3ClientConfig } from '@aws-sdk/client-s3';
 import { lookup } from 'mime-types';
-import { getHashAndTimestamp } from './git';
-import { getSizesFromJSON } from './size_limit';
+import { getHashAndTimestamp } from './git.ts';
+import { getSizesFromJSON } from './size_limit.ts';
 
 const req = {
   required: true,

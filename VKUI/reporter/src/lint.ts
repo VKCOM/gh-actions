@@ -1,7 +1,7 @@
 import path from 'node:path';
 import * as core from '@actions/core';
 
-import { parseFile } from './shared';
+import { parseFile } from './shared.ts';
 
 const SEVERITY = {
   /**

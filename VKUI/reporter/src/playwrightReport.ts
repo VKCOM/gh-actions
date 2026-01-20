@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import * as github from '@actions/github';
-import { GitHubCommentBuilder } from './comment';
+import { GitHubCommentBuilder } from './comment.ts';
 
 function hasFailedScreenshots() {
   const playwrightReportDirPath = path.join(process.cwd(), 'playwright-report');

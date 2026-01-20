@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import { getCurrentVersion, getNextMinorVersion } from './getVersion';
-import { addMilestoneToPR, createMilestone, getMilestone } from './milestone';
+import { getCurrentVersion, getNextMinorVersion } from './getVersion.ts';
+import { addMilestoneToPR, createMilestone, getMilestone } from './milestone.ts';
 
 async function run() {
   try {

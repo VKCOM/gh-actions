@@ -2,7 +2,7 @@ import { uploadSourceMap } from '@apptracer/sourcemap';
 import type {
   TracerSourceMapRepository,
   TracerUploadSourceMapConfiguration,
-} from '../entities/repositories';
+} from '../entities/repositories.ts';
 
 export class TracerSourceMap implements TracerSourceMapRepository {
   public async uploadSourcemap(

@@ -1,6 +1,6 @@
 import * as github from '@actions/github';
 
-import { getPullRequestNumber } from './shared';
+import { getPullRequestNumber } from './shared.ts';
 
 /**
  * Префикс комментария, для его обнаружения
@@ -13,11 +13,10 @@ const commentPrefix = '<!--GitHub Comment Builder-->\n';
 export class GitHubCommentBuilder {
   public message = commentPrefix;
   private readonly prNumber: number;
+  private readonly gh: ReturnType<typeof github.getOctokit>;
 
-  public constructor(
-    private readonly gh: ReturnType<typeof github.getOctokit>,
-    prNumber?: number,
-  ) {
+  public constructor(gh: ReturnType<typeof github.getOctokit>, prNumber?: number) {
+    this.gh = gh;
     this.prNumber = typeof prNumber === 'number' ? prNumber : getPullRequestNumber();
   }
 
