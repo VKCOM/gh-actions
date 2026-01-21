@@ -1,7 +1,7 @@
-import * as fs from "node:fs/promises";
-import * as core from "@actions/core";
-import { cargoRegistryLastIndexPackage } from "./registry.ts";
-import { versionStyle } from "./versionStyle.ts";
+import * as fs from 'node:fs/promises';
+import * as core from '@actions/core';
+import { cargoRegistryLastIndexPackage } from './registry.ts';
+import { versionStyle } from './versionStyle.ts';
 
 /**
  * Возвращает последнюю версию crate пакета
@@ -18,12 +18,12 @@ async function updateDependency(data: string, name: string) {
   const lastVersion = await crateRegistryVersion(name);
   const searchValue = new RegExp(
     `(${name}[\\s]+=[\\s\\n]+(\\{.*?version\\s+=\\s+|))"([\\d.]+)"`,
-    "m",
+    'm',
   );
 
   const match = data.match(searchValue);
   if (match === null) {
-    throw new Error("Dependency not found in Cargo.toml");
+    throw new Error('Dependency not found in Cargo.toml');
   }
 
   const replaceValue = `$1"${versionStyle(match[3], lastVersion)}"`;
@@ -33,9 +33,9 @@ async function updateDependency(data: string, name: string) {
 
 async function run() {
   try {
-    const packages = core.getInput("packages", { required: true }).split(/[\n,]/);
-    const filepath = "Cargo.toml";
-    const encoding = "utf8";
+    const packages = core.getInput('packages', { required: true }).split(/[\n,]/);
+    const filepath = 'Cargo.toml';
+    const encoding = 'utf8';
 
     const data = await fs.readFile(filepath, encoding);
 

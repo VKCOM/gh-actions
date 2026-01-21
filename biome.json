@@ -14,26 +14,14 @@
     "bracketSpacing": true,
     "expand": "auto",
     "useEditorconfig": true,
-    "includes": [
-      "**",
-      "!**/node_modules/**/*",
-      "!**/.cache/**/*",
-      "!**/dist/**/*",
-      "!**/.yar/**/*"
-    ]
+    "includes": ["**", "!**/node_modules/**/*", "!**/.cache/**/*", "!**/dist/**/*", "!**/.yar/**/*"]
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true
     },
-    "includes": [
-      "**",
-      "!**/node_modules/**/*",
-      "!**/.cache",
-      "!**/dist/**/*",
-      "!**/.yar/**/*"
-    ]
+    "includes": ["**", "!**/node_modules/**/*", "!**/.cache", "!**/dist/**/*", "!**/.yar/**/*"]
   },
   "javascript": {
     "formatter": {
@@ -51,12 +39,6 @@
   "assist": {
     "enabled": true,
     "actions": { "source": { "organizeImports": "on" } },
-    "includes": [
-      "**",
-      "!**/node_modules/**/*",
-      "!**/.cache/**/*",
-      "!**/dist/**/*",
-      "!**/.yar/**/*"
-    ]
+    "includes": ["**", "!**/node_modules/**/*", "!**/.cache/**/*", "!**/dist/**/*", "!**/.yar/**/*"]
   }
 }
