@@ -6,5 +6,5 @@ inputs:
     description: 'Packages that need to be updated'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'

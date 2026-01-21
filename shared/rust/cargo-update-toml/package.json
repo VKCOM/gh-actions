@@ -14,7 +14,7 @@
   },
   "scripts": {
     "prebuild": "shx rm -rf dist/*",
-    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --format=esm --packages=bundle",
+    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --packages=bundle --format=esm --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
     "test": "node --version && node --test '**/*.test.*'"
   }
 }
