@@ -1,5 +1,5 @@
 import * as core from '@actions/core';
-import { WorkflowHandler } from './workflowHandler';
+import { WorkflowHandler } from './workflowHandler.ts';
 
 async function run(): Promise<void> {
   try {

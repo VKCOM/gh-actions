@@ -1,4 +1,4 @@
-import { Service } from './service';
+import { Service } from './service.ts';
 
 export class ActionService extends Service {
   public async run(): Promise<void> {

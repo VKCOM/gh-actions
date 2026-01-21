@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import * as core from '@actions/core';
-import { jest } from './jest';
-import { lint } from './lint';
-import { playwrightReport } from './playwrightReport';
+import { jest } from './jest.ts';
+import { lint } from './lint.ts';
+import { playwrightReport } from './playwrightReport.ts';
 
 async function run(): Promise<void> {
   try {

@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 
-import type { GitHubRepository } from '../entities/repositories';
+import type { GitHubRepository } from '../entities/repositories.ts';
 
 export class GitHub implements GitHubRepository {
   public async getInput() {

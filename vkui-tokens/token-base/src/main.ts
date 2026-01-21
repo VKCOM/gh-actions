@@ -1,7 +1,7 @@
 import * as fs from 'node:fs/promises';
 import * as core from '@actions/core';
 import * as Figma from 'figma-js';
-import { sortObjectRecursively } from './sort';
+import { sortObjectRecursively } from './sort.ts';
 
 type Tokens = { [P in string]: Tokens | string };
 

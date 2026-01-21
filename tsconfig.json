@@ -1,13 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "moduleResolution": "node",
-    "module": "commonjs",
     "noEmit": true,
-    "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "allowImportingTsExtensions": true
-  }
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true,
+    "strict": true,
+    "module": "nodenext",
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": true
+  },
+  "exclude": ["node_modules"]
 }
