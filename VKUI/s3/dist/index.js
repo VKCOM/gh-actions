@@ -52704,7 +52704,7 @@ var require_lodash = __commonJS({
   "../../node_modules/lodash/lodash.js"(exports, module) {
     (function() {
       var undefined2;
-      var VERSION = "4.17.21";
+      var VERSION = "4.17.23";
       var LARGE_ARRAY_SIZE = 200;
       var CORE_ERROR_TEXT = "Unsupported core-js use. Try https://npms.io/search?q=ponyfill.", FUNC_ERROR_TEXT = "Expected a function", INVALID_TEMPL_VAR_ERROR_TEXT = "Invalid `variable` option passed into `_.template`";
       var HASH_UNDEFINED = "__lodash_hash_undefined__";
@@ -54632,8 +54632,28 @@ var require_lodash = __commonJS({
         }
         function baseUnset(object, path2) {
           path2 = castPath(path2, object);
-          object = parent(object, path2);
-          return object == null || delete object[toKey(last(path2))];
+          var index = -1, length = path2.length;
+          if (!length) {
+            return true;
+          }
+          var isRootPrimitive = object == null || typeof object !== "object" && typeof object !== "function";
+          while (++index < length) {
+            var key = path2[index];
+            if (typeof key !== "string") {
+              continue;
+            }
+            if (key === "__proto__" && !hasOwnProperty.call(object, "__proto__")) {
+              return false;
+            }
+            if (key === "constructor" && index + 1 < length && typeof path2[index + 1] === "string" && path2[index + 1] === "prototype") {
+              if (isRootPrimitive && index === 0) {
+                continue;
+              }
+              return false;
+            }
+          }
+          var obj = parent(object, path2);
+          return obj == null || delete obj[toKey(last(path2))];
         }
         function baseUpdate(object, path2, updater, customizer) {
           return baseSet(object, path2, updater(baseGet(object, path2)), customizer);
