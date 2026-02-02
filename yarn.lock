@@ -22,7 +22,7 @@ __metadata:
   resolution: "@actions-internal/auto-update-icons-release-notes@workspace:icons/auto-update-release-notes"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^7.0.0"
     "@types/node": "npm:^25.0.9"
     "@types/semver": "npm:^7.7.1"
@@ -36,7 +36,7 @@ __metadata:
   resolution: "@actions-internal/auto-update-release-notes@workspace:VKUI/auto-update-release-notes"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^7.0.0"
     "@types/node": "npm:^25.0.9"
     "@types/semver": "npm:^7.7.1"
@@ -50,7 +50,7 @@ __metadata:
   resolution: "@actions-internal/bump-vkui-floating-ui-version@workspace:VKUI/bump-vkui-floating-ui-version"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^7.0.0"
     "@types/node": "npm:^25.0.9"
     "@types/semver": "npm:^7.7.1"
@@ -88,7 +88,7 @@ __metadata:
   resolution: "@actions-internal/patch@workspace:VKUI/patch"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^7.0.0"
     "@types/node": "npm:^25.0.9"
     "@types/semver": "npm:^7.7.1"
@@ -114,7 +114,7 @@ __metadata:
   resolution: "@actions-internal/push-screenshots@workspace:VKUI/push-screenshots"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@types/node": "npm:^25.0.9"
     typescript: "npm:^5.9.3"
   languageName: unknown
@@ -162,7 +162,7 @@ __metadata:
   resolution: "@actions-internal/size-upload@workspace:VKUI/size-upload"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/mime-types": "npm:^3.0.1"
     "@types/node": "npm:^25.0.9"
@@ -190,7 +190,7 @@ __metadata:
   resolution: "@actions-internal/stable-branch@workspace:VKUI/stable-branch"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^7.0.0"
     "@types/node": "npm:^25.0.9"
     "@types/semver": "npm:^7.7.1"
@@ -229,6 +229,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@actions/exec@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@actions/exec@npm:3.0.0"
+  dependencies:
+    "@actions/io": "npm:^3.0.2"
+  checksum: 10c0/5e4357cd8538ae8d94ffef653559202e7d18db18c5ecccd2c943b4aab989df9cf4e466fcc3c4405887a3c30b88e87b89fb7c7f5b179622d1192525ec891f0274
+  languageName: node
+  linkType: hard
+
 "@actions/github@npm:^7.0.0":
   version: 7.0.0
   resolution: "@actions/github@npm:7.0.0"
@@ -258,6 +267,13 @@ __metadata:
   version: 2.0.0
   resolution: "@actions/io@npm:2.0.0"
   checksum: 10c0/b66170cbce7e19b9560f445ebbe0af2d031857efbe759020708745384d7a94b738dc09df2636e0c3049a9172c7b293d09f8a882bf5c25cc86bd19844cef61c41
+  languageName: node
+  linkType: hard
+
+"@actions/io@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@actions/io@npm:3.0.2"
+  checksum: 10c0/25fae323886544f965e90ab9655e3fb60816eb379c78418c4b06a5dc9da27810eb5b0bd0629146dbd5482a03e3c60a5b8713223e4f789abede23df643ddcae8c
   languageName: node
   linkType: hard
 
@@ -2298,7 +2314,7 @@ __metadata:
   resolution: "@vkui-tokens/token-base@workspace:vkui-tokens/token-base"
   dependencies:
     "@actions/core": "npm:^2.0.2"
-    "@actions/exec": "npm:^2.0.0"
+    "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^7.0.0"
     "@types/node": "npm:^25.0.9"
     "@types/semver": "npm:^7.7.1"
