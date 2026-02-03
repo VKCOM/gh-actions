@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
-    "@actions/github": "^7.0.0",
+    "@actions/github": "^9.0.0",
     "strip-ansi": "^7.1.2"
   },
   "scripts": {
