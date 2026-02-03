@@ -18443,9 +18443,9 @@ var require_io = __commonJS({
   }
 });
 
-// ../../../node_modules/@actions/exec/lib/toolrunner.js
+// ../../../node_modules/@actions/core/node_modules/@actions/exec/lib/toolrunner.js
 var require_toolrunner = __commonJS({
-  "../../../node_modules/@actions/exec/lib/toolrunner.js"(exports) {
+  "../../../node_modules/@actions/core/node_modules/@actions/exec/lib/toolrunner.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
@@ -18941,9 +18941,9 @@ var require_toolrunner = __commonJS({
   }
 });
 
-// ../../../node_modules/@actions/exec/lib/exec.js
+// ../../../node_modules/@actions/core/node_modules/@actions/exec/lib/exec.js
 var require_exec = __commonJS({
-  "../../../node_modules/@actions/exec/lib/exec.js"(exports) {
+  "../../../node_modules/@actions/core/node_modules/@actions/exec/lib/exec.js"(exports) {
     "use strict";
     var __createBinding = exports && exports.__createBinding || (Object.create ? (function(o, m, k, k2) {
       if (k2 === void 0) k2 = k;
