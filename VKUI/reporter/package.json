@@ -10,7 +10,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@actions/core": "^2.0.2",
+    "@actions/core": "^3.0.0",
     "@actions/github": "^7.0.0",
     "strip-ansi": "^7.1.2"
   },
