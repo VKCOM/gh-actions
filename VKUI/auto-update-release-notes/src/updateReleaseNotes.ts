@@ -1,13 +1,15 @@
 import type * as github from '@actions/github';
 import { calculateReleaseVersion } from './calculateReleaseVersion.ts';
 import { getMilestone } from './getMilestone.ts';
-import { getRelease } from './getRelease.ts';
+import { getRcRelease } from './getRcRelease.ts';
 import { getPullRequestReleaseNotesBody } from './parsing/getPullRequestReleaseNotesBody.ts';
 import { parsePullRequestLinkedIssue } from './parsing/parsePullRequestLinkedIssue.ts';
 import { parsePullRequestReleaseNotesBody } from './parsing/parsePullRequestReleaseNotesBody.ts';
-import { releaseNotesUpdater } from './parsing/releaseNotesUpdater.ts';
+import { updateReleaseByName } from './updateReleaseByName.ts';
 
 const EMPTY_NOTES = '-';
+
+const isMajorVersion = (version: string): boolean => /^\d+\.0\.0$/.test(version);
 
 export const updateReleaseNotes = async ({
   octokit,
@@ -63,9 +65,9 @@ export const updateReleaseNotes = async ({
   const isFromForkedRepo = pullRequest.head.repo?.fork;
   const otherAuthor = isFromForkedRepo ? author : '';
 
-  const pullRequestReleaseNotes =
-    pullRequestReleaseNotesBody &&
-    parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber, otherAuthor);
+  const pullRequestReleaseNotes = pullRequestReleaseNotesBody
+    ? parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber, otherAuthor)
+    : null;
 
   const releaseData = await calculateReleaseVersion({
     octokit,
@@ -81,34 +83,38 @@ export const updateReleaseNotes = async ({
 
   const { releaseName, version: releaseVersion } = releaseData;
 
-  const release = await getRelease({
-    owner,
-    repo,
+  await updateReleaseByName({
     octokit,
+    repo,
+    owner,
     releaseName,
+    releaseVersion,
+    prNumber,
+    newNotes: pullRequestReleaseNotes,
   });
 
-  if (!release || !release.draft) {
+  if (!isMajorVersion(releaseVersion)) {
     return;
   }
 
-  const releaseUpdater = releaseNotesUpdater(release.body || '');
-
-  if (pullRequestReleaseNotes) {
-    pullRequestReleaseNotes.forEach((note) => {
-      releaseUpdater.addNotes({
-        noteData: note,
-        version: releaseVersion,
-      });
-    });
-  } else {
-    releaseUpdater.addUndescribedPRNumber(prNumber);
-  }
-
-  await octokit.rest.repos.updateRelease({
+  const rcRelease = await getRcRelease({
+    octokit,
     owner,
     repo,
-    release_id: release.id,
-    body: releaseUpdater.getBody(),
+    releaseVersion,
+  });
+
+  if (!rcRelease) {
+    return;
+  }
+
+  await updateReleaseByName({
+    octokit,
+    repo,
+    owner,
+    releaseName: rcRelease.releaseName,
+    releaseVersion: rcRelease.releaseVersion,
+    prNumber,
+    newNotes: pullRequestReleaseNotes,
   });
 };
