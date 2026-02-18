@@ -5,7 +5,7 @@ export function parsePullRequestReleaseNotesBody(
   releaseNotesBody: string,
   pullRequestNumber: number,
   author: string,
-): ReleaseNoteData[] | null | '' {
+): ReleaseNoteData[] {
   const updater = releaseNotesUpdater(releaseNotesBody);
 
   return updater.getReleaseNotesData().map((change) => ({
