@@ -25405,58 +25405,49 @@ var getMilestone = async ({
   }
 };
 
-// src/getRelease.ts
-async function getRecentDraftReleaseByName({
-  octokit,
-  owner,
-  repo,
-  releaseName
-}) {
-  try {
-    const response = await octokit.rest.repos.listReleases({
-      owner,
-      repo,
-      per_page: 10
-    });
-    const searchedRelease = response.data.filter((release) => release.draft).find((release) => release.name === releaseName);
-    return searchedRelease || null;
-  } catch (_error) {
-    return null;
-  }
-}
-async function getRelease({
-  octokit,
-  owner,
-  repo,
-  releaseName
-}) {
-  try {
-    const searchedRelease = await getRecentDraftReleaseByName({
-      octokit,
-      owner,
-      repo,
-      releaseName
-    });
-    if (searchedRelease) {
-      return searchedRelease;
+// src/getRcRelease.ts
+var RELEASES_PAGE_SIZE = 10;
+var findLatestRcReleaseName = (releases, major) => {
+  const rcPattern = new RegExp(`^v${major}\\.0\\.0-rc\\.\\d+$`);
+  for (const r of releases) {
+    const name = r.name || r.tag_name || "";
+    if (rcPattern.test(name)) {
+      return name;
     }
-  } catch (_e) {
-  }
-  try {
-    const { data: createdRelease } = await octokit.rest.repos.createRelease({
-      owner,
-      repo,
-      tag_name: releaseName,
-      name: releaseName,
-      body: "",
-      draft: true,
-      prerelease: false
-    });
-    return createdRelease;
-  } catch (_e) {
   }
   return null;
-}
+};
+var parseVersionFromReleaseName = (releaseName) => releaseName.startsWith("v") ? releaseName.slice(1) : releaseName;
+var getRcRelease = async ({
+  octokit,
+  owner,
+  repo,
+  releaseVersion
+}) => {
+  const major = parseInt(releaseVersion.split(".")[0], 10);
+  if (Number.isNaN(major)) {
+    return null;
+  }
+  let releases;
+  try {
+    const { data } = await octokit.rest.repos.listReleases({
+      owner,
+      repo,
+      per_page: RELEASES_PAGE_SIZE
+    });
+    releases = data;
+  } catch {
+    return null;
+  }
+  const rcReleaseName = findLatestRcReleaseName(releases, major);
+  if (!rcReleaseName) {
+    return null;
+  }
+  return {
+    releaseName: rcReleaseName,
+    releaseVersion: parseVersionFromReleaseName(rcReleaseName)
+  };
+};
 
 // src/parsing/getPullRequestReleaseNotesBody.ts
 var RELEASE_NOTE_HEADER = "## Release notes";
@@ -25865,8 +25856,100 @@ function parsePullRequestReleaseNotesBody(releaseNotesBody, pullRequestNumber, a
   }));
 }
 
+// src/getRelease.ts
+async function getRecentDraftReleaseByName({
+  octokit,
+  owner,
+  repo,
+  releaseName
+}) {
+  try {
+    const response = await octokit.rest.repos.listReleases({
+      owner,
+      repo,
+      per_page: 10
+    });
+    const searchedRelease = response.data.filter((release) => release.draft).find((release) => release.name === releaseName);
+    return searchedRelease || null;
+  } catch (_error) {
+    return null;
+  }
+}
+async function getRelease({
+  octokit,
+  owner,
+  repo,
+  releaseName
+}) {
+  try {
+    const searchedRelease = await getRecentDraftReleaseByName({
+      octokit,
+      owner,
+      repo,
+      releaseName
+    });
+    if (searchedRelease) {
+      return searchedRelease;
+    }
+  } catch (_e) {
+  }
+  try {
+    const { data: createdRelease } = await octokit.rest.repos.createRelease({
+      owner,
+      repo,
+      tag_name: releaseName,
+      name: releaseName,
+      body: "",
+      draft: true,
+      prerelease: false
+    });
+    return createdRelease;
+  } catch (_e) {
+  }
+  return null;
+}
+
+// src/updateReleaseByName.ts
+var updateReleaseByName = async ({
+  octokit,
+  owner,
+  repo,
+  releaseName,
+  releaseVersion,
+  newNotes,
+  prNumber
+}) => {
+  const release = await getRelease({
+    owner,
+    repo,
+    octokit,
+    releaseName
+  });
+  if (!release || !release.draft) {
+    return;
+  }
+  const releaseUpdater = releaseNotesUpdater(release.body || "");
+  if (newNotes) {
+    newNotes.forEach((note) => {
+      releaseUpdater.addNotes({
+        noteData: note,
+        version: releaseVersion
+      });
+    });
+  } else {
+    releaseUpdater.addUndescribedPRNumber(prNumber);
+  }
+  await octokit.rest.repos.updateRelease({
+    owner,
+    repo,
+    release_id: release.id,
+    body: releaseUpdater.getBody()
+  });
+};
+
 // src/updateReleaseNotes.ts
 var EMPTY_NOTES = "-";
+var isMajorVersion = (version) => /^\d+\.0\.0$/.test(version);
 var updateReleaseNotes = async ({
   octokit,
   owner,
@@ -25906,7 +25989,7 @@ var updateReleaseNotes = async ({
   }
   const isFromForkedRepo = pullRequest.head.repo?.fork;
   const otherAuthor = isFromForkedRepo ? author : "";
-  const pullRequestReleaseNotes = pullRequestReleaseNotesBody && parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber, otherAuthor);
+  const pullRequestReleaseNotes = pullRequestReleaseNotesBody ? parsePullRequestReleaseNotesBody(pullRequestReleaseNotesBody, prNumber, otherAuthor) : null;
   const releaseData = await calculateReleaseVersion({
     octokit,
     repo,
@@ -25918,31 +26001,35 @@ var updateReleaseNotes = async ({
     return;
   }
   const { releaseName, version: releaseVersion } = releaseData;
-  const release = await getRelease({
-    owner,
-    repo,
+  await updateReleaseByName({
     octokit,
-    releaseName
+    repo,
+    owner,
+    releaseName,
+    releaseVersion,
+    prNumber,
+    newNotes: pullRequestReleaseNotes
   });
-  if (!release || !release.draft) {
+  if (!isMajorVersion(releaseVersion)) {
     return;
   }
-  const releaseUpdater = releaseNotesUpdater(release.body || "");
-  if (pullRequestReleaseNotes) {
-    pullRequestReleaseNotes.forEach((note) => {
-      releaseUpdater.addNotes({
-        noteData: note,
-        version: releaseVersion
-      });
-    });
-  } else {
-    releaseUpdater.addUndescribedPRNumber(prNumber);
-  }
-  await octokit.rest.repos.updateRelease({
+  const rcRelease = await getRcRelease({
+    octokit,
     owner,
     repo,
-    release_id: release.id,
-    body: releaseUpdater.getBody()
+    releaseVersion
+  });
+  if (!rcRelease) {
+    return;
+  }
+  await updateReleaseByName({
+    octokit,
+    repo,
+    owner,
+    releaseName: rcRelease.releaseName,
+    releaseVersion: rcRelease.releaseVersion,
+    prNumber,
+    newNotes: pullRequestReleaseNotes
   });
 };
 
