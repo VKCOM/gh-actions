@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
-    "@apptracer/sourcemap": "^1.1.10"
+    "@apptracer/sourcemap": "^1.1.12"
   },
   "scripts": {
     "prebuild": "shx rm -rf dist/*",
