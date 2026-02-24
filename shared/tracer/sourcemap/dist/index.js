@@ -18534,6 +18534,7 @@ var require_lib = __commonJS({
     var require$$3 = __require("http");
     var require$$4 = __require("https");
     var require$$5$1 = __require("url");
+    var require$$8 = __require("crypto");
     var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
     function getDefaultExportFromCjs(x) {
       return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
@@ -18568,7 +18569,7 @@ var require_lib = __commonJS({
     function balanced$1(a, b, str) {
       if (a instanceof RegExp) a = maybeMatch(a, str);
       if (b instanceof RegExp) b = maybeMatch(b, str);
-      var r = range$1(a, b, str);
+      var r = range$2(a, b, str);
       return r && {
         start: r[0],
         end: r[1],
@@ -18581,8 +18582,8 @@ var require_lib = __commonJS({
       var m = str.match(reg);
       return m ? m[0] : null;
     }
-    balanced$1.range = range$1;
-    function range$1(a, b, str) {
+    balanced$1.range = range$2;
+    function range$2(a, b, str) {
       var begs, beg, left, right, result;
       var ai = str.indexOf(a);
       var bi = str.indexOf(b, ai + 1);
@@ -18688,7 +18689,7 @@ var require_lib = __commonJS({
         var isSequence = isNumericSequence || isAlphaSequence;
         var isOptions = m.body.indexOf(",") >= 0;
         if (!isSequence && !isOptions) {
-          if (m.post.match(/,.*\}/)) {
+          if (m.post.match(/,(?!,).*\}/)) {
             str = m.pre + "{" + m.body + escClose + m.post;
             return expand$2(str);
           }
@@ -21068,7 +21069,7 @@ var require_lib = __commonJS({
         fn(...args);
       });
     }
-    function range(size) {
+    function range$1(size) {
       var result = Array(size);
       while (size--) {
         result[size] = size;
@@ -21077,7 +21078,7 @@ var require_lib = __commonJS({
     }
     function timesLimit(count, limit, iteratee, callback) {
       var _iteratee = wrapAsync(iteratee);
-      return mapLimit$1(range(count), limit, _iteratee, callback);
+      return mapLimit$1(range$1(count), limit, _iteratee, callback);
     }
     function times(n, iteratee, callback) {
       return timesLimit(n, Infinity, iteratee, callback);
@@ -22200,7 +22201,7 @@ var require_lib = __commonJS({
     function requireSafeBuffer$1() {
       if (hasRequiredSafeBuffer$1) return safeBuffer$1.exports;
       hasRequiredSafeBuffer$1 = 1;
-      (function(module2, exports2) {
+      (function(module2, exports$1) {
         var buffer = require$$0$5;
         var Buffer2 = buffer.Buffer;
         function copyProps(src, dst) {
@@ -22211,8 +22212,8 @@ var require_lib = __commonJS({
         if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
           module2.exports = buffer;
         } else {
-          copyProps(buffer, exports2);
-          exports2.Buffer = SafeBuffer;
+          copyProps(buffer, exports$1);
+          exports$1.Buffer = SafeBuffer;
         }
         function SafeBuffer(arg, encodingOrOffset, length) {
           return Buffer2(arg, encodingOrOffset, length);
@@ -23293,8 +23294,8 @@ var require_lib = __commonJS({
       var Duplex2;
       Readable2.ReadableState = ReadableState2;
       require$$0$1.EventEmitter;
-      var EElistenerCount = function(emitter, type) {
-        return emitter.listeners(type).length;
+      var EElistenerCount = function(emitter, type2) {
+        return emitter.listeners(type2).length;
       };
       var Stream2 = requireStream$1();
       var Buffer2 = requireSafeBuffer$1().Buffer;
@@ -23978,7 +23979,7 @@ var require_lib = __commonJS({
       var util2 = Object.create(requireUtil());
       util2.inherits = requireInherits();
       util2.inherits(Transform2, Duplex2);
-      function afterTransform2(er, data) {
+      function afterTransform(er, data) {
         var ts = this._transformState;
         ts.transforming = false;
         var cb = ts.writecb;
@@ -24000,7 +24001,7 @@ var require_lib = __commonJS({
         if (!(this instanceof Transform2)) return new Transform2(options);
         Duplex2.call(this, options);
         this._transformState = {
-          afterTransform: afterTransform2.bind(this),
+          afterTransform: afterTransform.bind(this),
           needTransform: false,
           transforming: false,
           writecb: null,
@@ -24087,37 +24088,36 @@ var require_lib = __commonJS({
       };
       return _stream_passthrough$1;
     }
-    (function(module2, exports2) {
+    (function(module2, exports$1) {
       var Stream2 = require$$0$3;
       if (process.env.READABLE_STREAM === "disable" && Stream2) {
         module2.exports = Stream2;
-        exports2 = module2.exports = Stream2.Readable;
-        exports2.Readable = Stream2.Readable;
-        exports2.Writable = Stream2.Writable;
-        exports2.Duplex = Stream2.Duplex;
-        exports2.Transform = Stream2.Transform;
-        exports2.PassThrough = Stream2.PassThrough;
-        exports2.Stream = Stream2;
+        exports$1 = module2.exports = Stream2.Readable;
+        exports$1.Readable = Stream2.Readable;
+        exports$1.Writable = Stream2.Writable;
+        exports$1.Duplex = Stream2.Duplex;
+        exports$1.Transform = Stream2.Transform;
+        exports$1.PassThrough = Stream2.PassThrough;
+        exports$1.Stream = Stream2;
       } else {
-        exports2 = module2.exports = require_stream_readable$1();
-        exports2.Stream = Stream2 || exports2;
-        exports2.Readable = exports2;
-        exports2.Writable = require_stream_writable$1();
-        exports2.Duplex = require_stream_duplex$1();
-        exports2.Transform = require_stream_transform$1();
-        exports2.PassThrough = require_stream_passthrough$1();
+        exports$1 = module2.exports = require_stream_readable$1();
+        exports$1.Stream = Stream2 || exports$1;
+        exports$1.Readable = exports$1;
+        exports$1.Writable = require_stream_writable$1();
+        exports$1.Duplex = require_stream_duplex$1();
+        exports$1.Transform = require_stream_transform$1();
+        exports$1.PassThrough = require_stream_passthrough$1();
       }
     })(readable$1, readable$1.exports);
     var readableExports$1 = readable$1.exports;
     var passthrough = readableExports$1.PassThrough;
     var util$d = require$$0$4;
-    var PassThrough$3 = passthrough;
+    var PassThrough$2 = passthrough;
     var lazystream$1 = {
-      Readable: Readable$3,
-      Writable: Writable$3
+      Readable: Readable$3
     };
-    util$d.inherits(Readable$3, PassThrough$3);
-    util$d.inherits(Writable$3, PassThrough$3);
+    util$d.inherits(Readable$3, PassThrough$2);
+    util$d.inherits(Writable$3, PassThrough$2);
     function beforeFirstCall(instance, method, callback) {
       instance[method] = function() {
         delete instance[method];
@@ -24128,7 +24128,7 @@ var require_lib = __commonJS({
     function Readable$3(fn, options) {
       if (!(this instanceof Readable$3))
         return new Readable$3(fn, options);
-      PassThrough$3.call(this, options);
+      PassThrough$2.call(this, options);
       beforeFirstCall(this, "_read", function() {
         var source = fn.call(this, options);
         var emit = this.emit.bind(this, "error");
@@ -24140,7 +24140,7 @@ var require_lib = __commonJS({
     function Writable$3(fn, options) {
       if (!(this instanceof Writable$3))
         return new Writable$3(fn, options);
-      PassThrough$3.call(this, options);
+      PassThrough$2.call(this, options);
       beforeFirstCall(this, "_write", function() {
         var destination = fn.call(this, options);
         var emit = this.emit.bind(this, "error");
@@ -24265,8 +24265,8 @@ var require_lib = __commonJS({
     }
     var _baseGetTag = baseGetTag$4;
     function isObject$4(value) {
-      var type = typeof value;
-      return value != null && (type == "object" || type == "function");
+      var type2 = typeof value;
+      return value != null && (type2 == "object" || type2 == "function");
     }
     var isObject_1 = isObject$4;
     var baseGetTag$3 = _baseGetTag;
@@ -24413,9 +24413,9 @@ var require_lib = __commonJS({
     var MAX_SAFE_INTEGER = 9007199254740991;
     var reIsUint = /^(?:0|[1-9]\d*)$/;
     function isIndex$2(value, length) {
-      var type = typeof value;
+      var type2 = typeof value;
       length = length == null ? MAX_SAFE_INTEGER : length;
-      return !!length && (type == "number" || type != "symbol" && reIsUint.test(value)) && (value > -1 && value % 1 == 0 && value < length);
+      return !!length && (type2 == "number" || type2 != "symbol" && reIsUint.test(value)) && (value > -1 && value % 1 == 0 && value < length);
     }
     var _isIndex = isIndex$2;
     var eq$2 = eq_1;
@@ -24426,8 +24426,8 @@ var require_lib = __commonJS({
       if (!isObject$1(object)) {
         return false;
       }
-      var type = typeof index2;
-      if (type == "number" ? isArrayLike$2(object) && isIndex$1(index2, object.length) : type == "string" && index2 in object) {
+      var type2 = typeof index2;
+      if (type2 == "number" ? isArrayLike$2(object) && isIndex$1(index2, object.length) : type2 == "string" && index2 in object) {
         return eq$2(object[index2], value);
       }
       return false;
@@ -24471,9 +24471,9 @@ var require_lib = __commonJS({
     }
     var stubFalse_1 = stubFalse;
     isBuffer$2.exports;
-    (function(module2, exports2) {
+    (function(module2, exports$1) {
       var root2 = _root, stubFalse2 = stubFalse_1;
-      var freeExports = exports2 && !exports2.nodeType && exports2;
+      var freeExports = exports$1 && !exports$1.nodeType && exports$1;
       var freeModule = freeExports && true && module2 && !module2.nodeType && module2;
       var moduleExports = freeModule && freeModule.exports === freeExports;
       var Buffer2 = moduleExports ? root2.Buffer : void 0;
@@ -24524,9 +24524,9 @@ var require_lib = __commonJS({
     var _baseUnary = baseUnary$2;
     var _nodeUtil = { exports: {} };
     _nodeUtil.exports;
-    (function(module2, exports2) {
+    (function(module2, exports$1) {
       var freeGlobal2 = _freeGlobal;
-      var freeExports = exports2 && !exports2.nodeType && exports2;
+      var freeExports = exports$1 && !exports$1.nodeType && exports$1;
       var freeModule = freeExports && true && module2 && !module2.nodeType && module2;
       var moduleExports = freeModule && freeModule.exports === freeExports;
       var freeProcess = moduleExports && freeGlobal2.process;
@@ -24713,11 +24713,11 @@ var require_lib = __commonJS({
         if (typeof input !== "object" || input === null) return input;
         var prim = input[Symbol.toPrimitive];
         if (prim !== void 0) {
-          var res = prim.call(input, hint || "default");
+          var res = prim.call(input, hint);
           if (typeof res !== "object") return res;
           throw new TypeError("@@toPrimitive must return a primitive value.");
         }
-        return (hint === "string" ? String : Number)(input);
+        return String(input);
       }
       var _require = require$$0$5, Buffer2 = _require.Buffer;
       var _require2 = require$$0$4, inspect = _require2.inspect;
@@ -25054,8 +25054,8 @@ var require_lib = __commonJS({
         if (endsWith(name, " argument")) {
           msg = `The ${name} ${determiner} ${oneOf(expected, "type")}`;
         } else {
-          const type = includes2(name, ".") ? "property" : "argument";
-          msg = `The "${name}" ${type} ${determiner} ${oneOf(expected, "type")}`;
+          const type2 = includes2(name, ".") ? "property" : "argument";
+          msg = `The "${name}" ${type2} ${determiner} ${oneOf(expected, "type")}`;
         }
         msg += `. Received type ${typeof actual}`;
         return msg;
@@ -25288,7 +25288,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._writableState && this._writableState.getBuffer();
         }
       });
@@ -25303,7 +25303,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._writableState.highWaterMark;
         }
       });
@@ -25473,7 +25473,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._writableState.length;
         }
       });
@@ -25546,7 +25546,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           if (this._writableState === void 0) {
             return false;
           }
@@ -25606,7 +25606,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._writableState.highWaterMark;
         }
       });
@@ -25615,7 +25615,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._writableState && this._writableState.getBuffer();
         }
       });
@@ -25624,7 +25624,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._writableState.length;
         }
       });
@@ -25640,7 +25640,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           if (this._readableState === void 0 || this._writableState === void 0) {
             return false;
           }
@@ -25662,7 +25662,7 @@ var require_lib = __commonJS({
     function requireSafeBuffer() {
       if (hasRequiredSafeBuffer) return safeBuffer.exports;
       hasRequiredSafeBuffer = 1;
-      (function(module2, exports2) {
+      (function(module2, exports$1) {
         var buffer = require$$0$5;
         var Buffer2 = buffer.Buffer;
         function copyProps(src, dst) {
@@ -25673,8 +25673,8 @@ var require_lib = __commonJS({
         if (Buffer2.from && Buffer2.alloc && Buffer2.allocUnsafe && Buffer2.allocUnsafeSlow) {
           module2.exports = buffer;
         } else {
-          copyProps(buffer, exports2);
-          exports2.Buffer = SafeBuffer;
+          copyProps(buffer, exports$1);
+          exports$1.Buffer = SafeBuffer;
         }
         function SafeBuffer(arg, encodingOrOffset, length) {
           return Buffer2(arg, encodingOrOffset, length);
@@ -26067,7 +26067,7 @@ var require_lib = __commonJS({
         if (typeof input !== "object" || input === null) return input;
         var prim = input[Symbol.toPrimitive];
         if (prim !== void 0) {
-          var res = prim.call(input, hint || "default");
+          var res = prim.call(input, hint);
           if (typeof res !== "object") return res;
           throw new TypeError("@@toPrimitive must return a primitive value.");
         }
@@ -26299,7 +26299,7 @@ var require_lib = __commonJS({
         if (typeof input !== "object" || input === null) return input;
         var prim = input[Symbol.toPrimitive];
         if (prim !== void 0) {
-          var res = prim.call(input, hint || "default");
+          var res = prim.call(input, hint);
           if (typeof res !== "object") return res;
           throw new TypeError("@@toPrimitive must return a primitive value.");
         }
@@ -26357,8 +26357,8 @@ var require_lib = __commonJS({
       var Duplex2;
       Readable2.ReadableState = ReadableState2;
       require$$0$1.EventEmitter;
-      var EElistenerCount = function EElistenerCount2(emitter, type) {
-        return emitter.listeners(type).length;
+      var EElistenerCount = function EElistenerCount2(emitter, type2) {
+        return emitter.listeners(type2).length;
       };
       var Stream2 = requireStream();
       var Buffer2 = require$$0$5.Buffer;
@@ -26446,7 +26446,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           if (this._readableState === void 0) {
             return false;
           }
@@ -26987,7 +26987,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._readableState.highWaterMark;
         }
       });
@@ -26996,7 +26996,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._readableState && this._readableState.buffer;
         }
       });
@@ -27005,7 +27005,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._readableState.flowing;
         },
         set: function set(state2) {
@@ -27020,7 +27020,7 @@ var require_lib = __commonJS({
         // because otherwise some prototype manipulation in
         // userland will fail
         enumerable: false,
-        get: function get() {
+        get: function get2() {
           return this._readableState.length;
         }
       });
@@ -27085,7 +27085,7 @@ var require_lib = __commonJS({
       var _require$codes = requireErrors().codes, ERR_METHOD_NOT_IMPLEMENTED = _require$codes.ERR_METHOD_NOT_IMPLEMENTED, ERR_MULTIPLE_CALLBACK = _require$codes.ERR_MULTIPLE_CALLBACK, ERR_TRANSFORM_ALREADY_TRANSFORMING = _require$codes.ERR_TRANSFORM_ALREADY_TRANSFORMING, ERR_TRANSFORM_WITH_LENGTH_0 = _require$codes.ERR_TRANSFORM_WITH_LENGTH_0;
       var Duplex2 = require_stream_duplex();
       requireInherits()(Transform2, Duplex2);
-      function afterTransform2(er, data) {
+      function afterTransform(er, data) {
         var ts = this._transformState;
         ts.transforming = false;
         var cb = ts.writecb;
@@ -27107,7 +27107,7 @@ var require_lib = __commonJS({
         if (!(this instanceof Transform2)) return new Transform2(options);
         Duplex2.call(this, options);
         this._transformState = {
-          afterTransform: afterTransform2.bind(this),
+          afterTransform: afterTransform.bind(this),
           needTransform: false,
           transforming: false,
           writecb: null,
@@ -27236,7 +27236,7 @@ var require_lib = __commonJS({
           callback(err || new ERR_STREAM_DESTROYED("pipe"));
         };
       }
-      function call(fn) {
+      function call2(fn) {
         fn();
       }
       function pipe(from2, to) {
@@ -27247,7 +27247,7 @@ var require_lib = __commonJS({
         if (typeof streams[streams.length - 1] !== "function") return noop2;
         return streams.pop();
       }
-      function pipeline2() {
+      function pipeline() {
         for (var _len = arguments.length, streams = new Array(_len), _key = 0; _key < _len; _key++) {
           streams[_key] = arguments[_key];
         }
@@ -27262,33 +27262,33 @@ var require_lib = __commonJS({
           var writing = i > 0;
           return destroyer(stream2, reading, writing, function(err) {
             if (!error3) error3 = err;
-            if (err) destroys.forEach(call);
+            if (err) destroys.forEach(call2);
             if (reading) return;
-            destroys.forEach(call);
+            destroys.forEach(call2);
             callback(error3);
           });
         });
         return streams.reduce(pipe);
       }
-      pipeline_1 = pipeline2;
+      pipeline_1 = pipeline;
       return pipeline_1;
     }
-    (function(module2, exports2) {
+    (function(module2, exports$1) {
       var Stream2 = require$$0$3;
       if (process.env.READABLE_STREAM === "disable" && Stream2) {
         module2.exports = Stream2.Readable;
         Object.assign(module2.exports, Stream2);
         module2.exports.Stream = Stream2;
       } else {
-        exports2 = module2.exports = require_stream_readable();
-        exports2.Stream = Stream2 || exports2;
-        exports2.Readable = exports2;
-        exports2.Writable = require_stream_writable();
-        exports2.Duplex = require_stream_duplex();
-        exports2.Transform = require_stream_transform();
-        exports2.PassThrough = require_stream_passthrough();
-        exports2.finished = requireEndOfStream();
-        exports2.pipeline = requirePipeline();
+        exports$1 = module2.exports = require_stream_readable();
+        exports$1.Stream = Stream2 || exports$1;
+        exports$1.Readable = exports$1;
+        exports$1.Writable = require_stream_writable();
+        exports$1.Duplex = require_stream_duplex();
+        exports$1.Transform = require_stream_transform();
+        exports$1.PassThrough = require_stream_passthrough();
+        exports$1.finished = requireEndOfStream();
+        exports$1.pipeline = requirePipeline();
       }
     })(readable, readable.exports);
     var readableExports = readable.exports;
@@ -27478,23 +27478,23 @@ var require_lib = __commonJS({
     var _ListCache = ListCache$1;
     var getNative$1 = _getNative;
     var root$1 = _root;
-    var Map$1 = getNative$1(root$1, "Map");
-    var _Map = Map$1;
+    var Map$2 = getNative$1(root$1, "Map");
+    var _Map = Map$2;
     var Hash = _Hash;
     var ListCache = _ListCache;
-    var Map2 = _Map;
+    var Map$1 = _Map;
     function mapCacheClear$1() {
       this.size = 0;
       this.__data__ = {
         "hash": new Hash(),
-        "map": new (Map2 || ListCache)(),
+        "map": new (Map$1 || ListCache)(),
         "string": new Hash()
       };
     }
     var _mapCacheClear = mapCacheClear$1;
     function isKeyable$1(value) {
-      var type = typeof value;
-      return type == "string" || type == "number" || type == "symbol" || type == "boolean" ? value !== "__proto__" : value === null;
+      var type2 = typeof value;
+      return type2 == "string" || type2 == "number" || type2 == "symbol" || type2 == "boolean" ? value !== "__proto__" : value === null;
     }
     var _isKeyable = isKeyable$1;
     var isKeyable = _isKeyable;
@@ -27687,8 +27687,8 @@ var require_lib = __commonJS({
     var difference_1 = difference$1;
     var getNative = _getNative;
     var root = _root;
-    var Set$1 = getNative(root, "Set");
-    var _Set = Set$1;
+    var Set$2 = getNative(root, "Set");
+    var _Set = Set$2;
     function noop$4() {
     }
     var noop_1 = noop$4;
@@ -27700,12 +27700,12 @@ var require_lib = __commonJS({
       return result;
     }
     var _setToArray = setToArray$2;
-    var Set2 = _Set;
+    var Set$1 = _Set;
     var noop$3 = noop_1;
     var setToArray$1 = _setToArray;
     var INFINITY = 1 / 0;
-    var createSet$1 = !(Set2 && 1 / setToArray$1(new Set2([, -0]))[1] == INFINITY) ? noop$3 : function(values) {
-      return new Set2(values);
+    var createSet$1 = !(Set$1 && 1 / setToArray$1(new Set$1([, -0]))[1] == INFINITY) ? noop$3 : function(values) {
+      return new Set$1(values);
     };
     var _createSet = createSet$1;
     var SetCache = _SetCache;
@@ -28740,8 +28740,8 @@ var require_lib = __commonJS({
       self2.found = all;
     }
     function mark(self2, p) {
-      var abs = makeAbs(self2, p);
-      var c = self2.cache[abs];
+      var abs2 = makeAbs(self2, p);
+      var c = self2.cache[abs2];
       var m = p;
       if (c) {
         var isDir = c === "DIR" || Array.isArray(c);
@@ -28752,26 +28752,26 @@ var require_lib = __commonJS({
           m = m.slice(0, -1);
         if (m !== p) {
           var mabs = makeAbs(self2, m);
-          self2.statCache[mabs] = self2.statCache[abs];
-          self2.cache[mabs] = self2.cache[abs];
+          self2.statCache[mabs] = self2.statCache[abs2];
+          self2.cache[mabs] = self2.cache[abs2];
         }
       }
       return m;
     }
     function makeAbs(self2, f) {
-      var abs = f;
+      var abs2 = f;
       if (f.charAt(0) === "/") {
-        abs = path$4.join(self2.root, f);
+        abs2 = path$4.join(self2.root, f);
       } else if (isAbsolute(f) || f === "") {
-        abs = f;
+        abs2 = f;
       } else if (self2.changedCwd) {
-        abs = path$4.resolve(self2.cwd, f);
+        abs2 = path$4.resolve(self2.cwd, f);
       } else {
-        abs = path$4.resolve(f);
+        abs2 = path$4.resolve(f);
       }
       if (process.platform === "win32")
-        abs = abs.replace(/\\/g, "/");
-      return abs;
+        abs2 = abs2.replace(/\\/g, "/");
+      return abs2;
     }
     function isIgnored(self2, path2) {
       if (!self2.ignore.length)
@@ -28881,17 +28881,17 @@ var require_lib = __commonJS({
           read = prefix;
         } else
           read = prefix;
-        var abs = this._makeAbs(read);
+        var abs2 = this._makeAbs(read);
         if (childrenIgnored2(this, read))
           return;
         var isGlobStar = remain[0] === minimatch2.GLOBSTAR;
         if (isGlobStar)
-          this._processGlobStar(prefix, read, abs, remain, index2, inGlobStar);
+          this._processGlobStar(prefix, read, abs2, remain, index2, inGlobStar);
         else
-          this._processReaddir(prefix, read, abs, remain, index2, inGlobStar);
+          this._processReaddir(prefix, read, abs2, remain, index2, inGlobStar);
       };
-      GlobSync.prototype._processReaddir = function(prefix, read, abs, remain, index2, inGlobStar) {
-        var entries = this._readdir(abs, inGlobStar);
+      GlobSync.prototype._processReaddir = function(prefix, read, abs2, remain, index2, inGlobStar) {
+        var entries = this._readdir(abs2, inGlobStar);
         if (!entries)
           return;
         var pn = remain[0];
@@ -28947,16 +28947,16 @@ var require_lib = __commonJS({
       GlobSync.prototype._emitMatch = function(index2, e) {
         if (isIgnored2(this, e))
           return;
-        var abs = this._makeAbs(e);
+        var abs2 = this._makeAbs(e);
         if (this.mark)
           e = this._mark(e);
         if (this.absolute) {
-          e = abs;
+          e = abs2;
         }
         if (this.matches[index2][e])
           return;
         if (this.nodir) {
-          var c = this.cache[abs];
+          var c = this.cache[abs2];
           if (c === "DIR" || Array.isArray(c))
             return;
         }
@@ -28964,55 +28964,55 @@ var require_lib = __commonJS({
         if (this.stat)
           this._stat(e);
       };
-      GlobSync.prototype._readdirInGlobStar = function(abs) {
+      GlobSync.prototype._readdirInGlobStar = function(abs2) {
         if (this.follow)
-          return this._readdir(abs, false);
+          return this._readdir(abs2, false);
         var entries;
         var lstat2;
         try {
-          lstat2 = this.fs.lstatSync(abs);
+          lstat2 = this.fs.lstatSync(abs2);
         } catch (er) {
           if (er.code === "ENOENT") {
             return null;
           }
         }
         var isSym = lstat2 && lstat2.isSymbolicLink();
-        this.symlinks[abs] = isSym;
+        this.symlinks[abs2] = isSym;
         if (!isSym && lstat2 && !lstat2.isDirectory())
-          this.cache[abs] = "FILE";
+          this.cache[abs2] = "FILE";
         else
-          entries = this._readdir(abs, false);
+          entries = this._readdir(abs2, false);
         return entries;
       };
-      GlobSync.prototype._readdir = function(abs, inGlobStar) {
-        if (inGlobStar && !ownProp2(this.symlinks, abs))
-          return this._readdirInGlobStar(abs);
-        if (ownProp2(this.cache, abs)) {
-          var c = this.cache[abs];
+      GlobSync.prototype._readdir = function(abs2, inGlobStar) {
+        if (inGlobStar && !ownProp2(this.symlinks, abs2))
+          return this._readdirInGlobStar(abs2);
+        if (ownProp2(this.cache, abs2)) {
+          var c = this.cache[abs2];
           if (!c || c === "FILE")
             return null;
           if (Array.isArray(c))
             return c;
         }
         try {
-          return this._readdirEntries(abs, this.fs.readdirSync(abs));
+          return this._readdirEntries(abs2, this.fs.readdirSync(abs2));
         } catch (er) {
-          this._readdirError(abs, er);
+          this._readdirError(abs2, er);
           return null;
         }
       };
-      GlobSync.prototype._readdirEntries = function(abs, entries) {
+      GlobSync.prototype._readdirEntries = function(abs2, entries) {
         if (!this.mark && !this.stat) {
           for (var i = 0; i < entries.length; i++) {
             var e = entries[i];
-            if (abs === "/")
-              e = abs + e;
+            if (abs2 === "/")
+              e = abs2 + e;
             else
-              e = abs + "/" + e;
+              e = abs2 + "/" + e;
             this.cache[e] = true;
           }
         }
-        this.cache[abs] = entries;
+        this.cache[abs2] = entries;
         return entries;
       };
       GlobSync.prototype._readdirError = function(f, er) {
@@ -29020,9 +29020,9 @@ var require_lib = __commonJS({
           case "ENOTSUP":
           // https://github.com/isaacs/node-glob/issues/205
           case "ENOTDIR":
-            var abs = this._makeAbs(f);
-            this.cache[abs] = "FILE";
-            if (abs === this.cwdAbs) {
+            var abs2 = this._makeAbs(f);
+            this.cache[abs2] = "FILE";
+            if (abs2 === this.cwdAbs) {
               var error3 = new Error(er.code + " invalid cwd " + this.cwd);
               error3.path = this.cwd;
               error3.code = er.code;
@@ -29045,8 +29045,8 @@ var require_lib = __commonJS({
             break;
         }
       };
-      GlobSync.prototype._processGlobStar = function(prefix, read, abs, remain, index2, inGlobStar) {
-        var entries = this._readdir(abs, inGlobStar);
+      GlobSync.prototype._processGlobStar = function(prefix, read, abs2, remain, index2, inGlobStar) {
+        var entries = this._readdir(abs2, inGlobStar);
         if (!entries)
           return;
         var remainWithoutGlobStar = remain.slice(1);
@@ -29054,7 +29054,7 @@ var require_lib = __commonJS({
         var noGlobStar = gspref.concat(remainWithoutGlobStar);
         this._process(noGlobStar, index2, false);
         var len = entries.length;
-        var isSym = this.symlinks[abs];
+        var isSym = this.symlinks[abs2];
         if (isSym && inGlobStar)
           return;
         for (var i = 0; i < len; i++) {
@@ -29088,12 +29088,12 @@ var require_lib = __commonJS({
         this._emitMatch(index2, prefix);
       };
       GlobSync.prototype._stat = function(f) {
-        var abs = this._makeAbs(f);
+        var abs2 = this._makeAbs(f);
         var needDir = f.slice(-1) === "/";
         if (f.length > this.maxLength)
           return false;
-        if (!this.stat && ownProp2(this.cache, abs)) {
-          var c = this.cache[abs];
+        if (!this.stat && ownProp2(this.cache, abs2)) {
+          var c = this.cache[abs2];
           if (Array.isArray(c))
             c = "DIR";
           if (!needDir || c === "DIR")
@@ -29101,20 +29101,20 @@ var require_lib = __commonJS({
           if (needDir && c === "FILE")
             return false;
         }
-        var stat3 = this.statCache[abs];
+        var stat3 = this.statCache[abs2];
         if (!stat3) {
           var lstat2;
           try {
-            lstat2 = this.fs.lstatSync(abs);
+            lstat2 = this.fs.lstatSync(abs2);
           } catch (er) {
             if (er && (er.code === "ENOENT" || er.code === "ENOTDIR")) {
-              this.statCache[abs] = false;
+              this.statCache[abs2] = false;
               return false;
             }
           }
           if (lstat2 && lstat2.isSymbolicLink()) {
             try {
-              stat3 = this.fs.statSync(abs);
+              stat3 = this.fs.statSync(abs2);
             } catch (er) {
               stat3 = lstat2;
             }
@@ -29122,11 +29122,11 @@ var require_lib = __commonJS({
             stat3 = lstat2;
           }
         }
-        this.statCache[abs] = stat3;
+        this.statCache[abs2] = stat3;
         var c = true;
         if (stat3)
           c = stat3.isDirectory() ? "DIR" : "FILE";
-        this.cache[abs] = this.cache[abs] || c;
+        this.cache[abs2] = this.cache[abs2] || c;
         if (needDir && c === "FILE")
           return false;
         return c;
@@ -29484,22 +29484,22 @@ var require_lib = __commonJS({
           read = prefix;
         } else
           read = prefix;
-        var abs = this._makeAbs(read);
+        var abs2 = this._makeAbs(read);
         if (childrenIgnored2(this, read))
           return cb();
         var isGlobStar = remain[0] === minimatch2.GLOBSTAR;
         if (isGlobStar)
-          this._processGlobStar(prefix, read, abs, remain, index2, inGlobStar, cb);
+          this._processGlobStar(prefix, read, abs2, remain, index2, inGlobStar, cb);
         else
-          this._processReaddir(prefix, read, abs, remain, index2, inGlobStar, cb);
+          this._processReaddir(prefix, read, abs2, remain, index2, inGlobStar, cb);
       };
-      Glob.prototype._processReaddir = function(prefix, read, abs, remain, index2, inGlobStar, cb) {
+      Glob.prototype._processReaddir = function(prefix, read, abs2, remain, index2, inGlobStar, cb) {
         var self2 = this;
-        this._readdir(abs, inGlobStar, function(er, entries) {
-          return self2._processReaddir2(prefix, read, abs, remain, index2, inGlobStar, entries, cb);
+        this._readdir(abs2, inGlobStar, function(er, entries) {
+          return self2._processReaddir2(prefix, read, abs2, remain, index2, inGlobStar, entries, cb);
         });
       };
-      Glob.prototype._processReaddir2 = function(prefix, read, abs, remain, index2, inGlobStar, entries, cb) {
+      Glob.prototype._processReaddir2 = function(prefix, read, abs2, remain, index2, inGlobStar, entries, cb) {
         if (!entries)
           return cb();
         var pn = remain[0];
@@ -29563,86 +29563,86 @@ var require_lib = __commonJS({
           this._emitQueue.push([index2, e]);
           return;
         }
-        var abs = isAbsolute2(e) ? e : this._makeAbs(e);
+        var abs2 = isAbsolute2(e) ? e : this._makeAbs(e);
         if (this.mark)
           e = this._mark(e);
         if (this.absolute)
-          e = abs;
+          e = abs2;
         if (this.matches[index2][e])
           return;
         if (this.nodir) {
-          var c = this.cache[abs];
+          var c = this.cache[abs2];
           if (c === "DIR" || Array.isArray(c))
             return;
         }
         this.matches[index2][e] = true;
-        var st = this.statCache[abs];
+        var st = this.statCache[abs2];
         if (st)
           this.emit("stat", e, st);
         this.emit("match", e);
       };
-      Glob.prototype._readdirInGlobStar = function(abs, cb) {
+      Glob.prototype._readdirInGlobStar = function(abs2, cb) {
         if (this.aborted)
           return;
         if (this.follow)
-          return this._readdir(abs, false, cb);
-        var lstatkey = "lstat\0" + abs;
+          return this._readdir(abs2, false, cb);
+        var lstatkey = "lstat\0" + abs2;
         var self2 = this;
         var lstatcb = inflight2(lstatkey, lstatcb_);
         if (lstatcb)
-          self2.fs.lstat(abs, lstatcb);
+          self2.fs.lstat(abs2, lstatcb);
         function lstatcb_(er, lstat2) {
           if (er && er.code === "ENOENT")
             return cb();
           var isSym = lstat2 && lstat2.isSymbolicLink();
-          self2.symlinks[abs] = isSym;
+          self2.symlinks[abs2] = isSym;
           if (!isSym && lstat2 && !lstat2.isDirectory()) {
-            self2.cache[abs] = "FILE";
+            self2.cache[abs2] = "FILE";
             cb();
           } else
-            self2._readdir(abs, false, cb);
+            self2._readdir(abs2, false, cb);
         }
       };
-      Glob.prototype._readdir = function(abs, inGlobStar, cb) {
+      Glob.prototype._readdir = function(abs2, inGlobStar, cb) {
         if (this.aborted)
           return;
-        cb = inflight2("readdir\0" + abs + "\0" + inGlobStar, cb);
+        cb = inflight2("readdir\0" + abs2 + "\0" + inGlobStar, cb);
         if (!cb)
           return;
-        if (inGlobStar && !ownProp2(this.symlinks, abs))
-          return this._readdirInGlobStar(abs, cb);
-        if (ownProp2(this.cache, abs)) {
-          var c = this.cache[abs];
+        if (inGlobStar && !ownProp2(this.symlinks, abs2))
+          return this._readdirInGlobStar(abs2, cb);
+        if (ownProp2(this.cache, abs2)) {
+          var c = this.cache[abs2];
           if (!c || c === "FILE")
             return cb();
           if (Array.isArray(c))
             return cb(null, c);
         }
         var self2 = this;
-        self2.fs.readdir(abs, readdirCb(this, abs, cb));
+        self2.fs.readdir(abs2, readdirCb(this, abs2, cb));
       };
-      function readdirCb(self2, abs, cb) {
+      function readdirCb(self2, abs2, cb) {
         return function(er, entries) {
           if (er)
-            self2._readdirError(abs, er, cb);
+            self2._readdirError(abs2, er, cb);
           else
-            self2._readdirEntries(abs, entries, cb);
+            self2._readdirEntries(abs2, entries, cb);
         };
       }
-      Glob.prototype._readdirEntries = function(abs, entries, cb) {
+      Glob.prototype._readdirEntries = function(abs2, entries, cb) {
         if (this.aborted)
           return;
         if (!this.mark && !this.stat) {
           for (var i = 0; i < entries.length; i++) {
             var e = entries[i];
-            if (abs === "/")
-              e = abs + e;
+            if (abs2 === "/")
+              e = abs2 + e;
             else
-              e = abs + "/" + e;
+              e = abs2 + "/" + e;
             this.cache[e] = true;
           }
         }
-        this.cache[abs] = entries;
+        this.cache[abs2] = entries;
         return cb(null, entries);
       };
       Glob.prototype._readdirError = function(f, er, cb) {
@@ -29652,9 +29652,9 @@ var require_lib = __commonJS({
           case "ENOTSUP":
           // https://github.com/isaacs/node-glob/issues/205
           case "ENOTDIR":
-            var abs = this._makeAbs(f);
-            this.cache[abs] = "FILE";
-            if (abs === this.cwdAbs) {
+            var abs2 = this._makeAbs(f);
+            this.cache[abs2] = "FILE";
+            if (abs2 === this.cwdAbs) {
               var error3 = new Error(er.code + " invalid cwd " + this.cwd);
               error3.path = this.cwd;
               error3.code = er.code;
@@ -29681,20 +29681,20 @@ var require_lib = __commonJS({
         }
         return cb();
       };
-      Glob.prototype._processGlobStar = function(prefix, read, abs, remain, index2, inGlobStar, cb) {
+      Glob.prototype._processGlobStar = function(prefix, read, abs2, remain, index2, inGlobStar, cb) {
         var self2 = this;
-        this._readdir(abs, inGlobStar, function(er, entries) {
-          self2._processGlobStar2(prefix, read, abs, remain, index2, inGlobStar, entries, cb);
+        this._readdir(abs2, inGlobStar, function(er, entries) {
+          self2._processGlobStar2(prefix, read, abs2, remain, index2, inGlobStar, entries, cb);
         });
       };
-      Glob.prototype._processGlobStar2 = function(prefix, read, abs, remain, index2, inGlobStar, entries, cb) {
+      Glob.prototype._processGlobStar2 = function(prefix, read, abs2, remain, index2, inGlobStar, entries, cb) {
         if (!entries)
           return cb();
         var remainWithoutGlobStar = remain.slice(1);
         var gspref = prefix ? [prefix] : [];
         var noGlobStar = gspref.concat(remainWithoutGlobStar);
         this._process(noGlobStar, index2, false, cb);
-        var isSym = this.symlinks[abs];
+        var isSym = this.symlinks[abs2];
         var len = entries.length;
         if (isSym && inGlobStar)
           return cb();
@@ -29736,12 +29736,12 @@ var require_lib = __commonJS({
         cb();
       };
       Glob.prototype._stat = function(f, cb) {
-        var abs = this._makeAbs(f);
+        var abs2 = this._makeAbs(f);
         var needDir = f.slice(-1) === "/";
         if (f.length > this.maxLength)
           return cb();
-        if (!this.stat && ownProp2(this.cache, abs)) {
-          var c = this.cache[abs];
+        if (!this.stat && ownProp2(this.cache, abs2)) {
+          var c = this.cache[abs2];
           if (Array.isArray(c))
             c = "DIR";
           if (!needDir || c === "DIR")
@@ -29749,48 +29749,48 @@ var require_lib = __commonJS({
           if (needDir && c === "FILE")
             return cb();
         }
-        var stat3 = this.statCache[abs];
+        var stat3 = this.statCache[abs2];
         if (stat3 !== void 0) {
           if (stat3 === false)
             return cb(null, stat3);
           else {
-            var type = stat3.isDirectory() ? "DIR" : "FILE";
-            if (needDir && type === "FILE")
+            var type2 = stat3.isDirectory() ? "DIR" : "FILE";
+            if (needDir && type2 === "FILE")
               return cb();
             else
-              return cb(null, type, stat3);
+              return cb(null, type2, stat3);
           }
         }
         var self2 = this;
-        var statcb = inflight2("stat\0" + abs, lstatcb_);
+        var statcb = inflight2("stat\0" + abs2, lstatcb_);
         if (statcb)
-          self2.fs.lstat(abs, statcb);
+          self2.fs.lstat(abs2, statcb);
         function lstatcb_(er, lstat2) {
           if (lstat2 && lstat2.isSymbolicLink()) {
-            return self2.fs.stat(abs, function(er2, stat4) {
+            return self2.fs.stat(abs2, function(er2, stat4) {
               if (er2)
-                self2._stat2(f, abs, null, lstat2, cb);
+                self2._stat2(f, abs2, null, lstat2, cb);
               else
-                self2._stat2(f, abs, er2, stat4, cb);
+                self2._stat2(f, abs2, er2, stat4, cb);
             });
           } else {
-            self2._stat2(f, abs, er, lstat2, cb);
+            self2._stat2(f, abs2, er, lstat2, cb);
           }
         }
       };
-      Glob.prototype._stat2 = function(f, abs, er, stat3, cb) {
+      Glob.prototype._stat2 = function(f, abs2, er, stat3, cb) {
         if (er && (er.code === "ENOENT" || er.code === "ENOTDIR")) {
-          this.statCache[abs] = false;
+          this.statCache[abs2] = false;
           return cb();
         }
         var needDir = f.slice(-1) === "/";
-        this.statCache[abs] = stat3;
-        if (abs.slice(-1) === "/" && stat3 && !stat3.isDirectory())
+        this.statCache[abs2] = stat3;
+        if (abs2.slice(-1) === "/" && stat3 && !stat3.isDirectory())
           return cb(null, false, stat3);
         var c = true;
         if (stat3)
           c = stat3.isDirectory() ? "DIR" : "FILE";
-        this.cache[abs] = this.cache[abs] || c;
+        this.cache[abs2] = this.cache[abs2] || c;
         if (needDir && c === "FILE")
           return cb();
         return cb(null, c, stat3);
@@ -29950,7 +29950,7 @@ var require_lib = __commonJS({
     var normalizePath$1 = normalizePath$2;
     var defaults = defaults_1;
     var Stream$5 = require$$0$3.Stream;
-    var PassThrough$2 = readableExports.PassThrough;
+    var PassThrough$1 = readableExports.PassThrough;
     var utils = archiverUtils.exports = {};
     utils.file = fileExports;
     utils.collectStream = function(source, callback) {
@@ -30001,7 +30001,7 @@ var require_lib = __commonJS({
       } else if (typeof source === "string") {
         return Buffer.from(source);
       } else if (utils.isStream(source)) {
-        return source.pipe(new PassThrough$2());
+        return source.pipe(new PassThrough$1());
       }
       return source;
     };
@@ -30058,7 +30058,7 @@ var require_lib = __commonJS({
     };
     var archiverUtilsExports = archiverUtils.exports;
     var error2 = { exports: {} };
-    (function(module2, exports2) {
+    (function(module2, exports$1) {
       var util2 = require$$0$4;
       const ERROR_CODES = {
         "ABORTED": "archive was aborted",
@@ -30095,7 +30095,7 @@ var require_lib = __commonJS({
     var util$c = archiverUtilsExports;
     var inherits$5 = require$$0$4.inherits;
     var ArchiverError = errorExports;
-    var Transform$4 = readableExports.Transform;
+    var Transform$3 = readableExports.Transform;
     var win32 = process.platform === "win32";
     var Archiver$1 = function(format, options) {
       if (!(this instanceof Archiver$1)) {
@@ -30109,7 +30109,7 @@ var require_lib = __commonJS({
         highWaterMark: 1024 * 1024,
         statConcurrency: 4
       });
-      Transform$4.call(this, options);
+      Transform$3.call(this, options);
       this._format = false;
       this._module = false;
       this._pending = 0;
@@ -30131,7 +30131,7 @@ var require_lib = __commonJS({
       };
       this._streams = [];
     };
-    inherits$5(Archiver$1, Transform$4);
+    inherits$5(Archiver$1, Transform$3);
     Archiver$1.prototype._abort = function() {
       this._state.aborted = true;
       this._queue.kill();
@@ -30758,11 +30758,6 @@ var require_lib = __commonJS({
     var generalPurposeBitExports = generalPurposeBit.exports;
     var unixStat = {
       /**
-       * Bits used for permissions (and sticky bit)
-       */
-      PERM_MASK: 4095,
-      // 07777
-      /**
        * Bits used to indicate the filesystem object type.
        */
       FILE_TYPE_FLAG: 61440,
@@ -30770,47 +30765,13 @@ var require_lib = __commonJS({
       /**
        * Indicates symbolic links.
        */
-      LINK_FLAG: 40960,
-      // 0120000
-      /**
-       * Indicates plain files.
-       */
-      FILE_FLAG: 32768,
-      // 0100000
-      /**
-       * Indicates directories.
-       */
-      DIR_FLAG: 16384,
-      // 040000
-      // ----------------------------------------------------------
-      // somewhat arbitrary choices that are quite common for shared
-      // installations
-      // -----------------------------------------------------------
-      /**
-       * Default permissions for symbolic links.
-       */
-      DEFAULT_LINK_PERM: 511,
-      // 0777
-      /**
-       * Default permissions for directories.
-       */
-      DEFAULT_DIR_PERM: 493,
-      // 0755
-      /**
-       * Default permissions for plain files.
-       */
-      DEFAULT_FILE_PERM: 420
-      // 0644
+      LINK_FLAG: 40960
     };
     var constants$5 = {
-      WORD: 4,
-      DWORD: 8,
       EMPTY: Buffer.alloc(0),
-      SHORT: 2,
       SHORT_MASK: 65535,
       SHORT_SHIFT: 16,
       SHORT_ZERO: Buffer.from(Array(2)),
-      LONG: 4,
       LONG_ZERO: Buffer.from(Array(4)),
       MIN_VERSION_INITIAL: 10,
       MIN_VERSION_DATA_DESCRIPTOR: 20,
@@ -30829,49 +30790,16 @@ var require_lib = __commonJS({
       ZIP64_MAGIC_SHORT: 65535,
       ZIP64_MAGIC: 4294967295,
       ZIP64_EXTRA_ID: 1,
-      ZLIB_NO_COMPRESSION: 0,
       ZLIB_BEST_SPEED: 1,
-      ZLIB_BEST_COMPRESSION: 9,
-      ZLIB_DEFAULT_COMPRESSION: -1,
       MODE_MASK: 4095,
-      DEFAULT_FILE_MODE: 33188,
-      // 010644 = -rw-r--r-- = S_IFREG | S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
-      DEFAULT_DIR_MODE: 16877,
-      // 040755 = drwxr-xr-x = S_IFDIR | S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH
-      EXT_FILE_ATTR_DIR: 1106051088,
-      // 010173200020 = drwxr-xr-x = (((S_IFDIR | 0755) << 16) | S_DOS_D)
-      EXT_FILE_ATTR_FILE: 2175008800,
-      // 020151000040 = -rw-r--r-- = (((S_IFREG | 0644) << 16) | S_DOS_A) >>> 0
-      // Unix file types
-      S_IFMT: 61440,
-      // 0170000 type of file mask
-      S_IFIFO: 4096,
-      // 010000 named pipe (fifo)
-      S_IFCHR: 8192,
-      // 020000 character special
       S_IFDIR: 16384,
       // 040000 directory
-      S_IFBLK: 24576,
-      // 060000 block special
       S_IFREG: 32768,
       // 0100000 regular
-      S_IFLNK: 40960,
-      // 0120000 symbolic link
-      S_IFSOCK: 49152,
-      // 0140000 socket
       // DOS file type flags
       S_DOS_A: 32,
       // 040 Archive
-      S_DOS_D: 16,
-      // 020 Directory
-      S_DOS_V: 8,
-      // 010 Volume
-      S_DOS_S: 4,
-      // 04 System
-      S_DOS_H: 2,
-      // 02 Hidden
-      S_DOS_R: 1
-      // 01 Read Only
+      S_DOS_D: 16
     };
     var inherits$4 = require$$0$4.inherits;
     var normalizePath = normalizePath$2;
@@ -31046,7 +30974,7 @@ var require_lib = __commonJS({
     var archiveOutputStream = { exports: {} };
     var util$9 = { exports: {} };
     var Stream$4 = require$$0$3.Stream;
-    var PassThrough$1 = readableExports.PassThrough;
+    var PassThrough = readableExports.PassThrough;
     var util$8 = util$9.exports = {};
     util$8.isStream = function(source) {
       return source instanceof Stream$4;
@@ -31057,7 +30985,7 @@ var require_lib = __commonJS({
       } else if (typeof source === "string") {
         return Buffer.from(source);
       } else if (util$8.isStream(source) && !source._readableState) {
-        var normalized = new PassThrough$1();
+        var normalized = new PassThrough();
         source.pipe(normalized);
         return normalized;
       }
@@ -31065,14 +30993,14 @@ var require_lib = __commonJS({
     };
     var utilExports = util$9.exports;
     var inherits$3 = require$$0$4.inherits;
-    var Transform$3 = readableExports.Transform;
+    var Transform$2 = readableExports.Transform;
     var ArchiveEntry = archiveEntryExports;
     var util$7 = utilExports;
     var ArchiveOutputStream$1 = archiveOutputStream.exports = function(options) {
       if (!(this instanceof ArchiveOutputStream$1)) {
         return new ArchiveOutputStream$1(options);
       }
-      Transform$3.call(this, options);
+      Transform$2.call(this, options);
       this.offset = 0;
       this._archive = {
         finish: false,
@@ -31080,7 +31008,7 @@ var require_lib = __commonJS({
         processing: false
       };
     };
-    inherits$3(ArchiveOutputStream$1, Transform$3);
+    inherits$3(ArchiveOutputStream$1, Transform$2);
     ArchiveOutputStream$1.prototype._appendBuffer = function(zae, source, callback) {
     };
     ArchiveOutputStream$1.prototype._appendStream = function(zae, source, callback) {
@@ -31143,16 +31071,16 @@ var require_lib = __commonJS({
       if (chunk) {
         this.offset += chunk.length;
       }
-      return Transform$3.prototype.write.call(this, chunk, cb);
+      return Transform$2.prototype.write.call(this, chunk, cb);
     };
     var archiveOutputStreamExports = archiveOutputStream.exports;
     var zipArchiveOutputStream = { exports: {} };
     var crc32$5 = {};
-    (function(exports2) {
+    (function(exports$1) {
       (function(factory) {
         if (typeof DO_NOT_EXPORT_CRC === "undefined") {
           {
-            factory(exports2);
+            factory(exports$1);
           }
         } else {
           factory({});
@@ -31233,9 +31161,9 @@ var require_lib = __commonJS({
         CRC32.str = crc32_str;
       });
     })(crc32$5);
-    var { Transform: Transform$2 } = readableExports;
+    var { Transform: Transform$1 } = readableExports;
     var crc32$4 = crc32$5;
-    var CRC32Stream$1 = class CRC32Stream extends Transform$2 {
+    var CRC32Stream$1 = class CRC32Stream extends Transform$1 {
       constructor(options) {
         super(options);
         this.checksum = Buffer.allocUnsafe(4);
@@ -31584,9 +31512,7 @@ var require_lib = __commonJS({
     };
     var zipArchiveOutputStreamExports = zipArchiveOutputStream.exports;
     var compressCommons = {
-      ArchiveEntry: archiveEntryExports,
       ZipArchiveEntry: zipArchiveEntryExports,
-      ArchiveOutputStream: archiveOutputStreamExports,
       ZipArchiveOutputStream: zipArchiveOutputStreamExports
     };
     var inherits$1 = require$$0$4.inherits;
@@ -31722,15 +31648,7 @@ var require_lib = __commonJS({
     };
     var zip = Zip;
     var tarStream = {};
-    var queueMicrotask_1;
-    var hasRequiredQueueMicrotask;
-    function requireQueueMicrotask() {
-      if (hasRequiredQueueMicrotask) return queueMicrotask_1;
-      hasRequiredQueueMicrotask = 1;
-      queueMicrotask_1 = typeof queueMicrotask === "function" ? queueMicrotask : (fn) => Promise.resolve().then(fn);
-      return queueMicrotask_1;
-    }
-    var processNextTick = typeof process !== "undefined" && typeof process.nextTick === "function" ? process.nextTick.bind(process) : requireQueueMicrotask();
+    var _default = require$$0$1;
     var fixedSize = class FixedFIFO {
       constructor(hwm) {
         if (!(hwm > 0) || (hwm - 1 & hwm) !== 0) throw new Error("Max size for a FixedFIFO should be a power of two");
@@ -31806,6 +31724,158 @@ var require_lib = __commonJS({
         return this.length === 0;
       }
     };
+    function isBuffer(value) {
+      return Buffer.isBuffer(value) || value instanceof Uint8Array;
+    }
+    function isEncoding(encoding) {
+      return Buffer.isEncoding(encoding);
+    }
+    function alloc(size, fill2, encoding) {
+      return Buffer.alloc(size, fill2, encoding);
+    }
+    function allocUnsafe(size) {
+      return Buffer.allocUnsafe(size);
+    }
+    function allocUnsafeSlow(size) {
+      return Buffer.allocUnsafeSlow(size);
+    }
+    function byteLength(string, encoding) {
+      return Buffer.byteLength(string, encoding);
+    }
+    function compare(a, b) {
+      return Buffer.compare(a, b);
+    }
+    function concat(buffers, totalLength) {
+      return Buffer.concat(buffers, totalLength);
+    }
+    function copy(source, target, targetStart, start, end) {
+      return toBuffer(source).copy(target, targetStart, start, end);
+    }
+    function equals(a, b) {
+      return toBuffer(a).equals(b);
+    }
+    function fill(buffer, value, offset, end, encoding) {
+      return toBuffer(buffer).fill(value, offset, end, encoding);
+    }
+    function from(value, encodingOrOffset, length) {
+      return Buffer.from(value, encodingOrOffset, length);
+    }
+    function includes(buffer, value, byteOffset, encoding) {
+      return toBuffer(buffer).includes(value, byteOffset, encoding);
+    }
+    function indexOf$1(buffer, value, byfeOffset, encoding) {
+      return toBuffer(buffer).indexOf(value, byfeOffset, encoding);
+    }
+    function lastIndexOf(buffer, value, byteOffset, encoding) {
+      return toBuffer(buffer).lastIndexOf(value, byteOffset, encoding);
+    }
+    function swap16(buffer) {
+      return toBuffer(buffer).swap16();
+    }
+    function swap32(buffer) {
+      return toBuffer(buffer).swap32();
+    }
+    function swap64(buffer) {
+      return toBuffer(buffer).swap64();
+    }
+    function toBuffer(buffer) {
+      if (Buffer.isBuffer(buffer)) return buffer;
+      return Buffer.from(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+    }
+    function toString(buffer, encoding, start, end) {
+      return toBuffer(buffer).toString(encoding, start, end);
+    }
+    function write(buffer, string, offset, length, encoding) {
+      return toBuffer(buffer).write(string, offset, length, encoding);
+    }
+    function readDoubleBE(buffer, offset) {
+      return toBuffer(buffer).readDoubleBE(offset);
+    }
+    function readDoubleLE(buffer, offset) {
+      return toBuffer(buffer).readDoubleLE(offset);
+    }
+    function readFloatBE(buffer, offset) {
+      return toBuffer(buffer).readFloatBE(offset);
+    }
+    function readFloatLE(buffer, offset) {
+      return toBuffer(buffer).readFloatLE(offset);
+    }
+    function readInt32BE(buffer, offset) {
+      return toBuffer(buffer).readInt32BE(offset);
+    }
+    function readInt32LE(buffer, offset) {
+      return toBuffer(buffer).readInt32LE(offset);
+    }
+    function readUInt32BE(buffer, offset) {
+      return toBuffer(buffer).readUInt32BE(offset);
+    }
+    function readUInt32LE(buffer, offset) {
+      return toBuffer(buffer).readUInt32LE(offset);
+    }
+    function writeDoubleBE(buffer, value, offset) {
+      return toBuffer(buffer).writeDoubleBE(value, offset);
+    }
+    function writeDoubleLE(buffer, value, offset) {
+      return toBuffer(buffer).writeDoubleLE(value, offset);
+    }
+    function writeFloatBE(buffer, value, offset) {
+      return toBuffer(buffer).writeFloatBE(value, offset);
+    }
+    function writeFloatLE(buffer, value, offset) {
+      return toBuffer(buffer).writeFloatLE(value, offset);
+    }
+    function writeInt32BE(buffer, value, offset) {
+      return toBuffer(buffer).writeInt32BE(value, offset);
+    }
+    function writeInt32LE(buffer, value, offset) {
+      return toBuffer(buffer).writeInt32LE(value, offset);
+    }
+    function writeUInt32BE(buffer, value, offset) {
+      return toBuffer(buffer).writeUInt32BE(value, offset);
+    }
+    function writeUInt32LE(buffer, value, offset) {
+      return toBuffer(buffer).writeUInt32LE(value, offset);
+    }
+    var b4a$5 = {
+      isBuffer,
+      isEncoding,
+      alloc,
+      allocUnsafe,
+      allocUnsafeSlow,
+      byteLength,
+      compare,
+      concat,
+      copy,
+      equals,
+      fill,
+      from,
+      includes,
+      indexOf: indexOf$1,
+      lastIndexOf,
+      swap16,
+      swap32,
+      swap64,
+      toBuffer,
+      toString,
+      write,
+      readDoubleBE,
+      readDoubleLE,
+      readFloatBE,
+      readFloatLE,
+      readInt32BE,
+      readInt32LE,
+      readUInt32BE,
+      readUInt32LE,
+      writeDoubleBE,
+      writeDoubleLE,
+      writeFloatBE,
+      writeFloatLE,
+      writeInt32BE,
+      writeInt32LE,
+      writeUInt32BE,
+      writeUInt32LE
+    };
+    var b4a$4 = b4a$5;
     var passThroughDecoder = class PassThroughDecoder {
       constructor(encoding) {
         this.encoding = encoding;
@@ -31814,12 +31884,13 @@ var require_lib = __commonJS({
         return 0;
       }
       decode(tail) {
-        return tail.toString(this.encoding);
+        return b4a$4.toString(tail, this.encoding);
       }
       flush() {
         return "";
       }
     };
+    var b4a$3 = b4a$5;
     var utf8Decoder = class UTF8Decoder {
       constructor() {
         this.codePoint = 0;
@@ -31837,7 +31908,7 @@ var require_lib = __commonJS({
           for (let i = Math.max(0, data.byteLength - 4), n = data.byteLength; i < n && isBoundary; i++) {
             isBoundary = data[i] <= 127;
           }
-          if (isBoundary) return data.toString();
+          if (isBoundary) return b4a$3.toString(data, "utf8");
         }
         let result = "";
         for (let i = 0, n = data.byteLength; i < n; i++) {
@@ -31953,12 +32024,11 @@ var require_lib = __commonJS({
           throw new Error("Unknown encoding: " + encoding);
       }
     }
-    var { EventEmitter } = require$$0$1;
+    var { EventEmitter } = _default;
     var STREAM_DESTROYED = new Error("Stream was destroyed");
-    var PREMATURE_CLOSE = new Error("Premature close");
-    var queueTick = processNextTick;
     var FIFO$1 = fastFifo;
     var TextDecoder2 = textDecoder;
+    var qmt = typeof queueMicrotask === "undefined" ? (fn) => commonjsGlobal.process.nextTick(fn) : queueMicrotask;
     var MAX = (1 << 29) - 1;
     var OPENING = 1;
     var PREDESTROYING = 2;
@@ -32010,7 +32080,7 @@ var require_lib = __commonJS({
     var WRITE_CORKED = 1024 << 18;
     var WRITE_NOT_ACTIVE = MAX ^ (WRITE_ACTIVE | WRITE_WRITING);
     var WRITE_NON_PRIMARY = MAX ^ WRITE_PRIMARY;
-    var WRITE_NOT_FINISHING = MAX ^ WRITE_FINISHING;
+    var WRITE_NOT_FINISHING = MAX ^ (WRITE_ACTIVE | WRITE_FINISHING);
     var WRITE_DRAINED = MAX ^ WRITE_UNDRAINED;
     var WRITE_NOT_QUEUED = MAX ^ WRITE_QUEUED;
     var WRITE_NOT_NEXT_TICK = MAX ^ WRITE_NEXT_TICK;
@@ -32033,6 +32103,7 @@ var require_lib = __commonJS({
     var SHOULD_NOT_READ = OPEN_STATUS | READ_ACTIVE | READ_ENDING | READ_DONE | READ_NEEDS_PUSH | READ_READ_AHEAD;
     var READ_BACKPRESSURE_STATUS = DESTROY_STATUS | READ_ENDING | READ_DONE;
     var READ_UPDATE_SYNC_STATUS = READ_UPDATING | OPEN_STATUS | READ_NEXT_TICK | READ_PRIMARY;
+    var READ_NEXT_TICK_OR_OPENING = READ_NEXT_TICK | OPENING;
     var WRITE_PRIMARY_STATUS = OPEN_STATUS | WRITE_FINISHING | WRITE_DONE;
     var WRITE_QUEUED_AND_UNDRAINED = WRITE_QUEUED | WRITE_UNDRAINED;
     var WRITE_QUEUED_AND_ACTIVE = WRITE_QUEUED | WRITE_ACTIVE;
@@ -32043,6 +32114,7 @@ var require_lib = __commonJS({
     var WRITE_FINISHING_STATUS = OPEN_STATUS | WRITE_FINISHING | WRITE_QUEUED_AND_ACTIVE | WRITE_DONE;
     var WRITE_BACKPRESSURE_STATUS = WRITE_UNDRAINED | DESTROY_STATUS | WRITE_FINISHING | WRITE_DONE;
     var WRITE_UPDATE_SYNC_STATUS = WRITE_UPDATING | OPEN_STATUS | WRITE_NEXT_TICK | WRITE_PRIMARY;
+    var WRITE_DROP_DATA = WRITE_FINISHING | WRITE_DONE | DESTROY_STATUS;
     var asyncIterator = Symbol.asyncIterator || /* @__PURE__ */ Symbol("asyncIterator");
     var WritableState = class {
       constructor(stream2, { highWaterMark = 16384, map: map2 = null, mapWritable: mapWritable2, byteLength: byteLength2, byteLengthWritable } = {}) {
@@ -32062,6 +32134,7 @@ var require_lib = __commonJS({
         return (this.stream._duplexState & WRITE_DONE) !== 0;
       }
       push(data) {
+        if ((this.stream._duplexState & WRITE_DROP_DATA) !== 0) return false;
         if (this.map !== null) data = this.map(data);
         this.buffered += this.byteLength(data);
         this.queue.push(data);
@@ -32109,7 +32182,7 @@ var require_lib = __commonJS({
       updateNonPrimary() {
         const stream2 = this.stream;
         if ((stream2._duplexState & WRITE_FINISHING_STATUS) === WRITE_FINISHING) {
-          stream2._duplexState = (stream2._duplexState | WRITE_ACTIVE) & WRITE_NOT_FINISHING;
+          stream2._duplexState = stream2._duplexState | WRITE_ACTIVE;
           stream2._final(afterFinal.bind(this));
           return;
         }
@@ -32137,7 +32210,7 @@ var require_lib = __commonJS({
       updateNextTick() {
         if ((this.stream._duplexState & WRITE_NEXT_TICK) !== 0) return;
         this.stream._duplexState |= WRITE_NEXT_TICK;
-        if ((this.stream._duplexState & WRITE_UPDATING) === 0) queueTick(this.afterUpdateNextTick);
+        if ((this.stream._duplexState & WRITE_UPDATING) === 0) qmt(this.afterUpdateNextTick);
       }
     };
     var ReadableState = class {
@@ -32284,17 +32357,15 @@ var require_lib = __commonJS({
         if ((this.stream._duplexState & READ_UPDATE_SYNC_STATUS) === READ_PRIMARY) this.update();
         else this.updateNextTick();
       }
+      updateNextTickIfOpen() {
+        if ((this.stream._duplexState & READ_NEXT_TICK_OR_OPENING) !== 0) return;
+        this.stream._duplexState |= READ_NEXT_TICK;
+        if ((this.stream._duplexState & READ_UPDATING) === 0) qmt(this.afterUpdateNextTick);
+      }
       updateNextTick() {
         if ((this.stream._duplexState & READ_NEXT_TICK) !== 0) return;
         this.stream._duplexState |= READ_NEXT_TICK;
-        if ((this.stream._duplexState & READ_UPDATING) === 0) queueTick(this.afterUpdateNextTick);
-      }
-    };
-    var TransformState = class {
-      constructor(stream2) {
-        this.data = null;
-        this.afterTransform = afterTransform.bind(stream2);
-        this.afterFinal = null;
+        if ((this.stream._duplexState & READ_UPDATING) === 0) qmt(this.afterUpdateNextTick);
       }
     };
     var Pipeline = class {
@@ -32346,7 +32417,7 @@ var require_lib = __commonJS({
       if ((stream2._duplexState & AUTO_DESTROY) === DONE) {
         stream2._duplexState |= DESTROYING;
       }
-      stream2._duplexState &= WRITE_NOT_ACTIVE;
+      stream2._duplexState &= WRITE_NOT_FINISHING;
       if ((stream2._duplexState & WRITE_UPDATING) === 0) this.update();
       else this.updateNextTick();
     }
@@ -32418,10 +32489,6 @@ var require_lib = __commonJS({
       if (stream2._readableState !== null) {
         stream2._readableState.updateCallback();
       }
-    }
-    function afterTransform(err, data) {
-      if (data !== void 0 && data !== null) this.push(data);
-      this._writableState.afterWrite(err);
     }
     function newListener(name) {
       if (this._readableState !== null) {
@@ -32532,11 +32599,11 @@ var require_lib = __commonJS({
         return this._readableState.read();
       }
       push(data) {
-        this._readableState.updateNextTick();
+        this._readableState.updateNextTickIfOpen();
         return this._readableState.push(data);
       }
       unshift(data) {
-        this._readableState.updateNextTick();
+        this._readableState.updateNextTickIfOpen();
         return this._readableState.unshift(data);
       }
       resume() {
@@ -32733,115 +32800,6 @@ var require_lib = __commonJS({
         return this;
       }
     };
-    var Transform$1 = class Transform extends Duplex {
-      constructor(opts) {
-        super(opts);
-        this._transformState = new TransformState(this);
-        if (opts) {
-          if (opts.transform) this._transform = opts.transform;
-          if (opts.flush) this._flush = opts.flush;
-        }
-      }
-      _write(data, cb) {
-        if (this._readableState.buffered >= this._readableState.highWaterMark) {
-          this._transformState.data = data;
-        } else {
-          this._transform(data, this._transformState.afterTransform);
-        }
-      }
-      _read(cb) {
-        if (this._transformState.data !== null) {
-          const data = this._transformState.data;
-          this._transformState.data = null;
-          cb(null);
-          this._transform(data, this._transformState.afterTransform);
-        } else {
-          cb(null);
-        }
-      }
-      destroy(err) {
-        super.destroy(err);
-        if (this._transformState.data !== null) {
-          this._transformState.data = null;
-          this._transformState.afterTransform();
-        }
-      }
-      _transform(data, cb) {
-        cb(null, data);
-      }
-      _flush(cb) {
-        cb(null);
-      }
-      _final(cb) {
-        this._transformState.afterFinal = cb;
-        this._flush(transformAfterFlush.bind(this));
-      }
-    };
-    var PassThrough = class extends Transform$1 {
-    };
-    function transformAfterFlush(err, data) {
-      const cb = this._transformState.afterFinal;
-      if (err) return cb(err);
-      if (data !== null && data !== void 0) this.push(data);
-      this.push(null);
-      cb(null);
-    }
-    function pipelinePromise(...streams) {
-      return new Promise((resolve2, reject2) => {
-        return pipeline(...streams, (err) => {
-          if (err) return reject2(err);
-          resolve2();
-        });
-      });
-    }
-    function pipeline(stream2, ...streams) {
-      const all = Array.isArray(stream2) ? [...stream2, ...streams] : [stream2, ...streams];
-      const done = all.length && typeof all[all.length - 1] === "function" ? all.pop() : null;
-      if (all.length < 2) throw new Error("Pipeline requires at least 2 streams");
-      let src = all[0];
-      let dest = null;
-      let error3 = null;
-      for (let i = 1; i < all.length; i++) {
-        dest = all[i];
-        if (isStreamx(src)) {
-          src.pipe(dest, onerror);
-        } else {
-          errorHandle(src, true, i > 1, onerror);
-          src.pipe(dest);
-        }
-        src = dest;
-      }
-      if (done) {
-        let fin = false;
-        const autoDestroy = isStreamx(dest) || !!(dest._writableState && dest._writableState.autoDestroy);
-        dest.on("error", (err) => {
-          if (error3 === null) error3 = err;
-        });
-        dest.on("finish", () => {
-          fin = true;
-          if (!autoDestroy) done(error3);
-        });
-        if (autoDestroy) {
-          dest.on("close", () => done(error3 || (fin ? null : PREMATURE_CLOSE)));
-        }
-      }
-      return dest;
-      function errorHandle(s, rd, wr, onerror2) {
-        s.on("error", onerror2);
-        s.on("close", onclose);
-        function onclose() {
-          if (s._readableState && !s._readableState.ended) return onerror2(PREMATURE_CLOSE);
-          if (wr && s._writableState && !s._writableState.ended) return onerror2(PREMATURE_CLOSE);
-        }
-      }
-      function onerror(err) {
-        if (!err || error3) return;
-        error3 = err;
-        for (const s of all) {
-          s.destroy(err);
-        }
-      }
-    }
     function echo(s) {
       return s;
     }
@@ -32850,12 +32808,6 @@ var require_lib = __commonJS({
     }
     function isStreamx(stream2) {
       return typeof stream2._duplexState === "number" && isStream(stream2);
-    }
-    function isEnded(stream2) {
-      return !!stream2._readableState && stream2._readableState.ended;
-    }
-    function isFinished(stream2) {
-      return !!stream2._writableState && stream2._writableState.ended;
     }
     function getStreamError$2(stream2, opts = {}) {
       const err = stream2._readableState && stream2._readableState.error || stream2._writableState && stream2._writableState.error;
@@ -32879,174 +32831,12 @@ var require_lib = __commonJS({
       return s._writev !== Writable$2.prototype._writev && s._writev !== Duplex.prototype._writev;
     }
     var streamx = {
-      pipeline,
-      pipelinePromise,
-      isStream,
-      isStreamx,
-      isEnded,
-      isFinished,
       getStreamError: getStreamError$2,
-      Stream: Stream$3,
       Writable: Writable$2,
-      Readable: Readable$2,
-      Duplex,
-      Transform: Transform$1,
-      // Export PassThrough for compatibility with Node.js core's stream module
-      PassThrough
-    };
-    function isBuffer(value) {
-      return Buffer.isBuffer(value) || value instanceof Uint8Array;
-    }
-    function isEncoding(encoding) {
-      return Buffer.isEncoding(encoding);
-    }
-    function alloc(size, fill2, encoding) {
-      return Buffer.alloc(size, fill2, encoding);
-    }
-    function allocUnsafe(size) {
-      return Buffer.allocUnsafe(size);
-    }
-    function allocUnsafeSlow(size) {
-      return Buffer.allocUnsafeSlow(size);
-    }
-    function byteLength(string, encoding) {
-      return Buffer.byteLength(string, encoding);
-    }
-    function compare(a, b) {
-      return Buffer.compare(a, b);
-    }
-    function concat(buffers, totalLength) {
-      return Buffer.concat(buffers, totalLength);
-    }
-    function copy(source, target, targetStart, start, end) {
-      return toBuffer(source).copy(target, targetStart, start, end);
-    }
-    function equals(a, b) {
-      return toBuffer(a).equals(b);
-    }
-    function fill(buffer, value, offset, end, encoding) {
-      return toBuffer(buffer).fill(value, offset, end, encoding);
-    }
-    function from(value, encodingOrOffset, length) {
-      return Buffer.from(value, encodingOrOffset, length);
-    }
-    function includes(buffer, value, byteOffset, encoding) {
-      return toBuffer(buffer).includes(value, byteOffset, encoding);
-    }
-    function indexOf$1(buffer, value, byfeOffset, encoding) {
-      return toBuffer(buffer).indexOf(value, byfeOffset, encoding);
-    }
-    function lastIndexOf(buffer, value, byteOffset, encoding) {
-      return toBuffer(buffer).lastIndexOf(value, byteOffset, encoding);
-    }
-    function swap16(buffer) {
-      return toBuffer(buffer).swap16();
-    }
-    function swap32(buffer) {
-      return toBuffer(buffer).swap32();
-    }
-    function swap64(buffer) {
-      return toBuffer(buffer).swap64();
-    }
-    function toBuffer(buffer) {
-      if (Buffer.isBuffer(buffer)) return buffer;
-      return Buffer.from(buffer.buffer, buffer.byteOffset, buffer.byteLength);
-    }
-    function toString(buffer, encoding, start, end) {
-      return toBuffer(buffer).toString(encoding, start, end);
-    }
-    function write(buffer, string, offset, length, encoding) {
-      return toBuffer(buffer).write(string, offset, length, encoding);
-    }
-    function writeDoubleLE(buffer, value, offset) {
-      return toBuffer(buffer).writeDoubleLE(value, offset);
-    }
-    function writeFloatLE(buffer, value, offset) {
-      return toBuffer(buffer).writeFloatLE(value, offset);
-    }
-    function writeUInt32LE(buffer, value, offset) {
-      return toBuffer(buffer).writeUInt32LE(value, offset);
-    }
-    function writeInt32LE(buffer, value, offset) {
-      return toBuffer(buffer).writeInt32LE(value, offset);
-    }
-    function readDoubleLE(buffer, offset) {
-      return toBuffer(buffer).readDoubleLE(offset);
-    }
-    function readFloatLE(buffer, offset) {
-      return toBuffer(buffer).readFloatLE(offset);
-    }
-    function readUInt32LE(buffer, offset) {
-      return toBuffer(buffer).readUInt32LE(offset);
-    }
-    function readInt32LE(buffer, offset) {
-      return toBuffer(buffer).readInt32LE(offset);
-    }
-    function writeDoubleBE(buffer, value, offset) {
-      return toBuffer(buffer).writeDoubleBE(value, offset);
-    }
-    function writeFloatBE(buffer, value, offset) {
-      return toBuffer(buffer).writeFloatBE(value, offset);
-    }
-    function writeUInt32BE(buffer, value, offset) {
-      return toBuffer(buffer).writeUInt32BE(value, offset);
-    }
-    function writeInt32BE(buffer, value, offset) {
-      return toBuffer(buffer).writeInt32BE(value, offset);
-    }
-    function readDoubleBE(buffer, offset) {
-      return toBuffer(buffer).readDoubleBE(offset);
-    }
-    function readFloatBE(buffer, offset) {
-      return toBuffer(buffer).readFloatBE(offset);
-    }
-    function readUInt32BE(buffer, offset) {
-      return toBuffer(buffer).readUInt32BE(offset);
-    }
-    function readInt32BE(buffer, offset) {
-      return toBuffer(buffer).readInt32BE(offset);
-    }
-    var b4a$3 = {
-      isBuffer,
-      isEncoding,
-      alloc,
-      allocUnsafe,
-      allocUnsafeSlow,
-      byteLength,
-      compare,
-      concat,
-      copy,
-      equals,
-      fill,
-      from,
-      includes,
-      indexOf: indexOf$1,
-      lastIndexOf,
-      swap16,
-      swap32,
-      swap64,
-      toBuffer,
-      toString,
-      write,
-      writeDoubleLE,
-      writeFloatLE,
-      writeUInt32LE,
-      writeInt32LE,
-      readDoubleLE,
-      readFloatLE,
-      readUInt32LE,
-      readInt32LE,
-      writeDoubleBE,
-      writeFloatBE,
-      writeUInt32BE,
-      writeInt32BE,
-      readDoubleBE,
-      readFloatBE,
-      readUInt32BE,
-      readInt32BE
+      Readable: Readable$2
     };
     var headers$2 = {};
-    var b4a$2 = b4a$3;
+    var b4a$2 = b4a$5;
     var ZEROS = "0000000000000000000";
     var SEVENS = "7777777777777777777";
     var ZERO_OFFSET = "0".charCodeAt(0);
@@ -33127,7 +32917,7 @@ var require_lib = __commonJS({
       const gid = decodeOct(buf, 116, 8);
       const size = decodeOct(buf, 124, 12);
       const mtime = decodeOct(buf, 136, 12);
-      const type = toType(typeflag);
+      const type2 = toType(typeflag);
       const linkname = buf[157] === 0 ? null : decodeStr(buf, 157, 100, filenameEncoding);
       const uname = decodeStr(buf, 265, 32);
       const gname = decodeStr(buf, 297, 32);
@@ -33152,7 +32942,7 @@ var require_lib = __commonJS({
         gid,
         size,
         mtime: new Date(1e3 * mtime),
-        type,
+        type: type2,
         linkname,
         uname,
         gname,
@@ -33303,7 +33093,7 @@ var require_lib = __commonJS({
     }
     var { Writable: Writable$1, Readable: Readable$1, getStreamError: getStreamError$1 } = streamx;
     var FIFO = fastFifo;
-    var b4a$1 = b4a$3;
+    var b4a$1 = b4a$5;
     var headers$1 = headers$2;
     var EMPTY = b4a$1.alloc(0);
     var BufferList = class {
@@ -33646,7 +33436,7 @@ var require_lib = __commonJS({
     }
     var constantsExports = constants$2.exports;
     var { Readable, Writable, getStreamError } = streamx;
-    var b4a = b4a$3;
+    var b4a = b4a$5;
     var constants3 = constantsExports;
     var headers = headers$2;
     var DMODE = 493;
@@ -45286,24 +45076,24 @@ var require_lib = __commonJS({
       }
     };
     var mimeDb = require$$0;
-    (function(exports2) {
+    (function(exports$1) {
       var db = mimeDb;
       var extname = require$$1.extname;
       var EXTRACT_TYPE_REGEXP = /^\s*([^;\s]*)(?:;|\s|$)/;
       var TEXT_TYPE_REGEXP = /^text\//i;
-      exports2.charset = charset;
-      exports2.charsets = { lookup: charset };
-      exports2.contentType = contentType;
-      exports2.extension = extension;
-      exports2.extensions = /* @__PURE__ */ Object.create(null);
-      exports2.lookup = lookup;
-      exports2.types = /* @__PURE__ */ Object.create(null);
-      populateMaps(exports2.extensions, exports2.types);
-      function charset(type) {
-        if (!type || typeof type !== "string") {
+      exports$1.charset = charset;
+      exports$1.charsets = { lookup: charset };
+      exports$1.contentType = contentType;
+      exports$1.extension = extension;
+      exports$1.extensions = /* @__PURE__ */ Object.create(null);
+      exports$1.lookup = lookup;
+      exports$1.types = /* @__PURE__ */ Object.create(null);
+      populateMaps(exports$1.extensions, exports$1.types);
+      function charset(type2) {
+        if (!type2 || typeof type2 !== "string") {
           return false;
         }
-        var match = EXTRACT_TYPE_REGEXP.exec(type);
+        var match = EXTRACT_TYPE_REGEXP.exec(type2);
         var mime2 = match && db[match[1].toLowerCase()];
         if (mime2 && mime2.charset) {
           return mime2.charset;
@@ -45317,22 +45107,22 @@ var require_lib = __commonJS({
         if (!str || typeof str !== "string") {
           return false;
         }
-        var mime2 = str.indexOf("/") === -1 ? exports2.lookup(str) : str;
+        var mime2 = str.indexOf("/") === -1 ? exports$1.lookup(str) : str;
         if (!mime2) {
           return false;
         }
         if (mime2.indexOf("charset") === -1) {
-          var charset2 = exports2.charset(mime2);
+          var charset2 = exports$1.charset(mime2);
           if (charset2) mime2 += "; charset=" + charset2.toLowerCase();
         }
         return mime2;
       }
-      function extension(type) {
-        if (!type || typeof type !== "string") {
+      function extension(type2) {
+        if (!type2 || typeof type2 !== "string") {
           return false;
         }
-        var match = EXTRACT_TYPE_REGEXP.exec(type);
-        var exts = match && exports2.extensions[match[1].toLowerCase()];
+        var match = EXTRACT_TYPE_REGEXP.exec(type2);
+        var exts = match && exports$1.extensions[match[1].toLowerCase()];
         if (!exts || !exts.length) {
           return false;
         }
@@ -45346,17 +45136,17 @@ var require_lib = __commonJS({
         if (!extension2) {
           return false;
         }
-        return exports2.types[extension2] || false;
+        return exports$1.types[extension2] || false;
       }
       function populateMaps(extensions, types) {
         var preference = ["nginx", "apache", void 0, "iana"];
-        Object.keys(db).forEach(function forEachMimeType(type) {
-          var mime2 = db[type];
+        Object.keys(db).forEach(function forEachMimeType(type2) {
+          var mime2 = db[type2];
           var exts = mime2.extensions;
           if (!exts || !exts.length) {
             return;
           }
-          extensions[type] = exts;
+          extensions[type2] = exts;
           for (var i = 0; i < exts.length; i++) {
             var extension2 = exts[i];
             if (types[extension2]) {
@@ -45366,7 +45156,7 @@ var require_lib = __commonJS({
                 continue;
               }
             }
-            types[extension2] = type;
+            types[extension2] = type2;
           }
         });
       }
@@ -45522,6 +45312,691 @@ var require_lib = __commonJS({
       serial: serial_1,
       serialOrdered: serialOrderedExports
     };
+    var esObjectAtoms = Object;
+    var esErrors = Error;
+    var _eval = EvalError;
+    var range = RangeError;
+    var ref = ReferenceError;
+    var syntax = SyntaxError;
+    var type;
+    var hasRequiredType;
+    function requireType() {
+      if (hasRequiredType) return type;
+      hasRequiredType = 1;
+      type = TypeError;
+      return type;
+    }
+    var uri = URIError;
+    var abs$1 = Math.abs;
+    var floor$1 = Math.floor;
+    var max$2 = Math.max;
+    var min$1 = Math.min;
+    var pow$1 = Math.pow;
+    var round$1 = Math.round;
+    var _isNaN = Number.isNaN || function isNaN2(a) {
+      return a !== a;
+    };
+    var $isNaN = _isNaN;
+    var sign$1 = function sign2(number) {
+      if ($isNaN(number) || number === 0) {
+        return number;
+      }
+      return number < 0 ? -1 : 1;
+    };
+    var gOPD = Object.getOwnPropertyDescriptor;
+    var $gOPD$1 = gOPD;
+    if ($gOPD$1) {
+      try {
+        $gOPD$1([], "length");
+      } catch (e) {
+        $gOPD$1 = null;
+      }
+    }
+    var gopd = $gOPD$1;
+    var $defineProperty$2 = Object.defineProperty || false;
+    if ($defineProperty$2) {
+      try {
+        $defineProperty$2({}, "a", { value: 1 });
+      } catch (e) {
+        $defineProperty$2 = false;
+      }
+    }
+    var esDefineProperty = $defineProperty$2;
+    var shams$1;
+    var hasRequiredShams$1;
+    function requireShams$1() {
+      if (hasRequiredShams$1) return shams$1;
+      hasRequiredShams$1 = 1;
+      shams$1 = function hasSymbols2() {
+        if (typeof Symbol !== "function" || typeof Object.getOwnPropertySymbols !== "function") {
+          return false;
+        }
+        if (typeof Symbol.iterator === "symbol") {
+          return true;
+        }
+        var obj = {};
+        var sym = /* @__PURE__ */ Symbol("test");
+        var symObj = Object(sym);
+        if (typeof sym === "string") {
+          return false;
+        }
+        if (Object.prototype.toString.call(sym) !== "[object Symbol]") {
+          return false;
+        }
+        if (Object.prototype.toString.call(symObj) !== "[object Symbol]") {
+          return false;
+        }
+        var symVal = 42;
+        obj[sym] = symVal;
+        for (var _2 in obj) {
+          return false;
+        }
+        if (typeof Object.keys === "function" && Object.keys(obj).length !== 0) {
+          return false;
+        }
+        if (typeof Object.getOwnPropertyNames === "function" && Object.getOwnPropertyNames(obj).length !== 0) {
+          return false;
+        }
+        var syms = Object.getOwnPropertySymbols(obj);
+        if (syms.length !== 1 || syms[0] !== sym) {
+          return false;
+        }
+        if (!Object.prototype.propertyIsEnumerable.call(obj, sym)) {
+          return false;
+        }
+        if (typeof Object.getOwnPropertyDescriptor === "function") {
+          var descriptor = (
+            /** @type {PropertyDescriptor} */
+            Object.getOwnPropertyDescriptor(obj, sym)
+          );
+          if (descriptor.value !== symVal || descriptor.enumerable !== true) {
+            return false;
+          }
+        }
+        return true;
+      };
+      return shams$1;
+    }
+    var hasSymbols$1;
+    var hasRequiredHasSymbols;
+    function requireHasSymbols() {
+      if (hasRequiredHasSymbols) return hasSymbols$1;
+      hasRequiredHasSymbols = 1;
+      var origSymbol = typeof Symbol !== "undefined" && Symbol;
+      var hasSymbolSham = requireShams$1();
+      hasSymbols$1 = function hasNativeSymbols() {
+        if (typeof origSymbol !== "function") {
+          return false;
+        }
+        if (typeof Symbol !== "function") {
+          return false;
+        }
+        if (typeof origSymbol("foo") !== "symbol") {
+          return false;
+        }
+        if (typeof /* @__PURE__ */ Symbol("bar") !== "symbol") {
+          return false;
+        }
+        return hasSymbolSham();
+      };
+      return hasSymbols$1;
+    }
+    var Reflect_getPrototypeOf;
+    var hasRequiredReflect_getPrototypeOf;
+    function requireReflect_getPrototypeOf() {
+      if (hasRequiredReflect_getPrototypeOf) return Reflect_getPrototypeOf;
+      hasRequiredReflect_getPrototypeOf = 1;
+      Reflect_getPrototypeOf = typeof Reflect !== "undefined" && Reflect.getPrototypeOf || null;
+      return Reflect_getPrototypeOf;
+    }
+    var Object_getPrototypeOf;
+    var hasRequiredObject_getPrototypeOf;
+    function requireObject_getPrototypeOf() {
+      if (hasRequiredObject_getPrototypeOf) return Object_getPrototypeOf;
+      hasRequiredObject_getPrototypeOf = 1;
+      var $Object2 = esObjectAtoms;
+      Object_getPrototypeOf = $Object2.getPrototypeOf || null;
+      return Object_getPrototypeOf;
+    }
+    var ERROR_MESSAGE = "Function.prototype.bind called on incompatible ";
+    var toStr = Object.prototype.toString;
+    var max$1 = Math.max;
+    var funcType = "[object Function]";
+    var concatty = function concatty2(a, b) {
+      var arr = [];
+      for (var i = 0; i < a.length; i += 1) {
+        arr[i] = a[i];
+      }
+      for (var j = 0; j < b.length; j += 1) {
+        arr[j + a.length] = b[j];
+      }
+      return arr;
+    };
+    var slicy = function slicy2(arrLike, offset) {
+      var arr = [];
+      for (var i = offset, j = 0; i < arrLike.length; i += 1, j += 1) {
+        arr[j] = arrLike[i];
+      }
+      return arr;
+    };
+    var joiny = function(arr, joiner) {
+      var str = "";
+      for (var i = 0; i < arr.length; i += 1) {
+        str += arr[i];
+        if (i + 1 < arr.length) {
+          str += joiner;
+        }
+      }
+      return str;
+    };
+    var implementation$1 = function bind2(that) {
+      var target = this;
+      if (typeof target !== "function" || toStr.apply(target) !== funcType) {
+        throw new TypeError(ERROR_MESSAGE + target);
+      }
+      var args = slicy(arguments, 1);
+      var bound;
+      var binder = function() {
+        if (this instanceof bound) {
+          var result = target.apply(
+            this,
+            concatty(args, arguments)
+          );
+          if (Object(result) === result) {
+            return result;
+          }
+          return this;
+        }
+        return target.apply(
+          that,
+          concatty(args, arguments)
+        );
+      };
+      var boundLength = max$1(0, target.length - args.length);
+      var boundArgs = [];
+      for (var i = 0; i < boundLength; i++) {
+        boundArgs[i] = "$" + i;
+      }
+      bound = Function("binder", "return function (" + joiny(boundArgs, ",") + "){ return binder.apply(this,arguments); }")(binder);
+      if (target.prototype) {
+        var Empty = function Empty2() {
+        };
+        Empty.prototype = target.prototype;
+        bound.prototype = new Empty();
+        Empty.prototype = null;
+      }
+      return bound;
+    };
+    var implementation = implementation$1;
+    var functionBind = Function.prototype.bind || implementation;
+    var functionCall;
+    var hasRequiredFunctionCall;
+    function requireFunctionCall() {
+      if (hasRequiredFunctionCall) return functionCall;
+      hasRequiredFunctionCall = 1;
+      functionCall = Function.prototype.call;
+      return functionCall;
+    }
+    var functionApply;
+    var hasRequiredFunctionApply;
+    function requireFunctionApply() {
+      if (hasRequiredFunctionApply) return functionApply;
+      hasRequiredFunctionApply = 1;
+      functionApply = Function.prototype.apply;
+      return functionApply;
+    }
+    var reflectApply;
+    var hasRequiredReflectApply;
+    function requireReflectApply() {
+      if (hasRequiredReflectApply) return reflectApply;
+      hasRequiredReflectApply = 1;
+      reflectApply = typeof Reflect !== "undefined" && Reflect && Reflect.apply;
+      return reflectApply;
+    }
+    var actualApply;
+    var hasRequiredActualApply;
+    function requireActualApply() {
+      if (hasRequiredActualApply) return actualApply;
+      hasRequiredActualApply = 1;
+      var bind2 = functionBind;
+      var $apply2 = requireFunctionApply();
+      var $call2 = requireFunctionCall();
+      var $reflectApply = requireReflectApply();
+      actualApply = $reflectApply || bind2.call($call2, $apply2);
+      return actualApply;
+    }
+    var callBindApplyHelpers;
+    var hasRequiredCallBindApplyHelpers;
+    function requireCallBindApplyHelpers() {
+      if (hasRequiredCallBindApplyHelpers) return callBindApplyHelpers;
+      hasRequiredCallBindApplyHelpers = 1;
+      var bind2 = functionBind;
+      var $TypeError2 = requireType();
+      var $call2 = requireFunctionCall();
+      var $actualApply = requireActualApply();
+      callBindApplyHelpers = function callBindBasic(args) {
+        if (args.length < 1 || typeof args[0] !== "function") {
+          throw new $TypeError2("a function is required");
+        }
+        return $actualApply(bind2, $call2, args);
+      };
+      return callBindApplyHelpers;
+    }
+    var get;
+    var hasRequiredGet;
+    function requireGet() {
+      if (hasRequiredGet) return get;
+      hasRequiredGet = 1;
+      var callBind = requireCallBindApplyHelpers();
+      var gOPD2 = gopd;
+      var hasProtoAccessor;
+      try {
+        hasProtoAccessor = /** @type {{ __proto__?: typeof Array.prototype }} */
+        [].__proto__ === Array.prototype;
+      } catch (e) {
+        if (!e || typeof e !== "object" || !("code" in e) || e.code !== "ERR_PROTO_ACCESS") {
+          throw e;
+        }
+      }
+      var desc = !!hasProtoAccessor && gOPD2 && gOPD2(
+        Object.prototype,
+        /** @type {keyof typeof Object.prototype} */
+        "__proto__"
+      );
+      var $Object2 = Object;
+      var $getPrototypeOf = $Object2.getPrototypeOf;
+      get = desc && typeof desc.get === "function" ? callBind([desc.get]) : typeof $getPrototypeOf === "function" ? (
+        /** @type {import('./get')} */
+        function getDunder(value) {
+          return $getPrototypeOf(value == null ? value : $Object2(value));
+        }
+      ) : false;
+      return get;
+    }
+    var getProto$1;
+    var hasRequiredGetProto;
+    function requireGetProto() {
+      if (hasRequiredGetProto) return getProto$1;
+      hasRequiredGetProto = 1;
+      var reflectGetProto = requireReflect_getPrototypeOf();
+      var originalGetProto = requireObject_getPrototypeOf();
+      var getDunderProto = requireGet();
+      getProto$1 = reflectGetProto ? function getProto2(O) {
+        return reflectGetProto(O);
+      } : originalGetProto ? function getProto2(O) {
+        if (!O || typeof O !== "object" && typeof O !== "function") {
+          throw new TypeError("getProto: not an object");
+        }
+        return originalGetProto(O);
+      } : getDunderProto ? function getProto2(O) {
+        return getDunderProto(O);
+      } : null;
+      return getProto$1;
+    }
+    var call = Function.prototype.call;
+    var $hasOwn = Object.prototype.hasOwnProperty;
+    var bind$1 = functionBind;
+    var hasown = bind$1.call(call, $hasOwn);
+    var undefined$1;
+    var $Object = esObjectAtoms;
+    var $Error = esErrors;
+    var $EvalError = _eval;
+    var $RangeError = range;
+    var $ReferenceError = ref;
+    var $SyntaxError = syntax;
+    var $TypeError$1 = requireType();
+    var $URIError = uri;
+    var abs = abs$1;
+    var floor = floor$1;
+    var max = max$2;
+    var min = min$1;
+    var pow = pow$1;
+    var round = round$1;
+    var sign = sign$1;
+    var $Function = Function;
+    var getEvalledConstructor = function(expressionSyntax) {
+      try {
+        return $Function('"use strict"; return (' + expressionSyntax + ").constructor;")();
+      } catch (e) {
+      }
+    };
+    var $gOPD = gopd;
+    var $defineProperty$1 = esDefineProperty;
+    var throwTypeError = function() {
+      throw new $TypeError$1();
+    };
+    var ThrowTypeError = $gOPD ? (function() {
+      try {
+        arguments.callee;
+        return throwTypeError;
+      } catch (calleeThrows) {
+        try {
+          return $gOPD(arguments, "callee").get;
+        } catch (gOPDthrows) {
+          return throwTypeError;
+        }
+      }
+    })() : throwTypeError;
+    var hasSymbols = requireHasSymbols()();
+    var getProto = requireGetProto();
+    var $ObjectGPO = requireObject_getPrototypeOf();
+    var $ReflectGPO = requireReflect_getPrototypeOf();
+    var $apply = requireFunctionApply();
+    var $call = requireFunctionCall();
+    var needsEval = {};
+    var TypedArray = typeof Uint8Array === "undefined" || !getProto ? undefined$1 : getProto(Uint8Array);
+    var INTRINSICS = {
+      __proto__: null,
+      "%AggregateError%": typeof AggregateError === "undefined" ? undefined$1 : AggregateError,
+      "%Array%": Array,
+      "%ArrayBuffer%": typeof ArrayBuffer === "undefined" ? undefined$1 : ArrayBuffer,
+      "%ArrayIteratorPrototype%": hasSymbols && getProto ? getProto([][Symbol.iterator]()) : undefined$1,
+      "%AsyncFromSyncIteratorPrototype%": undefined$1,
+      "%AsyncFunction%": needsEval,
+      "%AsyncGenerator%": needsEval,
+      "%AsyncGeneratorFunction%": needsEval,
+      "%AsyncIteratorPrototype%": needsEval,
+      "%Atomics%": typeof Atomics === "undefined" ? undefined$1 : Atomics,
+      "%BigInt%": typeof BigInt === "undefined" ? undefined$1 : BigInt,
+      "%BigInt64Array%": typeof BigInt64Array === "undefined" ? undefined$1 : BigInt64Array,
+      "%BigUint64Array%": typeof BigUint64Array === "undefined" ? undefined$1 : BigUint64Array,
+      "%Boolean%": Boolean,
+      "%DataView%": typeof DataView === "undefined" ? undefined$1 : DataView,
+      "%Date%": Date,
+      "%decodeURI%": decodeURI,
+      "%decodeURIComponent%": decodeURIComponent,
+      "%encodeURI%": encodeURI,
+      "%encodeURIComponent%": encodeURIComponent,
+      "%Error%": $Error,
+      "%eval%": eval,
+      // eslint-disable-line no-eval
+      "%EvalError%": $EvalError,
+      "%Float16Array%": typeof Float16Array === "undefined" ? undefined$1 : Float16Array,
+      "%Float32Array%": typeof Float32Array === "undefined" ? undefined$1 : Float32Array,
+      "%Float64Array%": typeof Float64Array === "undefined" ? undefined$1 : Float64Array,
+      "%FinalizationRegistry%": typeof FinalizationRegistry === "undefined" ? undefined$1 : FinalizationRegistry,
+      "%Function%": $Function,
+      "%GeneratorFunction%": needsEval,
+      "%Int8Array%": typeof Int8Array === "undefined" ? undefined$1 : Int8Array,
+      "%Int16Array%": typeof Int16Array === "undefined" ? undefined$1 : Int16Array,
+      "%Int32Array%": typeof Int32Array === "undefined" ? undefined$1 : Int32Array,
+      "%isFinite%": isFinite,
+      "%isNaN%": isNaN,
+      "%IteratorPrototype%": hasSymbols && getProto ? getProto(getProto([][Symbol.iterator]())) : undefined$1,
+      "%JSON%": typeof JSON === "object" ? JSON : undefined$1,
+      "%Map%": typeof Map === "undefined" ? undefined$1 : Map,
+      "%MapIteratorPrototype%": typeof Map === "undefined" || !hasSymbols || !getProto ? undefined$1 : getProto((/* @__PURE__ */ new Map())[Symbol.iterator]()),
+      "%Math%": Math,
+      "%Number%": Number,
+      "%Object%": $Object,
+      "%Object.getOwnPropertyDescriptor%": $gOPD,
+      "%parseFloat%": parseFloat,
+      "%parseInt%": parseInt,
+      "%Promise%": typeof Promise === "undefined" ? undefined$1 : Promise,
+      "%Proxy%": typeof Proxy === "undefined" ? undefined$1 : Proxy,
+      "%RangeError%": $RangeError,
+      "%ReferenceError%": $ReferenceError,
+      "%Reflect%": typeof Reflect === "undefined" ? undefined$1 : Reflect,
+      "%RegExp%": RegExp,
+      "%Set%": typeof Set === "undefined" ? undefined$1 : Set,
+      "%SetIteratorPrototype%": typeof Set === "undefined" || !hasSymbols || !getProto ? undefined$1 : getProto((/* @__PURE__ */ new Set())[Symbol.iterator]()),
+      "%SharedArrayBuffer%": typeof SharedArrayBuffer === "undefined" ? undefined$1 : SharedArrayBuffer,
+      "%String%": String,
+      "%StringIteratorPrototype%": hasSymbols && getProto ? getProto(""[Symbol.iterator]()) : undefined$1,
+      "%Symbol%": hasSymbols ? Symbol : undefined$1,
+      "%SyntaxError%": $SyntaxError,
+      "%ThrowTypeError%": ThrowTypeError,
+      "%TypedArray%": TypedArray,
+      "%TypeError%": $TypeError$1,
+      "%Uint8Array%": typeof Uint8Array === "undefined" ? undefined$1 : Uint8Array,
+      "%Uint8ClampedArray%": typeof Uint8ClampedArray === "undefined" ? undefined$1 : Uint8ClampedArray,
+      "%Uint16Array%": typeof Uint16Array === "undefined" ? undefined$1 : Uint16Array,
+      "%Uint32Array%": typeof Uint32Array === "undefined" ? undefined$1 : Uint32Array,
+      "%URIError%": $URIError,
+      "%WeakMap%": typeof WeakMap === "undefined" ? undefined$1 : WeakMap,
+      "%WeakRef%": typeof WeakRef === "undefined" ? undefined$1 : WeakRef,
+      "%WeakSet%": typeof WeakSet === "undefined" ? undefined$1 : WeakSet,
+      "%Function.prototype.call%": $call,
+      "%Function.prototype.apply%": $apply,
+      "%Object.defineProperty%": $defineProperty$1,
+      "%Object.getPrototypeOf%": $ObjectGPO,
+      "%Math.abs%": abs,
+      "%Math.floor%": floor,
+      "%Math.max%": max,
+      "%Math.min%": min,
+      "%Math.pow%": pow,
+      "%Math.round%": round,
+      "%Math.sign%": sign,
+      "%Reflect.getPrototypeOf%": $ReflectGPO
+    };
+    if (getProto) {
+      try {
+        null.error;
+      } catch (e) {
+        errorProto = getProto(getProto(e));
+        INTRINSICS["%Error.prototype%"] = errorProto;
+      }
+    }
+    var errorProto;
+    var doEval = function doEval2(name) {
+      var value;
+      if (name === "%AsyncFunction%") {
+        value = getEvalledConstructor("async function () {}");
+      } else if (name === "%GeneratorFunction%") {
+        value = getEvalledConstructor("function* () {}");
+      } else if (name === "%AsyncGeneratorFunction%") {
+        value = getEvalledConstructor("async function* () {}");
+      } else if (name === "%AsyncGenerator%") {
+        var fn = doEval2("%AsyncGeneratorFunction%");
+        if (fn) {
+          value = fn.prototype;
+        }
+      } else if (name === "%AsyncIteratorPrototype%") {
+        var gen = doEval2("%AsyncGenerator%");
+        if (gen && getProto) {
+          value = getProto(gen.prototype);
+        }
+      }
+      INTRINSICS[name] = value;
+      return value;
+    };
+    var LEGACY_ALIASES = {
+      __proto__: null,
+      "%ArrayBufferPrototype%": ["ArrayBuffer", "prototype"],
+      "%ArrayPrototype%": ["Array", "prototype"],
+      "%ArrayProto_entries%": ["Array", "prototype", "entries"],
+      "%ArrayProto_forEach%": ["Array", "prototype", "forEach"],
+      "%ArrayProto_keys%": ["Array", "prototype", "keys"],
+      "%ArrayProto_values%": ["Array", "prototype", "values"],
+      "%AsyncFunctionPrototype%": ["AsyncFunction", "prototype"],
+      "%AsyncGenerator%": ["AsyncGeneratorFunction", "prototype"],
+      "%AsyncGeneratorPrototype%": ["AsyncGeneratorFunction", "prototype", "prototype"],
+      "%BooleanPrototype%": ["Boolean", "prototype"],
+      "%DataViewPrototype%": ["DataView", "prototype"],
+      "%DatePrototype%": ["Date", "prototype"],
+      "%ErrorPrototype%": ["Error", "prototype"],
+      "%EvalErrorPrototype%": ["EvalError", "prototype"],
+      "%Float32ArrayPrototype%": ["Float32Array", "prototype"],
+      "%Float64ArrayPrototype%": ["Float64Array", "prototype"],
+      "%FunctionPrototype%": ["Function", "prototype"],
+      "%Generator%": ["GeneratorFunction", "prototype"],
+      "%GeneratorPrototype%": ["GeneratorFunction", "prototype", "prototype"],
+      "%Int8ArrayPrototype%": ["Int8Array", "prototype"],
+      "%Int16ArrayPrototype%": ["Int16Array", "prototype"],
+      "%Int32ArrayPrototype%": ["Int32Array", "prototype"],
+      "%JSONParse%": ["JSON", "parse"],
+      "%JSONStringify%": ["JSON", "stringify"],
+      "%MapPrototype%": ["Map", "prototype"],
+      "%NumberPrototype%": ["Number", "prototype"],
+      "%ObjectPrototype%": ["Object", "prototype"],
+      "%ObjProto_toString%": ["Object", "prototype", "toString"],
+      "%ObjProto_valueOf%": ["Object", "prototype", "valueOf"],
+      "%PromisePrototype%": ["Promise", "prototype"],
+      "%PromiseProto_then%": ["Promise", "prototype", "then"],
+      "%Promise_all%": ["Promise", "all"],
+      "%Promise_reject%": ["Promise", "reject"],
+      "%Promise_resolve%": ["Promise", "resolve"],
+      "%RangeErrorPrototype%": ["RangeError", "prototype"],
+      "%ReferenceErrorPrototype%": ["ReferenceError", "prototype"],
+      "%RegExpPrototype%": ["RegExp", "prototype"],
+      "%SetPrototype%": ["Set", "prototype"],
+      "%SharedArrayBufferPrototype%": ["SharedArrayBuffer", "prototype"],
+      "%StringPrototype%": ["String", "prototype"],
+      "%SymbolPrototype%": ["Symbol", "prototype"],
+      "%SyntaxErrorPrototype%": ["SyntaxError", "prototype"],
+      "%TypedArrayPrototype%": ["TypedArray", "prototype"],
+      "%TypeErrorPrototype%": ["TypeError", "prototype"],
+      "%Uint8ArrayPrototype%": ["Uint8Array", "prototype"],
+      "%Uint8ClampedArrayPrototype%": ["Uint8ClampedArray", "prototype"],
+      "%Uint16ArrayPrototype%": ["Uint16Array", "prototype"],
+      "%Uint32ArrayPrototype%": ["Uint32Array", "prototype"],
+      "%URIErrorPrototype%": ["URIError", "prototype"],
+      "%WeakMapPrototype%": ["WeakMap", "prototype"],
+      "%WeakSetPrototype%": ["WeakSet", "prototype"]
+    };
+    var bind = functionBind;
+    var hasOwn$2 = hasown;
+    var $concat = bind.call($call, Array.prototype.concat);
+    var $spliceApply = bind.call($apply, Array.prototype.splice);
+    var $replace = bind.call($call, String.prototype.replace);
+    var $strSlice = bind.call($call, String.prototype.slice);
+    var $exec = bind.call($call, RegExp.prototype.exec);
+    var rePropName = /[^%.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|%$))/g;
+    var reEscapeChar = /\\(\\)?/g;
+    var stringToPath = function stringToPath2(string) {
+      var first = $strSlice(string, 0, 1);
+      var last = $strSlice(string, -1);
+      if (first === "%" && last !== "%") {
+        throw new $SyntaxError("invalid intrinsic syntax, expected closing `%`");
+      } else if (last === "%" && first !== "%") {
+        throw new $SyntaxError("invalid intrinsic syntax, expected opening `%`");
+      }
+      var result = [];
+      $replace(string, rePropName, function(match, number, quote, subString) {
+        result[result.length] = quote ? $replace(subString, reEscapeChar, "$1") : number || match;
+      });
+      return result;
+    };
+    var getBaseIntrinsic = function getBaseIntrinsic2(name, allowMissing) {
+      var intrinsicName = name;
+      var alias;
+      if (hasOwn$2(LEGACY_ALIASES, intrinsicName)) {
+        alias = LEGACY_ALIASES[intrinsicName];
+        intrinsicName = "%" + alias[0] + "%";
+      }
+      if (hasOwn$2(INTRINSICS, intrinsicName)) {
+        var value = INTRINSICS[intrinsicName];
+        if (value === needsEval) {
+          value = doEval(intrinsicName);
+        }
+        if (typeof value === "undefined" && !allowMissing) {
+          throw new $TypeError$1("intrinsic " + name + " exists, but is not available. Please file an issue!");
+        }
+        return {
+          alias,
+          name: intrinsicName,
+          value
+        };
+      }
+      throw new $SyntaxError("intrinsic " + name + " does not exist!");
+    };
+    var getIntrinsic = function GetIntrinsic2(name, allowMissing) {
+      if (typeof name !== "string" || name.length === 0) {
+        throw new $TypeError$1("intrinsic name must be a non-empty string");
+      }
+      if (arguments.length > 1 && typeof allowMissing !== "boolean") {
+        throw new $TypeError$1('"allowMissing" argument must be a boolean');
+      }
+      if ($exec(/^%?[^%]*%?$/, name) === null) {
+        throw new $SyntaxError("`%` may not be present anywhere but at the beginning and end of the intrinsic name");
+      }
+      var parts = stringToPath(name);
+      var intrinsicBaseName = parts.length > 0 ? parts[0] : "";
+      var intrinsic = getBaseIntrinsic("%" + intrinsicBaseName + "%", allowMissing);
+      var intrinsicRealName = intrinsic.name;
+      var value = intrinsic.value;
+      var skipFurtherCaching = false;
+      var alias = intrinsic.alias;
+      if (alias) {
+        intrinsicBaseName = alias[0];
+        $spliceApply(parts, $concat([0, 1], alias));
+      }
+      for (var i = 1, isOwn = true; i < parts.length; i += 1) {
+        var part = parts[i];
+        var first = $strSlice(part, 0, 1);
+        var last = $strSlice(part, -1);
+        if ((first === '"' || first === "'" || first === "`" || (last === '"' || last === "'" || last === "`")) && first !== last) {
+          throw new $SyntaxError("property names with quotes must have matching quotes");
+        }
+        if (part === "constructor" || !isOwn) {
+          skipFurtherCaching = true;
+        }
+        intrinsicBaseName += "." + part;
+        intrinsicRealName = "%" + intrinsicBaseName + "%";
+        if (hasOwn$2(INTRINSICS, intrinsicRealName)) {
+          value = INTRINSICS[intrinsicRealName];
+        } else if (value != null) {
+          if (!(part in value)) {
+            if (!allowMissing) {
+              throw new $TypeError$1("base intrinsic for " + name + " exists, but the property is not available.");
+            }
+            return void undefined$1;
+          }
+          if ($gOPD && i + 1 >= parts.length) {
+            var desc = $gOPD(value, part);
+            isOwn = !!desc;
+            if (isOwn && "get" in desc && !("originalValue" in desc.get)) {
+              value = desc.get;
+            } else {
+              value = value[part];
+            }
+          } else {
+            isOwn = hasOwn$2(value, part);
+            value = value[part];
+          }
+          if (isOwn && !skipFurtherCaching) {
+            INTRINSICS[intrinsicRealName] = value;
+          }
+        }
+      }
+      return value;
+    };
+    var shams;
+    var hasRequiredShams;
+    function requireShams() {
+      if (hasRequiredShams) return shams;
+      hasRequiredShams = 1;
+      var hasSymbols2 = requireShams$1();
+      shams = function hasToStringTagShams() {
+        return hasSymbols2() && !!Symbol.toStringTag;
+      };
+      return shams;
+    }
+    var GetIntrinsic = getIntrinsic;
+    var $defineProperty = GetIntrinsic("%Object.defineProperty%", true);
+    var hasToStringTag = requireShams()();
+    var hasOwn$1 = hasown;
+    var $TypeError = requireType();
+    var toStringTag = hasToStringTag ? Symbol.toStringTag : null;
+    var esSetTostringtag = function setToStringTag2(object, value) {
+      var overrideIfSet = arguments.length > 2 && !!arguments[2] && arguments[2].force;
+      var nonConfigurable = arguments.length > 2 && !!arguments[2] && arguments[2].nonConfigurable;
+      if (typeof overrideIfSet !== "undefined" && typeof overrideIfSet !== "boolean" || typeof nonConfigurable !== "undefined" && typeof nonConfigurable !== "boolean") {
+        throw new $TypeError("if provided, the `overrideIfSet` and `nonConfigurable` options must be booleans");
+      }
+      if (toStringTag && (overrideIfSet || !hasOwn$1(object, toStringTag))) {
+        if ($defineProperty) {
+          $defineProperty(object, toStringTag, {
+            configurable: !nonConfigurable,
+            enumerable: false,
+            value,
+            writable: false
+          });
+        } else {
+          object[toStringTag] = value;
+        }
+      }
+    };
     var populate$1 = function(dst, src) {
       Object.keys(src).forEach(function(prop) {
         dst[prop] = dst[prop] || src[prop];
@@ -45536,11 +46011,12 @@ var require_lib = __commonJS({
     var parseUrl = require$$5$1.parse;
     var fs2 = fs$9;
     var Stream = require$$0$3.Stream;
+    var crypto = require$$8;
     var mime = mimeTypes;
     var asynckit = asynckit$1;
+    var setToStringTag = esSetTostringtag;
+    var hasOwn = hasown;
     var populate = populate$1;
-    var form_data = FormData;
-    util.inherits(FormData, CombinedStream);
     function FormData(options) {
       if (!(this instanceof FormData)) {
         return new FormData(options);
@@ -45554,16 +46030,17 @@ var require_lib = __commonJS({
         this[option] = options[option];
       }
     }
+    util.inherits(FormData, CombinedStream);
     FormData.LINE_BREAK = "\r\n";
     FormData.DEFAULT_CONTENT_TYPE = "application/octet-stream";
     FormData.prototype.append = function(field, value, options) {
       options = options || {};
-      if (typeof options == "string") {
+      if (typeof options === "string") {
         options = { filename: options };
       }
       var append = CombinedStream.prototype.append.bind(this);
-      if (typeof value == "number") {
-        value = "" + value;
+      if (typeof value === "number" || value == null) {
+        value = String(value);
       }
       if (Array.isArray(value)) {
         this._error(new Error("Arrays are not supported."));
@@ -45579,7 +46056,7 @@ var require_lib = __commonJS({
     FormData.prototype._trackLength = function(header, value, options) {
       var valueLength = 0;
       if (options.knownLength != null) {
-        valueLength += +options.knownLength;
+        valueLength += Number(options.knownLength);
       } else if (Buffer.isBuffer(value)) {
         valueLength = value.length;
       } else if (typeof value === "string") {
@@ -45587,7 +46064,7 @@ var require_lib = __commonJS({
       }
       this._valueLength += valueLength;
       this._overheadLength += Buffer.byteLength(header) + FormData.LINE_BREAK.length;
-      if (!value || !value.path && !(value.readable && value.hasOwnProperty("httpVersion")) && !(value instanceof Stream)) {
+      if (!value || !value.path && !(value.readable && hasOwn(value, "httpVersion")) && !(value instanceof Stream)) {
         return;
       }
       if (!options.knownLength) {
@@ -45595,26 +46072,25 @@ var require_lib = __commonJS({
       }
     };
     FormData.prototype._lengthRetriever = function(value, callback) {
-      if (value.hasOwnProperty("fd")) {
+      if (hasOwn(value, "fd")) {
         if (value.end != void 0 && value.end != Infinity && value.start != void 0) {
           callback(null, value.end + 1 - (value.start ? value.start : 0));
         } else {
           fs2.stat(value.path, function(err, stat3) {
-            var fileSize;
             if (err) {
               callback(err);
               return;
             }
-            fileSize = stat3.size - (value.start ? value.start : 0);
+            var fileSize = stat3.size - (value.start ? value.start : 0);
             callback(null, fileSize);
           });
         }
-      } else if (value.hasOwnProperty("httpVersion")) {
-        callback(null, +value.headers["content-length"]);
-      } else if (value.hasOwnProperty("httpModule")) {
+      } else if (hasOwn(value, "httpVersion")) {
+        callback(null, Number(value.headers["content-length"]));
+      } else if (hasOwn(value, "httpModule")) {
         value.on("response", function(response) {
           value.pause();
-          callback(null, +response.headers["content-length"]);
+          callback(null, Number(response.headers["content-length"]));
         });
         value.resume();
       } else {
@@ -45622,7 +46098,7 @@ var require_lib = __commonJS({
       }
     };
     FormData.prototype._multiPartHeader = function(field, value, options) {
-      if (typeof options.header == "string") {
+      if (typeof options.header === "string") {
         return options.header;
       }
       var contentDisposition = this._getContentDisposition(value, options);
@@ -45634,54 +46110,54 @@ var require_lib = __commonJS({
         // if no content type. allow it to be empty array
         "Content-Type": [].concat(contentType || [])
       };
-      if (typeof options.header == "object") {
+      if (typeof options.header === "object") {
         populate(headers2, options.header);
       }
       var header;
       for (var prop in headers2) {
-        if (!headers2.hasOwnProperty(prop)) continue;
-        header = headers2[prop];
-        if (header == null) {
-          continue;
-        }
-        if (!Array.isArray(header)) {
-          header = [header];
-        }
-        if (header.length) {
-          contents += prop + ": " + header.join("; ") + FormData.LINE_BREAK;
+        if (hasOwn(headers2, prop)) {
+          header = headers2[prop];
+          if (header == null) {
+            continue;
+          }
+          if (!Array.isArray(header)) {
+            header = [header];
+          }
+          if (header.length) {
+            contents += prop + ": " + header.join("; ") + FormData.LINE_BREAK;
+          }
         }
       }
       return "--" + this.getBoundary() + FormData.LINE_BREAK + contents + FormData.LINE_BREAK;
     };
     FormData.prototype._getContentDisposition = function(value, options) {
-      var filename, contentDisposition;
+      var filename;
       if (typeof options.filepath === "string") {
         filename = path.normalize(options.filepath).replace(/\\/g, "/");
-      } else if (options.filename || value.name || value.path) {
-        filename = path.basename(options.filename || value.name || value.path);
-      } else if (value.readable && value.hasOwnProperty("httpVersion")) {
+      } else if (options.filename || value && (value.name || value.path)) {
+        filename = path.basename(options.filename || value && (value.name || value.path));
+      } else if (value && value.readable && hasOwn(value, "httpVersion")) {
         filename = path.basename(value.client._httpMessage.path || "");
       }
       if (filename) {
-        contentDisposition = 'filename="' + filename + '"';
+        return 'filename="' + filename + '"';
       }
-      return contentDisposition;
     };
     FormData.prototype._getContentType = function(value, options) {
       var contentType = options.contentType;
-      if (!contentType && value.name) {
+      if (!contentType && value && value.name) {
         contentType = mime.lookup(value.name);
       }
-      if (!contentType && value.path) {
+      if (!contentType && value && value.path) {
         contentType = mime.lookup(value.path);
       }
-      if (!contentType && value.readable && value.hasOwnProperty("httpVersion")) {
+      if (!contentType && value && value.readable && hasOwn(value, "httpVersion")) {
         contentType = value.headers["content-type"];
       }
       if (!contentType && (options.filepath || options.filename)) {
         contentType = mime.lookup(options.filepath || options.filename);
       }
-      if (!contentType && typeof value == "object") {
+      if (!contentType && value && typeof value === "object") {
         contentType = FormData.DEFAULT_CONTENT_TYPE;
       }
       return contentType;
@@ -45705,13 +46181,16 @@ var require_lib = __commonJS({
         "content-type": "multipart/form-data; boundary=" + this.getBoundary()
       };
       for (header in userHeaders) {
-        if (userHeaders.hasOwnProperty(header)) {
+        if (hasOwn(userHeaders, header)) {
           formHeaders[header.toLowerCase()] = userHeaders[header];
         }
       }
       return formHeaders;
     };
     FormData.prototype.setBoundary = function(boundary) {
+      if (typeof boundary !== "string") {
+        throw new TypeError("FormData boundary must be a string");
+      }
       this._boundary = boundary;
     };
     FormData.prototype.getBoundary = function() {
@@ -45738,11 +46217,7 @@ var require_lib = __commonJS({
       return Buffer.concat([dataBuffer, Buffer.from(this._lastBoundary())]);
     };
     FormData.prototype._generateBoundary = function() {
-      var boundary = "--------------------------";
-      for (var i = 0; i < 24; i++) {
-        boundary += Math.floor(Math.random() * 10).toString(16);
-      }
-      this._boundary = boundary;
+      this._boundary = "--------------------------" + crypto.randomBytes(12).toString("hex");
     };
     FormData.prototype.getLengthSync = function() {
       var knownLength = this._overheadLength + this._valueLength;
@@ -45782,8 +46257,10 @@ var require_lib = __commonJS({
       });
     };
     FormData.prototype.submit = function(params, cb) {
-      var request, options, defaults2 = { method: "post" };
-      if (typeof params == "string") {
+      var request;
+      var options;
+      var defaults2 = { method: "post" };
+      if (typeof params === "string") {
         params = parseUrl(params);
         options = populate({
           port: params.port,
@@ -45794,11 +46271,11 @@ var require_lib = __commonJS({
       } else {
         options = populate(params, defaults2);
         if (!options.port) {
-          options.port = options.protocol == "https:" ? 443 : 80;
+          options.port = options.protocol === "https:" ? 443 : 80;
         }
       }
       options.headers = this.getHeaders(params.headers);
-      if (options.protocol == "https:") {
+      if (options.protocol === "https:") {
         request = https.request(options);
       } else {
         request = http.request(options);
@@ -45836,12 +46313,16 @@ var require_lib = __commonJS({
     FormData.prototype.toString = function() {
       return "[object FormData]";
     };
+    setToStringTag(FormData.prototype, "FormData");
+    var form_data = FormData;
     var FormData$1 = /* @__PURE__ */ getDefaultExportFromCjs(form_data);
     function uploadSourceMap2(path2, config) {
       const formData = new FormData$1();
       formData.append("sourcemapToken", config.sourcemapToken);
       formData.append("versionName", config.versionName);
-      formData.append("versionCode", config.versionCode);
+      if (config.versionCode !== void 0) {
+        formData.append("versionCode", config.versionCode);
+      }
       if (config.buildUuid) {
         formData.append("buildUuid", config.buildUuid);
       }
