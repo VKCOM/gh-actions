@@ -204,7 +204,7 @@ __metadata:
   resolution: "@actions-internal/tracer-sourcemap@workspace:shared/tracer/sourcemap"
   dependencies:
     "@actions/core": "npm:^3.0.0"
-    "@apptracer/sourcemap": "npm:^1.1.10"
+    "@apptracer/sourcemap": "npm:^1.1.12"
     "@types/node": "npm:^25.2.3"
     typescript: "npm:^5.9.3"
   languageName: unknown
@@ -271,13 +271,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@apptracer/sourcemap@npm:^1.1.10":
-  version: 1.1.10
-  resolution: "@apptracer/sourcemap@npm:1.1.10"
+"@apptracer/sourcemap@npm:^1.1.12":
+  version: 1.1.12
+  resolution: "@apptracer/sourcemap@npm:1.1.12"
   dependencies:
     archiver: "npm:^6.0.1"
     form-data: "npm:^4.0.0"
-  checksum: 10c0/93b96bac048a5293c86a31507ae0a34f466bc6e7bcb73a7d5226ab184510db154ef4179e8d958d508c793ccb8d2c202fde1de2ff27bb1cbdc64f78b59319d0a1
+  checksum: 10c0/6e2f6d3151b54dea611955a96cae8826c7c1f2e73274efefe3902ec76b29d4978c311698207a567576de2dda770cacfff6b0b961fe170b8ed9364c5e148e13ce
   languageName: node
   linkType: hard
 
