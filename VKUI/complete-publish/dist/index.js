@@ -24792,8 +24792,11 @@ function getOctokit(token, options, ...additionalPlugins) {
 // ../../node_modules/@octokit/plugin-retry/dist-bundle/index.js
 var import_light = __toESM(require_light(), 1);
 var VERSION7 = "0.0.0-development";
+function isRequestError(error2) {
+  return error2.request !== void 0;
+}
 async function errorRequest(state, octokit, error2, options) {
-  if (!error2.request || !error2.request.request) {
+  if (!isRequestError(error2) || !error2?.request.request) {
     throw error2;
   }
   if (error2.status >= 400 && !state.doNotRetry.includes(error2.status)) {
@@ -24806,8 +24809,8 @@ async function errorRequest(state, octokit, error2, options) {
 async function wrapRequest(state, octokit, request2, options) {
   const limiter = new import_light.default();
   limiter.on("failed", function(error2, info2) {
-    const maxRetries = ~~error2.request.request.retries;
-    const after = ~~error2.request.request.retryAfter;
+    const maxRetries = ~~error2.request.request?.retries;
+    const after = ~~error2.request.request?.retryAfter;
     options.request.retryCount = info2.retryCount + 1;
     if (maxRetries > info2.retryCount) {
       return after * state.retryAfterBaseValue;
@@ -24819,7 +24822,7 @@ async function wrapRequest(state, octokit, request2, options) {
   );
 }
 async function requestWithGraphqlErrorHandling(state, octokit, request2, options) {
-  const response = await request2(request2, options);
+  const response = await request2(options);
   if (response.data && response.data.errors && response.data.errors.length > 0 && /Something went wrong while executing your query/.test(
     response.data.errors[0].message
   )) {
@@ -24841,11 +24844,7 @@ function retry(octokit, octokitOptions) {
     },
     octokitOptions.retry
   );
-  if (state.enabled) {
-    octokit.hook.error("request", errorRequest.bind(null, state, octokit));
-    octokit.hook.wrap("request", wrapRequest.bind(null, state, octokit));
-  }
-  return {
+  const retryPlugin = {
     retry: {
       retryRequest: (error2, retries, retryAfter) => {
         error2.request.request = Object.assign({}, error2.request.request, {
@@ -24856,6 +24855,11 @@ function retry(octokit, octokitOptions) {
       }
     }
   };
+  if (state.enabled) {
+    octokit.hook.error("request", errorRequest.bind(null, state, retryPlugin));
+    octokit.hook.wrap("request", wrapRequest.bind(null, state, retryPlugin));
+  }
+  return retryPlugin;
 }
 retry.VERSION = VERSION7;
 
