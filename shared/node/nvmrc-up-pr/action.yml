@@ -9,7 +9,7 @@ runs:
   using: "composite"
   steps:
     - name: Run update version
-      run: curl -s https://nodejs.org/dist/index.json | jq 'map(select(.lts != false))[0].version' -r > .nvmrc
+      run: curl -s https://nodejs.org/dist/index.json | jq 'max_by(.version | ltrimstr("v") | split(".") | map(tonumber)) | .version' -r > .nvmrc
       shell: bash
 
     - name: Create Pull Request
