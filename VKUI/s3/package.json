@@ -9,7 +9,7 @@
     "@types/lodash": "^4.17.24",
     "@types/mime-types": "^3.0.1",
     "@types/node": "^25.5.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.2"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
