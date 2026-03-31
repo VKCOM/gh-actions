@@ -24956,7 +24956,7 @@ var WorkflowHandler = class {
       `,
       {
         owner: context2.repo.owner,
-        repo: context2.repo.repo,
+        name: context2.repo.repo,
         title: this.releaseTag
       }
     );
