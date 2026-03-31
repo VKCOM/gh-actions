@@ -124,7 +124,7 @@ export class WorkflowHandler {
       `,
       {
         owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
+        name: github.context.repo.repo,
         title: this.releaseTag,
       },
     );
