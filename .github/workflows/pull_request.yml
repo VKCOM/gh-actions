@@ -12,7 +12,7 @@ jobs:
     name: Check lint
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -25,7 +25,7 @@ jobs:
     name: Check build
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -38,7 +38,7 @@ jobs:
     name: Check build
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Node setup
         uses: ./.github/actions/node-setup
@@ -51,7 +51,7 @@ jobs:
     name: Check dependencies
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Enable Corepack
         run: corepack enable
