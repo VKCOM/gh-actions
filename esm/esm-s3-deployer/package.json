@@ -1,0 +1,25 @@
+{
+  "name": "@vkontakte/esm-s3-deployer",
+  "version": "1.0.0",
+  "description": "Deploy npm packages to S3 for ESM CDN",
+  "license": "MIT",
+  "author": "VK",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1017.0",
+    "mime-types": "^3.0.2",
+    "semver": "^7.7.4",
+    "tar": "^7.5.13",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.9",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^25.5.0",
+    "@types/semver": "^7.7.1",
+    "typescript": "^6.0.2"
+  }
+}

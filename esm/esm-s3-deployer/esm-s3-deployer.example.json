@@ -1,0 +1,17 @@
+{
+  "packages": {
+    "@scope/package-name": "^1.0.0"
+  },
+  "s3": {
+    "bucket": "vkui-esm",
+    "profile": "default"
+  },
+  "registry": {
+    "server": "https://registry.npmjs.org"
+  },
+  "timeout": {
+    "registry": 5000,
+    "s3": 10000,
+    "fs": 5000
+  }
+}
