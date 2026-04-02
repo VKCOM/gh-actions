@@ -9,7 +9,8 @@
       "vkui-tokens/*",
       "shared/rust/cargo-update-toml",
       "shared/tracer/*",
-      "shared/*"
+      "shared/*",
+      "esm/*"
     ]
   },
   "scripts": {
