@@ -1,0 +1,22 @@
+{
+  "name": "@actions-internal/auto-label-pull-request",
+  "version": "0.0.0",
+  "main": "src/main.ts",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.0",
+    "@actions/github": "^9.0.0"
+  },
+  "scripts": {
+    "prebuild": "shx rm -rf dist/*",
+    "build": "esbuild ./src/main.ts --bundle --outfile=dist/index.js --platform=node --packages=bundle --format=esm --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
+    "test": "node --version && node --test '**/*.test.*'",
+    "lint:biome": "biome check"
+  }
+}

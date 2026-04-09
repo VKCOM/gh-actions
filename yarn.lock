@@ -17,6 +17,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@actions-internal/auto-label-pull-request@workspace:VKUI/auto-label-pull-request":
+  version: 0.0.0-use.local
+  resolution: "@actions-internal/auto-label-pull-request@workspace:VKUI/auto-label-pull-request"
+  dependencies:
+    "@actions/core": "npm:^3.0.0"
+    "@actions/github": "npm:^9.0.0"
+    "@types/node": "npm:^25.3.5"
+    typescript: "npm:^5.9.3"
+  languageName: unknown
+  linkType: soft
+
 "@actions-internal/auto-update-icons-release-notes@workspace:icons/auto-update-release-notes":
   version: 0.0.0-use.local
   resolution: "@actions-internal/auto-update-icons-release-notes@workspace:icons/auto-update-release-notes"
