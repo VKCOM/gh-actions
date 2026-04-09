@@ -3979,11 +3979,11 @@ var require_util2 = __commonJS({
     var { isUint8Array } = __require("node:util/types");
     var { webidl } = require_webidl();
     var supportedHashes = [];
-    var crypto2;
+    var crypto;
     try {
-      crypto2 = __require("node:crypto");
+      crypto = __require("node:crypto");
       const possibleRelevantHashes = ["sha256", "sha384", "sha512"];
-      supportedHashes = crypto2.getHashes().filter((hash) => possibleRelevantHashes.includes(hash));
+      supportedHashes = crypto.getHashes().filter((hash) => possibleRelevantHashes.includes(hash));
     } catch {
     }
     function responseURL(response) {
@@ -4256,7 +4256,7 @@ var require_util2 = __commonJS({
       }
     }
     function bytesMatch(bytes, metadataList) {
-      if (crypto2 === void 0) {
+      if (crypto === void 0) {
         return true;
       }
       const parsedMetadata = parseMetadata(metadataList);
@@ -4271,7 +4271,7 @@ var require_util2 = __commonJS({
       for (const item of metadata) {
         const algorithm = item.algo;
         const expectedValue = item.hash;
-        let actualValue = crypto2.createHash(algorithm).update(bytes).digest("base64");
+        let actualValue = crypto.createHash(algorithm).update(bytes).digest("base64");
         if (actualValue[actualValue.length - 1] === "=") {
           if (actualValue[actualValue.length - 2] === "=") {
             actualValue = actualValue.slice(0, -2);
@@ -5335,8 +5335,8 @@ var require_body = __commonJS({
     var { multipartFormDataParser } = require_formdata_parser();
     var random;
     try {
-      const crypto2 = __require("node:crypto");
-      random = (max) => crypto2.randomInt(0, max);
+      const crypto = __require("node:crypto");
+      random = (max) => crypto.randomInt(0, max);
     } catch {
       random = (max) => Math.floor(Math.random(max));
     }
@@ -16740,13 +16740,13 @@ var require_frame = __commonJS({
     "use strict";
     var { maxUnsigned16Bit } = require_constants5();
     var BUFFER_SIZE = 16386;
-    var crypto2;
+    var crypto;
     var buffer = null;
     var bufIdx = BUFFER_SIZE;
     try {
-      crypto2 = __require("node:crypto");
+      crypto = __require("node:crypto");
     } catch {
-      crypto2 = {
+      crypto = {
         // not full compatibility, but minimum.
         randomFillSync: function randomFillSync(buffer2, _offset, _size) {
           for (let i = 0; i < buffer2.length; ++i) {
@@ -16759,7 +16759,7 @@ var require_frame = __commonJS({
     function generateMask() {
       if (bufIdx === BUFFER_SIZE) {
         bufIdx = 0;
-        crypto2.randomFillSync(buffer ??= Buffer.allocUnsafe(BUFFER_SIZE), 0, BUFFER_SIZE);
+        crypto.randomFillSync(buffer ??= Buffer.allocUnsafe(BUFFER_SIZE), 0, BUFFER_SIZE);
       }
       return [buffer[bufIdx++], buffer[bufIdx++], buffer[bufIdx++], buffer[bufIdx++]];
     }
@@ -16831,9 +16831,9 @@ var require_connection = __commonJS({
     var { Headers: Headers2, getHeadersList } = require_headers();
     var { getDecodeSplit } = require_util2();
     var { WebsocketFrameSend } = require_frame();
-    var crypto2;
+    var crypto;
     try {
-      crypto2 = __require("node:crypto");
+      crypto = __require("node:crypto");
     } catch {
     }
     function establishWebSocketConnection(url, protocols, client, ws, onEstablish, options) {
@@ -16853,7 +16853,7 @@ var require_connection = __commonJS({
         const headersList = getHeadersList(new Headers2(options.headers));
         request2.headersList = headersList;
       }
-      const keyValue = crypto2.randomBytes(16).toString("base64");
+      const keyValue = crypto.randomBytes(16).toString("base64");
       request2.headersList.append("sec-websocket-key", keyValue);
       request2.headersList.append("sec-websocket-version", "13");
       for (const protocol of protocols) {
@@ -16883,7 +16883,7 @@ var require_connection = __commonJS({
             return;
           }
           const secWSAccept = response.headersList.get("Sec-WebSocket-Accept");
-          const digest = crypto2.createHash("sha1").update(keyValue + uid).digest("base64");
+          const digest = crypto.createHash("sha1").update(keyValue + uid).digest("base64");
           if (secWSAccept !== digest) {
             failWebsocketConnection(ws, "Incorrect hash received in Sec-WebSocket-Accept header.");
             return;
@@ -18906,12 +18906,12 @@ var require_lib = __commonJS({
             throw new Error("Client has already been disposed.");
           }
           const parsedUrl = new URL(requestUrl);
-          let info2 = this._prepareRequest(verb, parsedUrl, headers);
+          let info = this._prepareRequest(verb, parsedUrl, headers);
           const maxTries = this._allowRetries && RetryableHttpVerbs.includes(verb) ? this._maxRetries + 1 : 1;
           let numTries = 0;
           let response;
           do {
-            response = yield this.requestRaw(info2, data);
+            response = yield this.requestRaw(info, data);
             if (response && response.message && response.message.statusCode === HttpCodes2.Unauthorized) {
               let authenticationHandler;
               for (const handler2 of this.handlers) {
@@ -18921,7 +18921,7 @@ var require_lib = __commonJS({
                 }
               }
               if (authenticationHandler) {
-                return authenticationHandler.handleAuthentication(this, info2, data);
+                return authenticationHandler.handleAuthentication(this, info, data);
               } else {
                 return response;
               }
@@ -18944,8 +18944,8 @@ var require_lib = __commonJS({
                   }
                 }
               }
-              info2 = this._prepareRequest(verb, parsedRedirectUrl, headers);
-              response = yield this.requestRaw(info2, data);
+              info = this._prepareRequest(verb, parsedRedirectUrl, headers);
+              response = yield this.requestRaw(info, data);
               redirectsRemaining--;
             }
             if (!response.message.statusCode || !HttpResponseRetryCodes2.includes(response.message.statusCode)) {
@@ -18974,7 +18974,7 @@ var require_lib = __commonJS({
        * @param info
        * @param data
        */
-      requestRaw(info2, data) {
+      requestRaw(info, data) {
         return __awaiter3(this, void 0, void 0, function* () {
           return new Promise((resolve, reject) => {
             function callbackForResult(err, res) {
@@ -18986,7 +18986,7 @@ var require_lib = __commonJS({
                 resolve(res);
               }
             }
-            this.requestRawWithCallback(info2, data, callbackForResult);
+            this.requestRawWithCallback(info, data, callbackForResult);
           });
         });
       }
@@ -18996,12 +18996,12 @@ var require_lib = __commonJS({
        * @param data
        * @param onResult
        */
-      requestRawWithCallback(info2, data, onResult) {
+      requestRawWithCallback(info, data, onResult) {
         if (typeof data === "string") {
-          if (!info2.options.headers) {
-            info2.options.headers = {};
+          if (!info.options.headers) {
+            info.options.headers = {};
           }
-          info2.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
+          info.options.headers["Content-Length"] = Buffer.byteLength(data, "utf8");
         }
         let callbackCalled = false;
         function handleResult(err, res) {
@@ -19010,7 +19010,7 @@ var require_lib = __commonJS({
             onResult(err, res);
           }
         }
-        const req = info2.httpModule.request(info2.options, (msg) => {
+        const req = info.httpModule.request(info.options, (msg) => {
           const res = new HttpClientResponse(msg);
           handleResult(void 0, res);
         });
@@ -19022,7 +19022,7 @@ var require_lib = __commonJS({
           if (socket) {
             socket.end();
           }
-          handleResult(new Error(`Request timeout: ${info2.options.path}`));
+          handleResult(new Error(`Request timeout: ${info.options.path}`));
         });
         req.on("error", function(err) {
           handleResult(err);
@@ -19058,27 +19058,27 @@ var require_lib = __commonJS({
         return this._getProxyAgentDispatcher(parsedUrl, proxyUrl);
       }
       _prepareRequest(method, requestUrl, headers) {
-        const info2 = {};
-        info2.parsedUrl = requestUrl;
-        const usingSsl = info2.parsedUrl.protocol === "https:";
-        info2.httpModule = usingSsl ? https : http;
+        const info = {};
+        info.parsedUrl = requestUrl;
+        const usingSsl = info.parsedUrl.protocol === "https:";
+        info.httpModule = usingSsl ? https : http;
         const defaultPort = usingSsl ? 443 : 80;
-        info2.options = {};
-        info2.options.host = info2.parsedUrl.hostname;
-        info2.options.port = info2.parsedUrl.port ? parseInt(info2.parsedUrl.port) : defaultPort;
-        info2.options.path = (info2.parsedUrl.pathname || "") + (info2.parsedUrl.search || "");
-        info2.options.method = method;
-        info2.options.headers = this._mergeHeaders(headers);
+        info.options = {};
+        info.options.host = info.parsedUrl.hostname;
+        info.options.port = info.parsedUrl.port ? parseInt(info.parsedUrl.port) : defaultPort;
+        info.options.path = (info.parsedUrl.pathname || "") + (info.parsedUrl.search || "");
+        info.options.method = method;
+        info.options.headers = this._mergeHeaders(headers);
         if (this.userAgent != null) {
-          info2.options.headers["user-agent"] = this.userAgent;
+          info.options.headers["user-agent"] = this.userAgent;
         }
-        info2.options.agent = this._getAgent(info2.parsedUrl);
+        info.options.agent = this._getAgent(info.parsedUrl);
         if (this.handlers) {
           for (const handler2 of this.handlers) {
-            handler2.prepareRequest(info2.options);
+            handler2.prepareRequest(info.options);
           }
         }
-        return info2;
+        return info;
       }
       _mergeHeaders(headers) {
         if (this.requestOptions && this.requestOptions.headers) {
@@ -19457,37 +19457,6 @@ function escapeProperty(s) {
   return toCommandValue(s).replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A").replace(/:/g, "%3A").replace(/,/g, "%2C");
 }
 
-// ../../node_modules/@actions/core/lib/file-command.js
-import * as crypto from "crypto";
-import * as fs from "fs";
-import * as os2 from "os";
-function issueFileCommand(command, message) {
-  const filePath = process.env[`GITHUB_${command}`];
-  if (!filePath) {
-    throw new Error(`Unable to find environment variable for file command ${command}`);
-  }
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`Missing file at path: ${filePath}`);
-  }
-  fs.appendFileSync(filePath, `${toCommandValue(message)}${os2.EOL}`, {
-    encoding: "utf8"
-  });
-}
-function prepareKeyValueMessage(key, value) {
-  const delimiter = `ghadelimiter_${crypto.randomUUID()}`;
-  const convertedValue = toCommandValue(value);
-  if (key.includes(delimiter)) {
-    throw new Error(`Unexpected input: name should not contain the delimiter "${delimiter}"`);
-  }
-  if (convertedValue.includes(delimiter)) {
-    throw new Error(`Unexpected input: value should not contain the delimiter "${delimiter}"`);
-  }
-  return `${key}<<${delimiter}${os2.EOL}${convertedValue}${os2.EOL}${delimiter}`;
-}
-
-// ../../node_modules/@actions/core/lib/core.js
-import * as os4 from "os";
-
 // ../../node_modules/@actions/http-client/lib/index.js
 var tunnel = __toESM(require_tunnel2(), 1);
 var import_undici = __toESM(require_undici(), 1);
@@ -19544,7 +19513,7 @@ var HttpResponseRetryCodes = [
 ];
 
 // ../../node_modules/@actions/core/lib/summary.js
-import { EOL as EOL3 } from "os";
+import { EOL as EOL2 } from "os";
 import { constants, promises } from "fs";
 var __awaiter = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
@@ -19688,7 +19657,7 @@ var Summary = class {
    * @returns {Summary} summary instance
    */
   addEOL() {
-    return this.addRaw(EOL3);
+    return this.addRaw(EOL2);
   }
   /**
    * Adds an HTML codeblock to the summary buffer
@@ -19828,20 +19797,20 @@ var Summary = class {
 var _summary = new Summary();
 
 // ../../node_modules/@actions/core/lib/platform.js
-import os3 from "os";
+import os2 from "os";
 
 // ../../node_modules/@actions/io/lib/io-util.js
-import * as fs2 from "fs";
-var { chmod, copyFile, lstat, mkdir, open, readdir, rename, rm, rmdir, stat, symlink, unlink } = fs2.promises;
+import * as fs from "fs";
+var { chmod, copyFile, lstat, mkdir, open, readdir, rename, rm, rmdir, stat, symlink, unlink } = fs.promises;
 var IS_WINDOWS = process.platform === "win32";
-var READONLY = fs2.constants.O_RDONLY;
+var READONLY = fs.constants.O_RDONLY;
 
 // ../../node_modules/@actions/exec/lib/toolrunner.js
 var IS_WINDOWS2 = process.platform === "win32";
 
 // ../../node_modules/@actions/core/lib/platform.js
-var platform = os3.platform();
-var arch = os3.arch();
+var platform = os2.platform();
+var arch = os2.arch();
 
 // ../../node_modules/@actions/core/lib/core.js
 var ExitCode;
@@ -19859,13 +19828,16 @@ function getInput(name, options) {
   }
   return val.trim();
 }
-function setOutput(name, value) {
-  const filePath = process.env["GITHUB_OUTPUT"] || "";
-  if (filePath) {
-    return issueFileCommand("OUTPUT", prepareKeyValueMessage(name, value));
-  }
-  process.stdout.write(os4.EOL);
-  issueCommand("set-output", { name }, toCommandValue(value));
+function getBooleanInput(name, options) {
+  const trueValue = ["true", "True", "TRUE"];
+  const falseValue = ["false", "False", "FALSE"];
+  const val = getInput(name, options);
+  if (trueValue.includes(val))
+    return true;
+  if (falseValue.includes(val))
+    return false;
+  throw new TypeError(`Input does not meet YAML 1.2 "Core Schema" specification: ${name}
+Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
 }
 function setFailed(message) {
   process.exitCode = ExitCode.Failure;
@@ -19877,13 +19849,10 @@ function error(message, properties = {}) {
 function warning(message, properties = {}) {
   issueCommand("warning", toCommandProperties(properties), message instanceof Error ? message.toString() : message);
 }
-function info(message) {
-  process.stdout.write(message + os4.EOL);
-}
 
 // ../../node_modules/@actions/github/lib/context.js
-import { readFileSync, existsSync as existsSync2 } from "fs";
-import { EOL as EOL5 } from "os";
+import { readFileSync, existsSync } from "fs";
+import { EOL as EOL3 } from "os";
 var Context = class {
   /**
    * Hydrate the context from the environment
@@ -19892,11 +19861,11 @@ var Context = class {
     var _a, _b, _c;
     this.payload = {};
     if (process.env.GITHUB_EVENT_PATH) {
-      if (existsSync2(process.env.GITHUB_EVENT_PATH)) {
+      if (existsSync(process.env.GITHUB_EVENT_PATH)) {
         this.payload = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
       } else {
         const path2 = process.env.GITHUB_EVENT_PATH;
-        process.stdout.write(`GITHUB_EVENT_PATH ${path2} does not exist${EOL5}`);
+        process.stdout.write(`GITHUB_EVENT_PATH ${path2} does not exist${EOL3}`);
       }
     }
     this.eventName = process.env.GITHUB_EVENT_NAME;
@@ -23559,11 +23528,11 @@ function specialSubpackageLabel(filePath) {
     return null;
   }
   const packageName = directoryMatch[1];
+  if (packageName === "vkui") {
+    return null;
+  }
   if (packageName === "codemods") {
     return toSubpackageLabel("vkui-codemods");
-  }
-  if (packageName !== "vkui-floating-ui") {
-    return null;
   }
   return toSubpackageLabel(packageName);
 }
@@ -23598,19 +23567,35 @@ function getLabelsByChangedFiles(rawPaths) {
   }
   return Array.from(labels).sort((a, b) => a.localeCompare(b));
 }
+function getLabelColor(label) {
+  if (label.startsWith("cmp:")) {
+    return "1d76db";
+  }
+  if (label.startsWith("hook:")) {
+    return "0e8a16";
+  }
+  if (label.startsWith("subpackage:")) {
+    return "5319e7";
+  }
+  if (label === "docs") {
+    return "0075ca";
+  }
+  if (label === "dependencies") {
+    return "0366d6";
+  }
+  if (label === "github_actions") {
+    return "6f42c1";
+  }
+  if (label === "ci:cherry-pick:patch") {
+    return "d93f0b";
+  }
+  if (label === "vkui-tokens") {
+    return "0052cc";
+  }
+  return "ededed";
+}
 
 // src/main.ts
-function getPullRequestNumber() {
-  const prNumberInput = getInput("pr-number", { required: false });
-  if (prNumberInput) {
-    return Number(prNumberInput);
-  }
-  const pullRequest = context2.payload.pull_request;
-  if (!pullRequest?.number) {
-    throw new Error('Cannot resolve pull request number. Provide input "pr-number".');
-  }
-  return pullRequest.number;
-}
 async function getChangedFilesFromPullRequest(octokit, pullNumber) {
   const {
     repo: { owner, repo }
@@ -23624,18 +23609,18 @@ async function getChangedFilesFromPullRequest(octokit, pullNumber) {
   return pullFiles.map((file) => file.filename);
 }
 function getExtraLabelsFromPullRequestData(pullRequest) {
-  const labels = /* @__PURE__ */ new Set();
+  const labels = [];
   const title = pullRequest.title ?? "";
   const userLogin = pullRequest.user?.login ?? "";
   if (title.startsWith("fix")) {
-    labels.add("ci:cherry-pick:patch");
+    labels.push("ci:cherry-pick:patch");
   }
   if (userLogin === "dependabot[bot]" && title.includes("@vkontakte/vkui-tokens")) {
-    labels.add("vkui-tokens");
+    labels.push("vkui-tokens");
   }
-  return Array.from(labels);
+  return labels;
 }
-async function filterUnknownLabels(labels, octokit) {
+async function ensureLabelsExist(labels, octokit, createMissingLabels) {
   const {
     repo: { owner, repo }
   } = context2;
@@ -23647,9 +23632,25 @@ async function filterUnknownLabels(labels, octokit) {
   const repositoryLabelNames = new Set(repositoryLabels.map((label) => label.name));
   const missingLabels = labels.filter((label) => !repositoryLabelNames.has(label));
   if (missingLabels.length > 0) {
-    warning(
-      `Skipped labels that do not exist in repository: ${missingLabels.sort((a, b) => a.localeCompare(b)).join(", ")}`
-    );
+    if (!createMissingLabels) {
+      warning(
+        `Skipped labels that do not exist in repository: ${missingLabels.sort((a, b) => a.localeCompare(b)).join(", ")}`
+      );
+      return labels.filter((label) => repositoryLabelNames.has(label));
+    }
+    for (const label of missingLabels) {
+      try {
+        await octokit.rest.issues.createLabel({
+          owner,
+          repo,
+          name: label,
+          color: getLabelColor(label)
+        });
+        repositoryLabelNames.add(label);
+      } catch (error2) {
+        warning(`Cannot create label "${label}": ${String(error2)}`);
+      }
+    }
   }
   return labels.filter((label) => repositoryLabelNames.has(label));
 }
@@ -23657,7 +23658,8 @@ async function run() {
   try {
     const token = getInput("token", { required: true });
     const octokit = getOctokit(token);
-    const pullNumber = getPullRequestNumber();
+    const pullNumber = Number(getInput("pr-number", { required: true }));
+    const createMissingLabels = getBooleanInput("create-missing-labels");
     const pullResponse = await octokit.rest.pulls.get({
       ...context2.repo,
       pull_number: pullNumber
@@ -23671,7 +23673,11 @@ async function run() {
         user: pullRequest.user ? { login: pullRequest.user.login } : void 0
       })
     ]);
-    let filteredLabels = await filterUnknownLabels(Array.from(labels), octokit);
+    const filteredLabels = await ensureLabelsExist(
+      Array.from(labels),
+      octokit,
+      createMissingLabels
+    );
     if (filteredLabels.length > 0) {
       await octokit.rest.issues.addLabels({
         ...context2.repo,
@@ -23679,10 +23685,6 @@ async function run() {
         labels: filteredLabels
       });
     }
-    filteredLabels = filteredLabels.sort((a, b) => a.localeCompare(b));
-    info(`Changed files count: ${changedFiles.length}`);
-    info(`Added labels: ${filteredLabels.join(", ") || "(none)"}`);
-    setOutput("labels", JSON.stringify(filteredLabels));
   } catch (error2) {
     if (error2 instanceof Error) {
       setFailed(error2.message);

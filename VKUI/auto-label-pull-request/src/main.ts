@@ -1,6 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import {getLabelsByChangedFiles} from './labels.ts';
+import { getLabelColor, getLabelsByChangedFiles } from './labels.ts';
 
 async function getChangedFilesFromPullRequest(
   octokit: ReturnType<typeof github.getOctokit>,
@@ -39,7 +39,7 @@ function getExtraLabelsFromPullRequestData(pullRequest: {
   return labels;
 }
 
-async function filterUnknownLabels(
+async function ensureLabelsExist(
   labels: string[],
   octokit: ReturnType<typeof github.getOctokit>,
 ): Promise<string[]> {
@@ -56,9 +56,18 @@ async function filterUnknownLabels(
 
   const missingLabels = labels.filter((label) => !repositoryLabelNames.has(label));
   if (missingLabels.length > 0) {
-    core.warning(
-      `Skipped labels that do not exist in repository: ${missingLabels.sort((a, b) => a.localeCompare(b)).join(', ')}`,
-    );
+    for (const label of missingLabels) {
+      try {
+        await octokit.rest.issues.createLabel({
+          owner,
+          repo,
+          name: label,
+          color: getLabelColor(label),
+        });
+      } catch (error) {
+        core.warning(`Cannot create label "${label}": ${String(error)}`);
+      }
+    }
   }
 
   return labels.filter((label) => repositoryLabelNames.has(label));
@@ -68,7 +77,7 @@ async function run(): Promise<void> {
   try {
     const token = core.getInput('token', { required: true });
     const octokit = github.getOctokit(token);
-    const pullNumber = Number(core.getInput('pr-number', {required: true}));
+    const pullNumber = Number(core.getInput('pr-number', { required: true }));
 
     const pullResponse = await octokit.rest.pulls.get({
       ...github.context.repo,
@@ -85,7 +94,7 @@ async function run(): Promise<void> {
       }),
     ]);
 
-    let filteredLabels = await filterUnknownLabels(Array.from(labels), octokit);
+    const filteredLabels = await ensureLabelsExist(Array.from(labels), octokit);
 
     if (filteredLabels.length > 0) {
       await octokit.rest.issues.addLabels({

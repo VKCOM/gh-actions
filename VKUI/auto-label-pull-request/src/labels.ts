@@ -119,3 +119,17 @@ export function getLabelsByChangedFiles(rawPaths: string[]): string[] {
 
   return Array.from(labels).sort((a, b) => a.localeCompare(b));
 }
+
+export function getLabelColor(label: string): string {
+  if (label.startsWith('cmp:')) {
+    return 'eeeeee';
+  }
+  if (label.startsWith('hook:')) {
+    return 'bfdadc';
+  }
+  if (label.startsWith('subpackage:')) {
+    return '1D76DB';
+  }
+
+  return '000000';
+}

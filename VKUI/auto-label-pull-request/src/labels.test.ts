@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { getLabelsByChangedFiles } from './labels.ts';
+import { getLabelColor, getLabelsByChangedFiles } from './labels.ts';
 
 describe('getLabelsByChangedFiles', () => {
   it('detects components, hooks and static labels', () => {
@@ -36,5 +36,13 @@ describe('getLabelsByChangedFiles', () => {
     ]);
 
     assert.deepEqual(labels, ['hook:use-calendar']);
+  });
+});
+
+describe('getLabelColor', () => {
+  it('returns colors by label type', () => {
+    assert.equal(getLabelColor('cmp:chips-input'), 'eeeeee');
+    assert.equal(getLabelColor('hook:use-modal-manager'), 'bfdadc');
+    assert.equal(getLabelColor('subpackage:@vkontakte/vkui-floating-ui'), '1D76DB');
   });
 });
