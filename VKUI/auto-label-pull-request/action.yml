@@ -1,0 +1,12 @@
+name: 'Auto Label Pull Request'
+description: 'Detect and add pull request labels automatically'
+inputs:
+  pull_request_number:
+    required: true
+    description: 'Pull request number'
+  token:
+    required: true
+    description: 'GitHub token with pull request write access'
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
