@@ -38,7 +38,7 @@ export class WorkflowHandler {
 
       if (!milestone) {
         throw new Error(`There is no milestone for tag ${this.releaseTag}`);
-      } else if (milestone.closed_at === null) {
+      } else if (milestone.closedAt === null) {
         await this.closeMilestone(milestone.number);
       } else {
         core.debug(`[processMilestone]: milestone ${milestone.number} already closed`);
@@ -98,13 +98,38 @@ export class WorkflowHandler {
   }
 
   private async findMilestoneByReleaseTag() {
-    const { data: milestones } = await this.gh.rest.issues.listMilestones({
-      ...github.context.repo,
-      state: 'all',
-      sort: 'completeness',
-      direction: 'desc',
-    });
-    return milestones.find(({ title }) => title === this.releaseTag);
+    const response = await this.gh.graphql<{
+      repository: {
+        milestones: {
+          nodes: Array<{
+            title: string;
+            closedAt: string | null;
+            number: number;
+          }>;
+        };
+      };
+    }>(
+      `
+        query GetMilestoneByTitle($owner: String!, $name: String!, $title: String!) {
+          repository(owner: $owner, name: $name) {
+            milestones(first: 100, query: $title) {
+              nodes {
+                title
+                closedAt
+                number
+              }
+            }
+          }
+        }
+      `,
+      {
+        owner: github.context.repo.owner,
+        name: github.context.repo.repo,
+        title: this.releaseTag,
+      },
+    );
+
+    return response.repository.milestones.nodes.find(({ title }) => title === this.releaseTag);
   }
 
   private async getIssueNumbersByMilestone(milestoneNumber: number) {

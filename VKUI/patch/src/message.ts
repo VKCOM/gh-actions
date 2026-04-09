@@ -5,6 +5,8 @@ export function getPatchInstructions(
 ) {
   const { targetBranchRef, patchRefs, pullNumber } = patch;
 
+  const patchBranchName = `patch/${targetBranchRef}/pr${pullNumber}`;
+
   return `
 ## ${header}
 
@@ -17,9 +19,8 @@ ${description}
 1. Создайте новую ветку от ${targetBranchRef} и примените изменения используя cherry-pick
 
 \`\`\`bash
-git stash # опционально
 git fetch origin ${targetBranchRef}
-git checkout -b patch/pr${pullNumber} origin/${targetBranchRef}
+git checkout -b ${patchBranchName} origin/${targetBranchRef}
 
 ${patchRefs
   .map((pathRef) => {
@@ -36,8 +37,8 @@ ${patchRefs
 3. Отправьте ветку на GitHub и создайте новый PR с веткой ${targetBranchRef} (установка лейбла не требуется!)
 
 \`\`\`bash
-git push --set-upstream origin patch/pr${pullNumber}
-gh pr create --base ${targetBranchRef} --title "patch: pr${pullNumber}" --body "- patch #${pullNumber}"
+git push --set-upstream origin ${patchBranchName}
+gh pr create --base ${targetBranchRef} --title "patch(${targetBranchRef}): pr${pullNumber}" --body "- patch #${pullNumber}"
 \`\`\`
 `;
 }

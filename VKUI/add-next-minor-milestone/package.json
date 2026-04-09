@@ -6,8 +6,8 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@types/node": "^25.3.5",
-    "typescript": "^5.9.3"
+    "@types/node": "^25.5.2",
+    "typescript": "^6.0.2"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
