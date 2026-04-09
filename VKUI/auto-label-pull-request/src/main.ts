@@ -77,7 +77,7 @@ async function run(): Promise<void> {
   try {
     const token = core.getInput('token', { required: true });
     const octokit = github.getOctokit(token);
-    const pullNumber = Number(core.getInput('pr-number', { required: true }));
+    const pullNumber = Number(core.getInput('pull_request_number', { required: true }));
 
     const pullResponse = await octokit.rest.pulls.get({
       ...github.context.repo,

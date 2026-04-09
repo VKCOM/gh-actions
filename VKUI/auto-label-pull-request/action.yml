@@ -1,7 +1,7 @@
 name: 'Auto Label Pull Request'
 description: 'Detect and add pull request labels automatically'
 inputs:
-  pr-number:
+  pull_request_number:
     required: true
     description: 'Pull request number'
   token:

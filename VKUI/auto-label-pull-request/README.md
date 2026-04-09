@@ -26,4 +26,5 @@
   uses: ./VKUI/auto-label-pull-request
   with:
     token: ${{ secrets.GITHUB_TOKEN }}
+    pull_request_number: ${{ github.event.pull_request.number }}
 ```
