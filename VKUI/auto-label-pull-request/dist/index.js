@@ -19828,17 +19828,6 @@ function getInput(name, options) {
   }
   return val.trim();
 }
-function getBooleanInput(name, options) {
-  const trueValue = ["true", "True", "TRUE"];
-  const falseValue = ["false", "False", "FALSE"];
-  const val = getInput(name, options);
-  if (trueValue.includes(val))
-    return true;
-  if (falseValue.includes(val))
-    return false;
-  throw new TypeError(`Input does not meet YAML 1.2 "Core Schema" specification: ${name}
-Support boolean input list: \`true | True | TRUE | false | False | FALSE\``);
-}
 function setFailed(message) {
   process.exitCode = ExitCode.Failure;
   error(message);
@@ -23569,30 +23558,15 @@ function getLabelsByChangedFiles(rawPaths) {
 }
 function getLabelColor(label) {
   if (label.startsWith("cmp:")) {
-    return "1d76db";
+    return "eeeeee";
   }
   if (label.startsWith("hook:")) {
-    return "0e8a16";
+    return "bfdadc";
   }
   if (label.startsWith("subpackage:")) {
-    return "5319e7";
+    return "1D76DB";
   }
-  if (label === "docs") {
-    return "0075ca";
-  }
-  if (label === "dependencies") {
-    return "0366d6";
-  }
-  if (label === "github_actions") {
-    return "6f42c1";
-  }
-  if (label === "ci:cherry-pick:patch") {
-    return "d93f0b";
-  }
-  if (label === "vkui-tokens") {
-    return "0052cc";
-  }
-  return "ededed";
+  return "000000";
 }
 
 // src/main.ts
@@ -23620,7 +23594,7 @@ function getExtraLabelsFromPullRequestData(pullRequest) {
   }
   return labels;
 }
-async function ensureLabelsExist(labels, octokit, createMissingLabels) {
+async function ensureLabelsExist(labels, octokit) {
   const {
     repo: { owner, repo }
   } = context2;
@@ -23632,12 +23606,6 @@ async function ensureLabelsExist(labels, octokit, createMissingLabels) {
   const repositoryLabelNames = new Set(repositoryLabels.map((label) => label.name));
   const missingLabels = labels.filter((label) => !repositoryLabelNames.has(label));
   if (missingLabels.length > 0) {
-    if (!createMissingLabels) {
-      warning(
-        `Skipped labels that do not exist in repository: ${missingLabels.sort((a, b) => a.localeCompare(b)).join(", ")}`
-      );
-      return labels.filter((label) => repositoryLabelNames.has(label));
-    }
     for (const label of missingLabels) {
       try {
         await octokit.rest.issues.createLabel({
@@ -23646,7 +23614,6 @@ async function ensureLabelsExist(labels, octokit, createMissingLabels) {
           name: label,
           color: getLabelColor(label)
         });
-        repositoryLabelNames.add(label);
       } catch (error2) {
         warning(`Cannot create label "${label}": ${String(error2)}`);
       }
@@ -23659,7 +23626,6 @@ async function run() {
     const token = getInput("token", { required: true });
     const octokit = getOctokit(token);
     const pullNumber = Number(getInput("pr-number", { required: true }));
-    const createMissingLabels = getBooleanInput("create-missing-labels");
     const pullResponse = await octokit.rest.pulls.get({
       ...context2.repo,
       pull_number: pullNumber
@@ -23673,11 +23639,7 @@ async function run() {
         user: pullRequest.user ? { login: pullRequest.user.login } : void 0
       })
     ]);
-    const filteredLabels = await ensureLabelsExist(
-      Array.from(labels),
-      octokit,
-      createMissingLabels
-    );
+    const filteredLabels = await ensureLabelsExist(Array.from(labels), octokit);
     if (filteredLabels.length > 0) {
       await octokit.rest.issues.addLabels({
         ...context2.repo,

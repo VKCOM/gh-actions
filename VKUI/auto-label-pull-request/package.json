@@ -1,8 +1,8 @@
 {
+  "type": "module",
   "name": "@actions-internal/auto-label-pull-request",
   "version": "0.0.0",
   "main": "src/main.ts",
-  "type": "module",
   "license": "MIT",
   "private": true,
   "devDependencies": {
