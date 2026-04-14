@@ -10,7 +10,7 @@ __metadata:
   resolution: "@actions-internal/add-next-minor-milestone@workspace:VKUI/add-next-minor-milestone"
   dependencies:
     "@actions/core": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
     typescript: "npm:^6.0.2"
@@ -23,7 +23,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.0"
     "@actions/exec": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.7.4"
@@ -37,7 +37,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.0"
     "@actions/exec": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.7.4"
@@ -51,7 +51,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.0"
     "@actions/exec": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.7.4"
@@ -64,7 +64,7 @@ __metadata:
   resolution: "@actions-internal/complete-icons-publish@workspace:icons/complete-publish"
   dependencies:
     "@actions/core": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
     typescript: "npm:^6.0.2"
@@ -76,7 +76,7 @@ __metadata:
   resolution: "@actions-internal/complete-publish@workspace:VKUI/complete-publish"
   dependencies:
     "@actions/core": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
     typescript: "npm:^6.0.2"
@@ -89,7 +89,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.0"
     "@actions/exec": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.7.4"
@@ -102,7 +102,7 @@ __metadata:
   resolution: "@actions-internal/publish-release-notes@workspace:vkui-tokens/publish-release-notes"
   dependencies:
     "@actions/core": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
     typescript: "npm:^6.0.2"
@@ -125,7 +125,7 @@ __metadata:
   resolution: "@actions-internal/reporter@workspace:VKUI/reporter"
   dependencies:
     "@actions/core": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     strip-ansi: "npm:^7.2.0"
     typescript: "npm:^6.0.2"
@@ -176,7 +176,7 @@ __metadata:
   resolution: "@actions-internal/spell-checker-filename@workspace:shared/spell-checker-filename"
   dependencies:
     "@actions/core": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     "@types/nspell": "npm:^2.1.6"
     async-mutex: "npm:^0.5.0"
@@ -191,7 +191,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.0"
     "@actions/exec": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.7.4"
@@ -229,9 +229,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@actions/github@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@actions/github@npm:9.0.0"
+"@actions/github@npm:^9.1.0":
+  version: 9.1.0
+  resolution: "@actions/github@npm:9.1.0"
   dependencies:
     "@actions/http-client": "npm:^3.0.2"
     "@octokit/core": "npm:^7.0.6"
@@ -240,7 +240,7 @@ __metadata:
     "@octokit/request": "npm:^10.0.7"
     "@octokit/request-error": "npm:^7.1.0"
     undici: "npm:^6.23.0"
-  checksum: 10c0/a4f1b5ea46a93fc477dce6ab600702e5221560f63432b790dd8d0240e86c596a38a6cf4fc23868ee588c1dd18f3c0af1608e17de5f2697a0147ee20e6a538df9
+  checksum: 10c0/af8836a3472de479ac4d4bab49ace6a3971c8ffe283ca87546db3331e6d59dbf8880469cb49f466d60770926dc68041238f02eb2de55d309c493f01a39298098
   languageName: node
   linkType: hard
 
@@ -2289,7 +2289,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.0"
     "@actions/exec": "npm:^3.0.0"
-    "@actions/github": "npm:^9.0.0"
+    "@actions/github": "npm:^9.1.0"
     "@types/node": "npm:^25.6.0"
     "@types/semver": "npm:^7.7.1"
     figma-js: "npm:^1.16.0"
