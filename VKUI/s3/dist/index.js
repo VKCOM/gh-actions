@@ -51793,9 +51793,9 @@ var require_lodash = __commonJS({
   "../../node_modules/lodash/lodash.js"(exports, module) {
     (function() {
       var undefined2;
-      var VERSION = "4.17.23";
+      var VERSION = "4.18.1";
       var LARGE_ARRAY_SIZE = 200;
-      var CORE_ERROR_TEXT = "Unsupported core-js use. Try https://npms.io/search?q=ponyfill.", FUNC_ERROR_TEXT = "Expected a function", INVALID_TEMPL_VAR_ERROR_TEXT = "Invalid `variable` option passed into `_.template`";
+      var CORE_ERROR_TEXT = "Unsupported core-js use. Try https://npms.io/search?q=ponyfill.", FUNC_ERROR_TEXT = "Expected a function", INVALID_TEMPL_VAR_ERROR_TEXT = "Invalid `variable` option passed into `_.template`", INVALID_TEMPL_IMPORTS_ERROR_TEXT = "Invalid `imports` option passed into `_.template`";
       var HASH_UNDEFINED = "__lodash_hash_undefined__";
       var MAX_MEMOIZE_SIZE = 500;
       var PLACEHOLDER = "__lodash_placeholder__";
@@ -53725,19 +53725,12 @@ var require_lodash = __commonJS({
           if (!length) {
             return true;
           }
-          var isRootPrimitive = object == null || typeof object !== "object" && typeof object !== "function";
           while (++index < length) {
-            var key = path2[index];
-            if (typeof key !== "string") {
-              continue;
-            }
+            var key = toKey(path2[index]);
             if (key === "__proto__" && !hasOwnProperty.call(object, "__proto__")) {
               return false;
             }
-            if (key === "constructor" && index + 1 < length && typeof path2[index + 1] === "string" && path2[index + 1] === "prototype") {
-              if (isRootPrimitive && index === 0) {
-                continue;
-              }
+            if ((key === "constructor" || key === "prototype") && index < length - 1) {
               return false;
             }
           }
@@ -55069,7 +55062,7 @@ var require_lodash = __commonJS({
           var index = -1, length = pairs == null ? 0 : pairs.length, result2 = {};
           while (++index < length) {
             var pair = pairs[index];
-            result2[pair[0]] = pair[1];
+            baseAssignValue(result2, pair[0], pair[1]);
           }
           return result2;
         }
@@ -56453,8 +56446,13 @@ var require_lodash = __commonJS({
             options = undefined2;
           }
           string = toString(string);
-          options = assignInWith({}, options, settings, customDefaultsAssignIn);
-          var imports = assignInWith({}, options.imports, settings.imports, customDefaultsAssignIn), importsKeys = keys(imports), importsValues = baseValues(imports, importsKeys);
+          options = assignWith({}, options, settings, customDefaultsAssignIn);
+          var imports = assignWith({}, options.imports, settings.imports, customDefaultsAssignIn), importsKeys = keys(imports), importsValues = baseValues(imports, importsKeys);
+          arrayEach(importsKeys, function(key) {
+            if (reForbiddenIdentifierChars.test(key)) {
+              throw new Error2(INVALID_TEMPL_IMPORTS_ERROR_TEXT);
+            }
+          });
           var isEscaping, isEvaluating, index = 0, interpolate = options.interpolate || reNoMatch, source = "__p += '";
           var reDelimiters = RegExp2(
             (options.escape || reNoMatch).source + "|" + interpolate.source + "|" + (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + "|" + (options.evaluate || reNoMatch).source + "|$",
