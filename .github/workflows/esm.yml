@@ -1,0 +1,39 @@
+name: 'Cron / esm-s3-deployer'
+on:
+  schedule:
+    - cron: '0 5 * * *' # Runs at 05:00
+  workflow_dispatch:
+
+jobs:
+  esm-s3-deployer:
+    name: Run esm-s3-deployer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Node setup
+        uses: ./.github/actions/node-setup
+
+      - name: Create AWS directory
+        run: mkdir -p ~/.aws
+
+      - name: Configure AWS credentials file
+        run: |
+          cat > ~/.aws/credentials << EOF
+          [default]
+          aws_access_key_id = ${{ secrets.ESM_S3_ACCESS_KEY_ID }}
+          aws_secret_access_key = ${{ secrets.ESM_S3_SECRET_ACCESS_KEY }}
+          EOF
+
+      - name: Configure AWS config
+        run: |
+          cat > ~/.aws/config << EOF
+          [default]
+          region = us-east-1
+          endpoint_url = ${{ secrets.ESM_S3_ENDPOINT_URL }}
+          EOF
+
+      - name: Run esm-s3-deployer
+        run: node ../esm-s3-deployer/src/bin/index.ts
+        working-directory: esm/cron

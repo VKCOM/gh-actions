@@ -1,0 +1,17 @@
+{
+  "packages": {
+    "@vkontakte/vkui-tokens": "^4.75.2"
+  },
+  "s3": {
+    "bucket": "vkui-esm",
+    "profile": "default"
+  },
+  "registry": {
+    "server": "https://registry.npmjs.org"
+  },
+  "timeout": {
+    "registry": 5000,
+    "s3": 10000,
+    "fs": 5000
+  }
+}
