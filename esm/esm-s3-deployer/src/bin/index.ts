@@ -2,7 +2,7 @@
 
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import * as process from 'node:process';
+import process from 'node:process';
 import type { ConfigurationPartial } from '../architecture/entities/config.ts';
 import { Configuration } from '../architecture/entities/config.ts';
 import type { Context } from '../architecture/entities/context.ts';
