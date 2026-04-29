@@ -9,7 +9,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/add-next-minor-milestone@workspace:VKUI/add-next-minor-milestone"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
@@ -21,7 +21,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/auto-update-icons-release-notes@workspace:icons/auto-update-release-notes"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
@@ -35,7 +35,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/auto-update-release-notes@workspace:VKUI/auto-update-release-notes"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
@@ -49,7 +49,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/bump-vkui-floating-ui-version@workspace:VKUI/bump-vkui-floating-ui-version"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
@@ -63,7 +63,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/complete-icons-publish@workspace:icons/complete-publish"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
@@ -75,7 +75,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/complete-publish@workspace:VKUI/complete-publish"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
@@ -87,7 +87,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/patch@workspace:VKUI/patch"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
@@ -101,7 +101,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/publish-release-notes@workspace:vkui-tokens/publish-release-notes"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
     "@types/node": "npm:^25.6.0"
@@ -113,7 +113,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/push-screenshots@workspace:VKUI/push-screenshots"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@types/node": "npm:^25.6.0"
     typescript: "npm:^6.0.3"
@@ -124,7 +124,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/reporter@workspace:VKUI/reporter"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
     strip-ansi: "npm:^7.2.0"
@@ -136,7 +136,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/s3@workspace:VKUI/s3"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/lodash": "npm:^4.17.24"
     "@types/mime-types": "npm:^3.0.1"
@@ -151,7 +151,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/shared-rust-cargo-update-toml@workspace:shared/rust/cargo-update-toml"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@types/node": "npm:^25.6.0"
     typescript: "npm:^6.0.3"
   languageName: unknown
@@ -161,7 +161,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/size-upload@workspace:VKUI/size-upload"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/mime-types": "npm:^3.0.1"
@@ -175,7 +175,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/spell-checker-filename@workspace:shared/spell-checker-filename"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
     "@types/nspell": "npm:^2.1.6"
@@ -189,7 +189,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/stable-branch@workspace:VKUI/stable-branch"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
@@ -203,20 +203,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@actions-internal/tracer-sourcemap@workspace:shared/tracer/sourcemap"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@apptracer/sourcemap": "npm:^1.1.12"
     "@types/node": "npm:^25.6.0"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
 
-"@actions/core@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@actions/core@npm:3.0.0"
+"@actions/core@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@actions/core@npm:3.0.1"
   dependencies:
     "@actions/exec": "npm:^3.0.0"
     "@actions/http-client": "npm:^4.0.0"
-  checksum: 10c0/ef204ca270011308c3cdbf7da702c0b8220775ea28aec52ddba696443f11afad6e725f5534110f2ef014382ab807b695bb4dcbf307683a0fc6927b3817871f6c
+  checksum: 10c0/c1b86364e923e8b1bdcd338943d453c114b2cd8eb9507e07b7614679ea15ddf938b3bb75484aaf363bc3aa55ba926b9514ec08d79811a991f75c732a76c4d854
   languageName: node
   linkType: hard
 
@@ -3432,7 +3432,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@vkui-tokens/token-base@workspace:vkui-tokens/token-base"
   dependencies:
-    "@actions/core": "npm:^3.0.0"
+    "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
     "@types/node": "npm:^25.6.0"
