@@ -13,7 +13,7 @@
     "mime-types": "^3.0.2",
     "semver": "^7.7.4",
     "tar": "^7.5.13",
-    "zod": "^4.3.6"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.13",
