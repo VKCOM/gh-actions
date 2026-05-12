@@ -25566,15 +25566,7 @@ var COMPONENTS_DOCS_PARENT_MAP = {
   TabsItem: "Tabs",
   ActionSheetItem: "ActionSheet",
   HorizontalCellShowMore: "HorizontalCell",
-  OnboardingTooltipContainer: "OnboardingTooltip",
-  DisplayTitle: "Typography",
-  Title: "Typography",
-  Headline: "Typography",
-  Text: "Typography",
-  Paragraph: "Typography",
-  Subhead: "Typography",
-  Footnote: "Typography",
-  Caption: "Typography"
+  OnboardingTooltipContainer: "OnboardingTooltip"
 };
 function toKebabCase(componentName) {
   return componentName.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
