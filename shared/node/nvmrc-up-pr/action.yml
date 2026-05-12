@@ -12,35 +12,21 @@ runs:
       run: curl -s https://nodejs.org/dist/index.json | jq 'max_by(.version | ltrimstr("v") | split(".") | map(tonumber)) | .version' -r > .nvmrc
       shell: bash
 
-    - name: Create Pull Request
-      run: |
-        PREV_BRANCH=$(git branch --show-current)
-        trap 'git checkout "$PREV_BRANCH"' EXIT
-        BRANCH="github-actions/build/tools/nvm-up"
-        git checkout -B "$BRANCH"
-        git add .nvmrc
-        if git diff --cached --quiet; then
-          echo "No changes to commit"
-          exit 0
-        fi
-        VERSION=$(cat .nvmrc)
-        git commit -m "build(tools): Node.js version update to ${VERSION}"
-        git push origin "$BRANCH" --force
-        if ! gh pr create \
-          --title "Node.js version update to ${VERSION}" \
-          --body "Automated Node.js version update to [${VERSION}](https://nodejs.org/en/blog/release/${VERSION})
-
-        ## Release notes
-        -" \
-          --head "$BRANCH"; then
-          echo "PR already exists, updating"
-          gh pr edit "$BRANCH" \
-            --title "Node.js version update to ${VERSION}" \
-            --body "Automated Node.js version update to [${VERSION}](https://nodejs.org/en/blog/release/${VERSION})
-
-        ## Release notes
-        -"
-        fi
+    - name: Get version
+      id: version
+      run: echo "VERSION=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
       shell: bash
-      env:
-        GH_TOKEN: ${{ inputs.token }}
+
+    - name: Create Pull Request
+      uses: ./shared/create-pr
+      with:
+        token: ${{ inputs.token }}
+        branch: github-actions/build/tools/nvm-up
+        commit-message: 'build(tools): Node.js version update to ${{ steps.version.outputs.VERSION }}'
+        title: 'Node.js version update to ${{ steps.version.outputs.VERSION }}'
+        body: |
+          Automated Node.js version update to [${{ steps.version.outputs.VERSION }}](https://nodejs.org/en/blog/release/${{ steps.version.outputs.VERSION }})
+
+          ## Release notes
+          -
+        add-paths: .nvmrc

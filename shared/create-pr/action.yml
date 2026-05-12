@@ -1,0 +1,68 @@
+name: 'Create Pull Request'
+description: 'Create or update a pull request'
+inputs:
+  token:
+    required: true
+    description: 'GitHub token'
+  branch:
+    required: true
+    description: 'Branch name for the PR'
+  commit-message:
+    required: true
+    description: 'Commit message'
+  title:
+    required: true
+    description: 'PR title'
+  body:
+    required: false
+    description: 'PR body'
+  labels:
+    required: false
+    description: 'PR labels (space-separated)'
+  add-paths:
+    required: false
+    description: 'Path(s) for git add (default: -A)'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Create Pull Request
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        PR_BRANCH: ${{ inputs.branch }}
+        PR_ADD_PATHS: ${{ inputs.add-paths }}
+        PR_COMMIT_MSG: ${{ inputs.commit-message }}
+        PR_TITLE: ${{ inputs.title }}
+        PR_BODY: ${{ inputs.body }}
+        PR_LABELS: ${{ inputs.labels }}
+      run: |
+        PREV_BRANCH=$(git branch --show-current)
+        trap 'git checkout "$PREV_BRANCH"' EXIT
+        git checkout -B "$PR_BRANCH"
+        git add ${PR_ADD_PATHS:--A}
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+        git commit -m "$PR_COMMIT_MSG"
+        git push origin "$PR_BRANCH" --force
+
+        LABELS_ARGS=""
+        for label in $PR_LABELS; do
+          LABELS_ARGS="$LABELS_ARGS --label $label"
+        done
+
+        if ! gh pr create \
+          --title "$PR_TITLE" \
+          --body "$PR_BODY" \
+          $LABELS_ARGS \
+          --head "$PR_BRANCH"; then
+          echo "PR already exists, updating"
+          gh pr edit "$PR_BRANCH" \
+            --title "$PR_TITLE" \
+            --body "$PR_BODY"
+          for label in $PR_LABELS; do
+            gh pr edit "$PR_BRANCH" --add-label "$label"
+          done
+        fi
