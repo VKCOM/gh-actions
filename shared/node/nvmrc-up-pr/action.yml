@@ -12,15 +12,21 @@ runs:
       run: curl -s https://nodejs.org/dist/index.json | jq 'max_by(.version | ltrimstr("v") | split(".") | map(tonumber)) | .version' -r > .nvmrc
       shell: bash
 
+    - name: Get version
+      id: version
+      run: echo "VERSION=$(cat .nvmrc)" >> "$GITHUB_OUTPUT"
+      shell: bash
+
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
+      uses: ./shared/create-pr
       with:
-        title: Node.js version update
+        token: ${{ inputs.token }}
         branch: github-actions/build/tools/nvm-up
-        commit-message: 'build(tools): Node.js version up'
+        commit-message: 'build(tools): Node.js version update to ${{ steps.version.outputs.VERSION }}'
+        title: 'Node.js version update to ${{ steps.version.outputs.VERSION }}'
         body: |
-          Automated Node.js version up
+          Automated Node.js version update to [${{ steps.version.outputs.VERSION }}](https://nodejs.org/en/blog/release/${{ steps.version.outputs.VERSION }})
 
           ## Release notes
           -
-        token: ${{ inputs.token }}
+        add-paths: .nvmrc

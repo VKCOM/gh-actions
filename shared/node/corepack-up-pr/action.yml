@@ -15,14 +15,14 @@ runs:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
+      uses: ./shared/create-pr
       with:
-        title: Corepack up
+        token: ${{ inputs.token }}
         branch: github-actions/build/tools/corepack-up
         commit-message: 'build(tools): corepack up'
+        title: 'Corepack up'
         body: |
           Automated corepack up
 
           ## Release notes
           -
-        token: ${{ inputs.token }}

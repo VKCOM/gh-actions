@@ -4,7 +4,7 @@ inputs:
   token:
     required: true
     description: 'token with access to your repository'
-  
+
 runs:
   using: "composite"
   steps:
@@ -19,13 +19,11 @@ runs:
       shell: bash
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
+      uses: ./shared/create-pr
       with:
-        title: Cargo update
+        token: ${{ inputs.token }}
         branch: github-actions/build/deps/cargo-update
         commit-message: 'build(deps): cargo update'
-        body: Automated cargo update
-        labels: |
-          dependencies
-          rust
-        token: ${{ inputs.token }}
+        title: 'Cargo update'
+        body: 'Automated cargo update'
+        labels: 'dependencies rust'
