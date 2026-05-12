@@ -15,14 +15,33 @@ runs:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
-      with:
-        title: Corepack up
-        branch: github-actions/build/tools/corepack-up
-        commit-message: 'build(tools): corepack up'
-        body: |
-          Automated corepack up
+      run: |
+        PREV_BRANCH=$(git branch --show-current)
+        trap 'git checkout "$PREV_BRANCH"' EXIT
+        BRANCH="github-actions/build/tools/corepack-up"
+        git checkout -B "$BRANCH"
+        git add -A
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+        git commit -m "build(tools): corepack up"
+        git push origin "$BRANCH" --force
+        if ! gh pr create \
+          --title "Corepack up" \
+          --body "Automated corepack up
 
-          ## Release notes
-          -
-        token: ${{ inputs.token }}
+        ## Release notes
+        -" \
+          --head "$BRANCH"; then
+          echo "PR already exists, updating"
+          gh pr edit "$BRANCH" \
+            --title "Corepack up" \
+            --body "Automated corepack up
+
+        ## Release notes
+        -"
+        fi
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}

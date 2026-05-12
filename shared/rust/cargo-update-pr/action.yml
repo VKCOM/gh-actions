@@ -19,13 +19,31 @@ runs:
       shell: bash
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
-      with:
-        title: Cargo update
-        branch: github-actions/build/deps/cargo-update
-        commit-message: 'build(deps): cargo update'
-        body: Automated cargo update
-        labels: |
-          dependencies
-          rust
-        token: ${{ inputs.token }}
+      run: |
+        PREV_BRANCH=$(git branch --show-current)
+        trap 'git checkout "$PREV_BRANCH"' EXIT
+        BRANCH="github-actions/build/deps/cargo-update"
+        git checkout -B "$BRANCH"
+        git add -A
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+        git commit -m "build(deps): cargo update"
+        git push origin "$BRANCH" --force
+        if ! gh pr create \
+          --title "Cargo update" \
+          --body "Automated cargo update" \
+          --label "dependencies" \
+          --label "rust" \
+          --head "$BRANCH"; then
+          echo "PR already exists, updating"
+          gh pr edit "$BRANCH" \
+            --title "Cargo update" \
+            --body "Automated cargo update" \
+            --add-label "dependencies" \
+            --add-label "rust"
+        fi
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}

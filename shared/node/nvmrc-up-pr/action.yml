@@ -13,14 +13,34 @@ runs:
       shell: bash
 
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v7
-      with:
-        title: Node.js version update
-        branch: github-actions/build/tools/nvm-up
-        commit-message: 'build(tools): Node.js version up'
-        body: |
-          Automated Node.js version up
+      run: |
+        PREV_BRANCH=$(git branch --show-current)
+        trap 'git checkout "$PREV_BRANCH"' EXIT
+        BRANCH="github-actions/build/tools/nvm-up"
+        git checkout -B "$BRANCH"
+        git add .nvmrc
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+          exit 0
+        fi
+        VERSION=$(cat .nvmrc)
+        git commit -m "build(tools): Node.js version update to ${VERSION}"
+        git push origin "$BRANCH" --force
+        if ! gh pr create \
+          --title "Node.js version update to ${VERSION}" \
+          --body "Automated Node.js version update to [${VERSION}](https://nodejs.org/en/blog/release/${VERSION})
 
-          ## Release notes
-          -
-        token: ${{ inputs.token }}
+        ## Release notes
+        -" \
+          --head "$BRANCH"; then
+          echo "PR already exists, updating"
+          gh pr edit "$BRANCH" \
+            --title "Node.js version update to ${VERSION}" \
+            --body "Automated Node.js version update to [${VERSION}](https://nodejs.org/en/blog/release/${VERSION})
+
+        ## Release notes
+        -"
+        fi
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
