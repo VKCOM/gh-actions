@@ -15,7 +15,7 @@ runs:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
     - name: Create Pull Request
-      uses: ./shared/create-pr
+      uses: VKCOM/gh-actions/shared/create-pr@main
       with:
         token: ${{ inputs.token }}
         branch: github-actions/build/tools/corepack-up
