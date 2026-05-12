@@ -15,7 +15,7 @@
     "@actions/exec": "^3.0.0",
     "@actions/github": "^9.1.1",
     "figma-js": "^1.16.0",
-    "semver": "^7.7.4"
+    "semver": "^7.8.0"
   },
   "scripts": {
     "prebuild": "shx rm -rf dist/*",

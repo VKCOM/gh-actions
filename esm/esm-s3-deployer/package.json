@@ -11,7 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1017.0",
     "mime-types": "^3.0.2",
-    "semver": "^7.7.4",
+    "semver": "^7.8.0",
     "tar": "^7.5.13",
     "zod": "^4.4.3"
   },
