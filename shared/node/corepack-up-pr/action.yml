@@ -4,6 +4,10 @@ inputs:
   token:
     required: true
     description: 'token with access to your repository'
+  working-directory:
+    required: false
+    default: '.'
+    description: 'directory where corepack up should be run'
 
 runs:
   using: "composite"
@@ -11,18 +15,74 @@ runs:
     - name: Run corepack up
       run: corepack up
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
+    - name: Check for changes
+      id: check-changes
+      run: |
+        if git diff --quiet; then
+          echo "has-changes=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "has-changes=true" >> "$GITHUB_OUTPUT"
+        fi
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+
+    - name: Detect package manager version
+      id: pm-version
+      env:
+        WORKING_DIR: ${{ inputs.working-directory }}
+      run: |
+        PM=$(jq -r '.packageManager' package.json)
+        NAME=$(echo "$PM" | cut -d'@' -f1)
+        VERSION=$(echo "$PM" | cut -d'@' -f2)
+        echo "name=$NAME" >> "$GITHUB_OUTPUT"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+        case "$NAME" in
+          yarn)
+            URL="https://github.com/yarnpkg/berry/releases/tag/%40yarnpkg%2Fcli-${VERSION}"
+            ;;
+          pnpm)
+            URL="https://github.com/pnpm/pnpm/releases/tag/v${VERSION}"
+            ;;
+          npm)
+            URL="https://github.com/npm/cli/releases/tag/v${VERSION}"
+            ;;
+          *)
+            URL=""
+            ;;
+        esac
+
+        if [ -n "$URL" ]; then
+          echo "release-notes=- ${NAME}: ${URL}" >> "$GITHUB_OUTPUT"
+        else
+          echo "release-notes=- ${NAME}@${VERSION}" >> "$GITHUB_OUTPUT"
+        fi
+
+        if [ "$WORKING_DIR" != "." ]; then
+          SUFFIX=$(echo "${WORKING_DIR}" | sed 's|/|_|g; s|[^a-zA-Z0-9._-]|-|g')
+          echo "branch-suffix=/${SUFFIX}" >> "$GITHUB_OUTPUT"
+        else
+          echo "branch-suffix=" >> "$GITHUB_OUTPUT"
+        fi
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+
     - name: Create Pull Request
+      if: steps.check-changes.outputs.has-changes == 'true'
       uses: VKCOM/gh-actions/shared/create-pr@main
       with:
         token: ${{ inputs.token }}
-        branch: github-actions/build/tools/corepack-up
-        commit-message: 'build(tools): corepack up'
-        title: 'Corepack up'
+        branch: github-actions/build/tools/corepack-up${{ steps.pm-version.outputs.branch-suffix }}
+        commit-message: 'build(tools): corepack up ${{ steps.pm-version.outputs.name }}@${{ steps.pm-version.outputs.version }}'
+        title: 'Corepack up ${{ steps.pm-version.outputs.name }}@${{ steps.pm-version.outputs.version }}'
         body: |
           Automated corepack up
+
+          ${{ steps.pm-version.outputs.release-notes }}
 
           ## Release notes
           -
