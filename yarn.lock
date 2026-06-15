@@ -12,7 +12,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -24,7 +24,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.8.2"
     typescript: "npm:^6.0.3"
@@ -38,7 +38,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.8.2"
     typescript: "npm:^6.0.3"
@@ -52,7 +52,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.8.2"
     typescript: "npm:^6.0.3"
@@ -66,7 +66,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -78,7 +78,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -90,7 +90,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.8.2"
     typescript: "npm:^6.0.3"
@@ -104,7 +104,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
     "@octokit/plugin-retry": "npm:^8.1.0"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -115,7 +115,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -126,7 +126,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     strip-ansi: "npm:^7.2.0"
     typescript: "npm:^6.0.3"
   languageName: unknown
@@ -140,7 +140,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/lodash": "npm:^4.17.24"
     "@types/mime-types": "npm:^3.0.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     lodash: "npm:^4.18.1"
     mime-types: "npm:^3.0.2"
     typescript: "npm:^6.0.3"
@@ -152,7 +152,7 @@ __metadata:
   resolution: "@actions-internal/shared-rust-cargo-update-toml@workspace:shared/rust/cargo-update-toml"
   dependencies:
     "@actions/core": "npm:^3.0.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -165,7 +165,7 @@ __metadata:
     "@actions/exec": "npm:^3.0.0"
     "@aws-sdk/client-s3": "npm:3.726.1"
     "@types/mime-types": "npm:^3.0.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     mime-types: "npm:^3.0.2"
     typescript: "npm:^6.0.3"
   languageName: unknown
@@ -177,7 +177,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.1"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/nspell": "npm:^2.1.6"
     async-mutex: "npm:^0.5.0"
     nspell: "npm:^2.1.5"
@@ -192,7 +192,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/semver": "npm:^7.7.1"
     semver: "npm:^7.8.2"
     typescript: "npm:^6.0.3"
@@ -205,7 +205,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^3.0.1"
     "@apptracer/sourcemap": "npm:^1.1.12"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     typescript: "npm:^6.0.3"
   languageName: unknown
   linkType: soft
@@ -3360,12 +3360,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^25.9.2":
-  version: 25.9.2
-  resolution: "@types/node@npm:25.9.2"
+"@types/node@npm:^25.9.3":
+  version: 25.9.3
+  resolution: "@types/node@npm:25.9.3"
   dependencies:
     undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10c0/f14c0d56361febb985eccc45cf0834ee6e2f07c4389a636f3e1a55ebde320077a80bface18c9afd3092f5fa295925502c1a9d55f805efa813f634aa9c941cbac
+  checksum: 10c0/72d3aece9d42c2c641bcd3f3cb2dc2828b4bd384dfcbd910c404b8859a68bd69d50c4769ce7defd4ff5e049768e23e615f09407ea2cbbb5f44b90d75a7c6b8ca
   languageName: node
   linkType: hard
 
@@ -3392,7 +3392,7 @@ __metadata:
     "@aws-sdk/client-s3": "npm:^3.1017.0"
     "@biomejs/biome": "npm:^2.4.16"
     "@types/mime-types": "npm:^3.0.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/semver": "npm:^7.7.1"
     mime-types: "npm:^3.0.2"
     semver: "npm:^7.8.2"
@@ -3408,7 +3408,7 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:^2.4.16"
     "@swc/core": "npm:^1.15.40"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     concurrently: "npm:^10.0.3"
     esbuild: "npm:^0.28.0"
     husky: "npm:^9.1.7"
@@ -3426,7 +3426,7 @@ __metadata:
     "@actions/core": "npm:^3.0.1"
     "@actions/exec": "npm:^3.0.0"
     "@actions/github": "npm:^9.1.1"
-    "@types/node": "npm:^25.9.2"
+    "@types/node": "npm:^25.9.3"
     "@types/semver": "npm:^7.7.1"
     figma-js: "npm:^1.16.0"
     semver: "npm:^7.8.2"
