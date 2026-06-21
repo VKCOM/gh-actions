@@ -27,7 +27,7 @@
     "@swc/core": "^1.15.40",
     "@types/node": "^25.9.3",
     "concurrently": "^10.0.3",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.7",
     "shx": "^0.4.0",
