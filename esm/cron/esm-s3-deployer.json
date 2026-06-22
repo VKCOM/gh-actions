@@ -1,6 +1,6 @@
 {
   "packages": {
-    "@vkontakte/vkui-tokens": "^4.75.2"
+    "@vkontakte/vkui-tokens": "^4.80.1"
   },
   "s3": {
     "bucket": "vkui-esm",
