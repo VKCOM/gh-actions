@@ -12,7 +12,7 @@
     "@aws-sdk/client-s3": "^3.1017.0",
     "mime-types": "^3.0.2",
     "semver": "^7.8.5",
-    "tar": "^7.5.16",
+    "tar": "^7.5.19",
     "zod": "^4.4.3"
   },
   "devDependencies": {
