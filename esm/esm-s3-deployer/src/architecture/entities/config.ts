@@ -11,7 +11,7 @@ const S3 = z.object({
 
 const Timeout = z.object({
   registry: z.number().default(5000),
-  s3: z.number().default(10000),
+  s3: z.number().default(30000),
   fs: z.number().default(5000),
 });
 

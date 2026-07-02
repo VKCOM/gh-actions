@@ -1,5 +1,6 @@
 import type { Readable } from 'node:stream';
 import { S3 as S3Client } from '@aws-sdk/client-s3';
+import { NodeHttpHandler } from '@smithy/node-http-handler';
 import { isNotUndefined } from '../../lib/isNotUndefined.ts';
 import type { Context } from '../entities/context.ts';
 import type { S3Options, S3Repository } from '../entities/repositories.ts';
@@ -13,6 +14,10 @@ export class S3 implements S3Repository {
       ...(profile && { profile }),
       requestChecksumCalculation: 'WHEN_REQUIRED',
       responseChecksumValidation: 'WHEN_REQUIRED',
+      requestHandler: new NodeHttpHandler({
+        requestTimeout: 20_000,
+      }),
+      maxAttempts: 4,
     });
     this.#bucket = bucket;
   }
