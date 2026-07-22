@@ -19,7 +19,7 @@ jobs:
     name: Build main
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.DEVTOOLS_GITHUB_TOKEN }}
 
