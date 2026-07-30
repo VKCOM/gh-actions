@@ -25578,7 +25578,6 @@ var parsePullRequestLinkedIssue = (pullRequestBody) => {
 // src/parsing/getComponentDocsUrl.ts
 var COMPONENTS_DOCS_PARENT_MAP = {
   Header: "Group",
-  Footer: "Group",
   SplitCol: "SplitLayout",
   WriteBarIcon: "WriteBar",
   List: "Cell",
