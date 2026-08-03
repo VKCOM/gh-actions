@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.5",
-    "@swc/core": "^1.15.46",
+    "@swc/core": "^1.15.47",
     "@types/node": "^26.1.1",
     "concurrently": "^10.0.4",
     "esbuild": "^0.28.1",
