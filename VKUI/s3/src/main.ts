@@ -2,10 +2,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import * as core from '@actions/core';
 import { type PutObjectCommandInput, S3, type S3ClientConfig } from '@aws-sdk/client-s3';
-import lodash from 'lodash';
 import { lookup } from 'mime-types';
 
-const maxConcurrentUploadFiles = 2;
+// Сколько файлов грузить параллельно. Мелкие ассеты (css/js) хорошо параллелятся,
+// основная нагрузка — сеть/RPS, а не CPU/память.
+const maxConcurrentUploadFiles = 4;
+
+// Сколько раз повторять загрузку одного файла при transient-ошибках (5xx, таймаут, reset).
+const maxRetries = 4;
+
+const baseBackoffMs = 500;
 
 const req = {
   required: true,
@@ -44,7 +50,8 @@ function configuration(): S3ClientConfig {
     region,
     endpoint,
     requestHandler: {
-      requestTimeout: 30000, // 30 seconds
+      requestTimeout: 120000, // 2 minutes — single-PUT мелких файлов обычно быстрый,
+      // но при всплесках RPS/сети даём запас. Ретраи покрывают остаток.
     },
     requestChecksumCalculation: 'WHEN_REQUIRED',
     responseChecksumValidation: 'WHEN_REQUIRED',
@@ -62,8 +69,46 @@ class Action {
   }
 
   private async putObject(args: PutObjectCommandInput) {
-    const output = await this.s3.putObject(args);
-    return output;
+    let lastError: unknown;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        // Каждый раз открываем свежий стрим: после ошибки/завершения
+        // повторное чтение того же стрима ничего не даст.
+        if (typeof args.Body === 'string' || args.Body instanceof Buffer) {
+          return await this.s3.putObject(args);
+        }
+        // Для ReadStream пересоздаём поток перед каждой попыткой.
+        const stream = args.Body as fs.ReadStream;
+        if (attempt > 1) {
+          // Закрываем прежний стрим: при ошибке до потребления (например,
+          // сбой подписи/credentials) SDK его не закроет — копятся дескрипторы.
+          stream.destroy();
+          args.Body =
+            typeof stream.path === 'string' ? fs.createReadStream(stream.path) : undefined;
+        }
+        return await this.s3.putObject(args);
+      } catch (err) {
+        lastError = err;
+
+        // Не транзиентные ошибки (4xx, кроме 408/429) нет смысла ретраить.
+        const status = (err as { $metadata?: { httpStatusCode?: number } }).$metadata
+          ?.httpStatusCode;
+        const transient = status === undefined || status >= 500 || status === 408 || status === 429;
+
+        if (!transient || attempt === maxRetries) {
+          throw err;
+        }
+
+        const backoff = baseBackoffMs * 2 ** (attempt - 1);
+        core.warning(
+          `putObject attempt ${attempt}/${maxRetries} failed (status=${status}): ${(err as Error).message}. Retrying in ${backoff}ms`,
+        );
+        await new Promise((resolve) => setTimeout(resolve, backoff));
+      }
+    }
+
+    throw lastError;
   }
 
   private async upload(src: string, dist: string) {
@@ -74,26 +119,57 @@ class Action {
 
     core.debug(`length ${files.length}`);
 
-    const uploadTasks = lodash.chunk(
-      files.map((file) => {
-        core.debug(`file: ${file}`);
-        const fileStream = fs.createReadStream(file);
-        const bucketPath = path.join(dist, path.relative(sourceDir, file));
+    let done = 0;
+    const startedAt = Date.now();
 
-        core.debug(`put ${files.length}`);
-        return this.putObject({
-          Bucket: this.bucket,
-          ACL: 'public-read',
-          Body: fileStream,
-          Key: bucketPath,
-          ContentType: lookup(file) || 'text/plain',
-        });
-      }),
-      maxConcurrentUploadFiles,
-    );
+    // Пул конкурентности: держим не более maxConcurrentUploadFiles активных
+    // запросов, не создавая все стримы заранее (экономим память на больших папках).
+    const inflight = new Set<Promise<unknown>>();
 
-    for (const tasks of uploadTasks) {
-      await Promise.all(tasks);
+    for (const file of files) {
+      core.debug(`file: ${file}`);
+      const fileStream = fs.createReadStream(file);
+      const bucketPath = path.join(dist, path.relative(sourceDir, file));
+
+      const task = this.putObject({
+        Bucket: this.bucket,
+        ACL: 'public-read',
+        Body: fileStream,
+        Key: bucketPath,
+        ContentType: lookup(file) || 'text/plain',
+      }).then((result) => {
+        done++;
+        if (done % 50 === 0 || done === files.length) {
+          core.info(
+            `uploaded ${done}/${files.length} in ${((Date.now() - startedAt) / 1000).toFixed(1)}s`,
+          );
+        }
+        return result;
+      });
+
+      inflight.add(task);
+      // Убираем промис из пула по завершении. Ошибка не глушится — её пробросит
+      // либо Promise.race в цикле, либо финальная обработка ниже.
+      task.finally(() => inflight.delete(task));
+
+      if (inflight.size >= maxConcurrentUploadFiles) {
+        await Promise.race(inflight);
+      }
+    }
+
+    // Дожидаемся хвоста. Если хоть один файл упал (даже после выхода из цикла
+    // через Promise.race) — пробрасываем первую ошибку, но не бросаем висящие
+    // unhandled rejections от остальных.
+    return await this.awaitInflight(inflight);
+  }
+
+  private async awaitInflight(inflight: Set<Promise<unknown>>) {
+    // Фиксируем снимок: task.finally выше удаляет элементы из inflight
+    // во время ожидания, и итерировать меняющийся Set небезопасно.
+    const outcomes = await Promise.allSettled([...inflight]);
+    const failure = outcomes.find((o): o is PromiseRejectedResult => o.status === 'rejected');
+    if (failure) {
+      throw failure.reason;
     }
   }
 
