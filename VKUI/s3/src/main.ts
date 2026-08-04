@@ -6,7 +6,7 @@ import { lookup } from 'mime-types';
 
 // Сколько файлов грузить параллельно. Мелкие ассеты (css/js) хорошо параллелятся,
 // основная нагрузка — сеть/RPS, а не CPU/память.
-const maxConcurrentUploadFiles = 4;
+const maxConcurrentUploadFiles = 16;
 
 // Сколько раз повторять загрузку одного файла при transient-ошибках (5xx, таймаут, reset).
 const maxRetries = 4;
