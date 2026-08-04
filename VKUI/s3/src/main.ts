@@ -80,7 +80,7 @@ class Action {
         const fileStream = fs.createReadStream(file);
         const bucketPath = path.join(dist, path.relative(sourceDir, file));
 
-        core.debug(`put ${files.length}`);
+        core.debug(`put ${bucketPath}`);
         return this.putObject({
           Bucket: this.bucket,
           ACL: 'public-read',
