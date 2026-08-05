@@ -4,6 +4,10 @@ inputs:
   token:
     required: true
     description: 'token with access to your repository'
+  working-directory:
+    required: false
+    default: '.'
+    description: 'directory (relative to the repo root) where corepack up should be run; also used to build the PR branch suffix'
 
 runs:
   using: "composite"
@@ -11,18 +15,88 @@ runs:
     - name: Run corepack up
       run: corepack up
       shell: bash
+      working-directory: ${{ inputs.working-directory }}
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
+    - name: Detect package manager version
+      id: pm-version
+      env:
+        WORKING_DIR: ${{ inputs.working-directory }}
+      run: |
+        set -euo pipefail
+
+        PM=$(jq -e -r '.packageManager // empty' package.json) || {
+          echo "::error::Field 'packageManager' is missing in ${WORKING_DIR}/package.json"
+          exit 1
+        }
+
+        NAME="${PM%%@*}"
+        REST="${PM#*@}"
+        # Strip integrity hash suffix (e.g. yarn@4.0.0+sha224.xxxx)
+        VERSION="${REST%%+*}"
+
+        if [ "$NAME" = "$PM" ] || [ -z "$VERSION" ]; then
+          echo "::error::Malformed 'packageManager' value in ${WORKING_DIR}/package.json: ${PM}"
+          exit 1
+        fi
+
+        echo "name=$NAME" >> "$GITHUB_OUTPUT"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+        case "$NAME" in
+          yarn)
+            URL="https://github.com/yarnpkg/berry/releases/tag/%40yarnpkg%2Fcli-${VERSION}"
+            ;;
+          pnpm)
+            URL="https://github.com/pnpm/pnpm/releases/tag/v${VERSION}"
+            ;;
+          npm)
+            URL="https://github.com/npm/cli/releases/tag/v${VERSION}"
+            ;;
+          *)
+            URL=""
+            ;;
+        esac
+
+        {
+          echo "release-notes<<EOF"
+          if [ -n "$URL" ]; then
+            echo "- ${NAME}: ${URL}"
+          else
+            echo "- ${NAME}@${VERSION}"
+          fi
+          echo "EOF"
+        } >> "$GITHUB_OUTPUT"
+
+        # Normalize working-directory for the branch suffix:
+        # strip leading "./", collapse repeated "/", strip trailing "/"
+        NORMALIZED="${WORKING_DIR#./}"
+        while [ "$NORMALIZED" != "${NORMALIZED//\/\//\/}" ]; do
+          NORMALIZED="${NORMALIZED//\/\//\/}"
+        done
+        NORMALIZED="${NORMALIZED%/}"
+        NORMALIZED="${NORMALIZED#/}"
+        if [ -n "$NORMALIZED" ] && [ "$NORMALIZED" != "." ]; then
+          SUFFIX=$(sed 's|/|_|g; s|[^a-zA-Z0-9._-]|-|g' <<< "$NORMALIZED")
+          echo "branch-suffix=/${SUFFIX}" >> "$GITHUB_OUTPUT"
+        else
+          echo "branch-suffix=" >> "$GITHUB_OUTPUT"
+        fi
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
 
     - name: Create Pull Request
       uses: VKCOM/gh-actions/shared/create-pr@main
       with:
         token: ${{ inputs.token }}
-        branch: github-actions/build/tools/corepack-up
-        commit-message: 'build(tools): corepack up'
-        title: 'Corepack up'
+        branch: github-actions/build/tools/corepack-up${{ steps.pm-version.outputs.branch-suffix }}
+        commit-message: 'build(tools): corepack up ${{ steps.pm-version.outputs.name }}@${{ steps.pm-version.outputs.version }}'
+        title: 'Corepack up ${{ steps.pm-version.outputs.name }}@${{ steps.pm-version.outputs.version }}'
         body: |
           Automated corepack up
+
+          ${{ steps.pm-version.outputs.release-notes }}
 
           ## Release notes
           -
