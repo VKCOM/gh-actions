@@ -64944,7 +64944,7 @@ function info(message) {
 // src/main.ts
 var import_client_s3 = __toESM(require_dist_cjs88(), 1);
 var import_mime_types = __toESM(require_mime_types(), 1);
-var maxConcurrentUploadFiles = 4;
+var maxConcurrentUploadFiles = 16;
 var maxRetries = 4;
 var baseBackoffMs = 500;
 var req = {
