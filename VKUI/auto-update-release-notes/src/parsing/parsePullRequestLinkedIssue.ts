@@ -24,7 +24,7 @@ const ISSUE_NUMBER_MATCH_INDEX = 3;
 
 export const parsePullRequestLinkedIssue = (pullRequestBody: string) => {
   const match = pullRequestBody.match(linkedIssueRegExp);
-  if (!match || !match[ISSUE_NUMBER_MATCH_INDEX]) {
+  if (!match?.[ISSUE_NUMBER_MATCH_INDEX]) {
     return null;
   }
   return Number(match[ISSUE_NUMBER_MATCH_INDEX]);
