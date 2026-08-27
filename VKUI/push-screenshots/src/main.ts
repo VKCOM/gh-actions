@@ -30,6 +30,7 @@ async function run(): Promise<void> {
     await retry(
       async () => {
         await exec.exec('git', ['add', './**/*.png']);
+        await exec.exec('git', ['add', './**/*.webp']);
 
         try {
           await exec.exec('git', ['diff-index', '--quiet', 'HEAD']);
