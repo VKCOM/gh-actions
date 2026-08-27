@@ -19691,6 +19691,7 @@ async function run() {
     await retry(
       async () => {
         await exec("git", ["add", "./**/*.png"]);
+        await exec("git", ["add", "./**/*.webp"]);
         try {
           await exec("git", ["diff-index", "--quiet", "HEAD"]);
         } catch (_e) {
