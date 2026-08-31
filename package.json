@@ -23,7 +23,7 @@
     "pre-commit": "lint-staged"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.9",
+    "@biomejs/biome": "^2.5.11",
     "@swc/core": "^1.16.1",
     "@types/node": "^26.2.0",
     "concurrently": "^10.0.5",
