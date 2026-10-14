@@ -8,7 +8,7 @@
   "devDependencies": {
     "@types/lodash": "^4.17.26",
     "@types/mime-types": "^3.0.1",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.5",
     "typescript": "^7.0.2"
   },
   "dependencies": {
