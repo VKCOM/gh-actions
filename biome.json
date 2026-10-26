@@ -36,6 +36,8 @@
       "bracketSpacing": true
     }
   },
+  "markdown": { "formatter": { "enabled": false } },
+  "yaml": { "formatter": { "enabled": false } },
   "assist": {
     "enabled": true,
     "actions": { "source": { "organizeImports": "on" } },
