@@ -45,6 +45,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@actions-internal/auto-update-vkui-tokens-release-notes@workspace:vkui-tokens/auto-update-release-notes":
+  version: 0.0.0-use.local
+  resolution: "@actions-internal/auto-update-vkui-tokens-release-notes@workspace:vkui-tokens/auto-update-release-notes"
+  dependencies:
+    "@actions/core": "npm:^3.0.1"
+    "@actions/github": "npm:^9.1.1"
+    "@types/node": "npm:^26.6.5"
+    "@types/semver": "npm:^7.8.0"
+    semver: "npm:^7.8.5"
+    typescript: "npm:^7.0.2"
+  languageName: unknown
+  linkType: soft
+
 "@actions-internal/bump-vkui-floating-ui-version@workspace:VKUI/bump-vkui-floating-ui-version":
   version: 0.0.0-use.local
   resolution: "@actions-internal/bump-vkui-floating-ui-version@workspace:VKUI/bump-vkui-floating-ui-version"
