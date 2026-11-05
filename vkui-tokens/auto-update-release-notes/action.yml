@@ -1,0 +1,13 @@
+name: 'Update release notes for vkui-tokens'
+description: 'Auto update release notes for vkui-tokens'
+inputs:
+  pull_request_number:
+    required: true
+    description: 'pull request number'
+
+  token:
+    required: true
+    description: 'token with access to your repository'
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
