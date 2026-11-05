@@ -12,7 +12,7 @@ const PR_WITH_AUTHOR_REGEX = /^(.+)\(#(\d+),\s+спасибо\s+@(\w+)\)$/;
 function removeLeadingSpaces(str: string, n: number): string {
   const spaceRegex = /^(\s+)/;
   const match = str.match(spaceRegex);
-  if (!match || !match[1]) {
+  if (!match?.[1]) {
     return str;
   }
   const leadingSpacesCount = match[1].length;

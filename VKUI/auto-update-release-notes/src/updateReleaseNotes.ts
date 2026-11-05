@@ -77,7 +77,7 @@ export const updateReleaseNotes = async ({
     milestone,
   });
 
-  if (!releaseData || !releaseData.version) {
+  if (!releaseData?.version) {
     return;
   }
 
