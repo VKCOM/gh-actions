@@ -1,6 +1,7 @@
 import { Configuration, type ConfigurationPartial } from '../entities/config.ts';
 import type { Context } from '../entities/context.ts';
 import type { Repositories } from '../entities/repositories.ts';
+import { Build } from './build.ts';
 import {
   ConfigurationCache,
   ConfigurationFromObject,
@@ -25,6 +26,7 @@ export async function halfProductionRepository(ctx: Context) {
     unpack: new Unpack(),
     s3: new S3Console(),
     package: new Package(),
+    build: new Build(),
     configuration,
     mime: new Mime(),
     semver: new Semver(),
@@ -41,6 +43,7 @@ export async function libRepository(_ctx: Context, cfg: ConfigurationPartial) {
     unpack: new Unpack(),
     s3: new S3(parsed.s3.bucket, parsed.s3.profile),
     package: new Package(),
+    build: new Build(),
     configuration: configuration,
     mime: new Mime(),
     semver: new Semver(),

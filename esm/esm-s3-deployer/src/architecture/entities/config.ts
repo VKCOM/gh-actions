@@ -35,6 +35,8 @@ const Packages = z.record(PackageName, VersionRange);
 export const Configuration = z.object({
   registry: Registry.default(Registry.parse({})),
   packages: Packages,
+  // Subpaths without './'; an empty string selects the package root.
+  browserEntries: z.record(PackageName, z.array(z.string())).default({}),
   timeout: Timeout.default(Timeout.parse({})),
   s3: S3,
 });
