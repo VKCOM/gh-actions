@@ -11,6 +11,7 @@ export interface NpmRepository {
 
 export interface FSRepository {
   createReadStream(filePath: string): Readable;
+  readFile(ctx: Context, filePath: string): Promise<Buffer>;
   mkdtempDisposable(): Promise<DisposableTempDir>;
 }
 
@@ -40,6 +41,30 @@ export interface PackageRepository {
   fileList(ctx: Context, packagePath: string): Promise<string[]>;
 }
 
+export type BuildPackage = {
+  packagePath: string;
+  outputPath: string;
+  packageJson: PackageJson;
+  dependencies: ReadonlyArray<{ name: string; version: string }>;
+  subpaths?: ReadonlyArray<string>;
+  requireSubpaths?: ReadonlyArray<string>;
+  includeAllEntries?: boolean;
+};
+
+export type BuildOptions = BuildPackage & {
+  bundledPackages?: ReadonlyArray<BuildPackage>;
+};
+
+export type BuildImport = {
+  name: string;
+  subpath: string;
+  commonjs?: true;
+};
+
+export interface BuildRepository {
+  build(ctx: Context, options: BuildOptions): Promise<ReadonlyArray<BuildImport>>;
+}
+
 export interface ConfigurationRepository {
   get(ctx: Context): Promise<Configuration>;
 }
@@ -62,6 +87,7 @@ export type Repositories = Readonly<{
   unpack: UnpackRepository;
   s3: S3Repository;
   package: PackageRepository;
+  build: BuildRepository;
   mime: MimeRepository;
   semver: SemverRepository;
 }>;
