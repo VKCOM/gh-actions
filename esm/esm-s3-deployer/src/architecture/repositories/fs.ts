@@ -2,6 +2,7 @@ import * as fs from 'node:fs';
 import * as fsPromise from 'node:fs/promises';
 import * as os from 'node:os';
 import * as path from 'node:path';
+import type { Context } from '../entities/context.ts';
 import type { FSRepository } from '../entities/repositories.ts';
 
 export class FS implements FSRepository {
@@ -9,6 +10,10 @@ export class FS implements FSRepository {
 
   createReadStream(filePath: string) {
     return fs.createReadStream(filePath);
+  }
+
+  readFile(ctx: Context, filePath: string) {
+    return fsPromise.readFile(filePath, { signal: ctx.signal });
   }
 
   mkdtempDisposable() {
