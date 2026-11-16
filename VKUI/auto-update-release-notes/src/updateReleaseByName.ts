@@ -29,7 +29,7 @@ export const updateReleaseByName = async ({
     releaseName,
   });
 
-  if (!release || !release.draft) {
+  if (!release?.draft) {
     return;
   }
 
