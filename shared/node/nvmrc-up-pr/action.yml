@@ -9,7 +9,7 @@ runs:
   using: "composite"
   steps:
     - name: Run update version
-      run: curl -s https://nodejs.org/dist/index.json | jq 'max_by(.version | ltrimstr("v") | split(".") | map(tonumber)) | .version' -r > .nvmrc
+      run: curl -s https://nodejs.org/dist/index.json | jq '[.[] | select(.version | test("^v[0-9]+\\.[0-9]+\\.[0-9]+$"))] | max_by(.version | ltrimstr("v") | split(".") | map(tonumber)) | .version' -r > .nvmrc
       shell: bash
 
     - name: Get version
