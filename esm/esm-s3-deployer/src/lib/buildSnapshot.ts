@@ -8,7 +8,7 @@ export type BuildSnapshot = {
 };
 
 export async function buildSnapshot(files: ReadonlyMap<string, Buffer>): Promise<BuildSnapshot> {
-  await init;
+  await init();
 
   const sorted = [...files].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
   const graph = new Map(sorted.map(([key]) => [key, new Set<string>()]));
@@ -50,14 +50,22 @@ export async function buildSnapshot(files: ReadonlyMap<string, Buffer>): Promise
     const parsed = parse(contents.toString('utf8'));
     modules.set(key, parsed);
 
-    for (const { n } of parsed[0]) {
-      const dependency = n && importFile(key, n);
+    for (const imported of parsed[0]) {
+      if (imported.type === 'dynamic' && imported.glob) continue;
+      const dependency = imported.specifier && importFile(key, imported.specifier);
       if (dependency) graph.get(key)?.add(dependency.target);
     }
   }
 
   for (const [key, [imports]] of modules) {
-    if (!imports.some(({ d, n }) => d === -2 || (d >= 0 && n === undefined))) continue;
+    if (
+      !imports.some(
+        (entry) =>
+          entry.type === 'import-meta' ||
+          (entry.type === 'dynamic' && (entry.specifier === undefined || entry.glob)),
+      )
+    )
+      continue;
 
     // Computed imports and import.meta may reference paths the lexer cannot
     // enumerate, including Rspack's publicPath for assets and workers. Keep that
@@ -106,20 +114,23 @@ export async function buildSnapshot(files: ReadonlyMap<string, Buffer>): Promise
       const [imports, exports] = parsed;
 
       // Work backwards so replacing one specifier leaves earlier lexer offsets valid.
-      for (const { n, s, e, d } of [...imports].reverse()) {
-        const dependency = n && importFile(key, n);
+      for (const imported of [...imports].reverse()) {
+        if (imported.type === 'dynamic' && imported.glob) continue;
+        const dependency = imported.specifier && importFile(key, imported.specifier);
         if (!dependency) continue;
 
         const target = JSON.stringify(
           `/${immutableKeys.get(dependency.target)}${dependency.suffix}`,
         );
-        const start = d < 0 ? s - 1 : s;
-        const end = d < 0 ? e + 1 : e;
+        const start = imported.type === 'dynamic' ? imported.start : imported.start - 1;
+        const end = imported.type === 'dynamic' ? imported.end : imported.end + 1;
         code = code.slice(0, start) + target + code.slice(end);
       }
 
       const url = JSON.stringify(`/${immutableKey}`);
-      const hasDefault = exports.some(({ n }) => n === 'default');
+      const hasDefault = exports.some(
+        (entry) => entry.type !== 'reexport-all' && entry.name === 'default',
+      );
       const entry = `export * from ${url};${hasDefault ? ` export { default } from ${url};` : ''}\n`;
 
       return [key, { immutableKey, immutable: Buffer.from(code), entry: Buffer.from(entry) }];

@@ -27,13 +27,14 @@ export class S3 implements S3Repository {
     src: Readable,
     key: string,
     contentType: string,
-    { CacheControl }: S3Options = {},
+    { CacheControl, ContentLength }: S3Options = {},
   ): Promise<void> {
     await this.#s3.putObject(
       {
         Bucket: this.#bucket,
         ACL: 'public-read',
         Body: src,
+        ContentLength,
         Key: key,
         ContentType: contentType,
         CacheControl,

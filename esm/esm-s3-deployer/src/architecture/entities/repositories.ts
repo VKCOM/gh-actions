@@ -21,6 +21,7 @@ export interface UnpackRepository {
 
 export type S3Options = {
   CacheControl?: string | undefined;
+  ContentLength?: number | undefined;
 };
 
 export interface S3Repository {

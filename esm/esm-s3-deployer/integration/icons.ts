@@ -28,6 +28,7 @@ test('builds @vkontakte/icons and loads its complete browser module graph', {
     ),
     s3: {
       async upload(_ctx, stream, key, contentType, options) {
+        assert.ok(!key.includes('/__assets/'), `Unnecessary asset copy: ${key}`);
         if (key.endsWith('.js')) assert.match(contentType, /javascript/);
         if (key.startsWith('__builds/')) assert.match(options?.CacheControl ?? '', /immutable/);
         if (key === '@vkontakte/icons@3.80.0/index.js') {

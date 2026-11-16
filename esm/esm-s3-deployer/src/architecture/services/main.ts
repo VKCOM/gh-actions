@@ -75,13 +75,19 @@ export class MainService extends Service {
     return contextWithTimeout(ctx, configuration.timeout.s3);
   }
 
-  async #uploadFile(ctx: Context, key: string, stream: Readable, cacheControl: string) {
+  async #uploadFile(
+    ctx: Context,
+    key: string,
+    stream: Readable,
+    cacheControl: string,
+    contentLength?: number,
+  ) {
     return await this.repositories.s3.upload(
       await this.#s3Context(ctx),
       stream,
       key,
       await this.repositories.mime.get(ctx, key),
-      { CacheControl: cacheControl },
+      { CacheControl: cacheControl, ContentLength: contentLength },
     );
   }
 
@@ -226,6 +232,7 @@ export class MainService extends Service {
       requireSubpaths: [...prepared.requireSubpaths].sort(),
       includeAllEntries: roots.has(prepared) && prepared.browserEntries === undefined,
     });
+    const requireEdges: Array<[PreparedPackage, PreparedPackage]> = [];
     const pending = new Set(roots);
 
     for (const prepared of pending) {
@@ -243,6 +250,7 @@ export class MainService extends Service {
         const dependency = getPreparedPackage(packages, dependencyVersion);
 
         dependencies.add(dependency);
+        if (commonjs) requireEdges.push([prepared, dependency]);
 
         const subpaths = commonjs ? dependency.requireSubpaths : dependency.subpaths;
 
@@ -253,7 +261,13 @@ export class MainService extends Service {
       }
     }
 
-    for (const group of dependencyGroups(graph)) {
+    // A require must execute its target at the call site, including lazy calls.
+    // Make require edges bidirectional for grouping so connected packages share
+    // Rspack's synchronous module cache instead of eager external ESM imports.
+    const buildGraph = new Map([...graph].map(([pkg, edges]) => [pkg, new Set(edges)]));
+    for (const [consumer, dependency] of requireEdges) buildGraph.get(dependency)?.add(consumer);
+
+    for (const group of dependencyGroups(buildGraph)) {
       if (group.length < 2) continue;
 
       group.sort((a, b) => packageKey(a.version).localeCompare(packageKey(b.version)));
@@ -291,7 +305,13 @@ export class MainService extends Service {
     for (const fileChunk of chunk([...snapshot.files], maxConcurrentUploadFiles)) {
       await Promise.all(
         fileChunk.map(([, { immutableKey, immutable }]) =>
-          this.#uploadFile(ctx, immutableKey, Readable.from([immutable]), immutableCacheControl),
+          this.#uploadFile(
+            ctx,
+            immutableKey,
+            Readable.from([immutable]),
+            immutableCacheControl,
+            immutable.length,
+          ),
         ),
       );
     }
@@ -305,7 +325,7 @@ export class MainService extends Service {
     for (const fileChunk of chunk([...snapshot.files], maxConcurrentUploadFiles)) {
       await Promise.all(
         fileChunk.map(([key, { entry }]) =>
-          this.#uploadFile(ctx, key, Readable.from([entry]), entryCacheControl),
+          this.#uploadFile(ctx, key, Readable.from([entry]), entryCacheControl, entry.length),
         ),
       );
     }

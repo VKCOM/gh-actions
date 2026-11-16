@@ -16,9 +16,12 @@ type FixturePackage = {
   packageJson?: Partial<PackageJson>;
 };
 
-function browserLoader(uploads: ReadonlyArray<{ key: string; body: string }>) {
+function browserLoader(
+  uploads: ReadonlyArray<{ key: string; body: string }>,
+  globals: Record<string, unknown> = {},
+) {
   const cdn = new Map(uploads.map(({ key, body }) => [`/${key}`, body]));
-  const context = createContext({ URL });
+  const context = createContext({ URL, ...globals });
   const modules = new Map<string, SourceTextModule>();
 
   function load(url: string): SourceTextModule {
@@ -957,4 +960,136 @@ test('loads hashed dynamic chunks and resolves emitted assets inside immutable o
       }
     });
   }
+});
+
+test('keeps CommonJS dependency initialization at eager and lazy require call sites', async (t) => {
+  for (const lazy of [false, true]) {
+    await t.test(lazy ? 'lazy require' : 'ordered require', async () => {
+      const ctx = { signal: t.signal };
+      const { repositories, uploads } = await fixture(
+        ctx,
+        {
+          app: {
+            dependencies: { dependency: '1.0.0' },
+            files: {
+              'index.js': lazy
+                ? 'module.exports = () => { globalThis.config = 42; return require("dependency"); };'
+                : 'globalThis.config = 42; module.exports = require("dependency");',
+            },
+          },
+          dependency: {
+            dependencies: { leaf: '1.0.0' },
+            files: { 'index.js': 'module.exports = require("leaf");' },
+          },
+          leaf: {
+            files: {
+              'index.js':
+                'globalThis.state.executions++; module.exports = {value: globalThis.config};',
+            },
+          },
+        },
+        ['app'],
+      );
+      await new MainService(repositories).run(ctx);
+      const globals = { executions: 0 };
+      const load = browserLoader(uploads, { state: globals });
+      const value = Reflect.get(await load('/app@1.0.0/index.js'), 'default');
+      if (lazy) {
+        assert.equal(globals.executions, 0);
+        assert.equal(value().value, 42);
+        assert.equal(value(), value());
+      } else {
+        assert.equal(value.value, 42);
+      }
+      assert.equal(globals.executions, 1);
+      assert.equal(
+        Reflect.get(await load('/leaf@1.0.0/index.js'), 'default'),
+        lazy ? value() : value,
+      );
+    });
+  }
+});
+
+test('provides ContentLength for generated immutable files and entry facades', async (t) => {
+  const ctx = { signal: t.signal };
+  const { repositories, uploads } = await fixture(
+    ctx,
+    {
+      app: { files: { 'index.js': 'export default "Привет";', 'data.txt': 'raw archive asset' } },
+    },
+    ['app'],
+  );
+  await new MainService(repositories).run(ctx);
+  for (const { key, body, options } of uploads) {
+    if (key.startsWith('__builds/') || key.endsWith('/index.js')) {
+      assert.equal(options?.ContentLength, Buffer.byteLength(body), key);
+    }
+  }
+});
+
+test('publishes configured tokens with a missing main as a static-only package', async (t) => {
+  const ctx = { signal: t.signal };
+  const cron = JSON.parse(
+    await fs.readFile(new URL('../../../../cron/esm-s3-deployer.json', import.meta.url), 'utf8'),
+  );
+  const { repositories, uploads } = await fixture(
+    ctx,
+    {
+      '@vkontakte/vkui-tokens': {
+        packageJson: { main: './utils/descriptions.cjs' },
+        files: {
+          'utils/descriptions.js': 'module.exports = {};',
+          'themes/default.css': ':root {}',
+        },
+      },
+      '@vkontakte/icons': { files: { 'index.js': 'export const Icon = 42;' } },
+    },
+    Object.keys(cron.packages),
+    cron.browserEntries,
+  );
+  await new MainService(repositories).run(ctx);
+  assert.equal(
+    uploads.find(({ key }) => key === '@vkontakte/vkui-tokens@1.0.0/themes/default.css')?.body,
+    ':root {}',
+  );
+  assert.equal(
+    Reflect.get(await browserLoader(uploads)('/@vkontakte/icons@1.0.0/index.js'), 'Icon'),
+    42,
+  );
+});
+
+test('publishes worker chunks and their imports in the immutable snapshot', async (t) => {
+  const ctx = { signal: t.signal };
+  const { repositories, uploads } = await fixture(
+    ctx,
+    {
+      app: {
+        files: {
+          'index.js':
+            'export const start = () => new Worker(new URL(/* worker */ "./worker.js", import.meta.url), { type: "module" });',
+          'worker.js': 'import {value} from "./value.js"; globalThis.state.workerValue = value;',
+          'value.js': 'export const value = 42;',
+        },
+      },
+    },
+    ['app'],
+  );
+  await new MainService(repositories).run(ctx);
+  const workers: URL[] = [];
+  const load = browserLoader(uploads, {
+    Worker: class {
+      constructor(url: URL) {
+        workers.push(url);
+      }
+    },
+  });
+  Reflect.get(await load('/app@1.0.0/index.js'), 'start')();
+  assert.equal(workers.length, 1);
+  assert.match(workers[0]?.pathname ?? '', /^\/__builds\//);
+  const worker = uploads.find(({ key }) => `/${key}` === workers[0]?.pathname);
+  assert.ok(worker, 'The worker URL must refer to a published immutable file');
+  assert.ok(!uploads.some(({ key }) => key.includes('/__assets/')));
+  const globals = { workerValue: undefined };
+  await browserLoader(uploads, { state: globals })(workers[0]?.pathname ?? '');
+  assert.equal(globals.workerValue, 42);
 });

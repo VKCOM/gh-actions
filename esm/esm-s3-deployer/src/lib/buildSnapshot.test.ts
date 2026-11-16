@@ -26,7 +26,7 @@ test('pins static, dynamic and relative imports while preserving ordinary string
   const code = app.immutable.toString();
 
   assert.deepEqual(
-    parse(code)[0].map(({ n }) => n),
+    parse(code)[0].map(({ specifier }) => specifier),
     [
       `/${snapshot.files.get('dependency@1.0.0/index.js')?.immutableKey}`,
       `/${snapshot.files.get('dependency@1.0.0/index.js')?.immutableKey}`,
@@ -37,7 +37,9 @@ test('pins static, dynamic and relative imports while preserving ordinary string
 
   assert.ok(code.includes('export const text = "/dependency@1.0.0/index.js"'));
   assert.deepEqual(
-    parse(app.entry.toString())[1].map(({ n }) => n),
+    parse(app.entry.toString())[1].flatMap((entry) =>
+      entry.type === 'reexport-all' ? [] : [entry.name],
+    ),
     ['default'],
   );
 
@@ -138,7 +140,7 @@ test('hashes cycles and self imports without invalidating independent modules', 
   assert.ok(fileA && fileB);
   assert.equal(fileA.immutableKey.split('/')[1], fileB.immutableKey.split('/')[1]);
   assert.deepEqual(
-    parse(fileA.immutable.toString())[0].map(({ n }) => n),
+    parse(fileA.immutable.toString())[0].map(({ specifier }) => specifier),
     [`/${fileB.immutableKey}`, `/${fileA.immutableKey}`],
   );
 });
@@ -158,7 +160,7 @@ test('preserves query strings, fragments and parent-directory chunk imports', as
   const shared = snapshot.files.get('app@1.0.0/shared.mjs');
   assert.ok(entry && shared);
   assert.deepEqual(
-    parse(entry.immutable.toString())[0].map(({ n }) => n),
+    parse(entry.immutable.toString())[0].map(({ specifier }) => specifier),
     [`/${shared.immutableKey}?mode=1#value`, `/${shared.immutableKey}#lazy`],
   );
 });
@@ -215,5 +217,23 @@ test('keeps computed relative imports in a shared immutable directory', async ()
   assert.notEqual(
     entry.immutableKey.split('/')[1],
     snapshot.files.get('other@1.0.0/index.js')?.immutableKey.split('/')[1],
+  );
+});
+
+test('preserves template import globs and keeps their targets in the same snapshot directory', async () => {
+  const code = `export const load = name => import(\`./chunks/\${name}.js\`);`;
+  const snapshot = await buildSnapshot(
+    new Map([
+      ['app@1.0.0/index.js', Buffer.from(code)],
+      ['app@1.0.0/chunks/feature.js', Buffer.from('export default 42;')],
+    ]),
+  );
+  const entry = snapshot.files.get('app@1.0.0/index.js');
+  const feature = snapshot.files.get('app@1.0.0/chunks/feature.js');
+  assert.ok(entry && feature);
+  assert.equal(entry.immutable.toString(), code);
+  assert.equal(
+    new URL('./chunks/feature.js', `https://cdn.test/${entry.immutableKey}`).pathname,
+    `/${feature.immutableKey}`,
   );
 });

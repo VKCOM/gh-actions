@@ -2,7 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { type Compiler, rspack } from '@rspack/core';
+import { type Compilation, type Compiler, rspack } from '@rspack/core';
 import { init, parse } from 'es-module-lexer';
 import type { Context } from '../entities/context.ts';
 import type {
@@ -44,7 +44,7 @@ async function prepareEntries(
   compiler: Compiler,
   sources: ReadonlyArray<BuildSource>,
 ): Promise<Record<string, string>> {
-  await init;
+  await init();
 
   const entry: Record<string, string> = {};
 
@@ -107,7 +107,7 @@ async function prepareEntries(
           commonjs ? `require-entry-${index}.js` : `entry-${index}.mjs`,
         );
         const importCode = isModule
-          ? `export * from ${specifier};${parsed?.[1].some(({ n }) => n === 'default') ? ` export { default } from ${specifier};` : ''}`
+          ? `export * from ${specifier};${parsed?.[1].some((entry) => entry.type !== 'reexport-all' && entry.name === 'default') ? ` export { default } from ${specifier};` : ''}`
           : `export * from ${specifier}; import value from ${specifier}; export default value;`;
         let code: string;
         if (commonjs) {
@@ -165,14 +165,14 @@ async function prepareEntries(
   return entry;
 }
 
-function runCompiler(compiler: Compiler): Promise<void> {
+function runCompiler(compiler: Compiler): Promise<Compilation> {
   return new Promise((resolve, reject) => {
     compiler.run((error, stats) => {
       if (error) return reject(error);
       if (!stats || stats.hasErrors()) {
         return reject(new Error(stats?.toString({ all: false, errors: true }) ?? 'No build stats'));
       }
-      resolve();
+      resolve(stats.compilation);
     });
   });
 }
@@ -471,10 +471,15 @@ export class Build implements BuildRepository {
         return [];
 
       entry = await prepareEntries(compiler, sources);
-      await runCompiler(compiler);
+      const compilation = await runCompiler(compiler);
       // Runtime URL arguments cannot be enumerated by the bundler. Preserve
       // archive assets at their source-relative paths alongside the URL bases.
       for (const source of sources) {
+        const needsAssets = [...compilation.modules].some(
+          (module) => Reflect.get(module.buildInfo, 'runtimeAssets') === source.sourcePath,
+        );
+        if (!needsAssets) continue;
+
         await fs.cp(source.sourcePath, path.join(options.outputPath, source.prefix, '__assets'), {
           recursive: true,
           filter: (file) => !/\.[cm]?jsx?$/.test(file),
@@ -485,7 +490,7 @@ export class Build implements BuildRepository {
       await closeCompiler(compiler);
     }
 
-    // A cyclic group shares one compilation and CommonJS module cache. Other
+    // A connected group shares one compilation and CommonJS module cache. Other
     // members keep their public URLs through facades into the group's output.
     for (const source of sources.slice(1)) {
       if (!options.packageJson.version)
@@ -495,7 +500,9 @@ export class Build implements BuildRepository {
       for (const file of source.emittedFiles) {
         const target = `${source.prefix}${file}`;
         const code = await fs.readFile(path.join(options.outputPath, target), 'utf8');
-        const hasDefault = parse(code)[1].some(({ n }) => n === 'default');
+        const hasDefault = parse(code)[1].some(
+          (entry) => entry.type !== 'reexport-all' && entry.name === 'default',
+        );
         const url = JSON.stringify(
           `/${options.packageJson.name}@${options.packageJson.version}/${target}`,
         );

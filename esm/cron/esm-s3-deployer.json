@@ -3,6 +3,9 @@
     "@vkontakte/vkui-tokens": "^4.100.1",
     "@vkontakte/icons": "^3.80.0"
   },
+  "browserEntries": {
+    "@vkontakte/vkui-tokens": []
+  },
   "s3": {
     "bucket": "vkui-esm",
     "profile": "default"

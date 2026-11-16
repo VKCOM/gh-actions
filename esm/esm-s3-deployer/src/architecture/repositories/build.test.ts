@@ -903,3 +903,24 @@ test('externalizes browser replacements for local files from nested modules', as
     }
   }
 });
+
+test('does not duplicate archive assets without runtime URL references', async (t) => {
+  const pkg = { name: 'static-assets', main: 'index.js' };
+  await using source = await fixture({
+    'package.json': JSON.stringify(pkg),
+    'index.js': 'export const value = 42;',
+    'icons/icon.svg': '<svg/>',
+    'README.md': '# Assets',
+  });
+  await using output = await fixture({});
+  await new Build().build(
+    { signal: t.signal },
+    {
+      packagePath: source.path,
+      outputPath: output.path,
+      packageJson: pkg,
+      dependencies: [],
+    },
+  );
+  await assert.rejects(fs.access(path.join(output.path, '__assets')), { code: 'ENOENT' });
+});
