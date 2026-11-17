@@ -1,6 +1,8 @@
+import { createHash } from 'node:crypto';
 import type { Readable } from 'node:stream';
 import { S3 as S3Client } from '@aws-sdk/client-s3';
 import { NodeHttpHandler } from '@smithy/node-http-handler';
+import type { HttpRequest } from '@smithy/protocol-http';
 import { isNotUndefined } from '../../lib/isNotUndefined.ts';
 import type { Context } from '../entities/context.ts';
 import type { S3Options, S3Repository } from '../entities/repositories.ts';
@@ -19,6 +21,23 @@ export class S3 implements S3Repository {
       }),
       maxAttempts: 4,
     });
+    // Some S3-compatible stores still require the legacy Content-MD5 header
+    // on multi-object deletes. The AWS SDK no longer adds it in WHEN_REQUIRED
+    // mode, so calculate it from the serialized XML request body.
+    this.#s3.middlewareStack.add(
+      (next, context) => async (args) => {
+        if (context.commandName === 'DeleteObjectsCommand') {
+          const request = args.request as HttpRequest;
+          if (typeof request.body === 'string' || request.body instanceof Uint8Array) {
+            request.headers['content-md5'] = createHash('md5')
+              .update(request.body)
+              .digest('base64');
+          }
+        }
+        return next(args);
+      },
+      { name: 'deleteObjectsContentMd5', step: 'finalizeRequest' },
+    );
     this.#bucket = bucket;
   }
 
