@@ -353,6 +353,8 @@ export class Build implements BuildRepository {
 
       const name = requestName(request);
 
+      if (Object.hasOwn(owner.options.packageJson.peerDependencies ?? {}, name)) return request;
+
       if (dependencySource(owner, name)) return;
 
       const dependency = owner.options.dependencies.find((dependency) => dependency.name === name);

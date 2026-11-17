@@ -79,10 +79,14 @@ export class RegistryService extends Service {
       return cachedResolvedPackage;
     }
 
-    const dependencies = await this.#resolveDependencies(ctx, {
-      ...versionInfo.peerDependencies,
-      ...versionInfo.dependencies,
-    });
+    const dependencies = await this.#resolveDependencies(
+      ctx,
+      Object.fromEntries(
+        Object.entries(versionInfo.dependencies ?? {}).filter(
+          ([name]) => !Object.hasOwn(versionInfo.peerDependencies ?? {}, name),
+        ),
+      ),
+    );
 
     const resolvedPackage: PackageVersion = {
       name,
