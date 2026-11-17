@@ -101,6 +101,7 @@ async function fixture(
               name,
               version,
               dependencies: pkg.dependencies ?? {},
+              peerDependencies: pkg.packageJson?.peerDependencies ?? {},
               dist: { tarball: name, shasum: '' },
             },
           },
@@ -155,6 +156,54 @@ async function fixture(
 
   return { repositories, uploads, builds };
 }
+
+test('preserves bare peer imports in published snapshots without resolving peer versions', async (t) => {
+  for (const format of ['esm', 'commonjs']) {
+    await t.test(format, async () => {
+      const ctx = { signal: t.signal };
+      const { repositories, uploads, builds } = await fixture(
+        ctx,
+        {
+          app: {
+            dependencies: { dependency: '1.0.0', react: '1.0.0' },
+            packageJson: {
+              peerDependencies: { react: '*', '@scope/peer': '*' },
+            },
+            files: {
+              'index.js':
+                format === 'esm'
+                  ? 'export {default as React} from "react"; export {jsx} from "react/jsx-runtime"; export {value} from "@scope/peer/feature"; export {answer} from "dependency";'
+                  : 'exports.React = require("react"); exports.jsx = require("react/jsx-runtime").jsx; exports.value = require("@scope/peer/feature").value; exports.answer = require("dependency").answer;',
+            },
+          },
+          dependency: { files: { 'index.js': 'exports.answer = 42;' } },
+        },
+        ['app'],
+      );
+
+      await new MainService(repositories).run(ctx);
+
+      assert.deepEqual(new Set(builds), new Set(['app', 'dependency']));
+      const specifiers = new Set(
+        uploads
+          .filter(({ key }) => key.startsWith('__builds/') && key.endsWith('.js'))
+          .flatMap(({ body }) => [...new SourceTextModule(body).dependencySpecifiers]),
+      );
+      for (const peer of ['react', 'react/jsx-runtime', '@scope/peer/feature']) {
+        assert.ok(specifiers.has(peer), `Missing bare peer import ${peer}`);
+      }
+      assert.ok(uploads.some(({ key }) => key === 'dependency@1.0.0/index.js'));
+      if (format === 'esm') {
+        assert.ok(
+          [...specifiers].some((specifier) =>
+            /^\/__builds\/[^/]+\/dependency@1\.0\.0\//.test(specifier),
+          ),
+        );
+      }
+      assert.ok(!uploads.some(({ key }) => /(?:react|@scope\/peer)@/.test(key)));
+    });
+  }
+});
 
 test('publishes a complete immutable snapshot before updating shared legacy entries', async (t) => {
   const ctx = { signal: t.signal };
