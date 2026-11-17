@@ -3,7 +3,7 @@
     // Basic options
     "target": "ESNext",
     "module": "nodenext",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "noEmit": true,
 
     // Strict type checking (all enabled)
