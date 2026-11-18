@@ -641,14 +641,15 @@ test('refreshes stable entries after a transitive dependency update and retains 
   const ctx = { signal: t.signal };
   type ObjectData = { key: string; body: string; options: S3Options | undefined };
   const objects = new Map<string, ObjectData>();
+  const immutableUploads: string[] = [];
   const s3: Repositories['s3'] = {
     async upload(_ctx, stream, key, _type, options) {
       let body = '';
 
       for await (const chunk of stream) body += chunk;
-      const previous = objects.get(key);
-      if (previous?.options?.CacheControl?.includes('immutable')) {
-        assert.equal(body, previous.body, `Immutable object was changed: ${key}`);
+      if (key.startsWith('__builds/')) {
+        assert.ok(!objects.has(key), `Immutable object was uploaded again: ${key}`);
+        immutableUploads.push(key);
       }
       objects.set(key, { key, body, options });
     },
@@ -738,8 +739,18 @@ test('refreshes stable entries after a transitive dependency update and retains 
   assert.equal(Reflect.get(await load(pinnedUrl), 'value'), 1);
 
   const beforeRepeat = new Map(objects);
+  immutableUploads.length = 0;
   await deploy('1.0.1', 2);
+  assert.deepEqual(immutableUploads, []);
   assert.deepEqual(objects, beforeRepeat, 'An unchanged deploy must reuse the same immutable URLs');
+
+  const missingKey = /"\/(__builds\/[^" ]+)"/.exec(entry.body)?.[1];
+
+  assert.ok(missingKey);
+  assert.ok(objects.delete(missingKey));
+  await deploy('1.0.1', 2);
+  assert.deepEqual(immutableUploads, [missingKey]);
+  assert.deepEqual(objects, beforeRepeat);
 });
 
 test('keeps stable entry URLs unchanged when uploading the immutable snapshot fails', async (t) => {

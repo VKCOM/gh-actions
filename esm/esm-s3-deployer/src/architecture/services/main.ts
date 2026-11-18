@@ -300,11 +300,32 @@ export class MainService extends Service {
     }
 
     const snapshot = await buildSnapshot(files);
+    const snapshotFiles = [...snapshot.files.values()];
+    const prefixes = new Set(
+      snapshotFiles.map(({ immutableKey }) => `${immutableKey.split('/', 2).join('/')}/`),
+    );
+    const existingKeys = new Set<string>();
+
+    for (const prefixChunk of chunk([...prefixes], maxConcurrentUploadFiles)) {
+      const listings = await Promise.all(
+        prefixChunk.map(async (prefix) =>
+          this.repositories.s3.list(await this.#s3Context(ctx), prefix),
+        ),
+      );
+
+      for (const keys of listings) {
+        for (const key of keys) existingKeys.add(key);
+      }
+    }
+
+    const missingFiles = snapshotFiles.filter(
+      ({ immutableKey }) => !existingKeys.has(immutableKey),
+    );
 
     // Finish the entire immutable graph before switching any stable entry URL.
-    for (const fileChunk of chunk([...snapshot.files], maxConcurrentUploadFiles)) {
+    for (const fileChunk of chunk(missingFiles, maxConcurrentUploadFiles)) {
       await Promise.all(
-        fileChunk.map(([, { immutableKey, immutable }]) =>
+        fileChunk.map(({ immutableKey, immutable }) =>
           this.#uploadFile(
             ctx,
             immutableKey,
