@@ -7,6 +7,7 @@ import { chunk } from '../../lib/chunk.ts';
 import { dependencyGroups } from '../../lib/dependencyGroups.ts';
 import { difference } from '../../lib/difference.ts';
 import { secondsInYear } from '../../lib/duration.ts';
+import { measure } from '../../lib/timings.ts';
 import { type Context, contextWithTimeout } from '../entities/context.ts';
 import type { PackageJson } from '../entities/package.ts';
 import type { BuildPackage, Repositories } from '../entities/repositories.ts';
@@ -169,7 +170,12 @@ export class MainService extends Service {
 
     const packagePath = tmpDir.path;
 
-    await this.repositories.unpack.downloadAndUnpack(ctx, version.tarball, packagePath);
+    await measure(
+      ctx,
+      'npm.downloadAndUnpack',
+      () => this.repositories.unpack.downloadAndUnpack(ctx, version.tarball, packagePath),
+      key,
+    );
 
     const packageJson = await this.repositories.package.packageJson(ctx, packagePath);
 
@@ -299,57 +305,68 @@ export class MainService extends Service {
       }
     }
 
-    const snapshot = await buildSnapshot(files);
+    const snapshot = await measure(ctx, 'snapshot.build', () => buildSnapshot(files));
     const snapshotFiles = [...snapshot.files.values()];
     const prefixes = new Set(
       snapshotFiles.map(({ immutableKey }) => `${immutableKey.split('/', 2).join('/')}/`),
     );
     const existingKeys = new Set<string>();
 
-    for (const prefixChunk of chunk([...prefixes], maxConcurrentUploadFiles)) {
-      const listings = await Promise.all(
-        prefixChunk.map(async (prefix) =>
-          this.repositories.s3.list(await this.#s3Context(ctx), prefix),
-        ),
-      );
+    await measure(ctx, 'snapshot.listExisting', async () => {
+      for (const prefixChunk of chunk([...prefixes], maxConcurrentUploadFiles)) {
+        const listings = await Promise.all(
+          prefixChunk.map(async (prefix) =>
+            this.repositories.s3.list(await this.#s3Context(ctx), prefix),
+          ),
+        );
 
-      for (const keys of listings) {
-        for (const key of keys) existingKeys.add(key);
+        for (const keys of listings) {
+          for (const key of keys) existingKeys.add(key);
+        }
       }
-    }
+    });
 
     const missingFiles = snapshotFiles.filter(
       ({ immutableKey }) => !existingKeys.has(immutableKey),
     );
 
     // Finish the entire immutable graph before switching any stable entry URL.
-    for (const fileChunk of chunk(missingFiles, maxConcurrentUploadFiles)) {
-      await Promise.all(
-        fileChunk.map(({ immutableKey, immutable }) =>
-          this.#uploadFile(
-            ctx,
-            immutableKey,
-            Readable.from([immutable]),
-            immutableCacheControl,
-            immutable.length,
+    await measure(ctx, 'snapshot.uploadMissing', async () => {
+      for (const fileChunk of chunk(missingFiles, maxConcurrentUploadFiles)) {
+        await Promise.all(
+          fileChunk.map(({ immutableKey, immutable }) =>
+            this.#uploadFile(
+              ctx,
+              immutableKey,
+              Readable.from([immutable]),
+              immutableCacheControl,
+              immutable.length,
+            ),
           ),
-        ),
-      );
-    }
+        );
+      }
+    });
 
     for (const prepared of graph.keys()) {
       using logger = loggerTask(packageKey(prepared.version));
       logger.log('upload package files');
-      await this.#uploadPackageFiles(ctx, prepared, snapshot.files);
-    }
-
-    for (const fileChunk of chunk([...snapshot.files], maxConcurrentUploadFiles)) {
-      await Promise.all(
-        fileChunk.map(([key, { entry }]) =>
-          this.#uploadFile(ctx, key, Readable.from([entry]), entryCacheControl, entry.length),
-        ),
+      await measure(
+        ctx,
+        'package.uploadFiles',
+        () => this.#uploadPackageFiles(ctx, prepared, snapshot.files),
+        packageKey(prepared.version),
       );
     }
+
+    await measure(ctx, 'entries.upload', async () => {
+      for (const fileChunk of chunk([...snapshot.files], maxConcurrentUploadFiles)) {
+        await Promise.all(
+          fileChunk.map(([key, { entry }]) =>
+            this.#uploadFile(ctx, key, Readable.from([entry]), entryCacheControl, entry.length),
+          ),
+        );
+      }
+    });
   }
 
   async run(ctx: Context) {
@@ -359,20 +376,24 @@ export class MainService extends Service {
     const configuration = await this.repositories.configuration.get(ctx);
     const configured = new Map(Object.entries(configuration.packages));
 
-    for (const [packageName, range] of configured) {
-      for (const prepared of await this.#preparePackageRange(
-        ctx,
-        packageName,
-        range,
-        packages,
-        resources,
-      )) {
-        prepared.browserEntries = configuration.browserEntries[packageName];
-        roots.add(prepared);
+    await measure(ctx, 'packages.prepare', async () => {
+      for (const [packageName, range] of configured) {
+        for (const prepared of await this.#preparePackageRange(
+          ctx,
+          packageName,
+          range,
+          packages,
+          resources,
+        )) {
+          prepared.browserEntries = configuration.browserEntries[packageName];
+          roots.add(prepared);
+        }
       }
-    }
+    });
 
-    const graph = await this.#buildPackages(ctx, packages, roots);
+    const graph = await measure(ctx, 'packages.build', () =>
+      this.#buildPackages(ctx, packages, roots),
+    );
 
     await this.#publishPackages(ctx, graph);
 
@@ -394,6 +415,8 @@ export class MainService extends Service {
       }
     }
 
-    for (const version of aliases.values()) await this.#copyToMajorTag(ctx, version);
+    for (const [alias, version] of aliases) {
+      await measure(ctx, 'alias.update', () => this.#copyToMajorTag(ctx, version), alias);
+    }
   }
 }

@@ -1,6 +1,8 @@
 node_modules/
 .cache/
 *.log
+esm-deploy-timings.ndjson
+/icons-build/
 
 # yarn specific
 # see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
