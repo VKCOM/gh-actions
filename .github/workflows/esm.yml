@@ -35,5 +35,13 @@ jobs:
           EOF
 
       - name: Run esm-s3-deployer
+        id: deploy
         run: node ../esm-s3-deployer/src/bin/index.ts
         working-directory: esm/cron
+
+      - name: Upload deployment timings
+        if: ${{ !cancelled() && steps.deploy.outcome != 'skipped' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: esm-deploy-timings
+          path: esm/cron/esm-deploy-timings.ndjson

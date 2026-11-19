@@ -4,6 +4,7 @@ import { S3 as S3Client } from '@aws-sdk/client-s3';
 import { NodeHttpHandler } from '@smithy/node-http-handler';
 import type { HttpRequest } from '@smithy/protocol-http';
 import { isNotUndefined } from '../../lib/isNotUndefined.ts';
+import { measure } from '../../lib/timings.ts';
 import type { Context } from '../entities/context.ts';
 import type { S3Options, S3Repository } from '../entities/repositories.ts';
 
@@ -48,17 +49,23 @@ export class S3 implements S3Repository {
     contentType: string,
     { CacheControl, ContentLength }: S3Options = {},
   ): Promise<void> {
-    await this.#s3.putObject(
-      {
-        Bucket: this.#bucket,
-        ACL: 'public-read',
-        Body: src,
-        ContentLength,
-        Key: key,
-        ContentType: contentType,
-        CacheControl,
-      },
-      { abortSignal: ctx.signal },
+    await measure(
+      ctx,
+      's3.PutObject',
+      () =>
+        this.#s3.putObject(
+          {
+            Bucket: this.#bucket,
+            ACL: 'public-read',
+            Body: src,
+            ContentLength,
+            Key: key,
+            ContentType: contentType,
+            CacheControl,
+          },
+          { abortSignal: ctx.signal },
+        ),
+      key,
     );
 
     return;
@@ -71,37 +78,47 @@ export class S3 implements S3Repository {
     { CacheControl }: S3Options = {},
   ): Promise<void> {
     // Получаем метаданные исходного объекта для сохранения ContentType
-    const head = await this.#s3.headObject(
-      { Bucket: this.#bucket, Key: srcKey },
-      { abortSignal: ctx.signal },
+    const head = await measure(
+      ctx,
+      's3.HeadObject',
+      () => this.#s3.headObject({ Bucket: this.#bucket, Key: srcKey }, { abortSignal: ctx.signal }),
+      srcKey,
     );
 
-    await this.#s3.copyObject(
-      {
-        Bucket: this.#bucket,
-        CopySource: `${this.#bucket}/${srcKey}`,
-        Key: destKey,
-        ACL: 'public-read',
-        MetadataDirective: 'REPLACE',
-        CacheControl: head.CacheControl,
-        ContentType: head.ContentType,
-        ...(CacheControl && { CacheControl }),
-      },
-      { abortSignal: ctx.signal },
+    await measure(
+      ctx,
+      's3.CopyObject',
+      () =>
+        this.#s3.copyObject(
+          {
+            Bucket: this.#bucket,
+            CopySource: `${this.#bucket}/${srcKey}`,
+            Key: destKey,
+            ACL: 'public-read',
+            MetadataDirective: 'REPLACE',
+            CacheControl: head.CacheControl,
+            ContentType: head.ContentType,
+            ...(CacheControl && { CacheControl }),
+          },
+          { abortSignal: ctx.signal },
+        ),
+      destKey,
     );
   }
 
   async delete(ctx: Context, ...keys: string[]): Promise<void> {
-    await this.#s3.deleteObjects(
-      {
-        Bucket: this.#bucket,
-        Delete: {
-          Objects: keys.map((Key) => ({
-            Key,
-          })),
+    await measure(ctx, 's3.DeleteObjects', () =>
+      this.#s3.deleteObjects(
+        {
+          Bucket: this.#bucket,
+          Delete: {
+            Objects: keys.map((Key) => ({
+              Key,
+            })),
+          },
         },
-      },
-      { abortSignal: ctx.signal },
+        { abortSignal: ctx.signal },
+      ),
     );
   }
 
@@ -110,13 +127,19 @@ export class S3 implements S3Repository {
     let continuationToken: string | undefined;
 
     do {
-      const data = await this.#s3.listObjectsV2(
-        {
-          Bucket: this.#bucket,
-          Prefix: prefix,
-          ContinuationToken: continuationToken,
-        },
-        { abortSignal: ctx.signal },
+      const data = await measure(
+        ctx,
+        's3.ListObjectsV2',
+        () =>
+          this.#s3.listObjectsV2(
+            {
+              Bucket: this.#bucket,
+              Prefix: prefix,
+              ContinuationToken: continuationToken,
+            },
+            { abortSignal: ctx.signal },
+          ),
+        prefix,
       );
 
       if (data.Contents !== undefined) {

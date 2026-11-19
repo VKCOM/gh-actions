@@ -9,6 +9,7 @@ import type { Context } from '../architecture/entities/context.ts';
 import type { Repositories } from '../architecture/entities/repositories.ts';
 import { libRepository } from '../architecture/repositories/repositories.ts';
 import { MainService } from '../architecture/services/main.ts';
+import { createTimingRecorder, measure } from '../lib/timings.ts';
 
 class SystemSignalAbortError extends Error {
   constructor() {
@@ -43,15 +44,15 @@ async function loadConfig(configPath: string): Promise<ConfigurationPartial> {
 
 async function main() {
   const ctx = mainContext();
+  const recordTiming = createTimingRecorder('esm-deploy-timings.ndjson');
+  if (recordTiming) ctx.recordTiming = recordTiming;
+
   console.log('start');
-
-  const config = await loadConfig('esm-s3-deployer.json');
-
-  const repositories: Repositories = await libRepository(ctx, config);
-
-  const service = new MainService(repositories);
-
-  await service.run(ctx);
+  await measure(ctx, 'deploy', async () => {
+    const config = await loadConfig('esm-s3-deployer.json');
+    const repositories: Repositories = await libRepository(ctx, config);
+    await new MainService(repositories).run(ctx);
+  });
 
   console.log('end');
   process.exit(0);
