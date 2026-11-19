@@ -98,18 +98,36 @@ export class MainService extends Service {
     generated: ReadonlyMap<string, unknown>,
   ) {
     const prefix = packageKey(prepared.version);
-    const files = (await this.repositories.package.fileList(ctx, prepared.packagePath)).filter(
-      (file) => !generated.has(pathPosix.join(prefix, file)),
+    const listContext = await this.#s3Context(ctx);
+    let existingKeys: Set<string> | undefined;
+    try {
+      existingKeys = new Set(await this.repositories.s3.list(listContext, `${prefix}/`));
+    } catch (error) {
+      ctx.signal.throwIfAborted();
+      console.warn(`[${prefix}]: could not list package files, continuing with uploads`, error);
+    }
+
+    const files = (await this.repositories.package.fileList(ctx, prepared.packagePath)).flatMap(
+      (file) => {
+        const key = pathPosix.join(prefix, file);
+        const isJavaScript = /\.m?js$/.test(file);
+
+        // JavaScript at the same key can alternate between a raw file and a generated entry.
+        if (generated.has(key) || (!isJavaScript && existingKeys?.has(key))) return [];
+
+        const cacheControl = isJavaScript ? entryCacheControl : immutableCacheControl;
+        return [{ file, key, cacheControl }];
+      },
     );
 
     for (const fileChunk of chunk(files, maxConcurrentUploadFiles)) {
       await Promise.all(
-        fileChunk.map((file) =>
+        fileChunk.map(({ file, key, cacheControl }) =>
           this.#uploadFile(
             ctx,
-            pathPosix.join(prefix, file),
+            key,
             this.repositories.fs.createReadStream(path.join(prepared.packagePath, file)),
-            /\.m?js$/.test(file) ? entryCacheControl : immutableCacheControl,
+            cacheControl,
           ),
         ),
       );

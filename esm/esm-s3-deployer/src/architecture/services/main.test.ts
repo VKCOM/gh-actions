@@ -779,9 +779,13 @@ test('keeps stable entry URLs unchanged when uploading the immutable snapshot fa
   assert.ok(uploads.every(({ key }) => key.startsWith('__builds/')));
 });
 
-test('revalidates raw JavaScript paths that may become generated entries on a later deploy', async (t) => {
+test('skips existing static package files and refreshes raw and generated JavaScript', async (t) => {
   const ctx = { signal: t.signal };
   const objects = new Map<string, { body: string; options: S3Options | undefined }>();
+  const assetUploads: string[] = [];
+  const styleKey = 'dependency@1.0.0/style.css';
+  const iconKey = 'dependency@1.0.0/icon.svg';
+  const featureKey = 'dependency@1.0.0/feature.js';
   const s3: Repositories['s3'] = {
     async upload(_ctx, stream, key, _type, options) {
       let body = '';
@@ -791,10 +795,11 @@ test('revalidates raw JavaScript paths that may become generated entries on a la
       if (previous?.options?.CacheControl?.includes('immutable')) {
         assert.equal(body, previous.body, `Immutable object was changed: ${key}`);
       }
+      if (key === styleKey || key === iconKey) assetUploads.push(key);
       objects.set(key, { body, options });
     },
-    async list() {
-      return [];
+    async list(_ctx, prefix) {
+      return [...objects.keys()].filter((key) => key.startsWith(prefix));
     },
     async copy() {},
     async delete() {},
@@ -813,6 +818,7 @@ test('revalidates raw JavaScript paths that may become generated entries on a la
             'index.js': 'export const value = 1;',
             'feature.js': 'export const value = 2;',
             'style.css': 'body { color: red; }',
+            'icon.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>',
           },
         },
       },
@@ -824,19 +830,64 @@ test('revalidates raw JavaScript paths that may become generated entries on a la
 
   await deploy(false);
 
-  assert.equal(
-    objects.get('dependency@1.0.0/feature.js')?.options?.CacheControl,
-    'no-cache, public',
-  );
+  assert.equal(objects.get(featureKey)?.options?.CacheControl, 'no-cache, public');
 
-  assert.match(objects.get('dependency@1.0.0/style.css')?.options?.CacheControl ?? '', /immutable/);
+  assert.match(objects.get(styleKey)?.options?.CacheControl ?? '', /immutable/);
+  assert.deepEqual(assetUploads.sort(), [iconKey, styleKey]);
+  assetUploads.length = 0;
 
   await deploy(true);
   const uploads = [...objects].map(([key, object]) => ({ key, ...object }));
 
+  assert.match(objects.get(featureKey)?.body ?? '', /\/__builds\//);
   assert.equal(Reflect.get(await browserLoader(uploads)('/app@1.0.0/index.js'), 'value'), 2);
+  assert.deepEqual(assetUploads, []);
 
+  assert.ok(objects.delete(styleKey));
   await deploy(false);
+  assert.deepEqual(assetUploads, [styleKey]);
+  assert.equal(objects.get(featureKey)?.body, 'export const value = 2;');
+});
+
+test('falls back after a package listing failure unless the deployment was cancelled', async (t) => {
+  for (const cancel of [false, true]) {
+    await t.test(cancel ? 'deployment cancelled' : 'listing timed out', async (t) => {
+      const controller = new AbortController();
+      const ctx = { signal: AbortSignal.any([t.signal, controller.signal]) };
+      const { repositories, uploads } = await fixture(
+        ctx,
+        { app: { files: { 'index.js': 'export default 42;', 'style.css': 'body {}' } } },
+        ['app'],
+      );
+      const warn = t.mock.method(console, 'warn', () => {});
+      const cancelled = new Error('Deployment cancelled');
+      let failListing = true;
+      const service = new MainService({
+        ...repositories,
+        s3: {
+          ...repositories.s3,
+          async list(_ctx, prefix) {
+            if (prefix === 'app@1.0.0/' && failListing) {
+              failListing = false;
+              if (cancel) controller.abort(cancelled);
+              throw new DOMException('Listing timed out', 'TimeoutError');
+            }
+            return [];
+          },
+        },
+      });
+
+      if (cancel) {
+        await assert.rejects(service.run(ctx), (error) => error === cancelled);
+        assert.ok(uploads.every(({ key }) => key.startsWith('__builds/')));
+        assert.equal(warn.mock.callCount(), 0);
+      } else {
+        await service.run(ctx);
+        assert.ok(uploads.some(({ key }) => key === 'app@1.0.0/style.css'));
+        assert.equal(warn.mock.callCount(), 1);
+      }
+    });
+  }
 });
 
 test('preserves conditional dependency entries when bundling a package cycle', async (t) => {
