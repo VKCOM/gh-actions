@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1017.0",
-    "@rspack/core": "^2.3.1",
+    "@rspack/core": "^2.3.3",
     "acorn": "^8.15.0",
     "es-module-lexer": "^3.0.5",
     "mime-types": "^3.0.2",
